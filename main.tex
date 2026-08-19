@@ -5,40 +5,54 @@
 % DOCUMENT CLASS
 \documentclass[\OPTfontsize]{book}
 
+% 中译本改动：正文已译成中文，加载 ctex 以支持 CJK 排版，用 Fandol 字体集
+% （随 texlive 自带，不依赖系统安装的字体），跟 XeLaTeX/LuaLaTeX 都兼容；
+% 必须紧跟在 \documentclass 之后、其余字体/编码相关宏包之前加载。
+\usepackage[fontset=fandol]{ctex}
+
+% 中译本改动：用 LuaLaTeX 编译时，xcolor（被 \pagecolor{white}/\nopagecolor
+% 一类调用触发，见 front.tex/main.tex 的封面逻辑）内部直接用了 \pdfliteral/
+% \pdfsave/\pdfrestore 这些 pdfTeX 原语，LuaTeX 并不原生提供，报
+% "Undefined control sequence"（真实复现，编译到 setmath.tex 附近报了 9 次）。
+% luatex85 包专门用于在 LuaTeX 下把这批 pdfTeX 原语重新定义回来，是这类
+% "老宏包硬编码 pdfTeX 原语"问题的标准解法；只在 LuaTeX 下加载，其他引擎
+% 下这个包本身会直接退出，不需要额外判断。
+\usepackage{luatex85}
+
 \PassOptionsToPackage{table}{xcolor}
 
 \usepackage{etex} % We're running out of registers and dimensions, or some such
 
 % PAGE GEOMETRY
 \usepackage[papersize={\OPTpagesize},
-            twoside,
-            includehead,
-            top=\OPTtopmargin,
-            bottom=\OPTbottommargin,
-            inner=\OPTinnermargin,
-            outer=\OPToutermargin,
-            bindingoffset=\OPTbindingoffset]{geometry}
+  twoside,
+  includehead,
+  top=\OPTtopmargin,
+  bottom=\OPTbottommargin,
+  inner=\OPTinnermargin,
+  outer=\OPToutermargin,
+bindingoffset=\OPTbindingoffset]{geometry}
 
 % HYPERLINKING AND PDF METADATA
 \usepackage[backref=page,
-            colorlinks,
-            citecolor=linkcolor,
-            linkcolor=linkcolor,
-            urlcolor=linkcolor,
-            unicode,
-            pdfauthor={Univalent Foundations Program},
-            pdftitle={Homotopy Type Theory: Univalent Foundations of Mathematics},
-            pdfsubject={Mathematics},
-            pdfkeywords={type theory, homotopy theory, univalence axiom}]{hyperref}
+  colorlinks,
+  citecolor=linkcolor,
+  linkcolor=linkcolor,
+  urlcolor=linkcolor,
+  unicode,
+  pdfauthor={Univalent Foundations Program},
+  pdftitle={Homotopy Type Theory: Univalent Foundations of Mathematics},
+  pdfsubject={Mathematics},
+pdfkeywords={type theory, homotopy theory, univalence axiom}]{hyperref}
 \renewcommand{\backref}[1]{}
 \renewcommand{\backrefalt}[4]{%
-   \ifcase #1 %
-   (No citations.)
-   \or
-   (Cited on page\ #2.)
-   \else
-   (Cited on pages\ #2.)
-   \fi}
+  \ifcase #1 %
+  (No citations.)
+  \or
+  (Cited on page\ #2.)
+  \else
+  (Cited on pages\ #2.)
+\fi}
 
 % OTHER PACKAGES
 
@@ -111,9 +125,9 @@
 \renewcommand{\sectionmark}[1]{\markright{\textsc{\thesection\ #1}}}
 
 \lhead[\fancyplain{}{{\thepage}}]%
-      {\fancyplain{}{\nouppercase{\rightmark}}}
+{\fancyplain{}{\nouppercase{\rightmark}}}
 \rhead[\fancyplain{}{\nouppercase{\leftmark}}]%
-      {\fancyplain{}{\thepage}}
+{\fancyplain{}{\thepage}}
 \cfoot[]{}
 \lfoot[]{}
 \rfoot[]{}
@@ -126,13 +140,13 @@
 % Patch bug in titlesec 2.10.1
 \makeatletter
 \@ifpackagelater{titlesec}{2016/03/21}{%
- % Package titlesec is on version 2.10.2 or higher, nothing to do
+  % Package titlesec is on version 2.10.2 or higher, nothing to do
 }{\@ifpackagelater{titlesec}{2016/03/15}{%
-  % Package titlesec on version 2.10.1, patch accordingly
-  \usepackage{etoolbox}%
-  \patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
-  \patchcmd{\ttlh@hang}{\noindent}{}{}{}%
- }{% Package titlesec is on version 2.10.0 or lower, nothing to do %
+    % Package titlesec on version 2.10.1, patch accordingly
+    \usepackage{etoolbox}%
+    \patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+    \patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+  }{% Package titlesec is on version 2.10.0 or lower, nothing to do %
 }}
 \makeatother
 
@@ -152,9 +166,9 @@
 
 % Make a new page for each exercise, if the option is set
 \ifdef{\OPTexerciseperpage}
-  {
-    \BeforeBeginEnvironment{ex}{\newpage}
-  }{}
+{
+  \BeforeBeginEnvironment{ex}{\newpage}
+}{}
 
 \begin{document}
 
@@ -162,7 +176,6 @@
 % a custom title page.
 \title{Homotopy Type Theory: Univalent Foundations of Mathematics}
 \author{The Univalent Foundations Program}
-
 
 \frontmatter % Turn on arabic page numbers and unnumbered chapters
 
@@ -175,7 +188,7 @@
 
 % Add Preface to PDF Metadata but not printed TOC
 \hypertarget{preface}{}
-\bookmark[dest=preface]{Preface}
+\bookmark[dest=preface]{前言}
 
 % Preface and TOC have arabic numbers
 \pagestyle{fancyplain}
@@ -186,12 +199,12 @@
 
 % Add TOC to PDF Metadata but not printed TOC
 \hypertarget{toc}{}
-\bookmark[dest=toc]{Table of Contents}
+\bookmark[dest=toc]{目录}
 
 \setcounter{tocdepth}{1}        % chapters and sections for the toc
 \tableofcontents
 \setcounter{tocdepth}{2}        % chapters, sections, and subsections for the
-                                % metadata of the pdf
+% metadata of the pdf
 \cleartooddpage[\thispagestyle{empty}]
 
 \mainmatter % Turn on roman page numbers and numbered chapters
@@ -201,7 +214,7 @@
 
 \include{introduction}
 
-\part{Foundations}
+\part{基础篇}
 \label{part:foundations}
 
 \include{preliminaries}
@@ -219,7 +232,7 @@
 \include{hlevels}
 
 \cleartooddpage[\thispagestyle{empty}] % Needed for correct TOC
-\part{Mathematics}
+\part{数学篇}
 \label{part:mathematics}
 
 \include{homotopy}
@@ -234,7 +247,7 @@
 
 \cleartooddpage[\thispagestyle{empty}] % Needed for correct TOC
 \phantomsection % Needed for correct TOC also
-\part*{Appendix}
+\part*{附录}
 
 % We use magic to get the appendix look like Bibliography and Index
 
@@ -255,7 +268,7 @@
 \addcontentsline{toc}{part}{\bibname}
 \markboth{}{\textsc{Bibliography}}
 {\renewcommand{\markboth}[2]{} % Prevent bibliography from resetting the header to something silly
-\OPTbibliographyfont
+  \OPTbibliographyfont
 \bibliography{references}}
 
 \cleartooddpage[\thispagestyle{empty}]
@@ -321,7 +334,7 @@
 \markboth{}{\textsc{Index}}
 \renewcommand{\markboth}[2]{}
 {\OPTindexfont
-\setlength{\columnsep}{\OPTindexcolumnsep}
+  \setlength{\columnsep}{\OPTindexcolumnsep}
 \printindex}
 
 % The back cover

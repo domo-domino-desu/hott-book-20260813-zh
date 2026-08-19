@@ -1,601 +1,595 @@
-\chapter{Homotopy \texorpdfstring{$n$}{n}-types}
+\chapter{同伦 \texorpdfstring{$n$}{n}类型}
 \label{cha:hlevels}
 
 \index{n-type@$n$-type|(}%
 \indexsee{h-level}{$n$-type}
 
-One of the basic notions of homotopy theory is that of a \emph{homotopy $n$-type}: a space containing no interesting homotopy above dimension $n$.
-For instance, a homotopy $0$-type is essentially a set, containing no nontrivial paths, while a homotopy $1$-type may contain nontrivial paths, but no nontrivial paths between paths.
-Homotopy $n$-types are also called \emph{$n$-truncated spaces}.
-We have mentioned this notion already in \cref{sec:basics-sets}; our first goal in this chapter is to give it a precise definition in homotopy type theory.
+同伦论的一个基本概念是\emph{同伦 $n$-类型（homotopy $n$-type）}：一个在维度 $n$ 以上不含任何有趣同伦的空间。
+例如，同伦 $0$-类型本质上就是集合，不包含非平凡的道路；而同伦 $1$-类型可能包含非平凡的道路，但不包含道路之间的非平凡道路。
+同伦 $n$-类型也称为\emph{$n$-截断空间（$n$-truncated spaces）}。
+我们已经在 \cref{sec:basics-sets} 中提到过这个概念；本章的第一个目标就是在同伦类型论中给出它的精确定义。
 
-A dual notion to truncatedness is connectedness: a space is \emph{$n$-connected} if it has no interesting homotopy in dimensions $n$ and \emph{below}.
-For instance, a space is $0$-connected (also called just ``connected'') if it has only one connected component, and $1$-connected (also called ``simply connected'') if it also has no nontrivial loops (though it may have nontrivial higher loops between loops\index{loop!n-@$n$-}).
+与截断性对偶的概念是连通性：如果一个空间在维度 $n$ 及\emph{以下}不含任何有趣的同伦，则称其为\emph{$n$-连通的（$n$-connected）}。
+例如，一个空间是 $0$-连通的（也简称为"连通的"），当且仅当它只有一个连通分支；是 $1$-连通的（也称为"单连通的"），当且仅当它也没有非平凡环路（尽管它可能有环路之间的非平凡高阶环路\index{loop!n-@$n$-}）。
 
-The duality between truncatedness and connectedness is most easily seen by extending both notions to maps.
-We call a map \emph{$n$-truncated} or \emph{$n$-connected} if all its fibers are so.
-Then $n$-connected and $n$-truncated maps form the two classes of maps in an \emph{orthogonal factorization system},
+将这两个概念都扩展到映射上，便能最清楚地看到截断性与连通性之间的对偶关系。
+如果映射的所有纤维都是 $n$-截断的（或 $n$-连通的），我们就称该映射是\emph{$n$-截断的}或\emph{$n$-连通的}。
+那么，$n$-连通映射和 $n$-截断映射就构成了一个\emph{正交分解系统}
 \index{orthogonal factorization system}
 \indexsee{factorization!system, orthogonal}{orthogonal factorization system}
-i.e.\ every map factors uniquely as an $n$-connected map followed by an $n$-truncated one.
+中的两个映射类，也就是说，每个映射都可以唯一地分解为一个 $n$-连通映射后接一个 $n$-截断映射。
 
-In the case $n={-1}$, the $n$-truncated maps are the embeddings and the $n$-connected maps are the surjections, as defined in \cref{sec:mono-surj}.
-Thus, the $n$-connected factorization system is a massive generalization of the standard image factorization of a function between sets into a surjection followed by an injection.
-At the end of this chapter, we sketch briefly an even more general theory: any type-theoretic \emph{modality} gives rise to an analogous factorization system.
+在 $n={-1}$ 的情形，$n$-截断映射就是嵌入，而 $n$-连通映射就是满射，正如在 \cref{sec:mono-surj} 中所定义的那样。
+因此，$n$-连通分解系统是集合间函数标准像分解（即分解为满射后接单射）的大规模推广。
+在本章末尾，我们会简要概述一个更为一般的理论：任何类型论的\emph{模态}都会引出一个类似的分解系统。
 
-
-\section{Definition of \texorpdfstring{$n$}{n}-types}
+\section{\texorpdfstring{$n$}{n}类型的定义}
 \label{sec:n-types}
 
-As mentioned in \cref{sec:basics-sets,sec:contractibility}, it turns out to be convenient to define $n$-types starting two levels below zero, with the $(-1)$-types being the mere propositions and the $(-2)$-types the contractible ones.
+正如在 \cref{sec:basics-sets,sec:contractibility} 中提到的，从零以下两个层级开始定义 $n$-类型是比较方便的：$(-1)$-类型就是命题，$(-2)$-类型则是可缩的类型。
 
 \begin{defn}\label{def:hlevel}
-  Define the predicate $\istype{n} : \type \to \type$ for $n \geq -2$ by recursion as follows:
+  对于 $n \geq -2$，我们通过递归定义谓词 $\istype{n} : \type \to \type$ 如下：
   \[ \istype{n}(X) \defeq
   \begin{cases}
     \iscontr(X) & \text{ if } n = -2, \\
     \prd{x,y : X} \istype{n'}(\id[X]{x}{y}) & \text{ if } n = n'+1.
   \end{cases}
   \]
-  We say that $X$ is an \define{$n$-type}, or sometimes that it is \emph{$n$-truncated},
+  如果 $\istype{n}(X)$ 有实例，我们就说 $X$ 是一个\define{$n$-类型（$n$-type）}，有时也说它是\emph{$n$-截断的}，
   \indexdef{n-type@$n$-type}%
   \indexsee{n-truncated@$n$-truncated!type}{$n$-type}%
   \indexsee{type!n-type@$n$-type}{$n$-type}%
-  \indexsee{type!n-truncated@$n$-truncated}{$n$-type}%
- if $\istype{n}(X)$ is inhabited.
+  \indexsee{type!n-truncated@$n$-truncated}{$n$-type}。%
 \end{defn}
 
 \begin{rmk}
-  The number $n$ in \cref{def:hlevel} ranges over all integers greater than or equal to $-2$.
-  We could make sense of this formally by defining a type $\Z_{{\geq}-2}$ of such integers (a type whose induction principle is identical to that of $\nat$), or instead defining a predicate $\istype{(k-2)}$ for $k : \nat$.
-  Either way, we can prove theorems about $n$-types by induction on $n$, with $n = -2$ as the base case.
+  \cref{def:hlevel} 中的数字 $n$ 取遍所有大于等于 $-2$ 的整数。
+  我们可以形式化地理解这一点：可以定义一个这样的整数的类型 $\Z_{{\geq}-2}$（其归纳原理与 $\nat$ 相同），或者对每个 $k : \nat$ 定义一个谓词 $\istype{(k-2)}$。
+  无论哪种方式，我们都可以通过对 $n$ 进行归纳来证明关于 $n$-类型的定理，其中 $n = -2$ 是基础情形。
 \end{rmk}
 
 \begin{eg}
   \index{set}
-  We saw in \cref{thm:prop-minusonetype} that $X$ is a $(-1)$-type if and only if it is a mere proposition.
-  Therefore, $X$ is a $0$-type if and only if it is a set.
+  我们在 \cref{thm:prop-minusonetype} 中看到，$X$ 是 $(-1)$-类型当且仅当它是一个命题。
+  因此，$X$ 是 $0$-类型当且仅当它是一个集合。
 \end{eg}
 
-We have also seen that there are types which are not sets (\cref{thm:type-is-not-a-set}).
-So far, however, we have not shown for any $n>0$ that there exist types which are not $n$-types.
-In \cref{cha:homotopy}, however, we will show that the $(n+1)$-sphere $\Sn^{n+1}$ is not an $n$-type.
-(Kraus has also shown that the $n^{\mathrm{th}}$ nested univalent universe is also not an $n$-type, without using any higher inductive types.)
-Moreover, in \cref{sec:whitehead} will give an example of a type that is not an $n$-type for \emph{any} (finite) number $n$.
+我们也已经看到存在不是集合的类型（\cref{thm:type-is-not-a-set}）。
+然而，到目前为止，我们还没有对任何 $n>0$ 证明存在不是 $n$-类型的类型。
+不过在 \cref{cha:homotopy} 中，我们将证明 $(n+1)$-球面 $\Sn^{n+1}$ 不是 $n$-类型。
+（Kraus（克劳斯）也证明了第 $n$ 层嵌套的泛等宇宙也不是 $n$-类型，且未使用任何高阶归纳类型。）
+此外，在 \cref{sec:whitehead} 中，我们将给出一个对\emph{任何}（有限）数字 $n$ 都不是 $n$-类型的例子。
 
-We begin the general theory of $n$-types by showing they are closed under certain operations and constructors.
+我们先证明 $n$-类型在某些运算和构造子下封闭，以此开始 $n$-类型的一般理论。
 
 \begin{thm}\label{thm:h-level-retracts}
   \index{retract!of a type}%
   \index{retraction}%
- Let $p : X \to Y$ be a retraction and suppose that $X$ is an $n$-type, for any $n\geq -2$.
- Then $Y$ is also an $n$-type.
+ 设 $p : X \to Y$ 是一个收缩。对任意 $n\geq -2$，若 $X$ 是 $n$-类型，则 $Y$ 也是 $n$-类型。
 \end{thm}
 
 \begin{proof}
- We proceed by induction on $n$.
- The base case $n=-2$ is handled by \cref{thm:retract-contr}.
+ 我们对 $n$ 进行归纳。
+ 基础情形 $n=-2$ 由 \cref{thm:retract-contr} 处理。
 
- For the inductive step, assume that any retract of an $n$-type is an $n$-type, and that $X$ is an $\nplusone$-type.
- Let $y, y' : Y$; we must show that $\id{y}{y'}$ is an $n$-type.
- Let $s$ be a section of $p$, and let $\epsilon$ be a homotopy $\epsilon : p \circ s \htpy 1$.
- Since $X$ is an $\nplusone$-type, $\id[X]{s(y)}{s(y')}$ is an $n$-type.
- We claim that $\id{y}{y'}$ is a retract of $\id[X]{s(y)}{s(y')}$.
- For the section, we take
+ 对于归纳步骤，假设任何 $n$-类型的收缩核仍是 $n$-类型，并且 $X$ 是一个 $\nplusone$-类型。
+ 任取 $y, y' : Y$；我们需要证明 $\id{y}{y'}$ 是一个 $n$-类型。
+ 令 $s$ 为 $p$ 的一个截面，并令 $\epsilon$ 为一个同伦 $\epsilon : p \circ s \htpy 1$。
+ 由于 $X$ 是一个 $\nplusone$-类型，$\id[X]{s(y)}{s(y')}$ 是一个 $n$-类型。
+ 我们断言 $\id{y}{y'}$ 是 $\id[X]{s(y)}{s(y')}$ 的一个收缩核。
+ 对于截面，我们取
  \[ \apfunc s : (y=y') \to (s(y)=s(y')). \]
- For the retraction, we define $t:(s(y)=s(y'))\to(y=y')$ by
+ 对于收缩，我们定义 $t:(s(y)=s(y'))\to(y=y')$ 为
  \[ t(q) \defeq  \opp{\epsilon_y} \ct \ap p q \ct \epsilon_{y'}.\]
- To show that $t$ is a retraction of $\apfunc s$, we must show that
+ 为了证明 $t$ 是 $\apfunc s$ 的一个收缩，我们需要证明对于任意 $r:y=y'$，有
  \[ \opp{\epsilon_y} \ct \ap p {\ap sr} \ct \epsilon_{y'} = r \]
- for any $r:y=y'$.
- But this follows from \cref{lem:htpy-natural}.
+ 但这由 \cref{lem:htpy-natural} 可得。
 \end{proof}
 
-As an immediate corollary we obtain the stability of $n$-types under equivalence (which is also immediate from univalence):
+作为直接推论，我们得到 $n$-类型在等价下的稳定性（这从泛等性也能直接推出）：
 
 \begin{cor}\label{cor:preservation-hlevels-weq}
- If $\eqv{X}{Y}$ and $X$ is an $n$-type, then so is $Y$.
+ 如果 $\eqv{X}{Y}$ 且 $X$ 是一个 $n$-类型，那么 $Y$ 也是。
 \end{cor}
 
-Recall also the notion of embedding from \cref{sec:mono-surj}.
+此外，回忆 \cref{sec:mono-surj} 中引入的嵌入概念。
 
 \begin{thm}\label{thm:isntype-mono}
   \index{function!embedding}
-  If $f:X\to Y$ is an embedding and $Y$ is an $n$-type for some $n\ge -1$, then so is $X$.
+  若 $f:X\to Y$ 是一个嵌入，且对于某个 $n\ge -1$，$Y$ 是一个 $n$-类型，那么 $X$ 也是。
 \end{thm}
+
 \begin{proof}
-  Let $x,x':X$; we must show that $\id[X]{x}{x'}$ is an $\nminusone$-type.
-  But since $f$ is an embedding, we have $(\id[X]{x}{x'}) \eqvsym (\id[Y]{f(x)}{f(x')})$, and the latter is an $\nminusone$-type by assumption.
+  任取 $x,x':X$；我们需要证明 $\id[X]{x}{x'}$ 是一个 $\nminusone$-类型。
+  但由于 $f$ 是嵌入，我们有 $(\id[X]{x}{x'}) \eqvsym (\id[Y]{f(x)}{f(x')})$，而由假设后者是一个 $\nminusone$-类型。
 \end{proof}
 
-Note that this theorem fails when $n=-2$: the map $\emptyt \to \unit$ is an embedding, but $\unit$ is a $(-2)$-type while $\emptyt$ is not.
+注意，这一定理在 $n=-2$ 时不成立：映射 $\emptyt \to \unit$ 是一个嵌入，但 $\unit$ 是一个 $(-2)$-类型而 $\emptyt$ 不是。
 
 \begin{thm}\label{thm:hlevel-cumulative}
- The hierarchy of $n$-types is cumulative in the following sense:
-   given a number $n \geq -2$, if $X$ is an $n$-type, then it is also an $\nplusone$-type.
+ $n$-类型的层级在如下意义下是累积的：
+   给定一个数 $n \geq -2$，如果 $X$ 是一个 $n$-类型，那么它也是一个 $\nplusone$-类型。
 \end{thm}
 
 \begin{proof}
- We proceed by induction on $n$.
+ 我们对 $n$ 进行归纳。
 
- For $n = -2$, we need to show that a contractible type, say, $A$, has contractible path spaces.
-       Let $a_0: A$ be the center of contraction of $A$, and let $x, y : A$. We show that $\id[A]{x}{y}$
-       is contractible.
-       By contractibility of $A$ we have a path $\contr_x \ct \opp{\contr_y} : x = y$, which we choose as
-       the center of contraction for $\id{x}{y}$.
-       Given any $p : x = y$, we need to show $p = \contr_x \ct \opp{\contr_y}$.
-           By path induction, it suffices to show that
-        $\refl{x} = \contr_x \ct \opp{\contr_x}$, which is trivial.
+ 当 $n = -2$ 时，我们需要证明一个可缩类型，比如 $A$，具有可缩的道路空间。
+       设 $a_0: A$ 是 $A$ 的收缩中心，并设 $x, y : A$。我们证明 $\id[A]{x}{y}$
+       是可缩的。
+       由 $A$ 的可缩性，我们有一条道路 $\contr_x \ct \opp{\contr_y} : x = y$，我们选择它作为
+       $\id{x}{y}$ 的收缩中心。
+       给定任意 $p : x = y$，我们需要证明 $p = \contr_x \ct \opp{\contr_y}$。
+           根据道路归纳，只需证明
+       $\refl{x} = \contr_x \ct \opp{\contr_x}$，而这是平凡的。
 
- For the inductive step, we need to show that $\id[X]{x}{y}$ is an $\nplusone$-type, provided
-          that $X$ is an $\nplusone$-type. Applying the inductive hypothesis to $\id[X]{x}{y}$
-         yields the desired result.
+ 对于归纳步骤，我们需要证明：若 $X$ 是 $\nplusone$-类型，则
+           $\id[X]{x}{y}$ 是 $\nplusone$-类型。将归纳假设应用于 $\id[X]{x}{y}$
+           即得所需结论。
 \end{proof}
 
 % \section{Preservation under constructors}
 % \label{sec:ntype-pres}
 
-We now show that  $n$-types are preserved by most of the type forming operations.
+我们现在证明，大多数类型形成运算都保持 $n$-类型。
 
 \begin{thm}\label{thm:ntypes-sigma}
- Let $n \geq -2$, and let $A : \type$ and $B : A \to \type$.
- If $A$ is an $n$-type and for all $a : A$, $B(a)$ is an $n$-type, then so is $\sm{x : A} B(x)$.
+ 设 $n \geq -2$，且令 $A : \type$ 与 $B : A \to \type$。
+ 如果 $A$ 是一个 $n$-类型，并且对于所有 $a : A$，$B(a)$ 都是 $n$-类型，那么
+ $\sm{x : A} B(x)$ 也是 $n$-类型。
 \end{thm}
 
 \begin{proof}
- We proceed by induction on $n$.
+ 我们对 $n$ 进行归纳。
 
- For $n = -2$, we choose the center of contraction for $\sm{x : A} B(x)$ to be the pair
-       $(a_0, b_0)$, where $a_0 : A$ is the center of contraction of $A$ and $b_0 : B(a_0)$ is the center of contraction of $B(a_0)$.
-       Given any other element $(a,b)$ of $\sm{x : A} B(x)$, we provide a path $\id{(a, b)}{(a_0,b_0)}$
-       by contractibility of $A$ and $B(a_0)$, respectively.
+ 当 $n = -2$ 时，我们选择 $\sm{x : A} B(x)$ 的收缩中心为偶对
+       $(a_0, b_0)$，其中 $a_0 : A$ 是 $A$ 的收缩中心，而 $b_0 : B(a_0)$ 是 $B(a_0)$ 的收缩中心。
+       给定 $\sm{x : A} B(x)$ 中任意其他元素 $(a,b)$，我们分别利用 $A$ 和 $B(a_0)$ 的可缩性
+       提供一条道路 $\id{(a, b)}{(a_0,b_0)}$。
 
- For the inductive step, suppose that $A$ is an $\nplusone$-type and
-         for any $a : A$, $B(a)$ is an $\nplusone$-type. We show that $\sm{x : A} B(x)$ is an $\nplusone$-type:
-      fix $(a_1, b_1)$ and $(a_2,b_2)$ in $\sm{x : A} B(x)$,
-     we show that $\id{(a_1, b_1)}{(a_2,b_2)}$ is an $n$-type.
-      By \cref{thm:path-sigma} we have
+ 对于归纳步骤，假设 $A$ 是 $\nplusone$-类型，并且
+         对于任意 $a : A$，$B(a)$ 是 $\nplusone$-类型。我们证明 $\sm{x : A} B(x)$ 是 $\nplusone$-类型：
+      固定 $\sm{x : A} B(x)$ 中的 $(a_1, b_1)$ 和 $(a_2,b_2)$，
+     我们证明 $\id{(a_1, b_1)}{(a_2,b_2)}$ 是一个 $n$-类型。
+      根据 \cref{thm:path-sigma}，我们有
       \[ \eqvspaced{(\id{(a_1, b_1)}{(a_2,b_2)})}{\sm{p : \id{a_1}{a_2}} (\id[B(a_2)]{\trans{p}{b_1}}{b_2})} \]
-   and by preservation of $n$-types under equivalences (\cref{cor:preservation-hlevels-weq})
-   it suffices to prove that the latter is an $n$-type. This follows from the
-   inductive hypothesis.
+   并且由 $n$-类型在等价下的保持性（\cref{cor:preservation-hlevels-weq}），
+   只需证明后者是 $n$-类型。这由归纳假设可得。
 \end{proof}
 
-As a special case, if $A$ and $B$ are $n$-types, so is $A\times B$.
-Note also that \cref{thm:hlevel-cumulative} implies that if $A$ is an $n$-type, then so is $\id[A]xy$ for any $x,y:A$.
-Combining this with \cref{thm:ntypes-sigma}, we see that for any functions $f:A\to C$ and $g:B\to C$ between $n$-types, their pullback\index{pullback}
+作为一个特例，如果 $A$ 和 $B$ 是 $n$-类型，那么 $A\times B$ 也是。
+另请注意，\cref{thm:hlevel-cumulative} 蕴含：如果 $A$ 是 $n$-类型，那么对于任意 $x,y:A$，$\id[A]xy$ 也是 $n$-类型。
+将此与 \cref{thm:ntypes-sigma} 结合，我们看到对于任意 $n$-类型之间的函数 $f:A\to C$ 和 $g:B\to C$，它们的拉回\index{pullback}
 \[ A\times_C B \defeq \sm{x:A}{y:B} (f(x)=g(y)) \]
-(see \cref{ex:pullback}) is also an $n$-type.
-More generally, $n$-types are closed under all \emph{limits}.
+（参见 \cref{ex:pullback}）也是 $n$-类型。
+更一般地，$n$-类型在所有 \emph{极限} 下封闭。
 
 \begin{thm}\label{thm:hlevel-prod}
- Let $n\geq -2$, and let $A : \type$ and $B : A \to \type$.
- If for all $a : A$, $B(a)$ is an $n$-type, then so is $\prd{x : A} B(x)$.
+ 设 $n\geq -2$，且令 $A : \type$ 与 $B : A \to \type$。
+ 如果对于所有 $a : A$，$B(a)$ 是 $n$-类型，那么 $\prd{x : A} B(x)$ 也是 $n$-类型。
 \end{thm}
 
 \begin{proof}
-  We proceed by induction on $n$.
-  For $n = -2$, the result is simply \cref{thm:contr-forall}.
+  我们对 $n$ 进行归纳。
+  当 $n = -2$ 时，结果直接就是 \cref{thm:contr-forall}。
 
-  For the inductive step, assume the result is true for $n$-types, and that each $B(a)$ is an $\nplusone$-type.
-  Let $f, g : \prd{a:A}B(a)$.
-  We need to show that $\id{f}{g}$ is an $n$-type.
-  By function extensionality and closure of $n$-types under equivalence, it suffices to show that $\prd{a : A} (\id[B(a)]{f(a)}{g(a)})$ is an $n$-type.
-  This follows from the inductive hypothesis.
+  对于归纳步骤，假设结论对 $n$-类型成立，并且每个 $B(a)$ 是 $\nplusone$-类型。
+  令 $f, g : \prd{a:A}B(a)$。
+  我们需要证明 $\id{f}{g}$ 是 $n$-类型。
+  根据函数外延性以及 $n$-类型在等价下的封闭性，只需证明 $\prd{a : A} (\id[B(a)]{f(a)}{g(a)})$ 是 $n$-类型。
+  这由归纳假设可得。
 \end{proof}
 
-As a special case of the above theorem, the function space $A \to B$ is an $n$-type provided that $B$ is an $n$-type.
-We can now generalize our observations in \cref{cha:basics} that $\isset(A)$ and $\isprop(A)$ are mere propositions.
+作为上述定理的一个特例，如果 $B$ 是一个 $n$-类型，那么函数空间 $A \to B$ 也是 $n$-类型。
+现在我们可以推广 \cref{cha:basics} 中的观察，即 $\isset(A)$ 和 $\isprop(A)$ 是命题：
 
 \begin{thm}\label{thm:isaprop-isofhlevel}
- For any $n \geq -2$ and any type $X$, the type $\istype{n}(X)$ is a mere proposition.
+ 对于任意 $n \geq -2$ 和任意类型 $X$，类型 $\istype{n}(X)$ 都是一个命题。
 \end{thm}
+
 \begin{proof}
-  We proceed by induction with respect to $n$.
+  我们对 $n$ 进行归纳。
 
- For the base case, we need to show that for any $X$, the type $\iscontr(X)$ is a mere proposition.
- This is \cref{thm:isprop-iscontr}.
+ 对于基情形，需要证明对于任意 $X$，类型 $\iscontr(X)$ 是一个命题。
+ 这正是 \cref{thm:isprop-iscontr}。
 
-For the inductive step we need to show
+对于归纳步骤，我们需要证明
 \[\prd{X : \type} \isprop (\istype{n}(X)) \to \prd{X : \type} \isprop (\istype{\nplusone}(X)). \]
-To show the conclusion of this implication, we need to show that for any type $X$, the type
+为了证明此蕴含关系的结论，我们需要证明：对于任意类型 $X$，类型
 \[\prd{x, x' : X}\istype{n}(x = x')\]
-is a mere proposition. By \cref{thm:isprop-forall} or \cref{thm:hlevel-prod}, it suffices to show that for any $x, x' : X$, the type $\istype{n}(x =_X x')$ is a mere
-proposition.
-But this follows from the inductive hypothesis applied to the type $(x =_X x')$.
+是一个命题。根据 \cref{thm:isprop-forall} 或 \cref{thm:hlevel-prod}，只需证明对于任意 $x, x' : X$，类型 $\istype{n}(x =_X x')$ 是一个命题。
+而这由对类型 $(x =_X x')$ 施加归纳假设即可得出。
 \end{proof}
 
-Finally, we show that the type of $n$-types is itself an $\nplusone$-type.
-We define this to be:
+最后，我们证明 $n$-类型构成的类型本身是一个 $\nplusone$-类型。
+我们将其定义为：
 \symlabel{universe-of-ntypes}
 \[\ntype{n} \defeq \sm{X : \type} \istype{n}(X). \]
-If necessary, we may specify the universe $\UU$ by writing $\ntypeU{n}$.
-In particular, we have $\prop \defeq \ntype{(-1)}$ and $\set \defeq \ntype{0}$, as defined in \cref{cha:basics}.
-Note that just as for \prop and \set, because $\istype{n}(X)$ is a mere proposition, by \cref{thm:path-subset} for any $(X,p), (X',p'):\ntype{n}$ we have
+必要时，我们可以写作 $\ntypeU{n}$ 以指定宇宙 $\UU$。
+特别地，如 \cref{cha:basics} 中所定义，我们有 $\prop \defeq \ntype{(-1)}$ 与 $\set \defeq \ntype{0}$。
+需要注意的是，正如对于 \prop 和 \set 一样，由于 $\istype{n}(X)$ 是一个命题，根据 \cref{thm:path-subset}，对于任何 $(X,p), (X',p'):\ntype{n}$ 我们有
 \begin{align*}
   \Big(\id[\ntype{n}]{(X, p)}{(X', p')}\Big) &\eqvsym (\id[\type] X X')\\
   &\eqvsym (\eqv{X}{X'}).
 \end{align*}
 
 \begin{thm}\label{thm:hleveln-of-hlevelSn}
- For any $n \geq -2$, the type $\ntype{n}$ is an $\nplusone$-type.
+ 对于任意 $n \geq -2$，类型 $\ntype{n}$ 是一个 $\nplusone$-类型。
 \end{thm}
-\begin{proof}%[Proof of \cref{thm:hleveln-of-hlevelSn}]
-  Let $(X, p), (X', p') : \ntype{n}$; we need to show that $\id{(X, p)}{(X', p')}$ is an $n$-type.
-  By the above observation, this type is equivalent to $\eqv{X}{X'}$.
-  Next, we observe that the projection
-  \[(\eqv{X}{X'}) \to (X \rightarrow X').\]
-  is an embedding, so that if $n\geq -1$, then by \cref{thm:isntype-mono} it suffices to show that $X \rightarrow X'$ is an $n$-type.
-  But since $n$-types are preserved under the arrow type, this reduces to an assumption that $X'$ is an $n$-type.
 
-  In the case $n=-2$, this argument shows that $\eqv{X}{X'}$ is a $(-1)$-type --- but it is also inhabited, since any two contractible types
-are equivalent to \unit, and hence to each other.
-  Thus, $\eqv{X}{X'}$ is also a $(-2)$-type.
+\begin{proof}%[Proof of \cref{thm:hleveln-of-hlevelSn}]
+  令 $(X, p), (X', p') : \ntype{n}$；我们需要证明 $\id{(X, p)}{(X', p')}$ 是一个 $n$-类型。
+  根据上述观察，这个类型等价于 $\eqv{X}{X'}$。
+  接下来，我们注意到投影
+  \[(\eqv{X}{X'}) \to (X \rightarrow X').\]
+  是一个嵌入，因此如果 $n\geq -1$，那么由 \cref{thm:isntype-mono}，只需证明 $X \rightarrow X'$ 是一个 $n$-类型。
+  但由于 $n$-类型在箭头类型下是封闭的，这就化归到 $X'$ 是 $n$-类型这一假设。
+
+  在 $n=-2$ 的情形下，上述论证表明 $\eqv{X}{X'}$ 是一个 $(-1)$-类型——但它也是有实例的，因为任何两个可缩的类型都等价于 \unit，从而彼此等价。
+  因此，$\eqv{X}{X'}$ 也是一个 $(-2)$-类型。
 \end{proof}
 
-\section{Uniqueness of identity proofs and Hedberg's theorem}
+\section{恒等证明唯一性与 Hedberg 定理}
 \label{sec:hedberg}
 
 \index{set|(}%
 
-In \cref{sec:basics-sets} we defined a type $X$ to be a \emph{set} if for all $x, y : X$ and $p, q : x =_X y$ we have $p = q$.
-In conventional type theory, this property goes by the name of \define{uniqueness of identity proofs (UIP)}.
+在 \cref{sec:basics-sets} 中，我们定义了什么是\emph{集合（set）}：如果对于任意 $x, y : X$ 以及 $p, q : x =_X y$ 都有 $p = q$，则称类型 $X$ 是一个集合。
+在传统类型理论中，这一性质被称为\define{恒等证明唯一性（uniqueness of identity proofs, UIP）}。
 \indexdef{uniqueness!of identity proofs}%
-We have seen also that it is equivalent to being a $0$-type in the sense of the previous section.
-Here is another equivalent characterization, involving Streicher's ``Axiom K'' \cite{Streicher93}:
+我们也已经看到，这等价于它是上一节意义下的 $0$-类型。
+下面给出另一种等价的刻画，涉及 Streicher 的``K 公理'' \cite{Streicher93}：
 
 \begin{thm}\label{thm:h-set-uip-K}
- A type $X$ is a set if and only if it satisfies \define{Axiom K}:
+ 一个类型 $X$ 是集合，当且仅当它满足\define{K 公理（Axiom K）}：
  \indexdef{axiom!Streicher's Axiom K}%
- for all $x : X$ and $p : (x =_A x)$ we have $p = \refl{x}$.
+ 即，对于所有 $x : X$ 和 $p : (x =_A x)$，都有 $p = \refl{x}$。
 \end{thm}
 
 \begin{proof}
-  Clearly Axiom K is a special case of UIP.
-  Conversely, if $X$ satisfies Axiom K, let $x, y : X$ and $p, q : (\id{x}{y})$; we want to show $p=q$.
-  But induction on $q$ reduces this goal precisely to Axiom K.
+ 显然，K 公理是 UIP 的一个特例。
+ 反之，若 $X$ 满足 K 公理，任取 $x, y : X$ 和 $p, q : (\id{x}{y})$；我们要证明 $p=q$。
+ 但对 $q$ 进行归纳恰好将这一目标归约为 K 公理。
 \end{proof}
 
-We stress that \emph{we} are not assuming UIP or the K principle as axioms!
-They are simply properties which a particular type may or may not satisfy (which are equivalent to being a set).
-Recall from \cref{thm:type-is-not-a-set} that \emph{not} all types are sets.
+我们要强调，\emph{我们}并没有将 UIP 或 K 原则作为公理来假设！
+它们只是某些类型可能具有、也可能不具有的性质（即等价于该类型为集合）。
+回顾 \cref{thm:type-is-not-a-set}，\emph{并非}所有类型都是集合。
 
-The following theorem is another useful way to show that types are sets.
+下面的定理提供了另一种证明类型是集合的有用方法。
 
 \begin{thm}\label{thm:h-set-refrel-in-paths-sets}
   \index{relation!reflexive}%
-  Suppose $R$ is a reflexive\index{reflexivity!of a relation} mere relation on a type $X$ implying identity.
-  Then $X$ is a set, and $R(x,y)$ is equivalent to $\id[X]{x}{y}$ for all $x,y:X$.
+  设 $R$ 是类型 $X$ 上的一个自反的\index{reflexivity!of a relation}纯粹关系，且蕴含恒等。
+  那么 $X$ 是一个集合，并且对于所有 $x,y:X$，$R(x,y)$ 都等价于 $\id[X]{x}{y}$。
 \end{thm}
 
 \begin{proof}
-  Let $\rho : \prd{x:X} R(x,x)$ witness reflexivity of $R$, and let \narrowequation{f : \prd{x,y:X} R(x,y) \to (\id[X]{x}{y})} be a witness that $R$
-implies identity.
-  Note first that the two statements in the theorem are equivalent.
-  For on one hand, if $X$ is a set, then $\id[X]xy$ is a mere proposition, and since it is logically equivalent to the mere proposition
-$R(x,y)$ by hypothesis, it must also be equivalent to it.
-  On the other hand, if $\id[X]xy$ is equivalent to $R(x,y)$, then like the latter it is a mere proposition for all $x,y:X$, and hence $X$
-is a set.
+  令 $\rho : \prd{x:X} R(x,x)$ 见证 $R$ 的自反性，并令 \narrowequation{f : \prd{x,y:X} R(x,y) \to (\id[X]{x}{y})} 见证 $R$ 蕴含恒等。
+  我们首先注意到，定理中的两个陈述是等价的。
+  因为一方面，如果 $X$ 是一个集合，那么 $\id[X]xy$ 就是一个命题，而根据假设，它与命题 $R(x,y)$ 逻辑等价，因此也必然与 $R(x,y)$ 等价。
+  另一方面，如果 $\id[X]xy$ 等价于 $R(x,y)$，那么与后者一样，它对所有 $x,y:X$ 都是命题，因此 $X$ 是一个集合。
 
-  We give two proofs of this theorem.
-  The first shows directly that $X$ is a set; the second shows directly that $R(x,y)\eqvsym (x=y)$.
+  我们给出这个定理的两种证明。
+  第一种直接证明 $X$ 是集合；第二种直接证明 $R(x,y)\eqvsym (x=y)$。
 
-  \emph{First proof:} we show that $X$ is a set.
-  The idea is the same as that of \cref{thm:prop-set}: the function $f$ must be continuous in its arguments $x$ and $y$.
-  However, it is slightly more notationally complicated because we have to deal with the additional argument of type $R(x,y)$.
+  \emph{第一种证明：}我们证明 $X$ 是集合。
+  思路与 \cref{thm:prop-set} 相同：函数 $f$ 对其参数 $x$ 和 $y$ 必须是"连续的"。
+  不过，由于我们需要处理类型为 $R(x,y)$ 的额外参数，符号上会稍微复杂一些。
 
-  Firstly, for any $x:X$ and $p:\id[X]xx$, consider $\apdfunc{f(x)}(p)$.
-  This is a dependent path from $f(x,x)$ to itself.
-  Since $f(x,x)$ is still a function $R(x,x) \to (\id[X]xx)$, by \cref{thm:dpath-arrow} this yields for any $r:R(x,x)$ a path
+  首先，对任意 $x:X$ 和 $p:\id[X]xx$，考虑 $\apdfunc{f(x)}(p)$。
+  这是从 $f(x,x)$ 到自身的一条依赖道路。
+  由于 $f(x,x)$ 仍然是一个函数 $R(x,x) \to (\id[X]xx)$，根据 \cref{thm:dpath-arrow}，对任意 $r:R(x,x)$ 我们得到一条道路
   \[\trans{p}{f(x,x,r)} = f(x,x,\trans{p}r).
   \]
-  On the left-hand side, we have transport in an identity type, which is concatenation.
-  And on the right-hand side, we have $\trans{p}r = r$, since both lie in the mere proposition $R(x,x)$.
-  Thus, substituting $r\defeq \rho(x)$, we obtain
+  在等式的左边，是恒等类型中的传输，也就是拼接。
+  而在右边，由于 $r$ 和 $\trans{p}r$ 都位于命题 $R(x,x)$ 中，我们有 $\trans{p}r = r$。
+  因此，将 $r$ 替换为 $\rho(x)$，我们得到
   \[ f(x,x,\rho(x)) \ct p = f(x,x,\rho(x)). \]
-  By cancellation, $p=\refl{x}$.
-  So $X$ satisfies Axiom K, and hence is a set.
+  通过消去，得到 $p=\refl{x}$。
+  所以 $X$ 满足 K 公理，从而是集合。
 
-  \emph{Second proof:} we show that each $f(x,y) : R(x,y) \to \id[X]{x}{y}$ is an equivalence.
-  By \cref{thm:total-fiber-equiv}, it suffices to show that $f$ induces an equivalence of total spaces:
+  \emph{第二种证明：}我们证明每个 $f(x,y) : R(x,y) \to \id[X]{x}{y}$ 都是一个等价。
+  根据 \cref{thm:total-fiber-equiv}，只需证明 $f$ 诱导了一个全空间之间的等价：
   \begin{equation*}
     \eqv{\Parens{\sm{y:X}R(x,y)}}{\Parens{\sm{y:X}\id[X]{x}{y}}}.
   \end{equation*}
-  By \cref{thm:contr-paths}, the type on the right is contractible, so it
-  suffices to show that the type on the left is contractible. As the center of
-  contraction we take the pair $\pairr{x,\rho(x)}$.  It remains to show, for
-  every ${y:X}$ and every ${H:R(x,y)}$ that
+  由 \cref{thm:contr-paths}，右边的类型是可缩的，因此我们只需证明左边的类型也是可缩的。
+  我们取偶对 $\pairr{x,\rho(x)}$ 作为收缩的中心。
+  余下只需证明，对每个 ${y:X}$ 和每个 ${H:R(x,y)}$，都有
   \begin{equation*}
     \id{\pairr{x,\rho(x)}}{\pairr{y,H}}.
   \end{equation*}
-  But since $R(x,y)$ is a mere proposition, by \cref{thm:path-sigma} it suffices to show that
-  $\id[X]{x}{y}$, which we get from $f(H)$.
+  但由于 $R(x,y)$ 是一个命题，根据 \cref{thm:path-sigma}，我们只需证明 $\id[X]{x}{y}$，而这可以由 $f(H)$ 给出。
 \end{proof}
 
 \begin{cor}\label{notnotstable-equality-to-set}
-  If a type $X$ has the property that $\neg\neg(x=y)\to(x=y)$ for any $x,y:X$, then $X$ is a set.
+  如果一个类型 $X$ 满足以下性质：对任意 $x,y:X$，$\neg\neg(x=y)\to(x=y)$，那么 $X$ 是一个集合。
 \end{cor}
 
-Another convenient way to show that a type is a set is the following.
-Recall from \cref{sec:intuitionism} that a type $X$ is said to have \emph{decidable equality}
+另一种证明类型是集合的便捷方法如下。
+回顾 \cref{sec:intuitionism}，一个类型 $X$ 被称为具有\emph{可判定相等性（decidable equality）}
 \index{decidable!equality|(}%
-if for all $x, y : X$ we have
+如果对所有 $x, y : X$，我们有
 \[(x =_X y) + \neg (x =_X y).\]
 \index{continuity of functions in type theory@``continuity'' of functions in type theory}%
 \index{functoriality of functions in type theory@``functoriality'' of functions in type theory}%
-This is a very strong condition: it says that a path $x=y$ can be chosen, when it exists, continuously (or computably, or functorially) in $x$ and $y$.
-This turns out to imply that $X$ is a set, by way of \cref{thm:h-set-refrel-in-paths-sets} and the following lemma.
+这是一个非常强的条件：它意味着，当道路 $x=y$ 存在时，可以关于 $x$ 和 $y$ "连续地"（或"可计算地"或"函子性地"）选取该道路。
+结合 \cref{thm:h-set-refrel-in-paths-sets} 与下面的引理，这蕴含 $X$ 是一个集合。
 
 \begin{lem}\label{lem:hedberg-helper}
-For any type $A$ we have $(A+\neg A)\to(\neg\neg A\to A)$.
+对于任意类型 $A$，我们有 $(A+\neg A)\to(\neg\neg A\to A)$。
 \end{lem}
 
 \begin{proof}
-This was essentially already proven in \cref{thm:not-lem}, but we repeat the argument.
-Suppose $x:A+\neg A$. We have two cases to consider.
-If $x$ is $\inl(a)$ for some $a:A$, then we have the constant function $\neg\neg A
-\to A$ which maps everything to $a$. If $x$ is $\inr(t)$ for some $t:\neg A$,
-we have $g(t):\emptyt$ for every $g:\neg\neg A$. Hence we may use
-\emph{ex falso quodlibet}, that is $\rec{\emptyt}$, to obtain an element of $A$ for any $g:\neg\neg A$.
+这在 \cref{thm:not-lem} 中已经基本证明过了，但我们再重复一下论证过程。
+假设 $x:A+\neg A$。我们需要考虑两种情况。
+如果 $x$ 是某个 $a:A$ 的左注入 $\inl(a)$，那么我们有一个常值函数 $\neg\neg A
+\to A$，它将所有元素都映射到 $a$。如果 $x$ 是某个 $t:\neg A$ 的右注入 $\inr(t)$，
+那么对于每个 $g:\neg\neg A$，都有 $g(t):\emptyt$。因此我们可以使用
+\emph{ex falso quodlibet}，即 $\rec{\emptyt}$，来为任意 $g:\neg\neg A$ 获得一个 $A$ 中的元素。
 \end{proof}
 
 \index{anger}
+
+
 \begin{thm}[Hedberg]\label{thm:hedberg}
   \index{Hedberg's theorem}%
   \index{theorem!Hedberg's}%
-  If $X$ has decidable equality, then $X$ is a set.
+  如果 $X$ 有可判定相等性，那么 $X$ 是一个集合。
 \end{thm}
 
 \begin{proof}
-If $X$ has decidable equality, it follows that $\neg\neg(x=y)\to(x=y)$ for any
-$x,y:X$. Therefore, Hedberg's theorem follows from
-\cref{notnotstable-equality-to-set}.
+如果 $X$ 有可判定相等性，那么对于任意 $x,y:X$，$\neg\neg(x=y)\to(x=y)$ 成立。因此，Hedberg 定理可由
+\cref{notnotstable-equality-to-set} 推出。
 \end{proof}
 
-There is, of course, a strong connection between this theorem and \cref{thm:not-lem}.
-The statement \LEM{\infty} that is denied by \cref{thm:not-lem} clearly implies that every type has decidable equality, and hence is a set, which we know is not the case.
+当然，这个定理与 \cref{thm:not-lem} 有密切的联系。
+被 \cref{thm:not-lem} 所否定的命题 \LEM{\infty}，显然蕴含了每个类型都具有可判定相等性，从而都是集合——然而我们知道实际情况并非如此。
 \index{excluded middle}%
-Note that the consistent axiom \LEM{} from \cref{sec:intuitionism} implies only that every type has \emph{merely decidable equality}, i.e.\ that for any $A$ we have
+请注意，从 \cref{sec:intuitionism} 引入的一致公理 \LEM{}，仅蕴含每个类型具有\emph{命题意义下的可判定相等性}，即对于任意 $A$，我们有
 \indexdef{equality!merely decidable}%
 \indexdef{merely!decidable equality}%
 \[ \prd{a,b:A} (\brck{a=b} + \neg\brck{a=b}). \]
 
 \index{decidable!equality|)}%
 
-As an example application of \cref{thm:hedberg}, recall that in \cref{thm:nat-set} we observed that $\nat$ is a set, using our characterization of its equality types in
-\cref{sec:compute-nat}.
-A more traditional proof of this theorem uses only~\eqref{eq:zero-not-succ} and~\eqref{eq:suc-injective}, rather than the full
-characterization of \cref{thm:path-nat}, with \cref{thm:hedberg} to fill in the blanks.
+作为 \cref{thm:hedberg} 的一个应用示例，回顾 \cref{thm:nat-set}，我们曾利用 \cref{sec:compute-nat} 中对自然数相等类型的刻画，观察到 $\nat$ 是一个集合。
+一个更传统的证明该定理的方法，仅使用 \eqref{eq:zero-not-succ} 和 \eqref{eq:suc-injective}，而不是 \cref{thm:path-nat} 的完整刻画，并用 \cref{thm:hedberg} 来填补空白。
 
 \begin{thm}\label{prop:nat-is-set}
- The type $\nat$ of natural numbers has decidable equality, and hence is a set.
+ 自然数类型 $\nat$ 具有可判定相等性，因此是一个集合。
 \end{thm}
 
 \begin{proof}
-  Let $x, y : \nat$ be given; we proceed by induction on $x$ and case analysis on $y$ to prove $(x=y)+\neg(x=y)$.
-  If $x \jdeq 0$ and $y \jdeq 0$, we take $\inl(\refl0)$.
-  If $x \jdeq 0$ and $y \jdeq \suc(n)$, then by~\eqref{eq:zero-not-succ} we get $\neg (0 = \suc (n))$.
+  给定 $x, y : \nat$，我们通过对 $x$ 作归纳、对 $y$ 作分情形讨论来证明 $(x=y)+\neg(x=y)$。
+  若 $x \jdeq 0$ 且 $y \jdeq 0$，我们取 $\inl(\refl0)$。
+  若 $x \jdeq 0$ 且 $y \jdeq \suc(n)$，则由 \eqref{eq:zero-not-succ} 可得 $\neg (0 = \suc (n))$。
 
-  For the inductive step, let $x \jdeq \suc (n)$.
-  If $y \jdeq 0$, we use~\eqref{eq:zero-not-succ} again.
-  Finally, if $y \jdeq \suc (m)$, the inductive hypothesis gives $(m = n)+\neg(m = n)$.
-  In the first case, if $p:m=n$, then $\ap \suc p:\suc(m)=\suc(n)$.
-  And in the second case,~\eqref{eq:suc-injective} yields $\neg(\suc(m)=\suc(n))$.
+  对于归纳步骤，设 $x \jdeq \suc (n)$。
+  若 $y \jdeq 0$，我们再次使用 \eqref{eq:zero-not-succ}。
+  最后，若 $y \jdeq \suc (m)$，归纳假设给出 $(m = n)+\neg(m = n)$。
+  在第一种情形中，若 $p:m=n$，则 $\ap \suc p:\suc(m)=\suc(n)$。
+  而在第二种情形中，\eqref{eq:suc-injective} 推出 $\neg(\suc(m)=\suc(n))$。
 \end{proof}
 
 \index{set|)}%
 
 \index{axiom!Streicher's Axiom K!generalization to n-types@generalization to $n$-types}%
-Although Hedberg's theorem appears rather special to sets ($0$-types), ``Axiom K'' generalizes naturally to $n$-types.
-Note that the ordinary Axiom K (as a property of a type $X$) states that for all $x:X$, the loop space\index{loop space} $\Omega(X,x)$ (see \cref{def:loopspace}) is contractible.
-Since $\Omega(X,x)$ is always inhabited (by $\refl{x}$), this is equivalent to its being a mere proposition (a $(-1)$-type).
-Since $0 = (-1)+1$, this suggests the following generalization.
+尽管 Hedberg 定理似乎专属于集合（$0$-类型），但 K 公理可以自然地推广到 $n$-类型。
+注意，普通的 K 公理（作为类型 $X$ 的一个性质）断言：对所有 $x:X$，环路空间 $\Omega(X,x)$（参见 \cref{def:loopspace}）是可缩的。
+由于 $\Omega(X,x)$ 总是有实例的（由 $\refl{x}$ 给出），这等价于它是一个命题（一个 $(-1)$-类型）。
+因为 $0 = (-1)+1$，这启发我们如下推广。
 
 \begin{thm}\label{thm:hlevel-loops}
-  For any $n\geq -1$, a type $X$ is an $\nplusone$-type if and only if for all $x : X$, the type $\Omega(X, x)$ is an $n$-type.
+  对于任意 $n\geq -1$，类型 $X$ 是一个 $\nplusone$-类型，当且仅当对所有 $x : X$，类型 $\Omega(X, x)$ 是一个 $n$-类型。
 \end{thm}
 
-Before proving this, we prove an auxiliary lemma:
+在证明此定理前，我们先证明一个辅助引理：
 
 \begin{lem}\label{lem:hlevel-if-inhab-hlevel}
-  Given $n \geq -1$ and $X : \type$.
-  If, given any inhabitant of $X$ it follows that $X$ is an $n$-type, then $X$ is an $n$-type.
+  给定 $n \geq -1$ 和 $X : \type$。
+  如果已知 $X$ 有实例便能推出 $X$ 是 $n$-类型，那么 $X$ 本身就是 $n$-类型。
 \end{lem}
+
 \begin{proof}
-  Let $f : X \to \istype{n}(X)$ be the given map.
-  We need to show that for any $x, x' : X$, the type $\id{x}{x'}$ is an $\nminusone$-type.
-  But then $f(x)$ shows that $X$ is an $n$-type, hence all its path spaces are $\nminusone$-types.
+  令 $f : X \to \istype{n}(X)$ 为给定的映射。
+  我们需要证明，对任意 $x, x' : X$，类型 $\id{x}{x'}$ 是一个 $\nminusone$-类型。
+  而此时 $f(x)$ 表明 $X$ 是一个 $n$-类型，因而其所有道路空间都是 $\nminusone$-类型。
 \end{proof}
 
 \begin{proof}[Proof of \cref{thm:hlevel-loops}]
-  The ``only if'' direction is obvious, since $\Omega(X,x)\defeq (\id[X]xx)$.
-  Conversely, in order to show that $X$ is an $\nplusone$-type, we need to show that for any $x, x' : X$, the type $\id{x}{x'}$ is an
-$n$-type.
-  Following \cref{lem:hlevel-if-inhab-hlevel} it suffices to give a map
+  “仅当”方向是显然的，因为 $\Omega(X,x)\defeq (\id[X]xx)$。
+  反过来，为证 $X$ 是一个 $\nplusone$-类型，我们需要证明：对任意 $x, x' : X$，类型 $\id{x}{x'}$ 是一个 $n$-类型。
+  根据 \cref{lem:hlevel-if-inhab-hlevel}，只需构造一个映射
   \[ (\id{x}{x'}) \to \istype{n}(\id{x}{x'}). \]
-  By path induction, it suffices to do this when $x\jdeq x'$, in which case it follows from the assumption that $\Omega(X, x)$ is an
-$n$-type.
+  由道路归纳，只需考虑 $x\jdeq x'$ 的情形，此时由 $\Omega(X, x)$ 是 $n$-类型的假设即得证。
 \end{proof}
 
 \index{whiskering}
-By induction and some slightly clever whiskering, we can obtain a generalization of the K property to $n>0$.
+通过归纳和一些略显巧妙的须接（whiskering）操作，我们可以将 K 性质推广到 $n>0$ 的情形。
 
 \begin{thm}\label{thm:ntype-nloop}
   \index{loop space!iterated}%
-  For every $n\ge -1$, a type $A$ is an $n$-type if and only if $\Omega^{n+1}(A,a)$ is contractible for all $a:A$.
+  对于每个 $n\ge -1$，类型 $A$ 是 $n$-类型当且仅当对所有的 $a:A$，$\Omega^{n+1}(A,a)$ 都是可缩的。
 \end{thm}
-\begin{proof}
-  Recalling that $\Omega^0(A,a) = (A,a)$, the case $n=-1$ is \cref{ex:prop-inhabcontr}.
-  The case $n=0$ is \cref{thm:h-set-uip-K}.
-  Now we use induction; suppose the statement holds for $n:\N$.
-  By \cref{thm:hlevel-loops}, $A$ is an $(n+1)$-type iff $\Omega(A,a)$ is an $n$-type for all $a:A$.
-  By the inductive hypothesis, the latter is equivalent to saying that $\Omega^{n+1}(\Omega(A,a),p)$ is contractible for all $p:\Omega(A,a)$.
 
-  Since $\Omega^{n+2}(A,a) \defeq \Omega^{n+1}(\Omega(A,a),\refl{a})$, and $\Omega^{n+1} = \Omega^n \circ \Omega$, it will suffice to show that $\Omega(\Omega(A,a),p)$ is equal to $\Omega(\Omega(A,a),\refl{a})$, in the type $\pointed\type$ of pointed types.
-  For this, it suffices to give an equivalence
+\begin{proof}
+  回顾 $\Omega^0(A,a) = (A,a)$，$n=-1$ 的情形即为 \cref{ex:prop-inhabcontr}。
+  $n=0$ 的情形是 \cref{thm:h-set-uip-K}。
+  现在我们使用归纳法；假设命题对 $n:\N$ 成立。
+  根据 \cref{thm:hlevel-loops}，$A$ 是 $(n+1)$-类型当且仅当对所有 $a:A$，$\Omega(A,a)$ 都是 $n$-类型。
+  由归纳假设，后者等价于：对所有 $p:\Omega(A,a)$，$\Omega^{n+1}(\Omega(A,a),p)$ 都是可缩的。
+
+  由于 $\Omega^{n+2}(A,a) \defeq \Omega^{n+1}(\Omega(A,a),\refl{a})$ 且 $\Omega^{n+1} = \Omega^n \circ \Omega$，只需证明在带点类型 $\pointed\type$ 中 $\Omega(\Omega(A,a),p)$ 与 $\Omega(\Omega(A,a),\refl{a})$ 相等。
+  为此，只需给出一个等价
   \[ g : \Omega(\Omega(A,a),p) \eqvsym \Omega(\Omega(A,a),\refl{a}) \]
-  which carries the basepoint $\refl{p}$ to the basepoint $\refl{\refl{a}}$.
-  For $q:p=p$, define $g(q):\refl{a} = \refl{a}$ to be the following composite:
+  使其将基点 $\refl{p}$ 映射到基点 $\refl{\refl{a}}$。
+  对于 $q:p=p$，定义 $g(q):\refl{a} = \refl{a}$ 为如下复合：
   \[ \refl{a} = p\ct \opp p \overset{q}{=} p\ct\opp p = \refl{a}, \]
-  where the path labeled ``$q$'' is actually $\apfunc{\lam{r} r\ct\opp p} (q)$.
-  Then $g$ is an equivalence because it is a composite of equivalences
+  其中标记为“$q$”的道路实际上是 $\apfunc{\lam{r} r\ct\opp p} (q)$。
+  那么 $g$ 是一个等价，因为它是以下一系列等价的复合：
   \[ (p=p) \xrightarrow{\apfunc{\lam{r} r\ct\opp p}} (p\ct \opp p = p\ct \opp p) \xrightarrow{i\ct - \ct \opp i} (\refl{a} = \refl{a}). \]
-  using \cref{eg:concatequiv,thm:paths-respects-equiv}, where $i:\refl{a} = p\ct \opp p$ is the canonical equality.
-  And it is evident that $g(\refl{p}) = \refl{\refl{a}}$.
+  这里用到了 \cref{eg:concatequiv,thm:paths-respects-equiv}，其中 $i:\refl{a} = p\ct \opp p$ 是典范的相等。
+  显然有 $g(\refl{p}) = \refl{\refl{a}}$。
 \end{proof}
 
-\section{Truncations}
+\section{截断}
 \label{sec:truncations}
 
 \indexsee{n-truncation@$n$-truncation}{truncation}%
 \index{truncation!n-truncation@$n$-truncation|(defstyle}%
 
-In \cref{subsec:prop-trunc} we introduced the propositional truncation, which makes the ``best approximation'' of a type that is a mere
-proposition, i.e.\ a $(-1)$-type.
-In \cref{sec:hittruncations} we constructed this truncation as a higher inductive type, and gave one way to generalize it to a
-0-truncation.
-We now explain a better generalization of this, which truncates any type into an $n$-type for any $n\geq -2$; in classical homotopy theory this would be called its \define{$n^{\mathrm{th}}$ Postnikov section}.\index{Postnikov tower}
+在 \cref{subsec:prop-trunc} 中，我们引入了命题截断，它给出了一个类型到“仅仅是一个命题”（即 $(-1)$-类型）的“最佳逼近”。
+在 \cref{sec:hittruncations} 中，我们将此截断构造为一个高阶归纳类型，并给出了一种将其推广到 0-截断的方法。
+现在我们来解释一种更好的推广，它可以将任何类型截断为任意 $n\geq -2$ 的 $n$-类型；在经典同伦论中，这被称为它的 \define{$n$ 阶 Postnikov 截面（$n^{\mathrm{th}}$ Postnikov section）}。\index{Postnikov tower}
 
-The idea is to make use of \cref{thm:ntype-nloop}, which states that $A$ is an $n$-type just when $\Omega^{n+1}(A,a)$
+其思路是利用 \cref{thm:ntype-nloop} 与 \cref{lem:susp-loop-adj}。
+前者指出，$A$ 是 $n$-类型当且仅当对所有 $a:A$，$\Omega^{n+1}(A,a)$
 \index{loop space!iterated}%
-is contractible for
-all $a:A$, and \cref{lem:susp-loop-adj}, which implies that
-\narrowequation{\Omega^{n+1}(A,a) \eqvsym \Map_{*}(\Sn^{n+1},(A,a)),} where $\Sn^{n+1}$ is equipp\-ed with some basepoint which we may as well call \base.
-However, contractibility of $\Map_*(\Sn^{n+1},(A,a))$ is something that we can ensure directly by giving path constructors.
+是可缩的；后者则意味着
+\narrowequation{\Omega^{n+1}(A,a) \eqvsym \Map_{*}(\Sn^{n+1},(A,a)),}
+其中 $\Sn^{n+1}$ 配备了一个基点，我们不妨称之为 \base。
+然而，$\Map_*(\Sn^{n+1},(A,a))$ 的可缩性是我们可以通过直接给出道路构造子来保证的。
 
 \index{hub and spoke}%
-We will use the ``hub and spoke'' construction as in \cref{sec:hubs-spokes}.
-Thus, for $n\ge -1$, we take $\trunc nA$ to be the higher inductive type generated by:
+我们将使用类似于 \cref{sec:hubs-spokes} 中的“毂辐构造（hub and spoke）”。
+因此，对 $n\ge -1$，我们取 $\trunc nA$ 为由以下生成子生成的高阶归纳类型：
+
 \begin{itemize}
-\item a function $\tprojf n : A \to \trunc n A$,
-\item for each $r:\Sn^{n+1} \to \trunc n A$, a \emph{hub} point $h(r):\trunc n A$, and
-\item for each $r:\Sn^{n+1} \to \trunc n A$ and each $x:\Sn^{n+1}$, a \emph{spoke} path $s_r(x):r(x) = h(r)$.
+\item 一个函数 $\tprojf n : A \to \trunc n A$，
+\item 对于每个 $r:\Sn^{n+1} \to \trunc n A$，一个\emph{轮毂}点 $h(r):\trunc n A$，以及
+\item 对于每个 $r:\Sn^{n+1} \to \trunc n A$ 和每个 $x:\Sn^{n+1}$，一条\emph{辐条}道路 $s_r(x):r(x) = h(r)$。
 \end{itemize}
 
 \noindent
-The existence of these constructors is now enough to show:
+有了这些构造子，就足以证明：
 
 \begin{lem}
-  $\trunc n A$ is an $n$-type.
+  $\trunc n A$ 是一个 $n$-类型。
 \end{lem}
+
 \begin{proof}
-  By \cref{thm:ntype-nloop}, it suffices to show that $\Omega ^{n+1}(\trunc nA,b)$ is contractible for all $b:\trunc nA$, which by
-\cref{lem:susp-loop-adj} is equivalent to \narrowequation{\Map_*(\Sn^{n+1},(\trunc nA,b)).}
-  As center of contraction for the latter, we choose the function $c_b:\Sn^{n+1} \to \trunc nA$ which is constant at $b$, together with
-$\refl b : c_b(\base) = b$.
+  根据 \cref{thm:ntype-nloop}，只需证明对所有 $b:\trunc nA$，$\Omega ^{n+1}(\trunc nA,b)$ 是可缩的。
+  而由 \cref{lem:susp-loop-adj}，这等价于 \narrowequation{\Map_*(\Sn^{n+1},(\trunc nA,b)).}
+  我们以后者为收缩中心：取值为 $b$ 的常值函数 $c_b:\Sn^{n+1} \to \trunc nA$，连同道路 $\refl b : c_b(\base) = b$。
 
-  Now, an arbitrary element of $\Map_*(\Sn^{n+1},(\trunc nA,b))$ consists of a map $r:\Sn^{n+1} \to \trunc n A$ together with a path
-$p:r(\base)=b$.
-  By function extensionality, to show $r = c_b$ it suffices to give, for each $x:\Sn^{n+1}$, a path $r(x)=c_b(x) \jdeq b$.
-  We choose this to be the composite $s_r(x) \ct \opp{s_r(\base)} \ct p$, where $s_r(x)$ is the spoke at $x$.
+  现在，$\Map_*(\Sn^{n+1},(\trunc nA,b))$ 中的任意元素由一个映射 $r:\Sn^{n+1} \to \trunc n A$ 和一条道路 $p:r(\base)=b$ 组成。
+  根据函数外延性，要证明 $r = c_b$，只需对每个 $x:\Sn^{n+1}$ 给出一条道路 $r(x)=c_b(x) \jdeq b$。
+  我们将其取为复合 $s_r(x) \ct \opp{s_r(\base)} \ct p$，其中 $s_r(x)$ 是在 $x$ 处的辐条。
 
 
-  Finally, we must show that when transported along this equality $r=c_b$, the path $p$ becomes $\refl b$.
-  By transport in path types, this means we need
+  最后，我们必须证明，当沿着这个相等 $r=c_b$ 输运时，道路 $p$ 会变成 $\refl b$。
+  根据道路类型中的输运，这意味着我们需要
   \[\opp{(s_r(\base) \ct \opp{s_r(\base)} \ct p)} \ct p = \refl b.\]
-  But this is immediate from path operations.
+  而这直接由道路运算可得。
 \end{proof}
 
-(This construction fails for $n=-2$, but in that case we can simply define $\trunc{-2}{A}\defeq \unit$ for all $A$.
-From now on we assume $n\ge -1$.)
+（此构造在 $n=-2$ 时失败，但在那种情况下，我们可以对所有 $A$ 简单地定义 $\trunc{-2}{A}\defeq \unit$。
+从现在起，我们假设 $n\ge -1$。）
 
 \index{induction principle!for truncation}%
-To show the desired universal property of the $n$-truncation, we need the induction principle.
-We extract this from the constructors in the usual way; it says that given $P:\trunc nA\to\type$ together with
+为了证明 $n$-截断所期望的泛性质，我们需要归纳原理。
+我们像往常一样从构造子中提取它；该原理是说，给定 $P:\trunc nA\to\type$ 以及
+
+
 \begin{itemize}
-\item For each $a:A$, an element $g(a) : P(\tproj na)$,
-\item For each $r:\Sn^{n+1} \to \trunc n A$ and $r':\prd{x:\Sn^{n+1}} P(r(x))$, an element $h'(r,r'):P(h(r))$,
-\item For each $r:\Sn^{n+1} \to \trunc n A$ and $r':\prd{x:\Sn^{n+1}} P(r(x))$, and each $x:\Sn^{n+1}$, a dependent path
-$\dpath{P}{s_r(x)}{r'(x)}{h'(r,r')}$,
+\item 对于每个 $a:A$，一个元素 $g(a) : P(\tproj na)$，
+\item 对于每个 $r:\Sn^{n+1} \to \trunc n A$ 和 $r':\prd{x:\Sn^{n+1}} P(r(x))$，一个元素 $h'(r,r'):P(h(r))$，
+\item 对于每个 $r:\Sn^{n+1} \to \trunc n A$ 和 $r':\prd{x:\Sn^{n+1}} P(r(x))$，以及每个 $x:\Sn^{n+1}$，一条依值道路
+$\dpath{P}{s_r(x)}{r'(x)}{h'(r,r')}$，
 \end{itemize}
-there exists a section $f:\prd{x:\trunc n A} P(x)$ with $f(\tproj n a) \jdeq g(a)$ for all $a:A$.
-To make this more useful, we reformulate it as follows.
+
+
+则存在一个截面 $f:\prd{x:\trunc n A} P(x)$ 使得对所有 $a:A$ 有 $f(\tproj n a) \jdeq g(a)$。
+为使其更为有用，我们将其重新表述如下。
 
 \begin{thm}\label{thm:truncn-ind}
-  For any type family $P:\trunc n A \to \type$ such that each $P(x)$ is an $n$-type, and any function $g : \prd{a:A} P(\tproj n a)$, there
-exists a section $f:\prd{x:\trunc n A} P(x)$ such that $f(\tproj n a)\defeq g(a)$ for all $a:A$.
+  对于任意类型族 $P:\trunc n A \to \type$，若每个 $P(x)$ 都是 $n$-类型，则对任意函数 $g : \prd{a:A} P(\tproj n a)$，存在一个截面 $f:\prd{x:\trunc n A} P(x)$ 使得对所有 $a:A$ 有 $f(\tproj n a)\defeq g(a)$。
 \end{thm}
+
 \begin{proof}
-  It will suffice to construct the second and third data listed above, since $g$ has exactly the type of the first datum.
-  Given $r:\Sn^{n+1} \to \trunc n A$ and $r':\prd{x:\Sn^{n+1}} P(r(x))$, we have $h(r):\trunc n A$ and $s_r :\prd{x:\Sn^{n+1}} (r(x) =
-h(r))$.
-  Define $t:\Sn^{n+1} \to P(h(r))$ by $t(x) \defeq \trans{s_r(x)}{r'(x)}$.
-  Then since $P(h(r))$ is $n$-truncated, there exists a point $u:P(h(r))$ and a contraction $v:\prd{x:\Sn^{n+1}} (t(x) = u)$.
-  Define $h'(r,r') \defeq u$, giving the second datum.
-  Then (recalling the definition of dependent paths), $v$ has exactly the type required of the third datum.
+  只需构造上面列出的第二和第三项数据即可，因为 $g$ 的类型恰好就是第一项数据。
+  给定 $r:\Sn^{n+1} \to \trunc n A$ 和 $r':\prd{x:\Sn^{n+1}} P(r(x))$，我们有 $h(r):\trunc n A$ 和 $s_r :\prd{x:\Sn^{n+1}} (r(x) =
+h(r))$。
+  定义 $t:\Sn^{n+1} \to P(h(r))$ 为 $t(x) \defeq \trans{s_r(x)}{r'(x)}$。
+  由于 $P(h(r))$ 是 $n$-截断的，故存在一个点 $u:P(h(r))$ 和一个收缩 $v:\prd{x:\Sn^{n+1}} (t(x) = u)$。
+  定义 $h'(r,r') \defeq u$，这给出了第二项数据。
+  那么（回忆依值道路的定义），$v$ 的类型恰好就是第三项数据所要求的类型。
 \end{proof}
 
-In particular, if $E$ is some $n$-type, we can consider the constant family of types equal to $E$ for every point of $A$.
+特别地，如果 $E$ 是某个 $n$-类型，我们可以考虑在 $A$ 的每一点处取值恒为 $E$ 的常值类型族。
 \symlabel{extend}
 \index{recursion principle!for truncation}%
-Thus, every map $f:A\to{}E$ can be extended to a map $\extend{f}:\trunc nA\to{}E$ defined by $\extend{f}(\tproj na)\defeq f(a)$; this is the \emph{recursion principle} for $\trunc n A$.
+于是，每个映射 $f:A\to{}E$ 都可以延拓为一个映射 $\extend{f}:\trunc nA\to{}E$，其定义为 $\extend{f}(\tproj na)\defeq f(a)$；这就是 $\trunc n A$ 的\emph{递归原理}。
 
-The induction principle also implies a uniqueness principle for functions of this form.
+归纳原理还蕴含了这种形式的函数的唯一性原理。
 \index{uniqueness!principle, propositional!for functions on a truncation}%
-Namely, if $E$ is an $n$-type and $g,g':\trunc nA\to{}E$ are such
-that $g(\tproj na)=g'(\tproj na)$ for every $a:A$, then $g(x)=g'(x)$ for all $x:\trunc nA$, since the type $g(x)=g'(x)$ is an $n$-type.
-Thus, $g=g'$.
-(In fact, this uniqueness principle holds more generally when $E$ is an $\nplusone$-type.)
-This yields the following universal property.
+即，如果 $E$ 是 $n$-类型，且 $g,g':\trunc nA\to{}E$ 满足对每个 $a:A$ 有 $g(\tproj na)=g'(\tproj na)$，那么对所有 $x:\trunc nA$ 有 $g(x)=g'(x)$，因为类型 $g(x)=g'(x)$ 是 $n$-类型。
+因此，$g=g'$。
+（事实上，当 $E$ 是 $\nplusone$-类型时，此唯一性原理更一般地也成立。）
+由此我们得到以下泛性质。
 
-\begin{lem}[Universal property of truncations]\label{thm:trunc-reflective}
+\begin{lem}[截断的泛性质]\label{thm:trunc-reflective}
   \index{universal!property!of truncation}%
-  Let $n\ge-2$, $A:\type$ and $B:\typele{n}$. The following map is an
-  equivalence:
+  设 $n\ge-2$，$A:\type$ 且 $B:\typele{n}$。则以下映射是一个等价：
   \[\function{(\trunc nA\to{}B)}{(A\to{}B)}{g}{g\circ\tprojf n}\]
 \end{lem}
 
 \begin{proof}
-  Given that $B$ is $n$-truncated, any $f:A\to{}B$ can be extended to a map $\extend{f}:\trunc nA\to{}B$.
-  The map $\extend{f}\circ\tprojf n$ is equal to $f$, because for every $a:A$ we have $\extend{f}(\tproj na)=f(a)$ by definition.
-  And the map $\extend{g\circ\tprojf n}$ is equal to $g$, because they both send $\tproj na$ to $g(\tproj na)$.
+  给定 $B$ 是 $n$-截断的，任何 $f:A\to{}B$ 都可以延拓为一个映射 $\extend{f}:\trunc nA\to{}B$。
+  映射 $\extend{f}\circ\tprojf n$ 等于 $f$，因为根据定义，对于每个 $a:A$ 我们有 $\extend{f}(\tproj na)=f(a)$。
+  而映射 $\extend{g\circ\tprojf n}$ 等于 $g$，因为它们都将 $\tproj na$ 映到 $g(\tproj na)$。
 \end{proof}
 
-In categorical language, this says that the $n$-types form a \emph{reflective subcategory} of the category of types.
+用范畴论的语言来说，这表明 $n$-类型构成了类型范畴的一个\emph{反射子范畴}。
 \index{reflective!subcategory}%
-(To state this fully precisely, one ought to use the language of $(\infty,1)$-categories.)
+（要完全精确地陈述这一点，需要使用 $(\infty,1)$-范畴的语言。）
 \index{.infinity1-category@$(\infty,1)$-category}%
-In particular, this implies that the $n$-truncation is functorial:
-given $f:A\to B$, applying the recursion principle to the composite $A\xrightarrow{f} B \to \trunc n B$ yields a map $\trunc n f: \trunc n A \to \trunc n B$.
-By definition, we have a homotopy
+特别地，这意味着 $n$-截断具有函子性：给定 $f:A\to B$，对复合 $A\xrightarrow{f} B \to \trunc n B$ 应用递归原理，就得到一个映射 $\trunc n f: \trunc n A \to \trunc n B$。
+根据定义，我们有一个同伦
 \begin{equation}
   \mathsf{nat}^f_n : \prd{a:A} \trunc n f(\tproj n a) = \tproj n {f(a)},\label{eq:trunc-nat}
 \end{equation}
-expressing \emph{naturality} of the maps $\tprojf n$.
+表达了映射 $\tprojf n$ 的\emph{自然性}。
 
-Uniqueness implies functoriality laws such as $\trunc n {g\circ f} = \trunc n g \circ \trunc n f$ and $\trunc n{\idfunc[A]} = \idfunc[\trunc n A]$, with attendant coherence laws.
-We also have higher functoriality, for instance:
+唯一性蕴含了函子律，例如 $\trunc n {g\circ f} = \trunc n g \circ \trunc n f$ 和 $\trunc n{\idfunc[A]} = \idfunc[\trunc n A]$，以及相应的相干律。
+我们还有高阶函子性，例如：
 
 \begin{lem}\label{thm:trunc-htpy}
-  Given $f,g:A\to B$ and a homotopy $h:f\htpy g$, there is an induced homotopy $\trunc n h : \trunc n f \htpy \trunc n g$ such that the composite
+  给定 $f,g:A\to B$ 以及同伦 $h:f\htpy g$，存在一个诱导的同伦 $\trunc n h : \trunc n f \htpy \trunc n g$，使得复合
   \begin{equation}
     \xymatrix@C=3.6pc{\tproj n{f(a)} \ar@{=}[r]^-{\opp{\mathsf{nat}^f_n(a)}} &
       \trunc n f(\tproj n a) \ar@{=}[r]^-{\trunc n h(\tproj na)} &
       \trunc n g(\tproj n a) \ar@{=}[r]^-{\mathsf{nat}^g_n(a)} &
       \tproj n{g(a)}}\label{eq:trunc-htpy}
   \end{equation}
-  is equal to $\apfunc{\tprojf n}(h(a))$.
+  等于 $\apfunc{\tprojf n}(h(a))$。
 \end{lem}
+
 \begin{proof}
-  First, we indeed have a homotopy with components $\apfunc{\tprojf n}(h(a)) : \tproj n{f(a)} = \tproj n{g(a)}$.
-  Composing on either sides with the paths $\tproj n{f(a)} = \trunc n f(\tproj n a)$ and $\tproj n{g(a)} = \trunc n g(\tproj n a)$, which arise from the definitions of $\trunc n f$ and $\trunc ng$, we obtain a homotopy $(\trunc n f \circ \tprojf n) \htpy (\trunc n g \circ \tprojf n)$, and hence an equality by function extensionality.
-  But since $(\blank\circ \tprojf n)$ is an equivalence, there must be a path $\trunc nf = \trunc ng$ inducing it, and the coherence laws for function extensionality imply~\eqref{eq:trunc-htpy}.
+  首先，我们确实有一个分量为 $\apfunc{\tprojf n}(h(a)) : \tproj n{f(a)} = \tproj n{g(a)}$ 的同伦。
+  将其与路径 $\tproj n{f(a)} = \trunc n f(\tproj n a)$ 和 $\tproj n{g(a)} = \trunc n g(\tproj n a)$（分别源自 $\trunc n f$ 和 $\trunc ng$ 的定义）在两侧复合，便得到同伦 $(\trunc n f \circ \tprojf n) \htpy (\trunc n g \circ \tprojf n)$，进而由函数外延性得到一个相等。
+  但由于 $(\blank\circ \tprojf n)$ 是一个等价，必然存在一条道路 $\trunc nf = \trunc ng$ 诱导出该同伦，而函数外延性的相干律蕴含了~\eqref{eq:trunc-htpy}。
 \end{proof}
 
-The following observation about reflective subcategories is also standard.
+关于反射子范畴，以下观察也是标准的。
 
 \begin{cor}
-  A type $A$ is an $n$-type if and only if $\tprojf n : A \to \trunc n A$ is an equivalence.
+  一个类型 $A$ 是 $n$-类型，当且仅当 $\tprojf n : A \to \trunc n A$ 是一个等价。
 \end{cor}
+
 \begin{proof}
-  ``If'' follows from closure of $n$-types under equivalence.
-  On the other hand, if $A$ is an $n$-type, we can define $\ext(\idfunc[A]):\trunc n A\to{}A$.
-  Then we have $\ext(\idfunc[A])\circ\tprojf n=\idfunc[A]:A\to{}A$ by
-  definition.  In order to prove that
-  $\tprojf n\circ\ext(\idfunc[A])=\idfunc[\trunc nA]$, we only need to prove
-  that $\tprojf n\circ\ext(\idfunc[A])\circ\tprojf n=
-  \idfunc[\trunc nA]\circ\tprojf n$.
-  This is again true:
+  “当”的部分由 $n$-类型在等价下封闭可得。
+  反之，若 $A$ 是 $n$-类型，我们可以定义 $\ext(\idfunc[A]):\trunc n A\to{}A$。
+  那么根据定义我们有 $\ext(\idfunc[A])\circ\tprojf n=\idfunc[A]:A\to{}A$。
+  为了证明
+  $\tprojf n\circ\ext(\idfunc[A])=\idfunc[\trunc nA]$，
+  我们只需证明
+  $\tprojf n\circ\ext(\idfunc[A])\circ\tprojf n=
+  \idfunc[\trunc nA]\circ\tprojf n$。
+  这一点同样成立：
   \[\raisebox{\depth-\height+1em}{\xymatrix{
     A \ar^-{\tprojf n}[r] \ar_{\idfunc[A]}[rd] &
     \trunc nA \ar^>>>{\ext(\idfunc[A])}[d] \ar@/^40pt/^{\idfunc[\trunc nA]}[dd] \\
@@ -604,15 +598,16 @@ The following observation about reflective subcategories is also standard.
   \qedhere\]
 \end{proof}
 
-The category of $n$-types also has some special properties not possessed by all reflective subcategories.
-For instance, the reflector $\trunc n-$ preserves finite products.
+$n$-类型的范畴还有一些并非所有反射子范畴都具有的特殊性质。
+例如，反射子 $\trunc n-$ 保持有限积。
 
 \begin{thm}\label{cor:trunc-prod}
-  For any types $A$ and $B$, the induced map $\trunc n{A\times B} \to \trunc nA \times \trunc nB$ is an equivalence.
+  对于任意类型 $A$ 和 $B$，诱导的映射 $\trunc n{A\times B} \to \trunc nA \times \trunc nB$ 是一个等价。
 \end{thm}
+
 \begin{proof}
-  It suffices to show that $\trunc nA \times \trunc nB$ has the same universal property as $\trunc n{A\times B}$.
-  Thus, let $C$ be an $n$-type; we have
+  只需证明 $\trunc nA \times \trunc nB$ 具有与 $\trunc n{A\times B}$ 相同的泛性质。
+  于是，设 $C$ 是一个 $n$-类型；我们有如下等价：
   \begin{align*}
     (\trunc nA \times \trunc nB \to C)
     &= (\trunc nA \to (\trunc nB \to C))\\
@@ -620,94 +615,85 @@ For instance, the reflector $\trunc n-$ preserves finite products.
     &= (A \to (B \to C))\\
     &= (A \times B \to C)
   \end{align*}
-  using the universal properties of $\trunc nB$ and $\trunc nA$, along with the fact that $B\to C$ is an $n$-type since $C$ is.
-  It is straightforward to verify that this equivalence is given by composing with $\tprojf n \times \tprojf n$, as needed.
+  这里用到了 $\trunc nB$ 和 $\trunc nA$ 的泛性质，以及 $C$ 是 $n$-类型时 $B\to C$ 也是 $n$-类型这一事实。
+  不难验证，此等价由与 $\tprojf n \times \tprojf n$ 复合给出，恰如所需。
 \end{proof}
 
-The following related fact about dependent sums is often useful.
+下面这个关于依赖和的事实也常常很有用。
 
 \begin{thm}\label{thm:trunc-in-truncated-sigma}
-Let $P:A\to\type$ be a family of types. Then there is an equivalence
+设 $P:A\to\type$ 为一个类型族。则存在等价
 \begin{equation*}
 \eqv{\Trunc n{\sm{x:A}\trunc n{P(x)}}}{\Trunc n{\sm{x:A}P(x)}}.
 \end{equation*}
 \end{thm}
 
 \begin{proof}
-We use the induction principle of $n$-truncation several times to construct
-functions
+我们多次利用 $n$-截断的归纳原理，来构造函数
 \begin{align*}
 \varphi & : \Trunc n{\sm{x:A}\trunc n{P(x)}}\to\Trunc n{\sm{x:A}P(x)}\\
 \psi & : \Trunc n{\sm{x:A}P(x)}\to \Trunc n{\sm{x:A} \trunc n{P(x)}}
 \end{align*}
-and homotopies $H:\varphi\circ\psi\htpy \idfunc$ and $K:\psi\circ\varphi\htpy
-\idfunc$ exhibiting them as quasi-inverses.
-We define $\varphi$ by setting $\varphi(\tproj n{\pairr{x,\tproj nu}})\defeq\tproj n{\pairr{x,u}}$.
-We define $\psi$ by setting $\psi(\tproj n{\pairr{x,u}})\defeq\tproj n{\pairr{x,\tproj nu}}$.
-Then we define $H(\tproj n{\pairr{x,u}})\defeq \refl{\tproj n{\pairr{x,u}}}$ and
-$K(\tproj n{\pairr{x,\tproj nu}})\defeq \refl{\tproj n{\pairr{x,\tproj nu}}}$.
+以及同伦 $H:\varphi\circ\psi\htpy \idfunc$ 与 $K:\psi\circ\varphi\htpy
+\idfunc$，以表明它们互为拟逆。
+定义 $\varphi$ 为 $\varphi(\tproj n{\pairr{x,\tproj nu}})\defeq\tproj n{\pairr{x,u}}$。
+定义 $\psi$ 为 $\psi(\tproj n{\pairr{x,u}})\defeq\tproj n{\pairr{x,\tproj nu}}$。
+然后定义 $H(\tproj n{\pairr{x,u}})\defeq \refl{\tproj n{\pairr{x,u}}}$ 与
+$K(\tproj n{\pairr{x,\tproj nu}})\defeq \refl{\tproj n{\pairr{x,\tproj nu}}}$。
 \end{proof}
 
 \begin{cor}\label{thm:refl-over-ntype-base}
-  If $A$ is an $n$-type and $P:A\to\type$ is any type family, then
+  若 $A$ 是一个 $n$-类型，且 $P:A\to\type$ 是任意类型族，则
   \[ \eqv{\sm{a:A} \trunc n{P(a)}}{\Trunc n{\sm{a:A}P(a)}} \]
 \end{cor}
+
 \begin{proof}
-  If $A$ is an $n$-type, then the left-hand type above is already an $n$-type, hence equivalent to its $n$-truncation; thus this follows from \cref{thm:trunc-in-truncated-sigma}.
+  如果 $A$ 是 $n$-类型，那么上式左边的类型本身就已经是 $n$-类型，因此等价于它的 $n$-截断；于是本推论由 \cref{thm:trunc-in-truncated-sigma} 可得。
 \end{proof}
 
-We can characterize the path spaces of a truncation using the same method that we used in \cref{sec:compute-coprod,sec:compute-nat} for
-coproducts and natural numbers (and which we will use in \cref{cha:homotopy} to calculate homotopy groups).
-Unsurprisingly, the path spaces in the $(n+1)$-truncation of $A$ are the $n$-truncations of the path spaces of $A$.
-Indeed, for any $x,y:A$ there is a canonical map
+我们可以用与 \cref{sec:compute-coprod,sec:compute-nat} 中处理余积和自然数时相同的方法，来刻画截断的路径空间（该方法之后在 \cref{cha:homotopy} 计算同伦群时也会用到）。
+不出所料，$A$ 的 $(n+1)$-截断中的路径空间，就是 $A$ 的路径空间的 $n$-截断。
+确切地说，对于任意 $x,y:A$，存在一个典范映射
 \begin{equation}
   f:\ttrunc n{x=_Ay}\to \Big(\tproj {n+1}x=_{\trunc{n+1}A}\tproj {n+1}y\Big)\label{eq:path-trunc-map}
 \end{equation}
-defined by
+其定义为
 \[f(\tproj n{p})\defeq \apfunc{\tprojf {n+1}}(p). \]
-This definition uses the recursion principle for $\truncf n$, which is correct because $\trunc {n+1}A$ is $(n+1)$-truncated, so that the
-codomain of $f$ is $n$-truncated.
+这个定义使用了 $\truncf n$ 的递归原理，这是可行的，因为 $\trunc {n+1}A$ 是 $(n+1)$-截断的，因此 $f$ 的余域是 $n$-截断的。
 
 \begin{thm} \label{thm:path-truncation}
-  For any $A$ and $x,y:A$ and $n\ge -2$, the map~\eqref{eq:path-trunc-map} is an equivalence; thus we have
+  对于任意 $A$、$x,y:A$ 以及 $n\ge -2$，映射~\eqref{eq:path-trunc-map} 是一个等价；因此我们有
   \[ \eqv{\ttrunc n{x=_Ay}}{\Big(\tproj {n+1}x=_{\trunc{n+1}A}\tproj {n+1}y\Big)}. \]
 \end{thm}
 
 \begin{proof}
-  The proof is a simple application of the encode-decode method:
-  As in previous situations, we cannot directly define a quasi-inverse to the map~\eqref{eq:path-trunc-map} because there is no way to induct on an
-equality between $\tproj {n+1}x$ and $\tproj {n+1}y$.
-  Thus, instead we generalize its type, in order to have general elements of the type $\trunc{n+1}A$ instead of $\tproj {n+1}x$ and $\tproj
-{n+1}y$.
-  Define $P:\trunc {n+1}A\to\trunc {n+1}A\to\typele{n}$ by
+  证明是编码-解码方法的一个简单应用：
+  如同以往的情形一样，我们无法直接定义映射~\eqref{eq:path-trunc-map} 的一个拟逆，因为我们无法对 $\tproj {n+1}x$ 和 $\tproj {n+1}y$ 之间的相等进行归纳。
+  因此，我们转而将其类型推广，以便处理类型 $\trunc{n+1}A$ 中的一般元素，而不仅仅是 $\tproj {n+1}x$ 和 $\tproj {n+1}y$。
+  如下定义 $P:\trunc {n+1}A\to\trunc {n+1}A\to\typele{n}$：
   \[P(\tproj {n+1}x,\tproj {n+1}y)\defeq \trunc n{x=_Ay}\]
-  This definition is correct because $\trunc n{x=_Ay}$ is $n$-truncated, and $\typele{n}$ is $(n+1)$-truncated by
-\cref{thm:hleveln-of-hlevelSn}.
-  Now for every $u,v:\trunc{n+1}A$, there is a map
+  这个定义是良定义的，因为 $\trunc n{x=_Ay}$ 是 $n$-截断的，而根据 \cref{thm:hleveln-of-hlevelSn}，$\typele{n}$ 是 $(n+1)$-截断的。
+  现在，对于每一对 $u,v:\trunc{n+1}A$，都有一个映射
   \[\decode:P(u,v) \to \big(u=_{\trunc{n+1}A}v\big)\]
-  defined for $u=\tproj {n+1}x$ and $v=\tproj {n+1}y$ and $p:x=y$ by
+  它对 $u=\tproj {n+1}x$、$v=\tproj {n+1}y$ 以及 $p:x=y$ 定义为
   \[\decode(\tproj n{p})\defeq \apfunc{\tprojf{n+1}} (p).\]
-  Since the codomain of $\decode$ is $n$-truncated, it suffices to define it only for $u$ and $v$ of this form, and then it's just the same
-definition as before.
-  We also define a function
+  由于 $\decode$ 的余域是 $n$-截断的，我们只需对 $u$ 和 $v$ 是这种形式的情形定义它即可，而这与之前的定义相同。
+  我们还通过对 $u$ 作归纳来定义一个函数
   \[ r : \prd{u:\trunc{n+1} A} P(u,u) \]
-  by induction on $u$, where $r(\tproj{n+1} x) \defeq \tproj n {\refl x}$.
+  其中 $r(\tproj{n+1} x) \defeq \tproj n {\refl x}$。
 
-  Now we can define an inverse map
+  现在我们可以定义一个逆映射
   \[\encode: (u=_{\trunc{n+1}A}v) \to P(u,v)\]
-  by
+  定义为
   \[\encode(p) \defeq \transfib{v\mapsto P(u,v)}{p}{r(u)}. \]
-  To show that the composite
+  为了证明复合映射
   \[ (u=_{\trunc{n+1}A}v) \xrightarrow{\encode} P(u,v) \xrightarrow{\decode} (u=_{\trunc{n+1}A}v) \]
-  is the identity function, by path induction it suffices to check it for $\refl u : u=u$, in which case what we need to know is that
-$\decode(r(u)) = \refl{u}$.
-  But since this is an $(n-1)$-type, hence also an $(n+1)$-type, we may assume $u\jdeq \tproj {n+1} x$, in which case it follows by definition
-of $r$ and $\decode$.
-  Finally, to show that
+  是恒等函数，根据道路归纳，只需对 $\refl u : u=u$ 的情形进行验证；此时我们需要知道的是 $\decode(r(u)) = \refl{u}$。
+  但由于这是一个 $(n-1)$-类型，因而也是一个 $(n+1)$-类型，我们可以假定 $u\jdeq \tproj {n+1} x$，而在此假定下，结论由 $r$ 和 $\decode$ 的定义即得。
+  最后，为了证明
   \[ P(u,v) \xrightarrow{\decode} (u=_{\trunc{n+1}A}v) \xrightarrow{\encode} P(u,v) \]
-  is the identity function, since this goal is again an $(n-1)$-type, we may assume that $u=\tproj {n+1}x$ and $v=\tproj {n+1}y$ and that we are
-considering $\tproj n p:P(\tproj{n+1}x,\tproj{n+1}y)$ for some $p:x=y$.
-  Then we have
+  是恒等函数，由于该目标同样是一个 $(n-1)$-类型，我们可以假定 $u=\tproj {n+1}x$ 且 $v=\tproj {n+1}y$，且我们考虑的是对应于某个 $p:x=y$ 的 $\tproj n p:P(\tproj{n+1}x,\tproj{n+1}y)$。
+  那么我们有
   \begin{align*}
     \encode(\decode(\tproj n p)) &= \encode(\apfunc{\tprojf{n+1}}(p))\\
     &= \transfib{v\mapsto P(\tproj{n+1}x,v)}{\apfunc{\tprojf{n+1}}(p)}{\tproj n {\refl x}}\\
@@ -715,38 +701,40 @@ considering $\tproj n p:P(\tproj{n+1}x,\tproj{n+1}y)$ for some $p:x=y$.
     &= \tproj n {\transfib{y \mapsto (x=y)}{p}{\refl x}}\\
     &= \tproj n p,
   \end{align*}
-  using \cref{thm:transport-compose,thm:ap-transport}.
-  (Alternatively, we could do path induction on $p$; the desired equality would then hold judgmentally.)
-  This completes the proof that \decode and \encode are quasi-inverses.
-  The stated result is then the special case where $u=\tproj {n+1}x$ and $v=\tproj {n+1}y$.
+  这里用到了 \cref{thm:transport-compose,thm:ap-transport}。
+  （或者，我们也可以对 $p$ 进行道路归纳；则所需的相等在判断意义下成立。）
+  这就完成了 \decode 和 \encode 是拟逆的证明。
+  所陈述的结果便是 $u=\tproj {n+1}x$ 且 $v=\tproj {n+1}y$ 时的特例。
 \end{proof}
 
 \begin{cor}
-  Let $n\ge-2$ and $(A,a)$ be a pointed type. Then
+  设 $n\ge-2$，且 $(A,a)$ 是一个带点类型。那么
   \[\ttrunc n{\Omega(A,a)}=\Omega\mathopen{}\left(\trunc{n+1}{(A,a)}\right)\]
 \end{cor}
+
 \begin{proof}
-  This is a special case of the previous lemma where $x=y=a$.
+  这是前一个引理在 $x=y=a$ 时的特例。
 \end{proof}
 
 \begin{cor}
-  Let $n\ge -2$ and $k\ge 0$ and $(A,a)$ a pointed type.  Then
+  设 $n\ge -2$，$k\ge 0$，且 $(A,a)$ 是一个带点类型。那么
   \[\ttrunc n{\Omega^k(A,a)} = \Omega^k\mathopen{}\left(\trunc{n+k}{(A,a)}\right). \]
 \end{cor}
+
 \begin{proof}
-  By induction on $k$, using the recursive definition of $\Omega^k$.
+  对 $k$ 进行归纳，利用 $\Omega^k$ 的递归定义即可。
 \end{proof}
 
-We also observe that ``truncations are cumulative'': if we truncate to an $n$-type and then to a $k$-type with $k\le n$, then we might as
-well have truncated directly to a $k$-type.
+我们还注意到“截断是累积的”：如果我们将一个类型先截断为一个 $n$-类型，再截断为一个 $k$-类型（其中 $k\le n$），那么我们不妨一开始就直接将其截断为一个 $k$-类型。
 
 \begin{lem} \label{lem:truncation-le}
-  Let $k,n\ge-2$ with $k\le{}n$ and $A:\type$. Then
-  $\trunc k{\trunc nA}=\trunc kA$.
+  设 $k,n\ge-2$ 且 $k\le{}n$，$A:\type$。那么
+  $\trunc k{\trunc nA}=\trunc kA$。
 \end{lem}
+
 \begin{proof}
-  We define two maps $f:\trunc k{\trunc nA}\to\trunc kA$ and
-  $g:\trunc kA\to\trunc k{\trunc nA}$ by
+  我们定义两个映射 $f:\trunc k{\trunc nA}\to\trunc kA$ 和
+  $g:\trunc kA\to\trunc k{\trunc nA}$ 如下：
   %
   \[
    f(\tproj k{\tproj na}) \defeq \tproj ka
@@ -754,13 +742,11 @@ well have truncated directly to a $k$-type.
    g(\tproj ka) \defeq \tproj k{\tproj na}.
   \]
   %
-  The map $f$ is well-defined because $\trunc kA$ is $k$-truncated and also
-  $n$-truncated (because $k\le{}n$), and the map $g$ is well-defined because
-  $\trunc k{\trunc nA}$ is $k$-truncated.
+  映射 $f$ 是良定义的，因为 $\trunc kA$ 是 $k$-截断的，并且也是 $n$-截断的（因为 $k\le{}n$）；映射 $g$ 是良定义的，因为 $\trunc k{\trunc nA}$ 是 $k$-截断的。
 
-  The composition $f\circ{}g:\trunc kA\to\trunc kA$ satisfies
-  $(f\circ{}g)(\tproj ka)=\tproj ka$, hence $f\circ{}g=\idfunc[\trunc kA]$.
-  Similarly, we have $(g\circ{}f)(\tproj k{\tproj na})=\tproj k{\tproj na}$ and hence $g\circ{}f=\idfunc[\trunc k{\trunc nA}]$.
+  复合映射 $f\circ{}g:\trunc kA\to\trunc kA$ 满足
+  $(f\circ{}g)(\tproj ka)=\tproj ka$，因此 $f\circ{}g=\idfunc[\trunc kA]$。
+  类似地，我们有 $(g\circ{}f)(\tproj k{\tproj na})=\tproj k{\tproj na}$，因此 $g\circ{}f=\idfunc[\trunc k{\trunc nA}]$。
 \end{proof}
 
 % \begin{lem}
@@ -773,56 +759,53 @@ well have truncated directly to a $k$-type.
 
 \index{truncation!n-truncation@$n$-truncation|)}%
 
-\section{Colimits of \texorpdfstring{$n$}{n}-types}
+\section{$n$-类型的余极限}
 \label{sec:pushouts}
 
-Recall that in \cref{sec:colimits}, we used higher inductive types to define pushouts of types, and proved their universal property.
-In general, a (homotopy) colimit of $n$-types may no longer be an $n$-type (for an extreme counterexample, see \cref{ex:s2-colim-unit}).
-However, if we $n$-truncate it, we obtain an $n$-type which satisfies the correct universal property with respect to other $n$-types.
+回想一下，在 \cref{sec:colimits} 中，我们曾用高阶归纳类型定义了类型的推出，并证明了其泛性质。
+一般来说，$n$-\type{} 的（同伦）余极限可能不再是 $n$-\type{}（关于一个极端的反例，可见 \cref{ex:s2-colim-unit}）。
+然而，如果对其进行 $n$-截断，我们便能得到一个 $n$-\type{}，并且它对于其他 $n$-\type{} 而言满足正确的泛性质。
 
-In this section we prove this for pushouts, which are the most important and nontrivial case of colimits.
-Recall the following definitions from \cref{sec:colimits}.
+本节我们将对推出这一情形证明上述结论，因为推出是余极限中最重要且非平凡的情形。
+我们先回顾 \cref{sec:colimits} 中给出的如下定义。
 
 \begin{defn}
-  A \define{span} % in $\P$
-  \indexdef{span} %
-  is a 5-tuple $\Ddiag=(A,B,C,f,g)$ with % $A,B,C:\P$ and
-  $f:C\to{}A$ and $g:C\to{}B$.
+  一个 \define{伸展（span）}% in $\P$
+  \indexdef{span}%
+  由一个五元组 $\Ddiag=(A,B,C,f,g)$ 构成，其中 % $A,B,C:\P$ and，并有映射 $f:C\to{}A$ 与 $g:C\to{}B$。
   \[\Ddiag=\quad\vcenter{\xymatrix{C \ar^g[r] \ar_f[d] & B \\ A & }}\]
 \end{defn}
 
 \begin{defn}
-  Given a span $\Ddiag=(A,B,C,f,g)$ and a type $D$, a %$D:\P$, a
-  \define{cocone under $\Ddiag$ with base $D$} is a triple $(i, j, h)$
-  \index{cocone} %
-  with $i:A\to{}D$, $j:B\to{}D$ and $h : \prd{c:C}i(f(c))=j(g(c))$:
+  给定一个伸展 $\Ddiag=(A,B,C,f,g)$ 和一个类型 $D$，%$D:\P$, a
+  \define{上锥（cocone under $\Ddiag$ with base $D$）} 是一个三元组 $(i, j, h)$，
+  \index{cocone}%
+  其中 $i:A\to{}D$， $j:B\to{}D$，并且 $h : \prd{c:C}i(f(c))=j(g(c))$：
   \[\uppercurveobject{{ }}\lowercurveobject{{ }}\twocellhead{{ }}
   \xymatrix{C \ar^g[r] \ar_f[d] \drtwocell{^h} & B \ar^j[d] \\ A \ar_i[r] & D
   }\]
-  We denote by $\cocone{\Ddiag}{D}$ the type of all such cocones.
+  我们用 $\cocone{\Ddiag}{D}$ 表示所有这类上锥构成的类型。
 \end{defn}
 
-The type of cocones is (covariantly) functorial.
-For instance, given $D,E$ % $D,E:\P$
-and a map $t:D\to{}E$, there is a map
+上锥的类型具有（协变）函子性。
+例如，给定 $D$， $E$% $D,E:\P$
+以及一个映射 $t:D\to{}E$，则存在一个映射
   \[\function{\cocone{\Ddiag}{D}}{\cocone{\Ddiag}{E}}{c}{\composecocone{t}c}\]
-  defined by:
+  其定义为：
   \[\composecocone{t}(i,j,h)=(t\circ{}i,t\circ{}j,\mapfunc{t}\circ{}h).\]
-And given $D,E,F$, %$:\P$,
-functions $t:D\to{}E$, $u:E\to{}F$ and $c:\cocone{\Ddiag}{D}$, we have
+而给定 $D$， $E$， $F$，%$:\P$,
+函数 $t:D\to{}E$， $u:E\to{}F$ 以及 $c:\cocone{\Ddiag}{D}$，则有
 \begin{align}
   \composecocone{\idfunc[D]}c &= c \label{eq:composeconeid}\\
   \composecocone{(u\circ{}t)}c&=\composecocone{u}(\composecocone{t}c). \label{eq:composeconefunc}
 \end{align}
 
 \begin{defn}
-  Given a span $\Ddiag$ of $n$-types, an $n$-type $D$, and a cocone
-  $c:\cocone{\Ddiag}{D}$, the pair $(D,c)$ is said to be a \define{pushout
-  of $\Ddiag$ in $n$-types}
-  \indexdef{pushout!in ntypes@in $n$-types}%
-  if for every $n$-type $E$, the map
+  给定一个由 $n$-\type{} 构成的伸展 $\Ddiag$，一个 $n$-\type{} $D$，以及一个上锥
+  $c:\cocone{\Ddiag}{D}$，如果对每个 $n$-\type{} $E$，映射
   \[\function{(D\to{}E)}{\cocone{\Ddiag}{E}}{t}{\composecocone{t}c}\]
-  is an equivalence.
+  都是一个等价，则称配对 $(D,c)$ 为 \define{在 $n$-\type{} 中的推出（pushout of $\Ddiag$ in $n$-types）}。
+  \indexdef{pushout!in ntypes@in $n$-types}%
 \end{defn}
 
 \begin{comment}
@@ -880,54 +863,53 @@ However, unlike the case of pullbacks, pushouts in \P are not the same as the pu
 reflector.
 \end{comment}
 
-In order to construct pushouts of $n$-types, we need to explain how to reflect spans and cocones.
+为了构造 $n$-\type{} 的推出，我们需要先说明如何反射伸展与上锥。
 
 \bgroup
 \def\reflect(#1){\trunc n{#1}}
 
 \begin{defn}
-  Let
+  设
   \[\Ddiag=\quad\vcenter{\xymatrix{C \ar^g[r] \ar_f[d] & B \\ A & }}\]
-  be a span. We denote by $\reflect(\Ddiag)$ the following
-  span of $n$-types:
+  为一个伸展（span）。我们用 $\reflect(\Ddiag)$ 表示如下的 $n$-类型伸展：
   \[\reflect(\Ddiag)\defeq\quad \vcenter{\xymatrix{\reflect(C) \ar^{\reflect(g)}[r]
       \ar_{\reflect(f)}[d] & \reflect(B) \\ \reflect(A) & }}\]
 \end{defn}
 
 \begin{defn}
-  Let $D:\type$ and $c=(i,j,h):\cocone{\Ddiag}{D}$.
-  We define
+  设 $D:\type$ 且 $c=(i,j,h):\cocone{\Ddiag}{D}$。
+  我们定义
   \[\reflect(c)=(\reflect(i),\reflect(j),k):
   \cocone{\reflect(\Ddiag)}{\reflect(D)}\]
-  where $k$ is the composite homotopy
+  其中 $k$ 为复合同伦
   \[ \reflect(i) \circ \reflect(f) \htpy \reflect(i\circ f) \htpy \reflect(j\circ g) \htpy \reflect(j) \circ \reflect(g) \]
-  using \cref{thm:trunc-htpy} and the functoriality of $\reflect(\blank)$.
+  这里使用了 \cref{thm:trunc-htpy} 以及 $\reflect(\blank)$ 的函子性。
   % \[\reflect(h):\prd{c:\reflect(C)}\reflect(i)(\reflect(f)(c))=\reflect(j)(\reflect(g)(c))\]
   % is defined in the following way:
 \end{defn}
 
 \egroup
 
-We now observe that the maps from each type to its $n$-truncation assemble into a map of spans, in the following sense.
+我们现在观察到，从每个类型到其 $n$-截断的映射，在以下意义下组合成了一个伸展之间的映射。
 
 \begin{defn}
-  Let
+  设
   \[\Ddiag=\quad\vcenter{\xymatrix{C \ar^g[r] \ar_f[d] & B \\ A & }}
   \qquad\text{and}\qquad
   \Ddiag'=\quad\vcenter{\xymatrix{C' \ar^{g'}[r] \ar_{f'}[d] & B' \\ A' & }}
   \]
-  be spans.
-  A \define{map of spans}
+  为两个伸展。
+  一个从 $\Ddiag$ 到 $\Ddiag'$ 的\define{伸展之间的映射}
   \indexdef{map!of spans}%
-  $\Ddiag \to \Ddiag'$ consists of functions $\alpha:A\to A'$, $\beta:B\to B'$, and $\gamma:C\to C'$ and homotopies $\phi: \alpha\circ f \htpy f'\circ \gamma$ and $\psi:\beta\circ g \htpy g' \circ \gamma$.
+  由函数 $\alpha:A\to A'$、$\beta:B\to B'$、$\gamma:C\to C'$ 以及同伦 $\phi: \alpha\circ f \htpy f'\circ \gamma$ 和 $\psi:\beta\circ g \htpy g' \circ \gamma$ 构成。
 \end{defn}
 
-Thus, for any span $\Ddiag$, we have a map of spans $\tprojf[\Ddiag] n : \Ddiag \to \trunc n\Ddiag$ consisting of $\tprojf[A]n$, $\tprojf[B]n$, $\tprojf[C]n$, and the naturality homotopies $\mathsf{nat}^f_n$ and $\mathsf{nat}^g_n$ from~\eqref{eq:trunc-nat}.
+因此，对任意伸展 $\Ddiag$，我们都有一个由 $\tprojf[A]n$、$\tprojf[B]n$、$\tprojf[C]n$ 以及来自~\eqref{eq:trunc-nat} 的自然性同伦 $\mathsf{nat}^f_n$ 和 $\mathsf{nat}^g_n$ 所构成的伸展之间的映射 $\tprojf[\Ddiag] n : \Ddiag \to \trunc n\Ddiag$。
 
-We also need to know that maps of spans behave functorially.
-Namely, if $(\alpha,\beta,\gamma,\phi,\psi):\Ddiag \to \Ddiag'$ is a map of spans and $D$ any type, then we have
+我们还需要知道伸展之间的映射具有函子性。
+即，若 $(\alpha,\beta,\gamma,\phi,\psi):\Ddiag \to \Ddiag'$ 是一个伸展之间的映射且 $D$ 是任意类型，则有
 \[ \function{\cocone{\Ddiag'}{D}}{\cocone{\Ddiag}{D}}{(i,j,h)}{(i\circ \alpha,j\circ\beta, k)} \]
-where $k: \prd{z:C} i(\alpha(f(z))) = j(\beta(g(z)))$ is the composite
+其中 $k: \prd{z:C} i(\alpha(f(z))) = j(\beta(g(z)))$ 是复合
 \begin{equation}\label{eq:mapofspans-htpy}
 \xymatrix{
   i(\alpha(f(z))) \ar@{=}[r]^{\apfunc{i}(\phi)} &
@@ -935,11 +917,11 @@ where $k: \prd{z:C} i(\alpha(f(z))) = j(\beta(g(z)))$ is the composite
   j(g'(\gamma(z))) \ar@{=}[r]^{\apfunc{j}(\psi)} &
   j(\beta(g(z))). }
 \end{equation}
-We denote this cocone by $(i,j,h) \circ (\alpha,\beta,\gamma,\phi,\psi)$.
-Moreover, this functorial action commutes with the other functoriality of cocones:
+我们将这个上锥记为 $(i,j,h) \circ (\alpha,\beta,\gamma,\phi,\psi)$。
+此外，该函子作用与上锥的另一函子作用可交换：
 
 \begin{lem}\label{thm:conemap-funct}
-  Given $(\alpha,\beta,\gamma,\phi,\psi):\Ddiag \to \Ddiag'$ and $t:D\to E$, the following diagram commutes:
+  给定 $(\alpha,\beta,\gamma,\phi,\psi):\Ddiag \to \Ddiag'$ 以及 $t:D\to E$，下图交换：
   \begin{equation*}
     \vcenter{\xymatrix{
         \cocone{\Ddiag'}{D}\ar[r]^{t \circ {\blank}}\ar[d] &
@@ -949,10 +931,11 @@ Moreover, this functorial action commutes with the other functoriality of cocone
       }}
   \end{equation*}
 \end{lem}
+
 \begin{proof}
-  Given $(i,j,h):\cocone{\Ddiag'}{D}$, note that both composites yield a cocone whose first two components are $t\circ i\circ \alpha$ and $t\circ j\circ\beta$.
-  Thus, it remains to verify that the homotopies agree.
-  For the top-right composite, the homotopy is~\eqref{eq:mapofspans-htpy} with $(i,j,h)$ replaced by $(t\circ i, t\circ j, \apfunc{t}\circ h)$:
+  给定 $(i,j,h):\cocone{\Ddiag'}{D}$，注意两个复合都给出一个上锥，其前两个分量为 $t\circ i\circ \alpha$ 和 $t\circ j\circ\beta$。
+  因此，只需验证二者的同伦是否相同。
+  对于右上方的复合，其同伦是将 $(i,j,h)$ 替换为 $(t\circ i, t\circ j, \apfunc{t}\circ h)$ 后的~\eqref{eq:mapofspans-htpy}：
   \begin{equation*}
     \xymatrix@+2.8em{
       {t \, i \, \alpha \, f \, z} \ar@{=}[r]^{\apfunc{t\circ i}(\phi)} &
@@ -961,9 +944,9 @@ Moreover, this functorial action commutes with the other functoriality of cocone
       {t \, j \, \beta \, g \, z}
     }
   \end{equation*}
-  (For brevity, we are omitting the parentheses around the arguments of functions.)
-  On the other hand, for the left-bottom composite, the homotopy is $\apfunc{t}$ applied to~\eqref{eq:mapofspans-htpy}.
-  Since $\apfunc{}$ respects path-concatenation, this is equal to
+  （为简洁起见，我们省略了函数参数周围的括号。）
+  另一方面，对于左下方的复合，其同伦是 $\apfunc{t}$ 作用于~\eqref{eq:mapofspans-htpy} 的结果。
+  由于 $\apfunc{}$ 保路径的拼接，这等于
   \begin{equation*}
     \xymatrix@+2.8em{
       {t \, i \, \alpha \, f \, z} \ar@{=}[r]^{\apfunc{t}(\apfunc{i}(\phi))} &
@@ -971,24 +954,25 @@ Moreover, this functorial action commutes with the other functoriality of cocone
       {t \, j \, g' \, \gamma \, z} \ar@{=}[r]^{\apfunc{t}(\apfunc{j}(\psi))} &
       {t \, j \, \beta \, g \, z}. }
   \end{equation*}
-  But $\apfunc{t}\circ \apfunc{i} = \apfunc{t\circ i}$ and similarly for $j$, so these two homotopies are equal.
+  但是 $\apfunc{t}\circ \apfunc{i} = \apfunc{t\circ i}$，且对 $j$ 类似，因此这两个同伦相等。
 \end{proof}
 
-Finally, note that since we defined $\trunc nc : \cocone{\trunc n \Ddiag}{\trunc n D}$ using \cref{thm:trunc-htpy}, the additional condition~\eqref{eq:trunc-htpy} implies
+最后注意到，由于我们使用 \cref{thm:trunc-htpy} 定义了 $\trunc nc : \cocone{\trunc n \Ddiag}{\trunc n D}$，附加条件~\eqref{eq:trunc-htpy} 蕴含着
 \begin{equation}
   \tprojf[D] n \circ c = \trunc n c \circ \tprojf[\Ddiag]n. \label{eq:conetrunc}
 \end{equation}
-for any $c:\cocone{\Ddiag}{D}$.
-Now we can prove our desired theorem.
+对任意 $c:\cocone{\Ddiag}{D}$ 成立。
+现在我们可以证明期望的定理了。
 
 \begin{thm}
   \label{reflectcommutespushout}
   \index{universal!property!of pushout}%
-  Let $\Ddiag$ be a span and $(D,c)$ its pushout.
-  Then $(\trunc nD,\trunc n c)$ is a pushout of $\trunc n\Ddiag$ in $n$-types.
+  设 $\Ddiag$ 为一个伸展，$(D,c)$ 是其推出。
+  则 $(\trunc nD,\trunc n c)$ 是 $\trunc n\Ddiag$ 在 $n$-类型中的推出。
 \end{thm}
+
 \begin{proof}
-  Let $E$ be an $n$-type, and consider the following diagram:
+  设 $E$ 是一个 $n$-类型，考虑下图：
 \bgroup
 \def\reflect(#1){\trunc n{#1}}
   \begin{equation*}
@@ -1002,9 +986,9 @@ Now we can prove our desired theorem.
       }}
   \end{equation*}
 \egroup
-  The upper horizontal arrow is an equivalence since $E$ is an $n$-type, while $\blank\circ c$ is an equivalence since $c$ is a pushout cocone.
-  Thus, by the 2-out-of-3 property, to show that $\blank\circ \trunc nc$ is an equivalence, it will suffice to show that the upper square commutes and that the middle horizontal arrow is an equivalence.
-  To see that the upper square commutes, let $t:\trunc nD \to E$; then
+  上方水平箭头是等价，因为 $E$ 是 $n$-类型；而 $\blank\circ c$ 是等价，因为 $c$ 是推出上锥。
+  因此，根据 2-out-of-3 性质，要证明 $\blank\circ \trunc nc$ 是等价，只需证明上方方块交换且中间水平箭头是等价。
+  为证明上方方块交换，令 $t:\trunc nD \to E$；则有
   \begin{align}
     \big(t \circ \trunc n c\big) \circ \tprojf[\Ddiag] n
     &= t \circ \big(\trunc n c \circ \tprojf[\Ddiag] n\big)
@@ -1014,16 +998,16 @@ Now we can prove our desired theorem.
     &= \big(t\circ \tprojf[D]n\big) \circ c
     \tag{by~\eqref{eq:composeconefunc}}.
   \end{align}
-  To show that the middle horizontal arrow is an equivalence, consider the lower square.
-  The two lower vertical arrows are simply applications of $\happly$:
+  为证明中间水平箭头是等价，考虑下方方块。
+  下方两个垂直箭头就是 $\happly$ 的应用：
   \begin{align*}
     \ell_1(i,j,p) &\defeq (i,j,\happly(p))\\
     \ell_2(i,j,p) &\defeq (i,j,\happly(p))
   \end{align*}
-  and hence are equivalences by function extensionality.
-  The lowest horizontal arrow is defined by
+  因此由函数外延性可知它们是等价。
+  最下方的水平箭头定义为
   \[ (i,j,p) \mapsto \big( i\circ \tprojf[A]n,\;\; j \circ \tprojf[B] n,\;\; q\big) \]
-  where $q$ is the composite
+  其中 $q$ 是复合
   \begin{align}
     i\circ \tprojf[A]n \circ f
     &= i\circ \trunc nf \circ \tprojf[C]n
@@ -1033,12 +1017,12 @@ Now we can prove our desired theorem.
     &= j\circ \tprojf[B]n \circ g.
     \tag{by $\funext(\lam{z} \apfunc{j}(\mathsf{nat}^g_n(z)))$}
   \end{align}
-  This is an equivalence, because it is induced by an equivalence of cospans.
-  Thus, by 2-out-of-3, it will suffice to show that the lower square commutes.
-  But the two composites around the lower square agree definitionally on the first two components, so it suffices to show that for $(i,j,p)$ in the lower left corner and $z:C$, the path
+  这是一个等价，因为它由一个余伸展的等价所诱导。
+  因此，再次由 2-out-of-3，只需证明下方方块交换。
+  但绕行下方方块的两个复合在前两个分量上依定义相等，故只需证明对左下角的 $(i,j,p)$ 和 $z:C$，路径
   \[ \happly(q,z) : i(\tproj n{f(z)}) = j(\tproj n{g(z)}) \]
-  (with $q$ as above)
-  is equal to the composite
+  （其中 $q$ 如上所述）
+  等于复合
   \begin{align}
     i(\tproj n{f(z)})
     &= i(\trunc nf(\tproj nz))
@@ -1048,7 +1032,7 @@ Now we can prove our desired theorem.
     &= j(\tproj n{g(z)}).
     \tag{by $\apfunc{j}(\mathsf{nat}^g_n(z))$}
   \end{align}
-  However, since $\happly$ is functorial, it suffices to check equality for the three component paths:
+  然而，由于 $\happly$ 具有函子性，只需检查三个分量路径相等即可：
   \begin{align*}
     \happly({\funext(\lam{z} \apfunc{i}(\mathsf{nat}^f_n(z)))},z)
     &= {\apfunc{i}(\mathsf{nat}^f_n(z))}\\
@@ -1057,86 +1041,86 @@ Now we can prove our desired theorem.
     \happly({\funext(\lam{z} \apfunc{j}(\mathsf{nat}^g_n(z)))},z)
     &= {\apfunc{j}(\mathsf{nat}^g_n(z))}.
   \end{align*}
-  The first and third of these are just the fact that $\happly$ is quasi-inverse to $\funext$, while
-  the second is an easy general lemma about $\happly$ and precomposition.
+  其中第一和第三条路径正是 $\happly$ 是 $\funext$ 的拟逆这一事实，而第二条路径则是关于 $\happly$ 与预复合的一个简单通用引理。
 \end{proof}
 
-
-\section{Connectedness}
+\section{连通性}
 \label{sec:connectivity}
 
-An $n$-type is one that has no interesting information above dimension $n$.
-By contrast, an \emph{$n$-connected type} is one that has no interesting information \emph{below} dimension $n$.
-It turns out to be natural to study a more general notion for functions as well.
+$n$-类型是指在 $n$ 维以上不包含有趣信息的类型。
+与之相对，一个\emph{$n$-连通类型}是指在 $n$ 维\emph{以下}不包含有趣信息的类型。
+事实证明，研究函数的更一般概念也是很自然的。
 
 \begin{defn}
-A function $f:A\to B$ is said to be \define{$n$-connected}
+一个函数 $f:A\to B$ 被称为是 \define{$n$-连通的（$n$-connected）}
 \indexdef{function!n-connected@$n$-connected}%
 \indexsee{n-connected@$n$-connected!function}{function, $n$-connected}%
-if for all $b:B$, the type $\trunc n{\hfiber f b}$ is contractible:
+如果对于所有 $b:B$，类型 $\trunc n{\hfiber f b}$ 都是可缩的：
 \begin{equation*}
   \mathsf{conn}_n(f)\defeq \prd{b:B}\iscontr(\trunc n{\hfiber{f}b}).
 \end{equation*}
-A type $A$ is said to be \define{$n$-connected}
+一个类型 $A$ 被称为是 \define{$n$-连通的（$n$-connected）}
 \indexsee{n-connected@$n$-connected!type}{type, $n$-connected}%
 \indexdef{type!n-connected@$n$-connected}%
- if the unique function $A\to\unit$ is $n$-connected, i.e.\ if $\trunc nA$ is contractible.
+ 如果唯一的函数 $A\to\unit$ 是 $n$-连通的，亦即，如果 $\trunc nA$ 是可缩的。
 \end{defn}
+
+
 \indexsee{connected!function}{function, $n$-connected}
 
-Thus, a function $f:A\to B$ is $n$-connected if and only if $\hfib{f}b$ is $n$-connected for every $b:B$.
-Of course, every function is $(-2)$-connected.
-At the next level, we have:
+因此，一个函数 $f:A\to B$ 是 $n$-连通的，当且仅当对每个 $b:B$，其纤维 $\hfib{f}b$ 都是 $n$-连通的。
+显然，每个函数都是 $(-2)$-连通的。
+在下一个层级上，我们有：
 
 \begin{lem}\label{thm:minusoneconn-surjective}
   \index{function!surjective}%
-  A function $f$ is $(-1)$-connected if and only if it is surjective in the sense of \cref{sec:mono-surj}.
+  一个函数 $f$ 是 $(-1)$-连通的，当且仅当它是\cref{sec:mono-surj}意义下的满的（surjective）。
 \end{lem}
+
 \begin{proof}
-  We defined $f$ to be surjective if $\trunc{-1}{\hfiber f b}$ is inhabited for all $b$.
-  But since it is a mere proposition, inhabitation is equivalent to contractibility.
+  我们曾定义 $f$ 是满的，若对所有 $b$，类型 $\trunc{-1}{\hfiber f b}$ 都有实例。
+  但由于这是一个命题，有实例等价于可缩。
 \end{proof}
 
-Thus, $n$-connectedness of a function for $n\ge 0$ can be thought of as a strong form of surjectivity.
-Category-theoretically, $(-1)$-connectedness corresponds to essential surjectivity on objects, while $n$-connectedness corresponds to essential surjectivity on $k$-morphisms for $k\le n+1$.
+这样一来，对于 $n\ge 0$，函数的 $n$-连通性可以看作是一种更强的满射性。
+从范畴论角度看，$(-1)$-连通性对应于对象上的本质满性，而 $n$-连通性则对应于 $k$-态射（$k\le n+1$）上的本质满性。
 
-\cref{thm:minusoneconn-surjective} also implies that a type $A$ is $(-1)$-connected if and only if it is merely inhabited.
-When a type is $0$-connected we may simply say that it is \define{connected},
+\cref{thm:minusoneconn-surjective}还蕴含着，一个类型 $A$ 是 $(-1)$-连通的，当且仅当它仅知有实例。
+当一个类型是 $0$-连通的时候，我们可以简称为它是 \define{连通的}，
 \indexdef{connected!type}%
 \indexdef{type!connected}%
-and when it is $1$-connected we say it is \define{simply connected}.
+而当它是 $1$-连通的，我们则称之为是 \define{单连通的}。
 \indexdef{simply connected type}%
 \indexdef{type!simply connected}%
 
 \begin{rmk}\label{rmk:connectedness-indexing}
-  While our notion of $n$-connectedness for types agrees with the standard notion in homotopy theory, our notion of $n$-connectedness for \emph{functions} is off by one from a common indexing in classical homotopy theory.
-  Whereas we say a function $f$ is $n$-connected if all its fibers are $n$-connected, some classical homotopy theorists would call such a function $(n+1)$-connected.
-  (This is due to a historical focus on \emph{cofibers} rather than fibers.)
+  尽管我们对于类型的 $n$-连通性定义与同伦论中的标准定义一致，但我们对于\emph{函数}的 $n$-连通性定义，与经典同伦论中一个常见的编号约定相差了 1。
+  我们称一个函数 $f$ 是 $n$-连通的，如果它的所有纤维都是 $n$-连通的；而一些经典同伦论学者会称这样的函数为 $(n+1)$-连通的。
+  （这是由于历史上更关注\emph{余纤维（cofibers）}而非纤维。）
 \end{rmk}
 
-We now observe a few closure properties of connected maps.
+现在我们来观察连通映射的几条闭包性质。
 \index{function!n-connected@$n$-connected}
 
 \begin{lem}
 \index{retract!of a function}%
-Suppose that $g$ is a retract of a $n$-connected function $f$.  Then $g$ is
-$n$-connected.
+设 $g$ 是一个 $n$-连通函数 $f$ 的收缩核。那么 $g$ 也是 $n$-连通的。
 \end{lem}
+
 \begin{proof}
-This is a direct consequence of \cref{lem:func_retract_to_fiber_retract}.
+这是\cref{lem:func_retract_to_fiber_retract}的直接推论。
 \end{proof}
 
 \begin{cor}
-If $g$ is homotopic to a $n$-connected function $f$, then $g$ is $n$-connected.
+如果 $g$ 同伦于一个 $n$-连通函数 $f$，那么 $g$ 也是 $n$-连通的。
 \end{cor}
 
 \begin{lem}\label{lem:nconnected_postcomp}
-Suppose that $f:A\to B$ is $n$-connected. Then $g:B\to C$ is $n$-connected if and only if $g\circ f$ is
-$n$-connected.
+设 $f:A\to B$ 是 $n$-连通的。那么 $g:B\to C$ 是 $n$-连通的，当且仅当复合 $g\circ f$ 是 $n$-连通的。
 \end{lem}
 
 \begin{proof}
-For any $c:C$, we have
+对任意 $c:C$，我们有
 \begin{align*}
   \trunc n{\hfib{g\circ f}c}
   & \eqvsym \Trunc n{ \sm{w:\hfib{g}c}\hfib{f}{\proj1 w}}
@@ -1146,28 +1130,27 @@ For any $c:C$, we have
   & \eqvsym \trunc n{\hfib{g}c}.
   \tag{since $\trunc n{\hfib{f}{\proj1 w}}$ is contractible}
 \end{align*}
-It follows that $\trunc n{\hfib{g}c}$ is contractible if and only if $\trunc n{\hfib{g\circ f}c}$ is
-contractible.
+由此可见，$\trunc n{\hfib{g}c}$ 是可缩的，当且仅当$\trunc n{\hfib{g\circ f}c}$是可缩的。
 \end{proof}
 
-Importantly, $n$-connected functions can be equivalently characterized as those which satisfy an ``induction principle'' with respect to $n$-types.\index{induction principle!for connected maps}
-This idea will lead directly into our proof of the Freudenthal suspension theorem in \cref{sec:freudenthal}.
+重要的是，$n$-连通函数可以等价地刻画为那些满足关于 $n$-类型的“归纳原理”的函数。\index{induction principle!for connected maps}
+这一想法将直接引导我们在\cref{sec:freudenthal}中证明 Freudenthal 纬悬定理。
 
 \begin{lem}\label{prop:nconnected_tested_by_lv_n_dependent types}
-For $f:A\to B$ and $P:B\to\type$, consider the following function:
+对于函数 $f:A\to B$ 和类型族 $P:B\to\type$，考虑以下函数：
 \begin{equation*}
 \lam{s} s\circ f :\Parens{\prd{b:B} P(b)}\to\Parens{\prd{a:A}P(f(a))}.
 \end{equation*}
-For a fixed $f$ and $n\ge -2$, the following are equivalent.
+对于一个固定的 $f$ 和 $n\ge -2$，下列命题等价：
 \begin{enumerate}
-\item $f$ is $n$-connected.\label{item:conntest1}
-\item For every $P:B\to\ntype{n}$, the map $\lam{s} s\circ f$ is an equivalence.\label{item:conntest2}
-\item For every $P:B\to\ntype{n}$, the map $\lam{s} s\circ f$ has a section.\label{item:conntest3}
+\item $f$ 是 $n$-连通的。\label{item:conntest1}
+\item 对于每个 $P:B\to\ntype{n}$，映射 $\lam{s} s\circ f$ 都是一个等价。\label{item:conntest2}
+\item 对于每个 $P:B\to\ntype{n}$，映射 $\lam{s} s\circ f$ 都有一个截面。\label{item:conntest3}
 \end{enumerate}
 \end{lem}
 
 \begin{proof}
-Suppose that $f$ is $n$-connected and let $P:B\to\ntype{n}$. Then we have the equivalences
+假设 $f$ 是 $n$-连通的，并设 $P:B\to\ntype{n}$。那么我们有如下等价关系：
 \begin{align}
   \prd{b:B} P(b) & \eqvsym \prd{b:B} \Parens{\trunc n{\hfib{f}b} \to P(b)}
   \tag{since $\trunc n{\hfib{f}b}$ is contractible}\\
@@ -1178,105 +1161,107 @@ Suppose that $f$ is $n$-connected and let $P:B\to\ntype{n}$. Then we have the eq
   & \eqvsym \prd{a:A} P(f(a)).
   \tag{by the left universal property of path types}
 \end{align}
-We omit the proof that this equivalence is indeed given by $\lam{s} s\circ f$.
-Thus,~\ref{item:conntest1}$\Rightarrow$\ref{item:conntest2}, and clearly~\ref{item:conntest2}$\Rightarrow$\ref{item:conntest3}.
-To show~\ref{item:conntest3}$\Rightarrow$\ref{item:conntest1}, consider the type family
+我们略去关于此等价确实由 $\lam{s} s\circ f$ 给出的证明。
+因此，有\ref{item:conntest1}$\Rightarrow$\ref{item:conntest2}，且显然有\ref{item:conntest2}$\Rightarrow$\ref{item:conntest3}。
+为证\ref{item:conntest3}$\Rightarrow$\ref{item:conntest1}，考虑类型族
 \begin{equation*}
 P(b)\defeq \trunc n{\hfib{f}b}.
 \end{equation*}
-Then~\ref{item:conntest3} yields a map $c:\prd{b:B} \trunc n{\hfib{f}b}$ with
-$c(f(a))=\tproj n{\pairr{a,\refl{f(a)}}}$. To show that each $\trunc n{\hfib{f}b}$ is contractible,
-we will find a function of type
+那么，由\ref{item:conntest3}可得到一个映射$c:\prd{b:B} \trunc n{\hfib{f}b}$，满足$c(f(a))=\tproj n{\pairr{a,\refl{f(a)}}}$。
+为证明每个 $\trunc n{\hfib{f}b}$ 都是可缩的，我们需要构造一个类型如下的函数：
 \begin{equation*}
 \prd{b:B}{w:\trunc n{\hfib{f}b}} w= c(b).
 \end{equation*}
-By \cref{thm:truncn-ind}, for this it suffices to find a function of type
+根据\cref{thm:truncn-ind}，为此只需构造一个类型如下的函数：
 \begin{equation*}
 \prd{b:B}{a:A}{p:f(a)= b} \tproj n{\pairr{a,p}}= c(b).
 \end{equation*}
-But by rearranging variables and path induction, this is equivalent to the type
+但通过调整变量并使用道路归纳，这等价于如下类型：
 \begin{equation*}
 \prd{a:A} \tproj n{\pairr{a,\refl{f(a)}}}= c(f(a)).
 \end{equation*}
-This property holds by our choice of $c(f(a))$.
+而根据我们对 $c(f(a))$ 的选取，这一性质成立。
 \end{proof}
 
 \begin{cor}\label{cor:totrunc-is-connected}
-For any $A$, the canonical function $\tprojf n:A\to\trunc n A$ is $n$-connected.
+对任意类型 $A$，典范函数 $\tprojf n:A\to\trunc n A$ 是 $n$-连通的。
 \end{cor}
+
 \begin{proof}
-By \cref{thm:truncn-ind} and the associated uniqueness principle, the condition of \cref{prop:nconnected_tested_by_lv_n_dependent types} holds.
+根据\cref{thm:truncn-ind}以及与之相伴的唯一性原理，\cref{prop:nconnected_tested_by_lv_n_dependent types}的条件成立。
 \end{proof}
 
-For instance, when $n=-1$, \cref{cor:totrunc-is-connected} says that the map $A\to \brck A$ from a type to its propositional truncation is surjective.
+例如，当 $n=-1$ 时，\cref{cor:totrunc-is-connected}说明从一个类型到其命题截断的映射 $A\to \brck A$ 是满的。
 
 \begin{cor}\label{thm:nconn-to-ntype-const}\label{connectedtotruncated}
-A type $A$ is $n$-connected if and only if the map
+一个类型 $A$ 是 $n$-连通的，当且仅当对每个 $n$-类型 $B$，映射
 \begin{equation*}
   \lam{b}{a} b: B \to (A\to B)
 \end{equation*}
-is an equivalence for every $n$-type $B$.
-In other words, ``every map from $A$ to an $n$-type is constant''.
+都是等价。
+换言之，“从 $A$ 到任何 $n$-类型的映射都是常值映射”。
 \end{cor}
+
 \begin{proof}
-  By \cref{prop:nconnected_tested_by_lv_n_dependent types} applied to a function with codomain $\unit$.
+  将 \cref{prop:nconnected_tested_by_lv_n_dependent types} 应用于一个陪域为 $\unit$ 的函数即得。
 \end{proof}
 
 \begin{lem}\label{lem:nconnected_to_leveln_to_equiv}
-Let $B$ be an $n$-type and let $f:A\to B$ be a function. Then the induced function $g:\trunc n A\to B$ is an
-equivalence if and only if $f$ is $n$-connected.
+设 $B$ 是一个 $n$-类型，并设 $f:A\to B$ 是一个函数。那么诱导函数 $g:\trunc n A\to B$ 是等价，当且仅当 $f$ 是 $n$-连通的。
 \end{lem}
 
 \begin{proof}
-By \cref{cor:totrunc-is-connected}, $\tprojf n$ is $n$-connected.
-Thus, since $f = g\circ \tprojf n$, by
-\cref{lem:nconnected_postcomp} $f$ is $n$-connected if and only if $g$ is $n$-connected.
-But since $g$ is a function between $n$-types, its fibers are also $n$-types.
-Thus, $g$ is $n$-connected if and only if it is an equivalence.
+根据 \cref{cor:totrunc-is-connected}，$\tprojf n$ 是 $n$-连通的。
+由于 $f = g\circ \tprojf n$，根据
+\cref{lem:nconnected_postcomp} 可知，$f$ 是 $n$-连通的当且仅当 $g$ 是 $n$-连通的。
+但 $g$ 是两个 $n$-类型之间的函数，所以它的纤维也都是 $n$-类型。
+因此，$g$ 是 $n$-连通的当且仅当它是等价。
 \end{proof}
 
-We can also characterize connected pointed types in terms of connectivity of the inclusion of their basepoint.
+我们也可以用基点包含映射的连通性来刻画连通的带点类型。
 
 \begin{lem}\label{thm:connected-pointed}
   \index{basepoint}%
-  Let $A$ be a type and $a_0:\unit\to A$ a basepoint, with $n\ge -1$.
-  Then $A$ is $n$-connected if and only if the map $a_0$ is $(n-1)$-connected.
+  设 $A$ 是一个类型，$a_0:\unit\to A$ 是一个基点，且 $n\ge -1$。
+  那么 $A$ 是 $n$-连通的，当且仅当映射 $a_0$ 是 $(n-1)$-连通的。
 \end{lem}
-\begin{proof}
-  First suppose $a_0:\unit\to A$ is $(n-1)$-connected and let $B$ be an $n$-type; we will use \cref{thm:nconn-to-ntype-const}.
-  The map $\lam{b}{a} b: B \to (A\to B)$ has a retraction given by $f\mapsto f(a_0)$, so it suffices to show it also has a section, i.e.\ that for any $f:A\to B$ there is $b:B$ such that $f = \lam{a}b$.
-  We choose $b\defeq f(a_0)$.
-  Define $P:A\to\type$ by $P(a) \defeq (f(a)=f(a_0))$.
-  Then $P$ is a family of $(n-1)$-types and we have $P(a_0)$; hence we have $\prd{a:A} P(a)$ since $a_0:\unit\to A$ is $(n-1)$-connected.
-  Thus, $f = \lam{a} f(a_0)$ as desired.
 
-  Now suppose $A$ is $n$-connected, and let $P:A\to\ntype{(n-1)}$ and $u:P(a_0)$ be given.
-  By \cref{prop:nconnected_tested_by_lv_n_dependent types}, it will suffice to construct $f:\prd{a:A} P(a)$ such that $f(a_0)=u$.
-  Now $\ntype{(n-1)}$ is an $n$-type and $A$ is $n$-connected, so by \cref{thm:nconn-to-ntype-const}, there is an $n$-type $B$ such that $P = \lam{a} B$.
-  Hence, we have a family of equivalences $g:\prd{a:A} (\eqv{P(a)}{B})$.
-  Define $f(a) \defeq \opp{g_a}(g_{a_0}(u))$; then $f:\prd{a:A} P(a)$ and $f(a_0) = u$ as desired.
+\begin{proof}
+  首先假设 $a_0:\unit\to A$ 是 $(n-1)$-连通的，并设 $B$ 是一个 $n$-类型；我们将使用 \cref{thm:nconn-to-ntype-const}。
+  映射 $\lam{b}{a} b: B \to (A\to B)$ 有一个收缩，由 $f\mapsto f(a_0)$ 给出，因此只需证明它也有一个截面，即对任意 $f:A\to B$，存在 $b:B$ 使得 $f = \lam{a}b$。
+  我们取 $b\defeq f(a_0)$。
+  定义 $P:A\to\type$ 为 $P(a) \defeq (f(a)=f(a_0))$。
+  那么 $P$ 是一个由 $(n-1)$-类型构成的族，并且我们有 $P(a_0)$；由于 $a_0:\unit\to A$ 是 $(n-1)$-连通的，因此我们有 $\prd{a:A} P(a)$。
+  于是，$f = \lam{a} f(a_0)$ 如所需。
+
+  现在假设 $A$ 是 $n$-连通的，设给定 $P:A\to\ntype{(n-1)}$ 和 $u:P(a_0)$。
+  根据 \cref{prop:nconnected_tested_by_lv_n_dependent types}，只需构造 $f:\prd{a:A} P(a)$ 使得 $f(a_0)=u$。
+  现在 $\ntype{(n-1)}$ 是一个 $n$-类型且 $A$ 是 $n$-连通的，因此由 \cref{thm:nconn-to-ntype-const}，存在一个 $n$-类型 $B$ 使得 $P = \lam{a} B$。
+  于是，我们得到一族等价 $g:\prd{a:A} (\eqv{P(a)}{B})$。
+  定义 $f(a) \defeq \opp{g_a}(g_{a_0}(u))$；则 $f:\prd{a:A} P(a)$ 且 $f(a_0) = u$ 如所需。
 \end{proof}
 
-In particular, a pointed type $(A,a_0)$ is 0-connected if and only if $a_0:\unit\to A$ is surjective, which is to say $\prd{x:A} \brck{x=a_0}$.
-For a similar result in the not-necessarily-pointed case, see \cref{ex:connectivity-inductively}.
+特别地，一个带点类型 $(A,a_0)$ 是 0-连通的，当且仅当 $a_0:\unit\to A$ 是满的，也就是说 $\prd{x:A} \brck{x=a_0}$。
+关于不一定带点的情形的类似结果，参见 \cref{ex:connectivity-inductively}。
 
-A useful variation on \cref{lem:nconnected_postcomp} is:
+\cref{lem:nconnected_postcomp} 的一个有用变体是：
 
 \begin{lem}\label{lem:nconnected_postcomp_variation}
-Let $f:A\to B$ be a function and $P:A\to\type$ and $Q:B\to\type$ be type families. Suppose that $g:\prd{a:A} P(a)\to Q(f(a))$
-is a fiberwise $n$-connected%
+设 $f:A\to B$ 是一个函数，$P:A\to\type$ 和 $Q:B\to\type$ 是类型族。假设 $g:\prd{a:A} P(a)\to Q(f(a))$
+是一个逐纤维 $n$-连通%
 \index{fiberwise!n-connected family of functions@$n$-connected family of functions}
-family of functions, i.e.\ each function $g_a : P(a) \to Q(f(a))$ is $n$-connected.
-If $f$ is also $n$-connected, then so is the function
+的函数族，即每个函数 $g_a : P(a) \to Q(f(a))$ 都是 $n$-连通的。
+若 $f$ 也是 $n$-连通的，则函数
 \begin{align*}
 \varphi &:\Parens{\sm{a:A} P(a)}\to\Parens{\sm{b:B} Q(b)}\\
 \varphi(a,u) &\defeq \pairr{f(a),g_a(u)}.
 \end{align*}
-Conversely, if $\varphi$ and each $g_a$ are $n$-connected, and moreover $Q$ is fiberwise merely inhabited (i.e.\ we have $\brck{Q(b)}$ for all $b:B$), then $f$ is $n$-connected.
+也是 $n$-连通的。
+反之，若 $\varphi$ 和每个 $g_a$ 都是 $n$-连通的，且 $Q$ 逐纤维地仅知有实例（即对所有 $b:B$ 有 $\brck{Q(b)}$），则 $f$ 是 $n$-连通的。
 \end{lem}
 
 \begin{proof}
-For any $b:B$ and $v:Q(b)$ we have
+对任意 $b:B$ 和 $v:Q(b)$，我们有
 {\allowdisplaybreaks
 \begin{align*}
 \trunc n{\hfib{\varphi}{\pairr{b,v}}} & \eqvsym \Trunc n{\sm{a:A}{u:P(a)}{p:f(a)= b} \trans{p}{g_a(u)}= v}\\
@@ -1285,168 +1270,158 @@ For any $b:B$ and $v:Q(b)$ we have
 & \eqvsym \Trunc n{\sm{w:\hfib{f}b} \trunc n{\hfib{g(\proj1 w)}{\trans{\opp{\proj 2(w)}}{v}}}}\\
 & \eqvsym \trunc n{\hfib{f}b}
 \end{align*}}%
-where the transportations along $f(p)$ and $f(p)^{-1}$ are with respect to $Q$.
-Therefore, if either is contractible, so is the other.
+其中沿 $f(p)$ 和 $f(p)^{-1}$ 的输运是关于 $Q$ 的。
+因此，若其中一个是可缩的，则另一个也是可缩的。
 
-In particular, if $f$ is $n$-connected, then $\trunc n{\hfib{f}b}$ is contractible for all $b:B$, and hence so is $\trunc n{\hfib{\varphi}{\pairr{b,v}}}$ for all $(b,v):\sm{b:B} Q(b)$.
-On the other hand, if $\varphi$ is $n$-connected, then $\trunc n{\hfib{\varphi}{\pairr{b,v}}}$ is contractible for all $(b,v)$, hence so is $\trunc n{\hfib{f}b}$ for any $b:B$ such that there exists some $v:Q(b)$.
-Finally, since contractibility is a mere proposition, it suffices to merely have such a $v$.
+特别地，若 $f$ 是 $n$-连通的，则 $\trunc n{\hfib{f}b}$ 对所有 $b:B$ 都是可缩的，从而 $\trunc n{\hfib{\varphi}{\pairr{b,v}}}$ 对所有 $(b,v):\sm{b:B} Q(b)$ 也是可缩的。
+另一方面，若 $\varphi$ 是 $n$-连通的，则 $\trunc n{\hfib{\varphi}{\pairr{b,v}}}$ 对所有 $(b,v)$ 都是可缩的，因此对任何存在 $v:Q(b)$ 的 $b:B$，$\trunc n{\hfib{f}b}$ 也是可缩的。
+最后，由于可缩性是一个命题，只需仅知存在这样的 $v$ 即可。
 \end{proof}
 
-The converse direction of \cref{lem:nconnected_postcomp_variation} can fail if $Q$ is not fiberwise merely inhabited.
-For example, if $P$ and $Q$ are both constant at $\emptyt$, then $\varphi$ and each $g_a$ are equivalences, but $f$ could be arbitrary.
+如果 $Q$ 不是逐纤维仅知有实例的，\cref{lem:nconnected_postcomp_variation} 的逆命题可能不成立。
+例如，如果 $P$ 和 $Q$ 都恒取 $\emptyt$，那么 $\varphi$ 和每个 $g_a$ 都是等价，但 $f$ 可以是任意的。
 
-In the other direction, we have
+在另一个方向上，我们有
 
 \begin{lem}\label{prop:nconn_fiber_to_total}
-Let $P,Q:A\to\type$ be type families and consider a fiberwise transformation\index{fiberwise!transformation}
+设 $P,Q:A\to\type$ 是类型族，并考虑一个从 $P$ 到 $Q$ 的逐纤维变换\index{fiberwise!transformation}
 \begin{equation*}
 f:\prd{a:A} \Parens{P(a)\to Q(a)}
 \end{equation*}
-from $P$ to $Q$. Then the induced map $\total f: \sm{a:A}P(a) \to \sm{a:A} Q(a)$ is $n$-connected if and only if each $f(a)$ is $n$-connected.
+。
+那么诱导映射 $\total f: \sm{a:A}P(a) \to \sm{a:A} Q(a)$ 是 $n$-连通的，当且仅当每个 $f(a)$ 是 $n$-连通的。
 \end{lem}
 
-Of course, the ``only if'' direction is also a special case of \cref{lem:nconnected_postcomp_variation}.
+当然，“仅当”方向也是 \cref{lem:nconnected_postcomp_variation} 的一个特例。
 
 \begin{proof}
-By \cref{fibwise-fiber-total-fiber-equiv}, we have
+根据 \cref{fibwise-fiber-total-fiber-equiv}，对每个 $x:A$ 和 $v:Q(x)$，我们有
 $\hfib{\total f}{\pairr{x,v}}\eqvsym\hfib{f(x)}v$
-for each $x:A$ and $v:Q(x)$. Hence $\trunc n{\hfib{\total f}{\pairr{x,v}}}$ is contractible if and only if
-$\trunc n{\hfib{f(x)}v}$ is contractible.
+因此 $\trunc n{\hfib{\total f}{\pairr{x,v}}}$ 是可缩的，当且仅当
+$\trunc n{\hfib{f(x)}v}$ 是可缩的。
 \end{proof}
 
-Another useful fact about connected maps is that they induce an
-equivalence on $n$-truncations:
+关于连通映射的另一个有用事实是，它们在 $n$-截断上诱导一个等价：
 
 \begin{lem} \label{lem:connected-map-equiv-truncation}
-If $f : A \to B$ is $n$-connected, then it induces an equivalence
-$\eqv{\trunc{n}{A}}{\trunc{n}{B}}$.
+若 $f : A \to B$ 是 $n$-连通的，则它诱导一个等价
+$\eqv{\trunc{n}{A}}{\trunc{n}{B}}$。
 \end{lem}
+
 \begin{proof}
-Let $c$ be the proof that $f$ is $n$-connected.  From left to right, we
-use the map $\trunc{n}{f} : \trunc{n}{A} \to \trunc{n}{B}$.
-To define the map from right to left, by the universal property of
-truncations, it suffices to give a map $\mathsf{back} : B \to {\trunc{n}{A}}$.  We can
-define this map as follows:
+令 $c$ 为 $f$ 是 $n$-连通的证明。从左到右，我们使用映射 $\trunc{n}{f} : \trunc{n}{A} \to \trunc{n}{B}$。
+为了定义从右到左的映射，根据截断的泛性质，只需给出一个映射 $\mathsf{back} : B \to {\trunc{n}{A}}$。
+我们可以如下定义这个映射：
 \[
 \mathsf{back}(y) \defeq \trunc{n}{\proj{1}}{(\proj{1}{(c(y))})}.
 \]
-By definition, $c(y)$ has type $\iscontr(\trunc n {\hfiber{f}y})$, so its
-first component has type $\trunc n{\hfiber{f}y}$, and we can obtain an
-element of $\trunc n A$ from this by projection.
+根据定义，$c(y)$ 的类型是 $\iscontr(\trunc n {\hfiber{f}y})$，所以它的第一个分量的类型是 $\trunc n{\hfiber{f}y}$，而我们通过投影可以从中得到一个 $\trunc n A$ 的元素。
 
-Next, we show that the composites are the identity.  In both directions,
-because the goal is a path in an $n$-truncated type, it suffices to
-cover the case of the constructor $\tprojf{n}$.
+接下来，我们证明这两个复合映射都是恒等映射。在两个方向上，由于目标都是在 $n$-截断类型中给出一条道路，只需处理构造子 $\tprojf{n}$ 的情形。
 
-In one direction, we must show that for all $x:A$,
+在一个方向上，需证对任意 $x:A$，
 \[
 \trunc{n}{\proj{1}}{(\proj{1}{(c(f(x)))})} = \tproj{n}{x}.
 \]
-But $\tproj{n}{(x, \refl{f(x)})} : \trunc n{\hfiber{f}{f(x)}}$, and
-$c(f(x))$ says that this type is contractible, so
+但 $\tproj{n}{(x, \refl{f(x)})} : \trunc n{\hfiber{f}{f(x)}}$，而 $c(f(x))$ 断言这个类型是可缩的，因此
 \[
 \proj{1}{(c(f(x)))} = \tproj{n}{(x, \refl{})}.
 \]
-Applying $\trunc{n}{\proj{1}}$ to both sides of this equation gives the
-result.
+将 $\trunc{n}{\proj{1}}$ 应用于该等式两边即得结论。
 
-In the other direction, we must show that for all $y:B$,
+在另一个方向上，需证对任意 $y:B$，
 \[
 \trunc{n}{f}(\trunc{n}{\proj{1}} (\proj{1}{(c(y))})) = \tproj{n}{y}.
 \]
-$\proj{1}{(c(y))}$ has type $\trunc n {\hfiber{f}y}$, and the path we
-want is essentially the second component of the $\hfiber{f}y$, but we
-need to make sure the truncations work out.
+$\proj{1}{(c(y))}$ 的类型是 $\trunc n {\hfiber{f}y}$，我们想要的道路本质上是 $\hfiber{f}y$ 的第二个分量，但要确保截断的部分能对应上。
 
-In general, suppose we are given $p:\trunc{n}{\sm{x:A} B(x)}$ and wish to prove
-$P(\trunc{n}{\proj{1}{}}(p))$. By truncation induction, it suffices to
-prove $P(\tproj{n}{a})$ for all $a:A$ and $b:B(a)$.  Applying this
-principle in this case, it suffices to prove
+一般地，假设给定 $p:\trunc{n}{\sm{x:A} B(x)}$ 并希望证明
+$P(\trunc{n}{\proj{1}{}}(p))$。根据截断归纳法，只需对所有 $a:A$ 和 $b:B(a)$ 证明 $P(\tproj{n}{a})$。
+将这一原理应用于当前情形，只需在给定 $a:A$ 和 $b:f (a) = y$ 时证明
 \[
 \trunc{n}{f}(\tproj{n}{a}) = \tproj{n}{y}
 \]
-given $a:A$ and $b:f (a) = y$.  But the left-hand side equals $\tproj{n}{f (a)}$,
-so applying $\tprojf{n}$ to both sides of $b$ gives the result.
+但左边等于 $\tproj{n}{f (a)}$，所以将 $\tprojf{n}$ 应用于 $b$ 两边即得结论。
 \end{proof}
 
-One might guess that this fact characterizes the $n$-connected maps, but in fact being $n$-connected is a bit stronger than this.
-For instance, the inclusion $\bfalse:\unit \to\bool$ induces an equivalence on $(-1)$-truncations, but is not surjective (i.e.\ $(-1)$-connected).
-In \cref{sec:long-exact-sequence-homotopy-groups} we will see that the difference in general is an analogous extra bit of surjectivity.
+有人可能会猜想这个事实完全刻画了 $n$-连通映射，但实际上 $n$-连通性比这稍强一些。
+例如，包含映射 $\bfalse:\unit \to\bool$ 在 $(-1)$-截断上诱导一个等价，但它不是满的（即不是 $(-1)$-连通的）。
+在 \cref{sec:long-exact-sequence-homotopy-groups} 中我们将看到，一般的差异在于一种类似的额外满射性。
 
-
-\section{Orthogonal factorization}
+\section{正交分解}
 \label{sec:image-factorization}
 
 \index{unique!factorization system|(}%
 \index{orthogonal factorization system|(}%
-In set theory, the surjections and the injections form a unique factorization system: every function factors essentially uniquely as a surjection followed by an injection.
-We have seen that surjections generalize naturally to $n$-connected maps, so it is natural to inquire whether these also participate in a factorization system.
-Here is the corresponding generalization of injections.
+在集合论中，满射和单射构成一个唯一分解系统：每个函数本质上唯一地分解为一个满射后接一个单射。
+我们已经看到，满射可以自然地推广到 $n$-连通映射，因此很自然地会问：这些映射是否也参与一个分解系统？
+以下是单射的相应推广。
 
 \begin{defn}
-  A function $f:A\to B$ is \define{$n$-truncated}
+  一个函数 $f:A\to B$ 是\define{$n$-截断的（$n$-truncated）}
   \indexdef{n-truncated@$n$-truncated!function}%
   \indexdef{function!n-truncated@$n$-truncated}%
-if the fiber $\hfib f b$ is an $n$-type for all $b:B$.
+  如果对任意 $b:B$，纤维 $\hfib f b$ 都是 $n$-类型。
 \end{defn}
 
-In particular, $f$ is $(-2)$-truncated if and only if it is an equivalence.
-And of course, $A$ is an $n$-type if and only if $A\to\unit$ is $n$-truncated.
-Moreover, $n$-truncated maps could equivalently be defined recursively, like $n$-types.
+特别地，$f$ 是 $(-2)$-截断的当且仅当它是等价。
+当然，$A$ 是 $n$-类型当且仅当 $A\to\unit$ 是 $n$-截断的。
+此外，$n$-截断映射也可以像 $n$-类型那样递归地定义。
 
 \begin{lem}\label{thm:modal-mono}
-  For any $n\ge -2$, a function $f:A\to B$ is $(n+1)$-truncated if and only if for all $x,y:A$, the map $\apfunc{f}:(x=y) \to (f(x)=f(y))$ is $n$-truncated.
+  对任意 $n\ge -2$，函数 $f:A\to B$ 是 $(n+1)$-截断的当且仅当对任意 $x,y:A$，映射 $\apfunc{f}:(x=y) \to (f(x)=f(y))$ 是 $n$-截断的。
   \index{function!embedding}%
   \index{function!injective}%
-  In particular, $f$ is $(-1)$-truncated if and only if it is an embedding in the sense of \cref{sec:mono-surj}.
+  特别地，$f$ 是 $(-1)$-截断的当且仅当它是 \cref{sec:mono-surj} 中意义上的嵌入。
 \end{lem}
+
 \begin{proof}
-  Note that for any $(x,p),(y,q):\hfib f b$, we have
+  注意对任意 $(x,p),(y,q):\hfib f b$，有
   \begin{align*}
     \big((x,p) = (y,q)\big)
     &= \sm{r:x=y} (p = \apfunc f(r)\ct q)\\
     &= \sm{r:x=y} (\apfunc f (r) = p\ct \opp q)\\
     &= \hfib{\apfunc{f}}{p\ct \opp q}.
   \end{align*}
-  Thus, any path space in any fiber of $f$ is a fiber of $\apfunc{f}$.
-  On the other hand, choosing $b\defeq f(y)$ and $q\defeq \refl{f(y)}$ we see that any fiber of $\apfunc f$ is a path space in a fiber of $f$.
-  The result follows, since $f$ is $\nplusone$-truncated if all path spaces of its fibers are $n$-types.
+  因此，$f$ 的任意纤维中的任意道路空间都是 $\apfunc{f}$ 的纤维。
+  另一方面，取 $b\defeq f(y)$ 和 $q\defeq \refl{f(y)}$，我们看到 $\apfunc f$ 的任意纤维都是 $f$ 的纤维中的一个道路空间。
+  由于 $f$ 是 $\nplusone$-截断的当且仅当其所有纤维的道路空间都是 $n$-类型，结论得证。
 \end{proof}
 
-We can now construct the factorization, in a fairly obvious way.
+现在我们可以以一种相当明显的方式构造分解。
 
 \begin{defn}\label{defn:modal-image}
-Let $f:A\to B$ be a function. The \define{$n$-image}
+设 $f:A\to B$ 是一个函数。$f$ 的\define{$n$-像（$n$-image）}
 \indexdef{image}%
 \indexdef{image!n-image@$n$-image}%
 \indexdef{n-image@$n$-image}%
 \indexdef{function!n-image of@$n$-image of}%
-of $f$ is defined as
+定义为
 \begin{equation*}
 \im_n(f)\defeq \sm{b:B} \trunc n{\hfib{f}b}.
 \end{equation*}
-When $n=-1$, we write simply $\im(f)$ and call it the \define{image} of $f$.
+当 $n=-1$ 时，我们简记 $\im(f)$ 并称其为 $f$ 的\define{像（image）}。
 \end{defn}
 
 \begin{lem}\label{prop:to_image_is_connected}
-For any function $f:A\to B$, the canonical function $\tilde{f}:A\to\im_n(f)$ is $n$-connected.
-Consequently, any function factors as an $n$-connected function followed by an $n$-truncated function.
+对任意函数 $f:A\to B$，典范映射 $\tilde{f}:A\to\im_n(f)$ 是 $n$-连通的。
+因此，任意函数可分解为一个 $n$-连通映射后接一个 $n$-截断映射。
 \end{lem}
 
 \begin{proof}
-Note that $A\eqvsym\sm{b:B}\hfib{f}b$. The function $\tilde{f}$ is the function on total spaces induced by the canonical fiberwise transformation
+注意 $A\eqvsym\sm{b:B}\hfib{f}b$。映射 $\tilde{f}$ 是由典范的逐纤维变换
 \begin{equation*}
 \prd{b:B} \Parens{\hfib{f}b\to\trunc n{\hfib{f}b}}.
 \end{equation*}
-Since each map $\hfib{f}b\to\trunc n{\hfib{f}b}$ is $n$-connected by \cref{cor:totrunc-is-connected}, $\tilde{f}$ is $n$-connected by \cref{prop:nconn_fiber_to_total}.
-Finally, the projection $\proj1:\im_n(f) \to B$ is $n$-truncated, since its fibers are equivalent to the $n$-truncations of the fibers of $f$.
+诱导出的全空间上的映射。
+由于每个映射 $\hfib{f}b\to\trunc n{\hfib{f}b}$ 根据 \cref{cor:totrunc-is-connected} 是 $n$-连通的，故由 \cref{prop:nconn_fiber_to_total} 知 $\tilde{f}$ 是 $n$-连通的。
+最后，投影 $\proj1:\im_n(f) \to B$ 是 $n$-截断的，因为它的纤维等价于 $f$ 的纤维的 $n$-截断。
 \end{proof}
 
-In the following lemma we set up some machinery to prove the unique factorization theorem.
+在接下来的引理中，我们将为证明唯一分解定理准备一些工具。
 
 \begin{lem}\label{prop:factor_equiv_fiber}
-Suppose we have a commutative diagram of functions
+假设我们有函数的交换图
 \begin{equation*}
   \xymatrix{
     {A} \ar[r]^{g_1} \ar[d]_{g_2} &
@@ -1457,17 +1432,17 @@ Suppose we have a commutative diagram of functions
     {B}
   }
 \end{equation*}
-with $H:h_1\circ g_1\htpy h_2\circ g_2$, where $g_1$ and $g_2$ are $n$-connected and where $h_1$ and $h_2$ are $n$-truncated.
-Then there is an equivalence
+其中$H:h_1\circ g_1\htpy h_2\circ g_2$，且 $g_1$ 与 $g_2$ 是 $n$-连通的，而 $h_1$ 与 $h_2$ 是 $n$-截断的。
+则对任意 $b:B$，存在一个等价
 \begin{equation*}
 E(H,b):\hfib{h_1}b\eqvsym\hfib{h_2}b
 \end{equation*}
-for any $b:B$, such that for any $a:A$ we have an identification
+使得对任意 $a:A$，有一个相等证明
 \[\overline{E}(H,a) :  E(H,h_1(g_1(a)))({g_1(a),\refl{h_1(g_1(a))}}) = \pairr{g_2(a),\opp{H(a)}}.\]
 \end{lem}
 
 \begin{proof}
-Let $b:B$. Then we have the following equivalences:
+任取 $b:B$。则我们有以下等价：
 \begin{align}
 \hfib{h_1}b
 & \eqvsym \sm{w:\hfib{h_1}b} \trunc n{ \hfib{g_1}{\proj1 w}}
@@ -1477,15 +1452,15 @@ Let $b:B$. Then we have the following equivalences:
 & \eqvsym \trunc n{\hfib{h_1\circ g_1}b}
 \tag{by \cref{ex:unstable-octahedron}}
 \end{align}
-and likewise for $h_2$ and $g_2$.
-Also, since we have a homotopy $H:h_1\circ g_1\htpy h_2\circ g_2$, there is an obvious equivalence $\hfib{h_1\circ g_1}b\eqvsym\hfib{h_2\circ g_2}b$.
-Hence we obtain
+对 $h_2$ 和 $g_2$ 同理。
+此外，由于有同伦$H:h_1\circ g_1\htpy h_2\circ g_2$，存在一个明显的等价$\hfib{h_1\circ g_1}b\eqvsym\hfib{h_2\circ g_2}b$。
+因此对任意 $b:B$，我们得到
 \begin{equation*}
 \hfib{h_1}b\eqvsym\hfib{h_2}b
 \end{equation*}
-for any $b:B$. By analyzing the underlying functions, we get the following representation of what happens to the element
-$\pairr{g_1(a),\refl{h_1(g_1(a))}}$ after applying each of the equivalences of which $E$ is composed.
-Some of the identifications are definitional, but others (marked with a $=$ below) are only propositional; putting them together we obtain $\overline E(H,a)$.
+通过分析底层的函数，我们得到元素
+$\pairr{g_1(a),\refl{h_1(g_1(a))}}$ 在 $E$ 的各组成等价作用下变化的如下表示。
+其中有一些相等证明是定义性的，但另一些（在下方用 $=$ 标出）仅是命题性的；将它们组合起来，便得到 $\overline E(H,a)$。
 {\allowdisplaybreaks
 \begin{align*}
 \pairr{g_1(a),\refl{h_1(g_1(a))}} &
@@ -1497,78 +1472,77 @@ Some of the identifications are definitional, but others (marked with a $=$ belo
   & \mapsto \Pairr{\pairr{g_2(a),\opp{H(a)}}, \tproj n {\pairr{a,\refl{g_2(a)}}} }\\
   & \mapsto \pairr{g_2(a),\opp{H(a)}}
 \end{align*}}
-The first equality is because for general $b$, the map
+第一个等式成立是因为：对于一般的 $b$，映射
 \narrowequation{ \hfib{h_1}b \to \sm{w:\hfib{h_1}b} \trunc n{ \hfib{g_1}{\proj1 w}} }
-inserts the center of contraction for $\trunc n{ \hfib{g_1}{\proj1 w}}$ supplied by the assumption that $g_1$ is $n$-truncated; whereas in the case in question this type has the obvious inhabitant $\tproj n{ \pairr{a,\refl{g_1(a)}}}$, which by contractibility must be equal to the center.
-The second propositional equality is because the equivalence $\hfib{h_1\circ g_1}b\eqvsym\hfib{h_2\circ g_2}b$ concatenates the second components with $\opp{H(a)}$, and we have $\opp{H(a)} \ct \refl{} = \opp{H(a)}$.
-The reader may check that the other equalities are definitional (assuming a reasonable solution to \cref{ex:unstable-octahedron}).
+会插入$\trunc n{ \hfib{g_1}{\proj1 w}}$的收缩中心（由"$g_1$ 是 $n$-截断的"这一假设提供）；而在当前讨论的情形中，该类型有明显的元素$\tproj n{ \pairr{a,\refl{g_1(a)}}}$，由可缩性可知它必须等于那个收缩中心。
+第二个命题性等式成立是因为等价$\hfib{h_1\circ g_1}b\eqvsym\hfib{h_2\circ g_2}b$将第二个分量与 $\opp{H(a)}$ 拼接，并且我们有$\opp{H(a)} \ct \refl{} = \opp{H(a)}$。
+其余等式均为定义性的，读者可以自行验证（假定\cref{ex:unstable-octahedron}有一个合理的解决方案）。
 \end{proof}
 
 % The equivalences $E(H,b)$ are such that $E(H^{-1},b)= E(H,b)^{-1}$.
 
-Combining \cref{prop:to_image_is_connected,prop:factor_equiv_fiber}, we have the following unique factorization result:
+结合\cref{prop:to_image_is_connected,prop:factor_equiv_fiber}，我们得到如下唯一分解结果：
 
 \begin{thm}\label{thm:orth-fact}
-For each $f:A\to B$, the space $\fact_n(f)$ defined by
+对每个 $f:A\to B$，由下式定义的空间 $\fact_n(f)$
 \begin{equation*}
 \sm{X:\type}{g:A\to X}{h:X\to B} (h\circ g\htpy f)\times\mathsf{conn}_n(g)\times\mathsf{trunc}_n(h)
 \end{equation*}
-is contractible.
-Its center of contraction is the element
+是可缩的。
+其收缩中心是来自\cref{prop:to_image_is_connected}的元素
 \begin{equation*}
 \pairr{\im_n(f),\tilde{f},\proj1,\theta,\varphi,\psi}:\fact_n(f)
 \end{equation*}
-arising from \cref{prop:to_image_is_connected},
-where $\theta:\proj1\circ\tilde{f}\htpy f$ is the canonical homotopy, where $\varphi$ is the proof of
-\cref{prop:to_image_is_connected}, and where $\psi$ is the obvious proof that $\proj1:\im_n(f)\to B$ has $n$-truncated fibers.
+其中$\theta:\proj1\circ\tilde{f}\htpy f$是典范同伦，$\varphi$ 是
+\cref{prop:to_image_is_connected}的证明，而 $\psi$ 是"$\proj1:\im_n(f)\to B$具有 $n$-截断的纤维"这一事实的显然证明。
 \end{thm}
 
 \begin{proof}
-By \cref{prop:to_image_is_connected} we know that there is an element of $\fact_n(f)$, hence it is enough to
-show that $\fact_n(f)$ is a mere proposition. Suppose we have two $n$-factorizations
+根据\cref{prop:to_image_is_connected}我们知道 $\fact_n(f)$ 中存在元素，因此只需证明 $\fact_n(f)$ 是一个命题。
+假设 $f$ 有两个 $n$-分解
 \begin{equation*}
 \pairr{X_1,g_1,h_1,H_1,\varphi_1,\psi_1}\qquad\text{and}\qquad\pairr{X_2,g_2,h_2,H_2,\varphi_2,\psi_2}
 \end{equation*}
-of $f$. Then we have the pointwise-concatenated homotopy
+那么我们有点态拼接而成的同伦
 \[ H\defeq (\lam{a} H_1(a) \ct H_2^{-1}(a)) \,:\, (h_1\circ g_1\htpy h_2\circ g_2).\]
-By univalence and the characterization of paths and transport in $\Sigma$-types, function types, and path types, it suffices to show that
+根据泛等性以及道路与搬运在 $\Sigma$-类型、函数类型和道路类型中的刻画，只需证明以下四点：
 \begin{enumerate}
-\item there is an equivalence $e:X_1\eqvsym X_2$,
-\item there is a homotopy $\zeta:e\circ g_1\htpy g_2$,
+\item 存在一个等价 $e:X_1\eqvsym X_2$，
+\item 存在一个同伦$\zeta:e\circ g_1\htpy g_2$，
 % \note{Is it easy enough to see that these elements are the various transports?}
-\item there is a homotopy $\eta:h_2\circ e\htpy h_1$,
-\item for any $a:A$ we have $\opp{\apfunc{h_2}(\zeta(a))} \ct \eta(g_1(a)) \ct H_1(a) = H_2(a)$.
+\item 存在一个同伦$\eta:h_2\circ e\htpy h_1$，
+\item 对任意 $a:A$ 我们有$\opp{\apfunc{h_2}(\zeta(a))} \ct \eta(g_1(a)) \ct H_1(a) = H_2(a)$。
 \end{enumerate}
 %where $\underline{e}$ is the function underlying the equivalence.
-We prove these four assertions in that order.
+我们按顺序证明这四个断言。
 \begin{enumerate}
-\item By \cref{prop:factor_equiv_fiber}, we have a fiberwise equivalence
+\item 由\cref{prop:factor_equiv_fiber}，我们有一个逐纤维等价
 % \note{It could be a nice exercise for the book to show
 % that if $f_1:A_1\to B$ and $f_2:A_2\to B$ have equivalent fibers, then $A_1\eqvsym A_2$}.
 \begin{equation*}
 E(H) : \prd{b:B} \eqv{\hfib{h_1}b}{\hfib{h_2}b}.
 \end{equation*}
-This induces an equivalence of total spaces, i.e.\ we have
+这诱导了全空间的一个等价，亦即我们有
 \begin{equation*}
 \eqvspaced{\Parens{\sm{b:B} \hfib{h_1}b}}{\Parens{\sm{b:B}\hfib{h_2}b}}.
 \end{equation*}
-Of course, we also have the equivalences $X_1\eqvsym\sm{b:B}\hfib{h_1}b$ and $X_2\eqvsym\sm{b:B}
-\hfib{h_2}b$ from \cref{thm:total-space-of-the-fibers}.
-This gives us our equivalence $e:X_1\eqvsym X_2$; the reader may verify that the underlying function of $e$ is given by
+当然，由\cref{thm:total-space-of-the-fibers}我们还有等价$X_1\eqvsym\sm{b:B}\hfib{h_1}b$与$X_2\eqvsym\sm{b:B}
+\hfib{h_2}b$。
+由此我们得到等价 $e:X_1\eqvsym X_2$；读者可以验证 $e$ 的底层函数由下式给出：
 \begin{equation*}
 e(x) \jdeq \proj1(E(H,h_1(x))(x,\refl{h_1(x)})).
 \end{equation*}
-\item By \cref{prop:factor_equiv_fiber}, we may choose
-  $\zeta(a) \defeq \apfunc{\proj1}(\overline E(H,a)) : e(g_1(a)) = g_2(a)$.
+\item 由\cref{prop:factor_equiv_fiber}，我们可以选取
+  $\zeta(a) \defeq \apfunc{\proj1}(\overline E(H,a)) : e(g_1(a)) = g_2(a)$。
   \label{item:orth-fact-2}
-\item For every $x:X_1$, we have
+\item 对每个 $x:X_1$，我们有
 \begin{equation*}
 \proj2(E(H,h_1(x))({x,\refl{h_1(x)}})) :h_2(e(x))= h_1(x),
 \end{equation*}
-giving us a homotopy $\eta:h_2\circ e\htpy h_1$.
-\item By the characterization of paths in fibers (\cref{lem:hfib}), the path $\overline E(H,a)$ from \cref{prop:factor_equiv_fiber} gives us
-  $\eta(g_1(a)) = \apfunc{h_2}(\zeta(a)) \ct \opp{H(a)}$.
-  The desired equality follows by substituting the definition of $H$ and rearranging paths.\qedhere
+这给出了同伦$\eta:h_2\circ e\htpy h_1$。
+\item 根据纤维中道路的刻画（\cref{lem:hfib}），来自\cref{prop:factor_equiv_fiber}的道路 $\overline E(H,a)$ 给出
+  $\eta(g_1(a)) = \apfunc{h_2}(\zeta(a)) \ct \opp{H(a)}$。
+  代入 $H$ 的定义并整理道路后，即得所求的等式。\qedhere
 \end{enumerate}
 \end{proof}
 
@@ -1582,30 +1556,31 @@ giving us a homotopy $\eta:h_2\circ e\htpy h_1$.
 % \end{equation*}
 % \end{cor}
 
-By standard arguments, this yields the following orthogonality principle.
+通过标准论证，我们得到如下的正交性原理。
 
 \begin{thm}
-  Let $e:A\to B$ be $n$-connected and $m:C\to D$ be $n$-truncated.
-  Then the map
+  设 $e:A\to B$ 是 $n$-连通的，且 $m:C\to D$ 是 $n$-截断的。
+  则映射
   \[ \varphi: (B\to C) \;\to\; \sm{h:A\to C}{k:B\to D} (m\circ h \htpy k \circ e) \]
-  is an equivalence.
+  是一个等价。
 \end{thm}
-\begin{proof}[Sketch of proof]
-  For any $(h,k,H)$ in the codomain, let $h = h_2 \circ h_1$ and $k = k_2 \circ k_1$, where $h_1$ and $k_1$ are $n$-connected and $h_2$ and $k_2$ are $n$-truncated.
-  Then $f = (m\circ h_2) \circ h_1$ and $f = k_2 \circ (k_1\circ e)$ are both $n$-factorizations of $m \circ h = k\circ e$.
-  Thus, there is a unique equivalence between them.
-  It is straightforward (if a bit tedious) to extract from this that $\hfib\varphi{(h,k,H)}$ is contractible.
+
+\begin{proof}[证明概要]
+  对于陪域中的任意 $(h,k,H)$，令 $h = h_2 \circ h_1$ 且 $k = k_2 \circ k_1$，其中 $h_1$ 与 $k_1$ 是 $n$-连通的，$h_2$ 与 $k_2$ 是 $n$-截断的。
+  那么$f = (m\circ h_2) \circ h_1$与$f = k_2 \circ (k_1\circ e)$都是 $m \circ h = k\circ e$ 的 $n$-分解。
+  因此，二者之间存在唯一的等价。
+  由此不难得出$\hfib\varphi{(h,k,H)}$是可缩的（尽管略显繁琐）。
 \end{proof}
 
 \index{orthogonal factorization system|)}%
 \index{unique!factorization system|)}%
 
-We end by showing that images are stable under pullback.
+最后，我们证明像在拉回下是稳定的。
 \index{image!stability under pullback}
 \index{factorization!stability under pullback}
 
 \begin{lem}\label{lem:hfiber_wrt_pullback}
-Suppose that the square
+假设方块
 \begin{equation*}
   \vcenter{\xymatrix{
       A\ar[r]\ar[d]_f &
@@ -1614,11 +1589,11 @@ Suppose that the square
       D
       }}
 \end{equation*}
-is a pullback square and let $b:B$. Then $\hfib{f}b\eqvsym\hfib{g}{h(b)}$.
+是一个拉回方块，并设 $b:B$。那么$\hfib{f}b\eqvsym\hfib{g}{h(b)}$。
 \end{lem}
 
 \begin{proof}
-This follows from pasting of pullbacks (\cref{ex:pullback-pasting}), since the type $X$ in the diagram
+这可由拉回的粘贴性质（\cref{ex:pullback-pasting}）得出，因为下图中的类型 $X$
 \begin{equation*}
   \vcenter{\xymatrix{
       X\ar[r]\ar[d] &
@@ -1629,12 +1604,12 @@ This follows from pasting of pullbacks (\cref{ex:pullback-pasting}), since the t
       D
       }}
 \end{equation*}
-is the pullback of the left square if and only if it is the pullback of the outer rectangle, while $\hfib{f}b$ is the pullback of the square on the left and $\hfib{g}{h(b)}$ is the pullback of the outer rectangle.
+是左边方块的拉回当且仅当它是整个外层矩形的拉回，而 $\hfib{f}b$ 是左边方块的拉回，$\hfib{g}{h(b)}$ 是整个外层矩形的拉回。
 \end{proof}
 
 \begin{thm}\label{thm:stable-images}
 \index{stability!of images under pullback}%
-Consider functions $f:A\to B$, $g:C\to D$ and the diagram
+考虑函数 $f:A\to B$, $g:C\to D$ 以及图表
 \begin{equation*}
   \vcenter{\xymatrix{
       A\ar[r]\ar[d]_{\tilde{f}_n} &
@@ -1645,11 +1620,11 @@ Consider functions $f:A\to B$, $g:C\to D$ and the diagram
       D
       }}
 \end{equation*}
-If the outer rectangle is a pullback, then so is the bottom square (and hence so is the top square, by \cref{ex:pullback-pasting}). Consequently, images are stable under pullbacks.
+如果外层矩形是拉回，那么底部的方块也是拉回（从而由\cref{ex:pullback-pasting}，顶部的方块也是拉回）。因此，像在拉回下是稳定的。
 \end{thm}
 
 \begin{proof}
-Assuming the outer square is a pullback, we have equivalences
+假设外层方块是拉回，我们有等价
 \begin{align*}
 B\times_D\im_n(g) & \jdeq \sm{b:B}{w:\im_n(g)} h(b)=\proj1 w\\
 & \eqvsym \sm{b:B}{d:D}{w:\trunc n{\hfib{g}d}} h(b)= d\\
@@ -1662,67 +1637,68 @@ B\times_D\im_n(g) & \jdeq \sm{b:B}{w:\im_n(g)} h(b)=\proj1 w\\
 
 \index{n-type@$n$-type|)}%
 
-\section{Modalities}
+\section{模态}
 \label{sec:modalities}
 
 \index{modality|(}
 
-Nearly all of the theory of $n$-types and connectedness can be done in much greater generality.
-This section will not be used in the rest of the book.
+几乎所有关于 $n$-类型和连通性的理论都可以在更一般的框架下进行。
+本节的内容在本书后续部分不会用到。
 
-Our first thought regarding generalizing the theory of $n$-types might be to take \cref{thm:trunc-reflective} as a definition.
+对于推广 $n$-类型理论，我们最初的想法可能是将\cref{thm:trunc-reflective}作为一个定义。
 
 \begin{defn}\label{defn:reflective-subuniverse}
-  A \define{reflective subuniverse}
+  一个\define{反射子宇宙（reflective subuniverse）}
   \indexdef{reflective!subuniverse}%
   \indexdef{subuniverse, reflective}%
-  is a predicate $P:\type\to\prop$ such that
-  for every $A:\type$ we have a type $\reflect A$ such that $P(\reflect A)$ and a map
-  $\project_A:A\to\reflect A$, with the property that for every $B:\type$ with $P(B)$, the following map is an equivalence:
+  是一个谓词 $P:\type\to\prop$，满足对于每个类型 $A:\type$，我们都有一个类型 $\reflect A$ 使得 $P(\reflect A)$ 成立，以及一个映射
+  $\project_A:A\to\reflect A$，并具有如下性质：对于每个满足 $P(B)$ 的类型 $B:\type$，下面的映射是一个等价：
   \[\function{(\reflect A\to{}B)}{(A\to{}B)}{f}{f\circ\project_A}.\]
 \end{defn}
 
-We write $\P \defeq \setof{A:\type | P(A)}$, so $A:\P$ means that $A:\type$ and we have $P(A)$.
-We also write $\rec{\modal}$ for the quasi-inverse of the above map.
-The notation $\reflect$ may seem slightly odd, but it will make more sense soon.
+我们记$\P \defeq \setof{A:\type | P(A)}$，因此 $A:\P$ 表示 $A:\type$ 且 $P(A)$ 成立。
+我们也将上述映射的拟逆记为 $\rec{\modal}$。
+记号 $\reflect$ 可能看起来有点奇怪，但稍后我们会明白它的意义。
 
-For any reflective subuniverse, we can prove all the familiar facts about reflective subcategories from category theory, in the usual way.
-For instance, we have:
+对于任意反射子宇宙，我们可以用通常的方式证明范畴论中关于反射子范畴的所有熟知结论。例如，我们有：
+
 \begin{itemize}
-\item A type $A$ lies in $\P$ if and only if $\project_A:A\to\reflect A$ is an equivalence.
-\item $\P$ is closed under retracts.
-  In particular, $A$ lies in $\P$ as soon as $\project_A$ admits a retraction.
-\item The operation $\reflect$ is a functor in a suitable up-to-coherent-homotopy sense, which we can make precise at as high levels as necessary.
-\item The types in $\P$ are closed under all limits such as products and pullbacks.
-  In particular, for any $A:\P$ and $x,y:A$, the identity type $(x=_A y)$ is also in $\P$, since it is a pullback of two functions $\unit\to A$.
-\item Colimits in $\P$ can be constructed by applying $\reflect$ to ordinary colimits of types.
+\item 一个类型 $A$ 属于 $\P$ 当且仅当 $\project_A:A\to\reflect A$ 是一个等价。
+\item $\P$ 在收缩核下封闭。
+  特别地，只要 $\project_A$ 有一个收缩，$A$ 就属于 $\P$。
+\item 运算 $\reflect$ 在某种合适的、同伦相干的意义下是一个函子；我们可以在需要的任何高阶层次上给出精确表述。
+\item $\P$ 中的类型在所有极限（如积和拉回）下封闭。
+  特别地，对于任意 $A:\P$ 和 $x,y:A$，恒等类型 $(x=_A y)$ 也属于 $\P$，因为它是两个函数 $\unit\to A$ 的拉回。
+\item $\P$ 中的余极限可以通过将 $\reflect$ 作用于类型的普通余极限来构造。
 \end{itemize}
 
-Importantly, closure under products extends also to ``infinite products'', i.e.\ dependent function types.
+重要的是，对积的封闭性也推广到"无穷积"，即依值函数类型。
 
 \begin{thm}\label{thm:reflsubunv-forall}
-  If $B:A\to\P$ is any family of types in a reflective subuniverse \P, then $\prd{x:A} B(x)$ is also in \P.
+  如果 $B:A\to\P$ 是反射子宇宙 \P 中任意一族类型，那么 $\prd{x:A} B(x)$ 也属于 \P。
 \end{thm}
+
 \begin{proof}
-  For any $x:A$, consider the function $\mathsf{ev}_x : (\prd{x:A} B(x)) \to B(x)$ defined by $\mathsf{ev}_x(f) \defeq f(x)$.
-  Since $B(x)$ lies in $P$, this extends to a function
+  对于任意 $x:A$，考虑由$\mathsf{ev}_x(f) \defeq f(x)$定义的函数$\mathsf{ev}_x : (\prd{x:A} B(x)) \to B(x)$。
+  因为 $B(x)$ 属于 $P$，这个函数可以延拓为一个函数
   \[ \rec{\modal}(\mathsf{ev}_x) : \reflect\Parens{\prd{x:A} B(x)} \to B(x). \]
-  Thus we can define $h:\reflect(\prd{x:A} B(x)) \to \prd{x:A} B(x)$ by $h(z)(x) \defeq \rec{\modal}(\mathsf{ev}_x)(z)$.
-  Then $h$ is a retraction of $\project_{\prd{x:A} B(x)}$, so that ${\prd{x:A} B(x)}$ is in $\P$.
+  因此我们可以通过$h(z)(x) \defeq \rec{\modal}(\mathsf{ev}_x)(z)$定义$h:\reflect(\prd{x:A} B(x)) \to \prd{x:A} B(x)$。
+  那么 $h$ 就是$\project_{\prd{x:A} B(x)}$的一个收缩，从而${\prd{x:A} B(x)}$属于 $\P$。
 \end{proof}
 
-In particular, if $B:\P$ and $A$ is any type, then $(A\to B)$ is in \P.
-In categorical language, this means that any reflective subuniverse is an \define{exponential ideal}.
+特别地，如果 $B:\P$ 且 $A$ 是任意类型，那么 $(A\to B)$ 属于 \P。
+用范畴论的语言来说，这意味着任何反射子宇宙都是一个\define{指数理想（exponential ideal）}。
 \indexdef{exponential ideal}%
-This, in turn, implies by a standard argument that the reflector preserves finite products.
+进而，由标准论证可知反射子保持有限积。
 
 \begin{cor}\label{cor:trunc_prod}
-  For any types $A$ and $B$ and any reflective subuniverse, the induced map $\reflect(A\times B) \to \reflect(A) \times \reflect(B)$ is an equivalence.
+  对于任意类型 $A$ 和 $B$ 以及任意反射子宇宙，诱导的映射$\reflect(A\times B) \to \reflect(A) \times \reflect(B)$是一个等价。
 \end{cor}
+
 \begin{proof}
-  It suffices to show that $\reflect(A) \times \reflect(B)$ has the same universal property as $\reflect(A\times B)$.
-  It lies in $\P$ by the above remark that types in $\P$ are closed under limits.
-  Now let $C:\P$; we have
+  只需证明 $\reflect(A) \times \reflect(B)$ 具有与 $\reflect(A\times B)$ 相同的泛性质。
+  根据上述关于 $\P$ 中类型在极限下封闭的说明，$\reflect(A) \times \reflect(B)$ 属于 $\P$。
+  现在令 $C:\P$；我们有
   \begin{align*}
     (\reflect(A) \times \reflect(B) \to C)
     &= (\reflect(A) \to (\reflect(B) \to C))\\
@@ -1730,406 +1706,394 @@ This, in turn, implies by a standard argument that the reflector preserves finit
     &= (A \to (B \to C))\\
     &= (A \times B \to C)
   \end{align*}
-  using the universal properties  of $\reflect(B)$ and $\reflect(A)$, along with the fact that $B\to C$ is in \P since $C$ is.
-  It is straightforward to verify that this equivalence is given by composing with $\mreturn_A \times \mreturn_B$, as needed.
+  这里利用了 $\reflect(B)$ 和 $\reflect(A)$ 的泛性质，以及 $B\to C$ 属于 $\P$ 的事实（因为 $C$ 属于 $\P$）。
+  可以直接验证这个等价是通过与 $\mreturn_A \times \mreturn_B$ 复合得到的，符合要求。
 \end{proof}
 
-It may seem odd that every reflective subcategory of types is automatically an exponential ideal, with a product-preserving reflector.
-However, this is also the case classically in the category of \emph{sets}, for the same reasons.
-It's just that this fact is not usually remarked on, since the classical category of sets --- in contrast to the category of homotopy
-types --- does not have many interesting reflective subcategories.
+类型的每个反射子范畴都自动成为指数理想，并且具有保持积的反射子，这可能显得奇怪。然而，在经典集合范畴中，出于同样的原因，情况也是如此。只是这一事实通常不被提及，因为经典的集合范畴——与同伦类型范畴相反——并没有许多有趣的反射子范畴。
 
-Two basic properties of $n$-types are \emph{not} shared by general reflective subuniverses: \cref{thm:ntypes-sigma} (closure under $\Sigma$-types) and \cref{thm:truncn-ind} (truncation induction).
-However, the analogues of these two properties are equivalent to each other.
-
+$n$-类型的两个基本性质不被一般的反射子宇宙所具有：\cref{thm:ntypes-sigma}（在 $\Sigma$-类型下封闭）和\cref{thm:truncn-ind}（截断归纳）。然而，这两个性质的类似命题彼此等价。
 
 \begin{thm}\label{thm:modal-char}
-  For a reflective subuniverse \P, the following are logically equivalent.
+  对于一个反射子宇宙 \P，以下两条逻辑等价。
   \begin{enumerate}
-  \item If $A:\P$ and $B:A\to \P$, then $\sm{x:A} B(x)$ is in \P.\label{item:mchr1}
-  \item for every $A:\type$, type family $B:\reflect A\to\P$, and map $g:\prd{a:A} B(\project(a))$, there exists $f:\prd{z:\reflect A} B(z)$ such that $f(\project(a)) = g(a)$ for all $a:A$.\label{item:mchr2}
+  \item 如果 $A:\P$ 且 $B:A\to \P$，那么 $\sm{x:A} B(x)$ 属于 \P。\label{item:mchr1}
+  \item 对于每个 $A:\type$，类型族 $B:\reflect A\to\P$，以及映射$g:\prd{a:A} B(\project(a))$，存在$f:\prd{z:\reflect A} B(z)$使得对所有 $a:A$ 有$f(\project(a)) = g(a)$。\label{item:mchr2}
   \end{enumerate}
 \end{thm}
-\begin{proof}
-  Suppose~\ref{item:mchr1}.
-  Then in the situation of~\ref{item:mchr2}, the type $\sm{z:\reflect A} B(z)$ lies in $\P$, and we have $g':A\to \sm{z:\reflect A} B(z)$ defined by $g'(a)\defeq (\project(a),g(a))$.
-  Thus, we have $\rec{\modal}(g'):\reflect A \to \sm{z:\reflect A} B(z)$ such that $\rec{\modal}(g')(\project(a)) = (\project(a),g(a))$.
 
-  Now consider the functions $\proj1 \circ \rec{\modal}(g') : \reflect A \to \reflect A$ and $\idfunc[\reflect A]$.
-  By assumption, these become equal when precomposed with $\project$.
-  Thus, by the universal property of $\reflect$, they are equal already, i.e.\ we have $p_z:\proj1(\rec{\modal}(g')(z)) = z$ for all $z$.
-  Now we can define
+\begin{proof}
+  假设\ref{item:mchr1}。
+  那么在\ref{item:mchr2}所述的情形中，类型$\sm{z:\reflect A} B(z)$属于 $\P$，并且我们有由$g'(a)\defeq (\project(a),g(a))$定义的$g':A\to \sm{z:\reflect A} B(z)$。
+  于是，我们得到$\rec{\modal}(g'):\reflect A \to \sm{z:\reflect A} B(z)$，使得$\rec{\modal}(g')(\project(a)) = (\project(a),g(a))$成立。
+
+  现在考虑函数$\proj1 \circ \rec{\modal}(g') : \reflect A \to \reflect A$ 与 $\idfunc[\reflect A]$。
+  根据假设，它们与 $\project$ 预复合后相等。
+  因此，由 $\reflect$ 的泛性质，它们已经相等，即对所有 $z$ 我们有$p_z:\proj1(\rec{\modal}(g')(z)) = z$。
+  现在我们可以定义
   %
   \narrowequation{f(z) \defeq \trans{p_z}{\proj2(\rec{\modal}(g')(z))},}
   %
-  Using the adjunction property of the equivalence of
-  definition~\ref{defn:reflective-subuniverse}, one can show that the first component of
+  利用定义\ref{defn:reflective-subuniverse}给出的等价的伴随性质，可以证明
   %
   \narrowequation{\rec{\modal}(g')(\project(a)) = (\project(a),g(a))}
   %
-  is equal to $p_{\project(a)}$.  Thus, its second component yields
-  $f(\project(a)) = g(a)$, as needed.
+  的第一分量等于 $p_{\project(a)}$。因此，它的第二分量给出所需的$f(\project(a)) = g(a)$。
 
-  Conversely, suppose~\ref{item:mchr2}, and that $A:\P$ and $B:A\to\P$.
-  Let $h$ be the composite
+  反过来，假设\ref{item:mchr2}，且 $A:\P$ 以及 $B:A\to\P$。
+  令 $h$ 为复合
   \[ \reflect\Parens{\sm{x:A} B(x)} \xrightarrow{\reflect(\proj1)} \reflect A \xrightarrow{\opp{(\project_A)}} A. \]
-  Then for $z:\sm{x:A} B(x)$ we have
+  那么对于$z:\sm{x:A} B(x)$，我们有
   \begin{align*}
     h(\project(z)) &= \opp\project(\reflect(\proj1)(\project(z)))\\
     &= \opp\project(\project(\proj1(z)))\\
     &= \proj1(z).
   \end{align*}
-  Denote this path by $p_z$.
-  Now if we define $C:\reflect(\sm{x:A} B(x)) \to \type$ by $C(w) \defeq B(h(w))$, we have
+  记这条道路为 $p_z$。
+  现在如果我们将$C:\reflect(\sm{x:A} B(x)) \to \type$定义为$C(w) \defeq B(h(w))$，则有
   \[ g \defeq \lam{z} \trans{p_z}{\proj2(z)} \;:\; \prd{z:\sm{x:A} B(x)} C(\project(z)). \]
-  Thus, the assumption yields
+  于是，由假设可得
   %
   \narrowequation{f:\prd{w:\reflect(\sm{x:A}B(x))} C(w)}
   %
-  such that $f(\project(z)) = g(z)$.
-  Together, $h$ and $f$ give a function
+  使得$f(\project(z)) = g(z)$成立。
+  $h$ 和 $f$ 共同给出一个函数
   %
   \narrowequation{k:\reflect(\sm{x:A}B(x)) \to \sm{x:A}B(x)}
   %
-  defined by $k(w) \defeq (h(w),f(w))$, while $p_z$ and the equality $f(\project(z)) = g(z)$ show that $k$ is a retraction of $\project_{\sm{x:A}B(x)}$.
-  Therefore, $\sm{x:A}B(x)$ is in \P.
+  由$k(w) \defeq (h(w),f(w))$定义，而 $p_z$ 与相等$f(\project(z)) = g(z)$表明 $k$ 是$\project_{\sm{x:A}B(x)}$的一个收缩。
+  因此，$\sm{x:A}B(x)$ 属于 \P。
 \end{proof}
 
-Note the similarity to the discussion in \cref{sec:htpy-inductive}.
+注意这与\cref{sec:htpy-inductive}中的讨论相似。
 \index{recursion principle!for a modality}%
 \index{induction principle!for a modality}%
 \index{uniqueness!principle, propositional!for a modality}%
-The universal property of the reflector of a reflective subuniverse is like a recursion principle with its uniqueness property, while \cref{thm:modal-char}\ref{item:mchr2} is like the corresponding induction principle.
-Unlike in \cref{sec:htpy-inductive}, the two are not equivalent here, because of the restriction that we can only eliminate into types that lie in $\P$.
-Condition~\ref{item:mchr1} of \cref{thm:modal-char} is what fixes the disconnect.
+反射子宇宙的反射子的泛性质类似于带有唯一性性质的递归原理，而\cref{thm:modal-char}\ref{item:mchr2}则类似于相应的归纳原理。
+与\cref{sec:htpy-inductive}中不同，由于我们只能消去到属于 $\P$ 的类型中，二者在这里并不等价。
+\cref{thm:modal-char} 的条件~\ref{item:mchr1} 正是用来弥合这一脱节的。
 
-Unsurprisingly, of course, if we have the induction principle, then we can derive the recursion principle.
-We can also derive its uniqueness property, as long as we allow ourselves to eliminate into path types.
-This suggests the following definition.
-Note that any reflective subuniverse can be characterized by the operation $\reflect:\type\to\type$ and the functions $\project_A:A\to \reflect A$, since we have $P(A) = \isequiv(\project_A)$.
+当然，毫不意外的是，如果我们有归纳原理，就可以推出递归原理。
+只要允许消去到道路类型，我们也能推出其唯一性性质。
+这引出了以下定义。
+注意，任何反射子宇宙都可以由操作 $\reflect:\type\to\type$ 和函数 $\project_A:A\to \reflect A$ 来刻画，因为$P(A) = \isequiv(\project_A)$。
 
 \begin{defn}\label{defn:modality}
-A \define{modality}
+一个 \define{模态（modality）}
 \indexdef{modality}
-is an operation $\modal:\type\to\type$ for which there are
+是一个操作 $\modal:\type\to\type$，并附带以下数据：
 \begin{enumerate}
-\item functions $\mreturn^\modal_A:A\to\modal(A)$ for every type $A$.\label{item:modal1}
-\item for every $A:\type$ and every type family $B:\modal(A)\to\type$, a function\label{item:modal2}
+\item 对每个类型 $A$，有一个函数 $\mreturn^\modal_A:A\to\modal(A)$。\label{item:modal1}
+\item 对每个 $A:\type$ 以及每个类型族 $B:\modal(A)\to\type$，有一个函数\label{item:modal2}
 \begin{equation*}
 \ind{\modal}:\Parens{\prd{a:A}\modal(B(\mreturn^\modal_A(a)))}\to\prd{z:\modal(A)}\modal(B(z)).
 \end{equation*}
-\item A path $\ind\modal(f)(\mreturn^\modal_A(a)) = f(a)$ for each $f:\prd{a:A}\modal(B(\mreturn^\modal_A(a)))$.\label{item:modal3}
-\item For any $z,z':\modal(A)$, the function $\mreturn^\modal_{z=z'} : (z=z') \to \modal(z=z')$ is an equivalence.\label{item:modal4}
+\item 对每个 $f:\prd{a:A}\modal(B(\mreturn^\modal_A(a)))$，有一条道路 $\ind\modal(f)(\mreturn^\modal_A(a)) = f(a)$。\label{item:modal3}
+\item 对任意 $z,z':\modal(A)$，函数 $\mreturn^\modal_{z=z'} : (z=z') \to \modal(z=z')$ 是一个等价。\label{item:modal4}
 \end{enumerate}
-We say that $A$ is \define{modal}
+如果 $\mreturn^\modal_A:A\to\modal(A)$ 是一个等价，则称 $A$ 对于 $\modal$ 是 \define{模态的}
 \indexdef{modal!type}%
 \indexdef{type!modal}%
-for $\modal$ if $\mreturn^\modal_A:A\to\modal(A)$ is an equivalence, and we write
+，并记
 \begin{equation}
   \modaltype\defeq\setof{X:\type | X \text{ is $\modal$-modal} }\label{eq:modaltype}
 \end{equation}
-for the type of modal types.
+为模态类型的类型。
 \end{defn}
 
-Conditions~\ref{item:modal2} and~\ref{item:modal3} are very similar to \cref{thm:modal-char}\ref{item:mchr2}, but phrased using $\modal B(z)$ rather than assuming $B$ to be valued in $\P$.
-This allows us to state the condition purely in terms of the operation $\modal$, rather than requiring the predicate $P:\type\to\prop$ to be given in advance.
-(It is not entirely satisfactory, since we still have to refer to $P$ not-so-subtly in clause~\ref{item:modal4}.
-We do not know whether~\ref{item:modal4} follows from~\ref{item:modal1}--\ref{item:modal3}.)
-However, the stronger-looking property of \cref{thm:modal-char}\ref{item:mchr2} follows from \cref{defn:modality}\ref{item:modal2} and~\ref{item:modal3}, since for any $C:\modal A \to \modaltype$ we have $C(z) \eqvsym \modal C(z)$, and we can pass back across this equivalence.
+条件~\ref{item:modal2} 和~\ref{item:modal3} 与 \cref{thm:modal-char}\ref{item:mchr2} 非常相似，但改用 $\modal B(z)$ 来表述，而非假设 $B$ 取值于 $\P$。
+这使得我们可以纯粹用操作 $\modal$ 来陈述条件，而无需预先给定谓词 $P:\type\to\prop$。
+（这并非完全令人满意，因为在条款~\ref{item:modal4}中我们仍然不太隐讳地用到了 $P$。
+我们不知道~\ref{item:modal4} 是否能从~\ref{item:modal1}--\ref{item:modal3} 推出。）
+然而，\cref{thm:modal-char}\ref{item:mchr2} 这个看起来更强的性质可以从 \cref{defn:modality}\ref{item:modal2} 及~\ref{item:modal3} 推出，因为对于任何 $C:\modal A \to \modaltype$ 都有 $C(z) \eqvsym \modal C(z)$，并且我们可以借助这个等价来回转换。
 
 \index{universal!property!of a modality}%
-As with other induction principles, this implies a universal property.
+如同其他归纳原理一样，这蕴含了一个泛性质。
 
 \begin{thm}\label{prop:lv_n_deptype_sec_equiv_by_precomp}
-Let $A$ be a type and let $B:\modal(A)\to\modaltype$. Then the function
+设 $A$ 是一个类型，且 $B:\modal(A)\to\modaltype$。则函数
 \begin{equation*}
 (\blank\circ \mreturn^\modal_A) : \Parens{\prd{z:\modal(A)}B(z)} \to \Parens{\prd{a:A}B(\mreturn^\modal_A(a))}
 \end{equation*}
-is an equivalence.
+是一个等价。
 \end{thm}
+
 \begin{proof}
-By definition, the operation $\ind{\modal}$ is a right inverse to $(\blank\circ \mreturn^\modal_A)$.
-Thus, we only need to find a homotopy
+由定义，操作 $\ind{\modal}$ 是 $(\blank\circ \mreturn^\modal_A)$ 的一个右逆。
+因此，我们只需对每个 $s:\prd{z:\modal(A)}B(z)$ 找到一个同伦
 \begin{equation*}
 \prd{z:\modal(A)}s(z)= \ind{\modal}(s\circ \mreturn^\modal_A)(z)
 \end{equation*}
-for each $s:\prd{z:\modal(A)}B(z)$, exhibiting it as a left inverse as well.
-By assumption, each $B(z)$ is modal, and hence each type $s(z)= R^\modal_X(s\circ \mreturn^\modal_A)(z)$
-is also modal.
-Thus, it suffices to find a function of type
+来证明它同时也是一个左逆。
+根据假设，每个 $B(z)$ 都是模态的，因而每个类型 $s(z)= R^\modal_X(s\circ \mreturn^\modal_A)(z)$
+也是模态的。
+于是，只需找到一个类型为
 \begin{equation*}
 \prd{a:A}s(\mreturn^\modal_A(a))= \ind{\modal}(s\circ \mreturn^\modal_A)(\mreturn^\modal_A(a))
 \end{equation*}
-which follows from \cref{defn:modality}\ref{item:modal3}.
+的函数即可，而这可由 \cref{defn:modality}\ref{item:modal3} 推出。
 \end{proof}
 
-In particular, for every type $A$ and every modal type $B$, we have an equivalence $(\modal A\to B)\eqvsym (A\to B)$.
+特别地，对每个类型 $A$ 和每个模态类型 $B$，我们都有一个等价 $(\modal A\to B)\eqvsym (A\to B)$。
 
 \begin{cor}
-  For any modality $\modal$, the $\modal$-modal types form a reflective subuniverse satisfying the equivalent conditions of \cref{thm:modal-char}.
+  对于任意模态 $\modal$，$\modal$-模态类型构成一个满足 \cref{thm:modal-char} 的等价条件的反射子宇宙。
 \end{cor}
 
-Thus, modalities can be identified with reflective subuniverses closed under $\Sigma$-types.
-The name \emph{modality} comes, of course, from \emph{modal logic}\index{modal!logic}, which studies logic where we can form statements such as ``possibly $A$'' (usually written $\diamond A$) or ``necessarily $A$'' (usually written $\Box A$).
-The symbol $\modal$ is somewhat common for an arbitrary modal operator\index{modal!operator}. % (rather than a specific one such as $\diamond$ or $\Box$).
-Under the propositions-as-types principle, a modality in the sense of modal logic corresponds to an operation on \emph{types}, and \cref{defn:modality} seems a reasonable candidate for how such an operation should be defined.
-(More precisely, we should perhaps call these \emph{idempotent, monadic} modalities; see the Notes.)
+因此，模态可以等同于对 $\Sigma$ 类型封闭的反射子宇宙。
+名称 \emph{模态（modality）} 当然来源于 \emph{模态逻辑（modal logic）}\index{modal!logic}，后者研究的是一种逻辑，在其中我们可以形成诸如"可能 $A$"（通常写作 $\diamond A$）或"必然 $A$"（通常写作 $\Box A$）这类陈述。
+符号 $\modal$ 通常用于表示任意的模态算子\index{modal!operator}。% (rather than a specific one such as $\diamond$ or $\Box$).
+在命题即类型的原则下，模态逻辑意义上的模态对应着对\emph{类型}的一种操作，而 \cref{defn:modality} 似乎是定义此类操作的一种合理候选方案。
+（更准确地说，我们或许应该称这些模态为\emph{幂等的、单子的（idempotent, monadic）}模态；见注记。）
 \index{idempotent!modality}%
-As mentioned in \cref{subsec:when-trunc}, we may in general use adverbs\index{adverb} to speak informally about such modalities, such as ``merely''\index{merely} for the propositional truncation and ``purely''\index{purely} for the identity modality
+如 \cref{subsec:when-trunc} 所述，我们通常可以使用副词\index{adverb}来非正式地谈论这些模态，例如用"仅仅"\index{merely}表示命题截断，用"纯粹"\index{purely}表示恒等模态
 \index{identity!modality}%
 \index{modality!identity}%
-(i.e.\ the one defined by $\modal A \defeq A$).
+（即由 $\modal A \defeq A$ 定义的那个模态）。
 
-For any modality $\modal$, we define a map $f:A\to B$ to be \define{$\modal$-connected}
+对于任意模态 $\modal$，我们称映射 $f:A\to B$ 是 \define{$\modal$-连通的（$\modal$-connected）}
 \indexdef{function!.circle-connected@$\modal$-connected}%
 \indexdef{.circle-connected function@$\modal$-connected function}%
-if $\modal(\hfib f b)$ is contractible for all $b:B$, and to be \define{$\modal$-truncated}
+，若对所有 $b:B$，$\modal(\hfib f b)$ 都是可缩的；称其为 \define{$\modal$-截断的（$\modal$-truncated）}
 \indexdef{function!.circle-truncated@$\modal$-truncated}%
 \indexdef{.circle-truncated function@$\modal$-truncated function}%
-if $\hfib f b$ is modal for all $b:B$.
-All of the theory of \cref{sec:connectivity,sec:image-factorization} which doesn't involve relating $n$-types for different values of $n$ applies verbatim in this generality.
+，若对所有 $b:B$，$\hfib f b$ 都是模态的。
+所有来自 \cref{sec:connectivity,sec:image-factorization} 的理论，只要不涉及关联不同 $n$ 值的 $n$-类型，都可以逐字逐句地适用于这一一般情形。
 \index{orthogonal factorization system}%
 \index{unique!factorization system}%
-In particular, we have an orthogonal factorization system.
+特别地，我们有一个正交分解系统。
 
-An important class of modalities which does \emph{not} include the $n$-trun\-ca\-tions is the \emph{left exact} modalities: those for which the functor $\modal$ preserves pullbacks as well as finite products.
+一类不包含 $n$-截断的重要模态是\emph{左正合（left exact）}模态：即那些其函子 $\modal$ 既保持拉回又保持有限积的模态。
 \index{topology!Lawvere-Tierney}%
-These are a categorification of ``Lawvere-Tierney\index{Lawvere}\index{Tierney} topologies'' in elementary topos\index{topos} theory,
-and correspond in higher-categorical semantics to sub-$(\infty,1)$-toposes.
+它们是初等意象\index{topos}论中"Lawvere–Tierney\index{Lawvere}\index{Tierney} 拓扑"的范畴化，并在高阶范畴语义中对应于子 $(\infty,1)$-意象。
 \index{.infinity1-topos@$(\infty,1)$-topos}%
-However, this is beyond the scope of this book.
+然而，这已超出了本书的范围。
 
-Some particular examples of modalities other than $n$-truncation can be found in the exercises.
+除 $n$-截断外，其他模态的一些具体例子可以在习题中找到。
 
 \index{modality|)}
 
 \sectionNotes
 
-The notion of homotopy $n$-type in classical homotopy theory is quite old.
-It was Voevodsky who realized that the notion can be defined recursively in homotopy type theory, starting from contractibility.
+同伦 $n$-类型这一概念在经典同伦论中由来已久。
+是 Voevodsky 认识到，这个概念可以在同伦类型论中递归地定义，从可缩性出发即可。
 
 \index{axiom!Streicher's Axiom K}%
-The property ``Axiom K'' was so named by Thomas Streicher, as a property of identity types which comes after J, the latter being the traditional name for the eliminator of identity types.
-\cref{thm:hedberg} is due to Hedberg~\cite{hedberg1998coherence}; \cite{krausgeneralizations} contains more information and generalizations.
+"Axiom K"这一性质由 Thomas Streicher 如此命名，是因为它是继 J 之后相等类型的一个性质——后者是相等类型消去子的传统名称。
+\cref{thm:hedberg} 归功于 Hedberg~\cite{hedberg1998coherence}；\cite{krausgeneralizations} 则包含了更多信息与推广。
 
-The notions of $n$-connected spaces and functions are also classical in homotopy theory, although as mentioned before, our indexing for connectedness of functions is off by one from the classical indexing.
-The importance of the resulting factorization system has been emphasized by recent work in higher topos theory by Rezk, Lurie, and others.%
+$n$-连通空间与函数的概念在同伦论中同样经典，不过如前所述，我们对函数连通性的编号与经典编号相差 1。
+由此产生的分解系统的重要性，已被 Rezk、Lurie 及其他学者在高阶意象理论中的近期工作所强调。%
 \index{.infinity1-topos@$(\infty,1)$-topos}
-In particular, the results of this chapter should be compared with~\cite[\S6.5.1]{lurie:higher-topoi}.
-In \cref{sec:freudenthal}, the theory of $n$-connected maps will be crucial to our proof of the Freudenthal suspension theorem.
+特别地，本章的结果应与~\cite[\S6.5.1]{lurie:higher-topoi} 相比较。
+在 \cref{sec:freudenthal} 中，$n$-连通映射的理论将对我们证明 Freudenthal 纬悬定理起到关键作用。
 
-Modal operators\index{modal!operator} in \emph{simple} type theory have been studied extensively; see e.g.~\cite{modalTT}.  In the setting of dependent type theory, \cite{ab:bracket-types} treats the special case of propositional truncation ($(-1)$-truncation) as a modal operator\index{modal!operator}.  The development presented here greatly extends and generalizes this work, while drawing also on ideas from topos theory.\index{topos}
+对\emph{简单}类型论中的模态算子\index{modal!operator}已有大量研究；例如可见~\cite{modalTT}。而在依值类型论的框架下，\cite{ab:bracket-types} 将命题截断（$(-1)$-截断）这一特例作为模态算子\index{modal!operator}来处理。这里所展示的发展极大地扩展并推广了上述工作，同时也借鉴了意象理论\index{topos}中的思想。
 
-Generally, modal operators\index{modal!operator} come in (at least) two flavors: those such as $\diamond$ (``possibly'') for which $A\Rightarrow \diamond A$, and those such as $\Box$ (``necessarily'') for which $\Box A \Rightarrow A$.
-When they are also \emph{idempotent} (i.e.\ $\diamond A = \diamond{\diamond A}$ or $\Box A = \Box{\Box A}$), the former may be identified with reflective subcategories (or equivalently, idempotent monads), and the latter with coreflective subcategories (or idempotent comonads).
+一般来说，模态算子\index{modal!operator}至少可以分为两种：一种是像 $\diamond$（“可能”）那样满足 $A\Rightarrow \diamond A$ 的，另一种是像 $\Box$（“必然”）那样满足 $\Box A \Rightarrow A$ 的。
+当它们还是\emph{幂等的}（即 $\diamond A = \diamond{\diamond A}$ 或 $\Box A = \Box{\Box A}$）时，前者可以等同于反射子范畴（或等价地，幂等单子），而后者则等同于余反射子范畴（或幂等余单子）。
 \index{monad}
 \index{comonad}
-However, in dependent type theory it is trickier to deal with the comonadic sort, since they are more rarely stable under pullback, and thus cannot be interpreted as operations on the universe \UU.
-Sometimes there are ways around this (see e.g.~\cite{QGFTinCHoTT12}), but for simplicity, here we stick to the monadic sort.
+然而，在依值类型论中，处理余单子那一类要棘手一些，因为它们在拉回之下更少能保持稳定，从而无法被解释为宇宙 \UU 上的运算。
+虽然有时有办法绕过这一点（例如参见\cite{QGFTinCHoTT12}），但为了简单起见，这里我们只讨论单子那一类。
 
-On the computational side, monads (and hence modalities\index{modality}) are used to model computational effects in functional programming~\cite{Moggi89}.%
+在计算方面，单子（从而模态\index{modality}）被用来为函数式编程中的计算效应建模~\cite{Moggi89}。%
 \index{programming}%
 \index{computational effect}
-A computation is said to be \emph{pure} if its execution results in no side effects (such as printing a message to the screen, playing music, or sending data over the Internet).
-There exist ``purely functional'' programming languages, such as Haskell\index{Haskell}, in which it is technically only possible to write pure functions: side effects are represented by applying ``monads'' to output types.
-For instance, a function of type $\mathsf{Int}\to\mathsf{Int}$ is pure, while a function of type $\mathsf{Int}\to \mathsf{IO}(\mathsf{Int})$ may perform input and output along the way to computing its result; the operation $\mathsf{IO}$ is a monad.
+如果一个计算的执行不会导致副作用（例如在屏幕上打印消息、播放音乐或通过互联网发送数据），就称该计算是\emph{纯}的。
+存在像 Haskell\index{Haskell} 这样的“纯函数式”编程语言，在技术上，其中只能编写纯函数：副作用是通过对输出类型应用“单子”来表示的。
+例如，类型为 $\mathsf{Int}\to\mathsf{Int}$ 的函数是纯的，而类型为 $\mathsf{Int}\to \mathsf{IO}(\mathsf{Int})$ 的函数在计算结果的过程中可能会执行输入和输出；运算 $\mathsf{IO}$ 就是一个单子。
 \index{purely}%
-(This is the origin of our use of the adverb ``purely'' for the identity monad, since it corresponds computationally to pure functions with no side-effects.)
-The modalities we have considered in this chapter are all idempotent, whereas those used in functional programming rarely are, but the ideas are still closely related.
-
+（这就是我们将副词 “purely” 用于恒等单子的原因，因为后者在计算上对应于没有副作用的纯函数。）
+本章考虑的所有模态都是幂等的，而函数式编程中使用的模态很少是幂等的，但两者的思想仍然密切相关。
 
 \sectionExercises
 
 \begin{ex}\label{ex:all-types-sets}\
   \begin{enumerate}
-    \item Use \cref{thm:h-set-refrel-in-paths-sets} to show
-    that if $\brck{A}\to A$ for every type $A$,
-    then every type is a set.
-    \item Show that if every surjective function (purely) splits,
-    i.e.~if
+    \item 利用 \cref{thm:h-set-refrel-in-paths-sets} 证明：如果对每个类型 $A$ 都有 $\brck{A}\to A$，那么每个类型都是集合。
+    \item 证明：如果每个满射函数都（纯粹地）分裂，即如果对每个 $f:A\to B$ 都有
     %
-    \narrowequation{\prd{b:B}\brck{\hfib{f}{b}}\to\prd{b:B}\hfib{f}{b}}
+    \narrowequation{\prd{b:B}\brck{\hfib{f}{b}}\to\prd{b:B}\hfib{f}{b}},
     %
-    for every $f:A\to B$, then every type is a set.
+    那么每个类型都是集合。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:s2-colim-unit}
-  For this exercise, we consider the following general notion of colimit.
-  Define a \define{graph}\indexdef{graph} $\Gamma$ to consist of a type $\Gamma_0$ and a family $\Gamma_1 : \Gamma_0 \to \Gamma_0 \to \UU$.
-  A \define{diagram}\index{diagram} (of types) over a graph $\Gamma$ consists of a family $F:\Gamma_0 \to \UU$ together with for each $x,y:\Gamma_0$, a function $F_{x,y}:\Gamma_1(x,y) \to F(x) \to F(y)$.
-  The \define{colimit}\index{colimit!of types} of such a diagram is the higher inductive type $\colim(F)$ generated by
+  对于本题，我们考虑以下关于余极限的一般概念。
+  定义一个\define{图（graph）}\indexdef{graph} $\Gamma$，它由一个类型 $\Gamma_0$ 和一个族 $\Gamma_1 : \Gamma_0 \to \Gamma_0 \to \UU$ 组成。
+  在一个图 $\Gamma$ 上的\define{图表（diagram）}\index{diagram}（指类型的图表）包含一个族 $F:\Gamma_0 \to \UU$，以及对每对 $x,y:\Gamma_0$，一个函数 $F_{x,y}:\Gamma_1(x,y) \to F(x) \to F(y)$。
+  该图表的\define{余极限（colimit）}\index{colimit!of types} 是由以下构造子生成的高阶归纳类型 $\colim(F)$：
   \begin{itemize}
-  \item for each $x:\Gamma_0$, a function $\inc_x:F(x) \to \colim(F)$, and
-  \item for each $x,y:\Gamma_0$ and $\gamma:\Gamma_1(x,y)$ and $a:F(x)$, a path $\inc_y(F_{x,y}(\gamma,a)) = \inc_x(a)$.
+  \item 对每个 $x:\Gamma_0$，一个函数 $\inc_x:F(x) \to \colim(F)$，以及
+  \item 对每个 $x,y:\Gamma_0$、每个 $\gamma:\Gamma_1(x,y)$ 以及每个 $a:F(x)$，一条道路 $\inc_y(F_{x,y}(\gamma,a)) = \inc_x(a)$。
   \end{itemize}
-  There are more general kinds of colimits as well (see e.g.\ \cref{ex:s2-colim-unit-2}), but this is good enough for many purposes.
+  也存在更一般的余极限（例如参见\cref{ex:s2-colim-unit-2}），但这对于许多目的而言已经足够。
   \begin{enumerate}
-  \item Exhibit a graph $\Gamma$ such that colimits of $\Gamma$-diagrams can be identified with pushouts as defined in \cref{sec:colimits}.
-    In other words, each span should induce a diagram over $\Gamma$ whose colimit is the pushout of the span.
-  \item Exhibit a graph $\Gamma$ and a diagram $F$ over $\Gamma$ such that $F(x)=\unit$ for all $x$, but such that $\colim(F)=\Sn^2$.
-    Note that $\unit$ is a $(-2)$-type, while $\Sn^2$ is not expected to be an $n$-type for any finite $n$.
-    See also \cref{ex:s2-colim-unit-2}.
+  \item 给出一个图 $\Gamma$，使得 $\Gamma$-图表的余极限可以等同于 \cref{sec:colimits} 中定义的推出。
+    换言之，每个伸展应该诱导出一个 $\Gamma$-图表，其余极限就是该伸展的推出。
+  \item 给出一个图 $\Gamma$ 及其上的图表 $F$，使得对所有 $x$ 有 $F(x)=\unit$，但同时有 $\colim(F)=\Sn^2$。
+    注意 $\unit$ 是一个 $(-2)$-类型，而 $\Sn^2$ 预期不是任何有限 $n$ 对应的 $n$-类型。
+    另见 \cref{ex:s2-colim-unit-2}。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:ntypes-closed-under-wtypes}
-  Show that if $A$ is an $n$-type and $B:A\to \ntype{n}$ is a family of $n$-types, where $n\ge -1$, then the $W$-type $\wtype{a:A} B(a)$ (see \cref{sec:w-types}) is also an $n$-type.
+  证明：如果 $A$ 是一个 $n$-类型且 $B:A\to \ntype{n}$ 是一个 $n$-类型的族，其中 $n\ge -1$，那么 $W$-类型 $\wtype{a:A} B(a)$（参见 \cref{sec:w-types}）也是一个 $n$-类型。
 \end{ex}
 
 \begin{ex}\label{ex:connected-pointed-all-section-retraction}
-  Use \cref{prop:nconn_fiber_to_total} to extend \cref{thm:connected-pointed} to any section-retraction pair.
+  利用 \cref{prop:nconn_fiber_to_total} 将 \cref{thm:connected-pointed} 推广到任意的截面-收缩对。
 \end{ex}
 
 \begin{ex}\label{ex:ntype-from-nconn-const}
-  Show that \cref{thm:nconn-to-ntype-const} also works as a characterization in the other direction: $B$ is an $n$-type if and only if every map into $B$ from an $n$-con\-nect\-ed type is constant.
-  Ideally, your proof should work for any modality as in \cref{sec:modalities}.
+  证明 \cref{thm:nconn-to-ntype-const} 的特征刻画在另一个方向上也成立：$B$ 是 $n$-类型，当且仅当每个从 $n$-连通类型到 $B$ 的映射都是常值的。
+  理想情况下，你的证明应该能像在 \cref{sec:modalities} 中那样，适用于任何模态。
 \end{ex}
 
 \begin{ex}\label{ex:connectivity-inductively}
-  Prove that for $n\ge -1$, a type $A$ is $n$-connected if and only if it is merely inhabited and for all $a,b:A$ the type $\id[A]ab$ is $(n-1)$-connected.
-  Thus, since every type is $(-2)$-connected, $n$-connectedness of types can be defined inductively using only propositional truncations.
-  (In particular, $A$ is 0-connected if and only if $\brck{A}$ and $\prd{a,b:A} \brck{a=b}$.)
+  证明：对于 $n\ge -1$，一个类型 $A$ 是 $n$-连通的，当且仅当它仅知有实例，并且对于所有 $a,b:A$，类型 $\id[A]ab$ 是 $(n-1)$-连通的。
+  因此，由于每个类型都是 $(-2)$-连通的，类型的 $n$-连通性可以仅使用命题截断来归纳地定义。
+  （特别地，$A$ 是 $0$-连通的当且仅当 $\brck{A}$ 且 $\prd{a,b:A} \brck{a=b}$。）
 \end{ex}
 
 \begin{ex}\label{ex:lemnm}
   \indexdef{excluded middle!LEMnm@$\LEM{n,m}$}%
-  For $-1\le n,m \le\infty$, let $\LEM{n,m}$ denote the statement
+  对于 $-1\le n,m \le\infty$，记 $\LEM{n,m}$ 为如下命题
   \[ \prd{A:\ntype{n}} \trunc m{A + \neg A},\]
-  where $\ntype{\infty} \defeq \type$ and $\trunc{\infty}{X}\defeq X$.
-  Show that:
+  这里将 $\ntype{\infty} \defeq \type$，且 $\trunc{\infty}{X}\defeq X$。
+  证明：
   \begin{enumerate}
-  \item If $n=-1$ or $m=-1$, then $\LEM{n,m}$ is equivalent to $\LEM{}$ from \cref{sec:intuitionism}.
-  \item If $n\ge 0$ and $m\ge 0$, then $\LEM{n,m}$ is inconsistent with univalence.
+  \item 若 $n=-1$ 或 $m=-1$，则 $\LEM{n,m}$ 等价于 \cref{sec:intuitionism} 中的 $\LEM{}$。
+  \item 若 $n\ge 0$ 且 $m\ge 0$，则 $\LEM{n,m}$ 与泛等性矛盾。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:acnm}
   \indexdef{axiom!of choice!ACnm@$\choice{n,m}$}%
-  For $-1\le n,m\le\infty$, let $\choice{n,m}$ denote the statement
+  对于 $-1\le n,m\le\infty$，记 $\choice{n,m}$ 为如下命题
   \[ \prd{X:\set}{Y:X\to\ntype{n}}
   \Parens{\prd{x:X} \trunc m{Y(x)}}
   \to
   \Trunc m{\prd{x:X} Y(x)},
   \]
-  with conventions as in \cref{ex:lemnm}.
-  Thus $\choice{0,-1}$ is the axiom of choice from \cref{sec:axiom-choice},
-  while $\choice{\infty,\infty}$ is the identity function.
-  (If we had formulated $\choice{n,m}$ analogously to \eqref{eq:ac}
-  rather than \eqref{eq:epis-split},
-  $\choice{\infty,\infty}$ would be like \cref{thm:ttac}.)
-  It is known that $\choice{\infty,-1}$ is consistent with univalence, since it holds in Voevodsky's simplicial model.
+  约定同 \cref{ex:lemnm}。
+  于是 $\choice{0,-1}$ 就是 \cref{sec:axiom-choice} 中的选择公理，
+  而 $\choice{\infty,\infty}$ 就是恒等函数。
+  （如果我们按 \eqref{eq:ac} 而非 \eqref{eq:epis-split} 的方式类似地定义 $\choice{n,m}$，
+  那么 $\choice{\infty,\infty}$ 就会类似于 \cref{thm:ttac}。）
+  已知 $\choice{\infty,-1}$ 与泛等性一致，因为它在 Voevodsky 的单纯集模型中成立。
   \begin{enumerate}
-  \item Without using univalence, show that $\LEM{n,\infty}$ implies $\choice{n,m}$ for all $m$.
-    (On the other hand, in \cref{subsec:emacinsets} we will show that $\choice{}=\choice{0,-1}$ implies $\LEM{}=\LEM{-1,-1}$.)
-  \item Of course, $\choice{n,m}\Rightarrow \choice{k,m}$ if $k\le n$.
-    Are there any other implications between the principles $\choice{n,m}$?
-    Is $\choice{n,m}$ consistent with univalence for any $m\ge 0$ and any $n$?
-    (These are open questions.)\index{open!problem}
+  \item 不使用泛等性，证明对任意 $m$，$\LEM{n,\infty}$ 蕴含 $\choice{n,m}$。
+    （另一方面，在 \cref{subsec:emacinsets} 中我们将证明 $\choice{}=\choice{0,-1}$ 蕴含 $\LEM{}=\LEM{-1,-1}$。）
+  \item 显然，如果 $k\le n$，则 $\choice{n,m}\Rightarrow \choice{k,m}$。
+    那么这些原理 $\choice{n,m}$ 之间还有其他蕴含关系吗？
+    对于任意 $m\ge 0$ 和任意 $n$，$\choice{n,m}$ 与泛等性一致吗？
+    （这些都是开放问题。）\index{open!problem}
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:acnm-surjset}
-  Show that $\choice{n,-1}$ implies that for any $n$-type $A$, there merely exists a set $B$ and a surjection $B\to A$.
+  证明 $\choice{n,-1}$ 蕴含以下结论：对任意 $n$-类型 $A$，都仅存在一个集合 $B$ 和一个满射 $B\to A$。
 \end{ex}
 
 \begin{ex}\label{ex:acconn}
-  Define the \define{$n$-connected axiom of choice}
+  \define{$n$-连通选择公理（$n$-connected axiom of choice）}
   \indexdef{n-connected@$n$-connected!axiom of choice}%
   \indexdef{axiom!of choice!n-connected@$n$-connected}%
-  to be the statement
+  指的是如下命题：
   \begin{quote}
-    If $X$ is a set and $Y:X\to \type$ is a family of types such that each $Y(x)$ is $n$-connected, then $\prd{x:X} Y(x)$ is $n$-connected.
+    若 $X$ 是一个集合，且 $Y:X\to \type$ 是一个类型族，使得每个 $Y(x)$ 都是 $n$-连通的，则 $\prd{x:X} Y(x)$ 也是 $n$-连通的。
   \end{quote}
-  Note that the $(-1)$-connected axiom of choice is $\choice{\infty,-1}$ from \cref{ex:acnm}.
+  注意 $(-1)$-连通选择公理就是 \cref{ex:acnm} 中的 $\choice{\infty,-1}$。
   \begin{enumerate}
-  \item Prove that the $(-1)$-connected axiom of choice implies the $n$-con\-nect\-ed axiom of choice for all $n\ge -1$.
-  \item Are there any other implications between the $n$-connected axioms of choice and the principles $\choice{n,m}$?
-    (This is an open question.)\index{open!problem}
+  \item 证明对所有 $n\ge -1$，$(-1)$-连通选择公理蕴含 $n$-连通选择公理。
+  \item $n$-连通选择公理与原理 $\choice{n,m}$ 之间还有其他的蕴含关系吗？
+    （这是一个开放问题。）\index{open!problem}
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:n-truncation-not-left-exact}
-  Show that the $n$-truncation modality is not left exact for any $n\ge -1$.
-  That is, exhibit a pullback which it fails to preserve.
+  证明对任意 $n\ge -1$，$n$-截断模态都不是左正合的。
+  也就是说，请给出一个拉回，使得该模态未能保持它。
 \end{ex}
 
 \begin{ex}\label{ex:double-negation-modality}
-  Show that $X\mapsto (\neg\neg X)$ is a modality.\index{modal!operator}%
+  证明 $X\mapsto (\neg\neg X)$ 是一个模态。\index{modal!operator}%
 \end{ex}
 
 \begin{ex}\label{ex:prop-modalities}
-  Let $P$ be a mere proposition.
+  设 $P$ 是一个命题。
   \begin{enumerate}
-  \item Show that $X\mapsto (P\to X)$ is a left exact modality.
-    This is called the \define{open modality}
+  \item 证明 $X\mapsto (P\to X)$ 是一个左正合模态。
+    这称为与 $P$ 关联的\define{开模态（open modality）}
     \indexdef{open!modality}%
     \indexdef{modality!open}%
-    associated to $P$.
-  \item Show that $X\mapsto P*X$ is a left exact modality, where $*$ denotes the join (see \cref{sec:colimits}).
-    This is called the \define{closed modality}
+    。
+  \item 证明 $X\mapsto P*X$ 是一个左正合模态，其中 $*$ 表示联结（见 \cref{sec:colimits}）。
+    这称为与 $P$ 关联的\define{闭模态（closed modality）}
     \indexdef{closed!modality}%
     \indexdef{modality!closed}%
-    associated to $P$.
+    。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:f-local-type}
-  Let $f:A\to B$ be a map; a type $Z$ is \define{$f$-local}
+  设 $f:A\to B$ 是一个映射；如果 $(\blank\circ f):(B\to Z) \to (A\to Z)$ 是一个等价，则称类型 $Z$ 是\define{$f$-局部的（$f$-local）}
   \indexdef{f-local type@$f$-local type}%
   \indexdef{type!f-local@$f$-local}%
-  if $(\blank\circ f):(B\to Z) \to (A\to Z)$ is an equivalence.
+  。
   \begin{enumerate}
-  \item Prove that the $f$-local types form a reflective subuniverse.
-    You will want to use a higher inductive type to define the reflector (localization).
-  \item Prove that if $B=\unit$, then this subuniverse is a modality.
+  \item 证明 $f$-局部类型构成一个反射子宇宙。
+    你需要使用一个高阶归纳类型来定义反射子（局部化）。
+  \item 证明如果 $B=\unit$，那么这个子宇宙是一个模态。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:trunc-spokes-no-hub}
-  Show that in contrast to \cref{rmk:spokes-no-hub}, we could equivalently define $\trunc nA$ to be generated by a function $\tprojf n : A \to \trunc n A$ together with for each $r:\Sn^{n+1} \to \trunc n A$ and each $x:\Sn^{n+1}$, a path $s_r(x):r(x) = r(\base)$.
+  证明：与 \cref{rmk:spokes-no-hub} 不同，我们可以等价地将 $\trunc nA$ 定义为由一个函数 $\tprojf n : A \to \trunc n A$ 以及对于每个 $r:\Sn^{n+1} \to \trunc n A$ 和每个 $x:\Sn^{n+1}$ 的一条路径 $s_r(x):r(x) = r(\base)$ 所生成。
 \end{ex}
 
 \begin{ex}\label{ex:s2-colim-unit-2}
-  In this exercise, we consider a slightly fancier notion of colimit than in \cref{ex:s2-colim-unit}.
-  Define a \define{graph with composition}\indexdef{graph!with composition} $\Gamma$ to be a graph as in \cref{ex:s2-colim-unit} together with for each $x,y,z:\Gamma_0$, a function $\Gamma_1(y,z) \to \Gamma_1(x,y) \to \Gamma_1(x,z)$, written as $\delta\mapsto\gamma \mapsto \delta \circ \gamma$.
-  (For instance, any precategory as in \cref{cha:category-theory} is a graph with composition.)
-  A \define{diagram}\index{diagram} $F$ over a graph with composition $\Gamma$ consists of a diagram over the underlying graph, together with for each $x,y,z:\Gamma_0$ and $\gamma:\Gamma_1(x,y)$ and $\delta:\Gamma_1(y,z)$, a homotopy $\cmp_{x,y,z}(\delta,\gamma) : F_{y,z}(\delta) \circ F_{x,y}(\gamma) \htpy F_{x,z}(\delta\circ\gamma)$.
-  The \define{colimit}\index{colimit!of types} of such a diagram is the higher inductive type $\colim(F)$ generated by
+  本练习中，我们考虑一种比 \cref{ex:s2-colim-unit} 中稍复杂一些的余极限概念。
+  定义\define{带复合的图（graph with composition）}\indexdef{graph!with composition} $\Gamma$ 为如 \cref{ex:s2-colim-unit} 所述的图，并附带对每个 $x,y,z:\Gamma_0$ 的一个函数 $\Gamma_1(y,z) \to \Gamma_1(x,y) \to \Gamma_1(x,z)$，记作 $\delta\mapsto\gamma \mapsto \delta \circ \gamma$。
+  （例如，任何如 \cref{cha:category-theory} 所述的预范畴都是带复合的图。）
+  带复合的图 $\Gamma$ 上的\define{图表（diagram）}\index{diagram} $F$ 由底层图上的图表，加上对每个 $x,y,z:\Gamma_0$、$\gamma:\Gamma_1(x,y)$ 和 $\delta:\Gamma_1(y,z)$ 的一个同伦 $\cmp_{x,y,z}(\delta,\gamma) : F_{y,z}(\delta) \circ F_{x,y}(\gamma) \htpy F_{x,z}(\delta\circ\gamma)$ 构成。
+  此类图表的\define{余极限（colimit）}\index{colimit!of types} 是由以下构造子生成的高阶归纳类型 $\colim(F)$：
   \begin{itemize}
-  \item for each $x:\Gamma_0$, a function $\inc_x:F(x) \to \colim(F)$,
-  \item for each $x,y:\Gamma_0$ and $\gamma:\Gamma_1(x,y)$ and $a:F(x)$, a path $\glue_{x,y}(\gamma,a) : \inc_y(F_{x,y}(\gamma,a)) = \inc_x(a)$, and
-  \item for each $x,y,z:\Gamma_0$ and $\gamma:\Gamma_1(x,y)$ and $\delta:\Gamma_1(y,z)$ and $a:F(x)$, a path
+  \item 对每个 $x:\Gamma_0$，有一个函数 $\inc_x:F(x) \to \colim(F)$，
+  \item 对每个 $x,y:\Gamma_0$、$\gamma:\Gamma_1(x,y)$ 和 $a:F(x)$，有一条道路 $\glue_{x,y}(\gamma,a) : \inc_y(F_{x,y}(\gamma,a)) = \inc_x(a)$，以及
+  \item 对每个 $x,y,z:\Gamma_0$、$\gamma:\Gamma_1(x,y)$、$\delta:\Gamma_1(y,z)$ 和 $a:F(x)$，有一条道路
     \[ \ap{\inc_z}{\cmp_{x,y,z}(\delta,\gamma,a)} \ct \glue_{x,z}(\delta\circ \gamma,a) = \glue_{y,z}(\delta,F_{x,y}(\gamma,a)) \ct \glue_{x,y}(\gamma,a). \]
   \end{itemize}
-  (This is a ``second-order approximation'' to a fully homotopy-theoretic notions of diagram and colimit, which ought to involve ``coherence paths'' of this sort at all higher levels.
-  Defining such things in type theory is an important open problem.)
+  （这是对完全同伦论意义上的图表和余极限概念的一种“二阶近似”；后者在所有更高层级上均应包含此类“相干性路径”。
+  在类型论中定义此类概念是一个重要的公开问题。）
 
-  Exhibit a graph with composition $\Gamma$ such that $\Gamma_0$ is a set and each type $\Gamma_1(x,y)$ is a mere proposition, and a diagram $F$ over $\Gamma$ such that $F(x)=\unit$ for all $x$, for which $\colim(F)=\Sn^2$.
+  试构造一个带复合的图 $\Gamma$，使得 $\Gamma_0$ 是集合且每个类型 $\Gamma_1(x,y)$ 都是命题，并构造其上的图表 $F$，使得对所有 $x$ 均有 $F(x)=\unit$，且 $\colim(F)=\Sn^2$。
 \end{ex}
 
 \begin{ex}\label{ex:fiber-map-not-conn}
-  Comparing \cref{lem:nconnected_postcomp_variation,prop:nconn_fiber_to_total}, one might be tempted to conjecture that if $f:A\to B$ is $n$-connected and $g:\prd{a:A} P(a) \to Q(f(a))$ induces an $n$-connected map $\Parens{\sm{a:A} P(a)} \to \Parens{\sm{b:B} Q(b)}$, then $g$ is fiberwise $n$-connected.
-  Give a counterexample to show that this is false.
-  (In fact, when generalized to modalities, this property characterizes the left exact ones; see \cref{ex:prop-modalities}.)
+  对比 \cref{lem:nconnected_postcomp_variation,prop:nconn_fiber_to_total}，人们可能会猜想：若 $f:A\to B$ 是 $n$-连通的，且 $g:\prd{a:A} P(a) \to Q(f(a))$ 诱导出 $n$-连通映射 $\Parens{\sm{a:A} P(a)} \to \Parens{\sm{b:B} Q(b)}$，则 $g$ 是逐纤维 $n$-连通的。
+  请给出一个反例以说明此猜想不成立。
+  （事实上，推广到模态时，这一性质刻画了左正合模态；参见 \cref{ex:prop-modalities}。）
 \end{ex}
 
 \begin{ex}\label{ex:is-conn-trunc-functor}
-  Show that if $f : A \to B$ is $n$-connected, then $\trunc kf : \trunc kA \to \trunc kB$ is also $n$-connected.
+  证明：若 $f : A \to B$ 是 $n$-连通的，则 $\trunc kf : \trunc kA \to \trunc kB$ 也是 $n$-连通的。
 \end{ex}
 
 \begin{ex}\label{ex:categorical-connectedness}
-  We say a type $A$ is \define{categorically connected}
-  \indexdef{connected!categorically} if for every types $B, C$ the canonical map
-  $e_{A, B, C}:((A\to B) + (A\to C)) \to (A \to B + C)$ defined by
+  我们称一个类型 $A$ 是\define{范畴意义下连通的（categorically connected）}
+  \indexdef{connected!categorically}，如果对于任意类型 $B, C$，由
   \begin{align*}
     e_{A,B,C}(\inl(g)) &\defeq \lam{x} \inl(g(x)),\\
     e_{A,B,C}(\inr(g)) &\defeq \lam{x} \inr(g(x))
   \end{align*}
-  is an equivalence.
+  定义的典范映射 $e_{A, B, C}:((A\to B) + (A\to C)) \to (A \to B + C)$ 是一个等价。
   \begin{enumerate}
-  \item Show that any connected type is categorically connected.
-  \item Show that all categorically connected types are connected if and only if $\LEM{}$ holds. (Hint: consider $A \defeq \Sigma P$ such that $\neg \neg P$ holds.)
+  \item 证明任何连通的类型都是范畴意义下连通的。
+  \item 证明所有范畴意义下连通的类型都是连通的，当且仅当 $\LEM{}$ 成立。（提示：考虑 $A \defeq \Sigma P$，其中 $\neg \neg P$ 成立。）
   \end{enumerate}
 \end{ex}
 

@@ -81,14 +81,17 @@ all: $(TOPPDFFILES) exercise_solutions.pdf errata.pdf cover-lulu-hardcover.pdf c
 dvi: $(TOPDVIFILES) exercise_solutions.dvi errata.dvi cover-lulu-hardcover.dvi cover-lulu-paperback.dvi cover-letter.dvi cover-a4.dvi
 
 # Main targets
+# 中译本改动：正文含 CJK，必须用 LuaLaTeX（配合 main.tex 里加载的 ctex/
+# luatex85）编译，不能再用原来的 pdflatex；-pdflua 明确指定引擎，不依赖
+# .latexmkrc 里的 $pdf_mode 去和命令行的 -pdf（默认走 pdflatex）抢优先级。
 $(TOPPDFFILES) : %.pdf : %.tex $(TEXFILES) references.bib cover-lores-front.png cover-lores-back.png
 	if which latexmk > /dev/null 2>&1 ;\
-	then latexmk -interaction=batchmode -g -pdf $< ;\
-	else (echo "run 1: pdflatex $<"; pdflatex -halt-on-error -interaction=batchmode $< 2>&1 >/dev/null) && \
+	then latexmk -interaction=batchmode -g -pdflua $< ;\
+	else (echo "run 1: lualatex $<"; lualatex -halt-on-error -interaction=batchmode $< 2>&1 >/dev/null) && \
 	     bibtex $(patsubst %.tex,%,$<) && \
 	     makeindex $(patsubst %.tex,%,$<) && \
-	     (echo "run 2: pdflatex $<"; pdflatex -halt-on-error -interaction=batchmode $< 2>&1 >/dev/null) ;\
-	     pdflatex -halt-on-error $< ;\
+	     (echo "run 2: lualatex $<"; lualatex -halt-on-error -interaction=batchmode $< 2>&1 >/dev/null) ;\
+	     lualatex -halt-on-error $< ;\
 	     echo "HINT: If you think this took a long time you should install latexmk." ;\
 	fi
 

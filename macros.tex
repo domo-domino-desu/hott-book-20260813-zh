@@ -696,52 +696,66 @@
 }
 
 % Now define a bunch of theorem-type environments.
-\newtheorem{thm}{Theorem}[section]
-\crefname{thm}{Theorem}{Theorems}
+% 中译本改动：环境标题（\newtheorem 第二个参数）和 cleveref 的 \cref 输出
+% （\crefname 后两个参数）都改成中文，让"定理 3.2.1"这类自动生成的标题和
+% 交叉引用文字跟已经译成中文的正文保持一致，不再是中英夹杂。
+\newtheorem{thm}{定理}[section]
+\crefname{thm}{定理}{定理}
 %\defthm{prop}{Proposition}   % Probably we shouldn't use "Proposition" in this way
-\defthm{cor}{Corollary}{Corollaries}
-\defthm{lem}{Lemma}{Lemmas}
-\defthm{axiom}{Axiom}{Axioms}
+\defthm{cor}{推论}{推论}
+\defthm{lem}{引理}{引理}
+\defthm{axiom}{公理}{公理}
 % Since definitions and theorems in type theory are synonymous, should
 % we actually use the same theoremstyle for them?
 \theoremstyle{definition}
-\defthm{defn}{Definition}{Definitions}
+\defthm{defn}{定义}{定义}
 \theoremstyle{remark}
-\defthm{rmk}{Remark}{Remarks}
-\defthm{eg}{Example}{Examples}
-\defthm{egs}{Examples}{Examples}
-\defthm{notes}{Notes}{Notes}
+\defthm{rmk}{注记}{注记}
+\defthm{eg}{例}{例}
+\defthm{egs}{例}{例}
+\defthm{notes}{注解}{注解}
 % Number exercises within chapters, with their own counter.
-\newtheorem{ex}{Exercise}[chapter]
-\crefname{ex}{Exercise}{Exercises}
+\newtheorem{ex}{习题}[chapter]
+\crefname{ex}{习题}{习题}
 
 % Display format for sections
-\crefformat{section}{\S#2#1#3}
-\Crefformat{section}{Section~#2#1#3}
-\crefrangeformat{section}{\S\S#3#1#4--#5#2#6}
-\Crefrangeformat{section}{Sections~#3#1#4--#5#2#6}
-\crefmultiformat{section}{\S\S#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
-\Crefmultiformat{section}{Sections~#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
-\crefrangemultiformat{section}{\S\S#3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}{, #3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}
-\Crefrangemultiformat{section}{Sections~#3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}{, #3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}
+% 中译本改动：中文习惯"第 3.2 节"这种数字被前后缀包住的格式，跟英文纯前缀的
+% "Section 3.2"不同，所以这里连位置参数的顺序都要跟着调整，不只是换词。
+% 大小写形式（cref/Cref）在中文里没有区别，两个宏给一样的格式。
+\crefformat{section}{第~#2#1#3~节}
+\Crefformat{section}{第~#2#1#3~节}
+\crefrangeformat{section}{第~#3#1#4~至~#5#2#6~节}
+\Crefrangeformat{section}{第~#3#1#4~至~#5#2#6~节}
+\crefmultiformat{section}{第~#2#1#3}{~和~#2#1#3~节}{、#2#1#3}{~和~#2#1#3~节}
+\Crefmultiformat{section}{第~#2#1#3}{~和~#2#1#3~节}{、#2#1#3}{~和~#2#1#3~节}
+\crefrangemultiformat{section}{第~#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6~节}{、#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6~节}
+\Crefrangemultiformat{section}{第~#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6~节}{、#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6~节}
 
 % Display format for appendices
-\crefformat{appendix}{Appendix~#2#1#3}
-\Crefformat{appendix}{Appendix~#2#1#3}
-\crefrangeformat{appendix}{Appendices~#3#1#4--#5#2#6}
-\Crefrangeformat{appendix}{Appendices~#3#1#4--#5#2#6}
-\crefmultiformat{appendix}{Appendices~#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
-\Crefmultiformat{appendix}{Appendices~#2#1#3}{ and~#2#1#3}{, #2#1#3}{ and~#2#1#3}
-\crefrangemultiformat{appendix}{Appendices~#3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}{, #3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}
-\Crefrangemultiformat{appendix}{Appendices~#3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}{, #3#1#4--#5#2#6}{ and~#3#1#4--#5#2#6}
+\crefformat{appendix}{附录~#2#1#3}
+\Crefformat{appendix}{附录~#2#1#3}
+\crefrangeformat{appendix}{附录~#3#1#4~至~#5#2#6}
+\Crefrangeformat{appendix}{附录~#3#1#4~至~#5#2#6}
+\crefmultiformat{appendix}{附录~#2#1#3}{~和~#2#1#3}{、#2#1#3}{~和~#2#1#3}
+\Crefmultiformat{appendix}{附录~#2#1#3}{~和~#2#1#3}{、#2#1#3}{~和~#2#1#3}
+\crefrangemultiformat{appendix}{附录~#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6}{、#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6}
+\Crefrangemultiformat{appendix}{附录~#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6}{、#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6}
 
-\crefname{part}{Part}{Parts}
+\crefname{part}{部分}{部分}
 
 % Number subsubsections
 \setcounter{secnumdepth}{5}
 
 % Display format for figures
-\crefname{figure}{Figure}{Figures}
+\crefname{figure}{图}{图}
+
+% 中译本改动：cleveref 对 chapter/table/equation 有自己内置的默认英文名
+% （不跟着 \chaptername 这类 babel/polyglossia 的本地化走），原书从没显式
+% 覆盖过，所以 \cref{cha:xxx} 这类引用一直在用英文 "Chapter" 渲染，跟已经
+% 译成中文的正文不一致，这里补上。
+\crefname{chapter}{章}{章}
+\crefname{table}{表}{表}
+\crefname{equation}{式}{式}
 
 %%%% EQUATION NUMBERING %%%%
 

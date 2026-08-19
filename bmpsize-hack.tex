@@ -1,12 +1,16 @@
 \RequirePackage{bmpsize-base}
 \RequirePackage{ifpdf}
 \makeatletter
-% Fix \includegraphics for dvi mode, but only if not making a pdf
-\ifpdf
-  \expandafter\@gobble
-\else
-  \expandafter\@firstofone
-\fi{%
+% 中译本改动：这段 DVI 模式下手工计算图片包围盒的 hack，是为真正的
+% "dvips -> ps2pdf" 流程写的，假设的是 pdftex 的原语。ifpdf 包在 XeLaTeX/
+% LuaLaTeX 下都可能判定成"不是 pdf 模式"从而误触发这段 hack，报
+% "Undefined control sequence"（真实复现：\@bmpsize@read 报错，编译直接
+% 中止；用 \ifdefined\XeTeXversion/\luatexversion 分别探测两种引擎又在
+% LuaLaTeX 下报 "\ifdefined ... was incomplete"，怀疑是这两个宏在当前
+% texlive 版本下的可用性问题，没有深究）。中译本只会用 XeLaTeX 或
+% LuaLaTeX 编译，两者都能自己正确处理图片包围盒，不需要这段 hack，直接
+% 无条件跳过最省事也最不容易出岔子。
+\expandafter\@gobble{%
 \AtBeginDocument{%
 \let\Gin@ii@old=\Gin@ii
 \def\Gin@ii[#1]#2{%

@@ -1,43 +1,41 @@
-\chapter{Set theory}
+\chapter{集合论}
 \label{cha:set-math}
 
 \index{set|(}%
 
-Our conception of sets as types with particularly simple homotopical character, cf.\
-\cref{sec:basics-sets}, is quite different from the sets of Zermelo--Fraenkel\index{set theory!Zermelo--Fraenkel} set theory, which form a
-cumulative hierarchy with an intricate nested membership structure.
-For many mathematical purposes, the homotopy-the\-o\-ret\-ic sets are just as good as
-the Zermelo--Fraenkel ones, but there are important differences.
+我们将集合视为具有特别简单同伦性质的类型，这一观念（参见\cref{sec:basics-sets}）与 Zermelo--Fraenkel\index{set theory!Zermelo--Fraenkel} 集合论中的集合颇为不同，后者构成一个具有复杂嵌套隶属结构的累积层次。
+对许多数学目的而言，同伦类型论中的集合与 Zermelo--Fraenkel 集合论中的集合同样适用，但二者之间也存在重要的差异。
 
-We begin this chapter in \cref{sec:piw-pretopos} by showing that the category $\uset$ has (most of) the usual properties of the category of sets.
+本章我们首先在\cref{sec:piw-pretopos}中证明，范畴 $\uset$ 拥有（大多数）集合范畴通常具有的性质。
 \index{mathematics!constructive}%
 \index{mathematics!predicative}%
-In constructive, predicative, univalent foundations, it is a ``$\Pi\mathsf{W}$-pretopos''; whereas if we assume propositional resizing
+在构造性、直谓、泛等的基础中，它是一个“$\Pi\mathsf{W}$-预意象（$\Pi\mathsf{W}$-pretopos）”；
 \index{propositional!resizing}%
-(\cref{subsec:prop-subsets}) it is an elementary topos,\index{topos} and if we assume \LEM{} and \choice{} then it is a model of Lawvere's \emph{Elementary Theory of the Category of Sets}\index{Lawvere}.
+而如果我们假设命题大小重整（\cref{subsec:prop-subsets}），它就是一个初等意象\index{topos}；
+如果我们再假设 \LEM{} 和 \choice{}，那么它便是 Lawvere（劳维尔）的\emph{集合范畴的初等理论}\index{Lawvere} 的一个模型。
 \index{Elementary Theory of the Category of Sets}%
-This is sufficient to ensure that the sets in homotopy type theory behave like sets as used by most mathematicians outside of set theory.
+这足以保证同伦类型论中的集合，其行为与大多数集合论以外的数学家所使用的集合一致。
 
-In the rest of the chapter, we investigate some subjects that traditionally belong to ``set theory''.
-In \cref{sec:cardinals,sec:ordinals,sec:wellorderings} we study cardinal and ordinal numbers.
-These are traditionally defined in set theory using the global membership relation, but we will see that the univalence axiom enables an equally convenient, more ``structural'' approach.
+在本章余下部分，我们将考察一些传统上归入“集合论”的课题。
+在\cref{sec:cardinals,sec:ordinals,sec:wellorderings}中，我们将研究基数与序数。
+这些概念在集合论中传统上借助全局隶属关系来定义，但我们将会看到，泛等公理能够提供一种同样便捷、更具“结构性”的方法。
 
-Finally, in \cref{sec:cumulative-hierarchy} we consider the possibility of constructing \emph{inside} of homotopy type theory a cumulative hierarchy of sets, equipped with a binary membership relation akin to that of Zermelo--Fraenkel set theory.
-This combines higher inductive types with ideas from the field of algebraic set theory.
+最后，在\cref{sec:cumulative-hierarchy}中，我们将探讨在同伦类型论\emph{内部}构造一个累积层次的可能性，并为其配备一个类似于 Zermelo--Fraenkel 集合论的二元隶属关系。
+这将高阶归纳类型与代数集合论的思想结合起来。
 \index{algebraic set theory}%
 \index{set theory!algebraic}%
 
-In this chapter we will often use the traditional logical notation described in \cref{subsec:prop-trunc}.
-In addition to the basic theory of \cref{cha:basics,cha:logic}, we use higher inductive types for colimits and quotients as in \cref{sec:colimits,sec:set-quotients}, as well as some of the theory of truncation from \cref{cha:hlevels}, particularly the factorization system of \cref{sec:image-factorization} in the case $n=-1$.
-In \cref{sec:ordinals} we use an inductive family (\cref{sec:generalizations}) to describe well-foundedness, and in \cref{sec:cumulative-hierarchy} we use a more complicated higher inductive type to present the cumulative hierarchy.
-
+在本章中，我们将频繁使用\cref{subsec:prop-trunc}中描述的传统逻辑记号。
+除了\cref{cha:basics,cha:logic}的基础理论外，我们还会用到\cref{sec:colimits,sec:set-quotients}中关于余极限和商的高阶归纳类型，以及\cref{cha:hlevels}中的一些截断理论，特别是当 $n=-1$ 时\cref{sec:image-factorization}中的因子分解系统。
+在\cref{sec:ordinals}中，我们将用归纳族（\cref{sec:generalizations}）来描述良基性；
+而在\cref{sec:cumulative-hierarchy}中，则会使用一个更复杂的高阶归纳类型来呈现累积层次。
 
 %\section{\texorpdfstring{$\set$}{Set} is a \texorpdfstring{$\Pi$}{Π}W-pretopos}
 \section{The category of sets}
 \label{sec:piw-pretopos}
 
-Recall that in \cref{cha:category-theory} we defined the category \uset to consist of all $0$-types (in some universe \UU) and maps between them, and observed that it is a category (not just a precategory).
-We consider successively the levels of structure which \uset possesses.
+回顾在\cref{cha:category-theory}中，我们将范畴 \uset 定义为由所有 $0$-类型（位于某个宇宙 \UU 中）及其间的映射构成，并指出它是一个范畴（而不仅仅是预范畴）。
+下面我们依次考察 \uset 所具备的各级结构。
 
 \subsection{Limits and colimits}
 \label{subsec:limits-sets}
@@ -45,18 +43,17 @@ We consider successively the levels of structure which \uset possesses.
 \index{limit!of sets}%
 \index{colimit!of sets}%
 
-Since sets are closed under products, the universal property of products in \cref{thm:prod-ump} shows immediately that \uset has finite products.
-In fact, infinite products follow just as easily from the equivalence
-\[ \Parens{X\to \prd{a:A} B(a)} \eqvsym \Parens{\prd{a:A} (X\to B(a))}.\]
-And we saw in \cref{ex:pullback}\index{pullback} that the pullback of $f:A\to C$ and $g:B\to C$ can be defined as $\sm{a:A}{b:B} f(a)=g(b)$; this is a set if $A,B,C$ are and inherits the correct universal property.
-Thus, \uset is a \emph{complete} category in the obvious sense.
+由于集合对积封闭，\cref{thm:prod-ump}中积的泛性质立即表明 \uset 具有有限积。
+事实上，由等价 \[ \Parens{X\to \prd{a:A} B(a)} \eqvsym \Parens{\prd{a:A} (X\to B(a))}.\] 同样容易得到无限积。
+并且我们在\cref{ex:pullback}\index{pullback}中看到，$f:A\to C$ 和 $g:B\to C$ 的拉回可以定义为 $\sm{a:A}{b:B} f(a)=g(b)$；当 $A,B,C$ 是集合时，它也是集合，且继承了应有的泛性质。
+因此，\uset 在自然的意义上是一个\emph{完备的}范畴。
 \index{category!complete}%
 \index{complete!category}%
 
-Since sets are closed under $+$ and contain \emptyt, \uset has finite coproducts.
-Similarly, since $\sm{a:A}B(a)$ is a set whenever $A$ and each $B(a)$ are, it yields a coproduct of the family $B$ in \uset.
-Finally, we showed in \cref{sec:pushouts} that pushouts exist in $n$-types, which includes \uset in particular.
-Thus, \uset is also \emph{cocomplete}.
+由于集合对 $+$ 封闭且包含 \emptyt，\uset 具有有限余积。
+类似地，由于当 $A$ 和每个 $B(a)$ 是集合时，$\sm{a:A}B(a)$ 也是集合，所以它在 \uset 中提供了族 $B$ 的余积。
+最后，我们在\cref{sec:pushouts}中证明了 $n$-类型中存在推出，特别地，这包含了 \uset。
+因此，\uset 也是\emph{余完备的}。
 \index{category!cocomplete}%
 \index{cocomplete category}%
 
@@ -64,34 +61,35 @@ Thus, \uset is also \emph{cocomplete}.
 \label{sec:image}
 
 %We will show that $\uset$ is a $\Pi$W-pretopos.
-Next, we show that $\uset$ is a \define{regular category}, i.e.:
+接下来，我们证明 $\uset$ 是一个\define{正则范畴（regular category）}，即：
 \indexdef{category!regular}%
 \indexdef{regular!category}%
 %
+
 \begin{enumerate}
-\item $\uset$ is finitely complete.\label{item:reg1}
-\item The kernel pair $\proj1,\proj2: (\sm{x,y:A} f(x)= f(y)) \to A$ of any
-  function $f : A \to B$ has a coequalizer.\label{item:reg2}
+\item $\uset$ 是有限完备的。\label{item:reg1}
+\item 任何函数 $f : A \to B$ 的核偶对 $\proj1,\proj2: (\sm{x,y:A} f(x)= f(y)) \to A$ 有一个余等子。\label{item:reg2}
   \indexdef{kernel!pair}
-\item Pullbacks of regular epimorphisms are again regular epimorphisms.\label{item:reg3}
+\item 正则满态射的拉回仍是正则满态射。\label{item:reg3}
 \end{enumerate}
+
 %
-Recall that a \define{regular epimorphism}
+回忆一下，一个\define{正则满态射（regular epimorphism）}
 \indexdef{epimorphism!regular}%
 \indexdef{regular!epimorphism}%
-is a morphism that is the coequalizer of \emph{some} pair of maps.
-Thus in~\ref{item:reg3} the pullback of a coequalizer is required to again be a coequalizer, but not necessarily of the pulled-back pair.
+是指可以成为\emph{某个}映射对的余等子的态射。
+因此，在~\ref{item:reg3}中，要求余等子的拉回仍然是余等子，但不一定是那个被拉回的映射对的余等子。
 
 \index{set-coequalizer}%
 \index{image}
-The obvious candidate for the coequalizer of the kernel pair of $f:A\to B$ is the \emph{image} of $f$, as defined in \cref{sec:image-factorization}.
-Recall that we defined $\im(f)\defeq \sm{b:B} \brck{\hfib f b}$, with functions
-$\tilde{f}:A\to\im(f)$ and $i_f:\im(f)\to B$ defined by
+对于函数 $f:A\to B$ 的核偶对的余等子，一个自然的候选是 $f$ 的\emph{像（image）}，正如在 \cref{sec:image-factorization} 中所定义的那样。
+回顾，我们曾定义 $\im(f)\defeq \sm{b:B} \brck{\hfib f b}$，配有函数
+$\tilde{f}:A\to\im(f)$ 与 $i_f:\im(f)\to B$，由
 \begin{align*}
   \tilde{f} & \defeq \lam{a} \Pairr{f(a),\,\bproj{\pairr{a,\refl{f(a)}}}}\\
 i_f & \defeq \proj1
 \end{align*}
-fitting into a diagram:
+定义，构成如下图表：
 \begin{equation*}
   \xymatrix{
     **[l]{\sm{x,y:A} f(x)= f(y)}
@@ -109,71 +107,72 @@ fitting into a diagram:
   }
 \end{equation*}
 
-Recall that a function $f:A\to B$ is called \emph{surjective} if
+回忆一下，一个函数 $f:A\to B$ 被称为\emph{满的（surjective）}，如果
 \index{function!surjective}%
 \narrowequation{\fall{b:B}\brck{\hfib f b},}
-or equivalently $\fall{b:B} \exis{a:A} f(a)=b$.
-We have also said that a function $f:A\to B$ between sets is called \emph{injective} if
+或等价地 $\fall{b:B} \exis{a:A} f(a)=b$。
+我们也曾提到，集合之间的一个函数 $f:A\to B$ 被称为\emph{单的（injective）}，如果
 \index{function!injective}%
-$\fall{a,a':A} (f(a) = f(a')) \Rightarrow (a=a')$, or equivalently if each of its fibers is a mere proposition.
-Since these are the $(-1)$-connected and $(-1)$-truncated maps in the sense of \cref{cha:hlevels}, the general theory there implies that $\tilde f$ above is surjective and $i_f$ is injective, and that this factorization is stable under pullback.
+$\fall{a,a':A} (f(a) = f(a')) \Rightarrow (a=a')$，或等价地，如果它的每个纤维都是命题。
+由于这些分别是 \cref{cha:hlevels} 意义下的 $(-1)$-连通映射与 $(-1)$-截断映射，那里的一般理论表明：上图中的 $\tilde f$ 是满的而 $i_f$ 是单的，并且这个分解在拉回下是稳定的。
 
-We now identify surjectivity and injectivity with the appropriate cat\-e\-go\-ry-theoretic notions.
-First we observe that categorical monomorphisms and epimorphisms have a slightly stronger equivalent formulation.
+现在我们将满射性与单射性同相应的范畴论概念等同起来。
+首先我们观察到，范畴论中的单态射与满态射有一个稍强的等价表述。
 
 \begin{lem}\label{thm:mono}
-  For a morphism $f:\hom_A(a,b)$ in a category $A$, the following are equivalent.
+  对于范畴 $A$ 中的一个态射 $f:\hom_A(a,b)$，以下条件等价。
   \begin{enumerate}
-  \item $f$ is a \define{monomorphism}:
+  \item $f$ 是一个\define{单态射（monomorphism）}：
     \indexdef{monomorphism}%
-    for all $x:A$ and ${g,h:\hom_A(x,a)}$, if $f\circ g = f\circ h$ then $g=h$.\label{item:mono1}
-  \item (If $A$ has pullbacks) the diagonal map $a\to a\times_b a$ is an isomorphism.\label{item:mono4}
-  \item For all $x:A$ and $k:\hom_A(x,b)$, the type $\sm{h:\hom_A(x,a)} (k = f\circ h)$ is a mere proposition.\label{item:mono2}
-  \item For all $x:A$ and ${g:\hom_A(x,a)}$, the type $\sm{h:\hom_A(x,a)} (f\circ g = f\circ h)$ is contractible.\label{item:mono3}
+    对所有 $x:A$ 与 ${g,h:\hom_A(x,a)}$，若 $f\circ g = f\circ h$ 则 $g=h$。\label{item:mono1}
+  \item （若 $A$ 有拉回）对角态射 $a\to a\times_b a$ 是一个同构。\label{item:mono4}
+  \item 对所有 $x:A$ 和 $k:\hom_A(x,b)$，类型 $\sm{h:\hom_A(x,a)} (k = f\circ h)$ 是一个命题。\label{item:mono2}
+  \item 对所有 $x:A$ 与 ${g:\hom_A(x,a)}$，类型 $\sm{h:\hom_A(x,a)} (f\circ g = f\circ h)$ 是可缩的。\label{item:mono3}
   \end{enumerate}
 \end{lem}
+
 \begin{proof}
-  The equivalence of conditions~\ref{item:mono1} and~\ref{item:mono4} is standard category theory.
-  Now consider the function $(f\circ \blank ):\hom_A(x,a) \to \hom_A(x,b)$ between sets.
-  Condition~\ref{item:mono1} says that it is injective, while~\ref{item:mono2} says that its fibers are mere propositions; hence they are equivalent.
-  And~\ref{item:mono2} implies~\ref{item:mono3} by taking $k\defeq f\circ g$ and recalling that an inhabited mere proposition is contractible.
-  Finally,~\ref{item:mono3} implies~\ref{item:mono1} since if $p:f\circ g= f\circ h$, then $(g,\refl{})$ and $(h,p)$ both inhabit the type in~\ref{item:mono3}, hence are equal and so $g=h$.
+  条件~\ref{item:mono1} 与条件~\ref{item:mono4} 的等价性是标准的范畴论结果。
+  现在考虑集合之间的函数 $(f\circ \blank ):\hom_A(x,a) \to \hom_A(x,b)$。
+  条件~\ref{item:mono1} 说它是单的，而条件~\ref{item:mono2} 说它的纤维是命题；因此它们等价。
+  条件~\ref{item:mono2} 蕴涵条件~\ref{item:mono3}：取 $k\defeq f\circ g$，并注意一个有实例的命题是可缩的。
+  最后，由条件~\ref{item:mono3} 可推出条件~\ref{item:mono1}，因为如果 $p:f\circ g= f\circ h$，那么 $(g,\refl{})$ 和 $(h,p)$ 都是条件~\ref{item:mono3} 中类型的项，因此它们相等，于是 $g=h$。
 \end{proof}
 
 \begin{lem}\label{thm:inj-mono}
-  A function $f:A\to B$ between sets is injective if and only if it is a monomorphism\index{monomorphism} in \uset.
+  集合之间的一个函数 $f:A\to B$ 是单的，当且仅当它是 \uset 中的一个单态射\index{monomorphism}。
 \end{lem}
+
 \begin{proof}
-  Left to the reader.
+  留给读者。
 \end{proof}
 
-Of course, an \define{epimorphism}
+当然，一个\define{满态射（epimorphism）}
 \indexdef{epimorphism}%
 \indexsee{epi}{epimorphism}%
-is a monomorphism in the opposite category.
-We now show that in \uset, the epimorphisms are precisely the surjections, and also precisely the coequalizers (regular epimorphisms).
+就是反范畴中的单态射。
+我们现在证明，在 \uset 中，满态射恰好就是满射，并且也恰好是余等子（正则满态射）。
 
-The coequalizer of a pair of maps $f,g:A\to B$ in $\uset$ is defined as the 0-truncation of a general (homotopy) coequalizer.
-For clarity, we may call this the \define{set-coequalizer}.
+$\uset$ 中一对映射 $f,g:A\to B$ 的余等子被定义为一般（同伦）余等子的 0-截断。
+为清晰起见，我们可称之为\define{集合余等子（set-coequalizer）}。
 \indexdef{set-coequalizer}%
 \indexsee{coequalizer!of sets}{set-coequalizer}%
-It is convenient to express its universal property as follows.
+其泛性质可方便地表述如下。
 
 \begin{lem}
 \index{universal!property!of set-coequalizer}%
-Let $f,g:A\to B$ be functions between sets $A$ and $B$. The
-{set-co}equalizer $c_{f,g}:B\to Q$ has the property that, for any set $C$ and any $h:B\to C$ with $h\circ f = h\circ g$, the type
+设 $f,g:A\to B$ 是集合 $A$ 与 $B$ 之间的函数。其集合余等子 $c_{f,g}:B\to Q$ 具有以下性质：对任意集合 $C$ 以及任意满足 $h\circ f = h\circ g$ 的 $h:B\to C$，类型
 \begin{equation*}
 \sm{k:Q\to C} (k\circ c_{f,g} = h)
 \end{equation*}
-is contractible.
+是可缩的。
 \end{lem}
 
 \begin{lem}\label{epis-surj}
-For any function $f:A\to B$ between sets, the following are equivalent:
+对于集合之间的任意函数 $f:A\to B$，以下条件等价：
 \begin{enumerate}
-\item $f$ is an epimorphism.
-\item Consider the pushout diagram
+\item $f$ 是一个满态射。
+\item 考虑 $\uset$ 中定义映射锥\index{cone!of a function}的推出图表
 \begin{equation*}
   \xymatrix{
     {A}
@@ -189,62 +188,60 @@ For any function $f:A\to B$ between sets, the following are equivalent:
     {C_f}
   }
 \end{equation*}
-in $\uset$ defining the mapping cone\index{cone!of a function}. Then the type $C_f$ is contractible.
-\item $f$ is surjective.
+则类型 $C_f$ 是可缩的。
+\item $f$ 是满射。
 \end{enumerate}
 \end{lem}
 
 \begin{proof}
-Let $f:A\to B$ be a function between sets, and suppose it to be an epimorphism; we show $C_f$ is contractible.
-The constructor $\unit\to C_f$ of $C_f$ gives us an element $t:C_f$.
-We have to show that
+设 $f:A\to B$ 为集合之间的函数，并假设它是满态射；我们证明 $C_f$ 是可缩的。
+$C_f$ 的构造子 $\unit\to C_f$ 给出了一个元素 $t:C_f$。
+我们需要证明
 \begin{equation*}
 \prd{x:C_f} x= t.
 \end{equation*}
-Note that $x= t$ is a mere proposition, hence we can use induction on $C_f$.
-Of course when $x$ is $t$ we have $\refl{t}:t=t$, so it suffices to find
+注意 $x= t$ 是一个命题，因此我们可以对 $C_f$ 使用归纳法。
+当然，当 $x$ 就是 $t$ 时，我们有 $\refl{t}:t=t$，所以只需找到
 \begin{align*}
 I_0 & : \prd{b:B} \iota(b)= t\\
 I_1 & : \prd{a:A} \opp{\alpha_1(a)} \ct I_0(f(a))=\refl{t}
 \end{align*}
-where $\iota:B\to C_f$ and $\alpha_1:\prd{a:A} \iota(f(a))= t$ are the other constructors
-of $C_f$. Note that $\alpha_1$ is a homotopy from $\iota\circ f$ to
-$\mathsf{const}_t\circ f$, so we find the elements
+其中 $\iota:B\to C_f$ 和 $\alpha_1:\prd{a:A} \iota(f(a))= t$ 是 $C_f$ 的其他构造子。
+注意 $\alpha_1$ 是一个从 $\iota\circ f$ 到 $\mathsf{const}_t\circ f$ 的同伦，因此我们得到元素
 \begin{equation*}
 \pairr{\iota,\refl{\iota\circ f}},\pairr{\mathsf{const}_t,\alpha_1}:
 \sm{h:B\to C_f} \iota\circ f \htpy h\circ f.
 \end{equation*}
-By the dual of \cref{thm:mono}\ref{item:mono3} (and function extensionality), there is a path
+根据 \cref{thm:mono}\ref{item:mono3} 的对偶（以及函数外延性），存在一条道路
 \begin{equation*}
 \gamma:\pairr{\iota,\refl{\iota\circ f}}=\pairr{\mathsf{const}_t,\alpha_1}.
 \end{equation*}
-Hence, we may define $I_0(b)\defeq \happly(\projpath1(\gamma),b):\iota(b)=t$.
-We also have
+因此，我们可以定义 $I_0(b)\defeq \happly(\projpath1(\gamma),b):\iota(b)=t$。
+我们还有
 \[\projpath2(\gamma) : \trans{\projpath1(\gamma)}{\refl{\iota\circ f}} = \alpha_1. \]
-This transport involves precomposition with $f$, which commutes with $\happly$.
-Thus, from transport in path types we obtain $I_0(f(a)) = \alpha_1(a)$ for any $a:A$, which gives us $I_1$.
+这个传送涉及与 $f$ 的预复合，而预复合与 $\happly$ 交换。
+因此，由道路类型中的传送，对任意 $a:A$ 我们得到 $I_0(f(a)) = \alpha_1(a)$，这就给出了 $I_1$。
 
-Now suppose $C_f$ is contractible; we show $f$ is surjective.
-We first construct a type family $P:C_f\to\prop$ by recursion on $C_f$, which is valid since \prop is a set.
-On the point constructors, we define
+现在假设 $C_f$ 是可缩的；我们证明 $f$ 是满的。
+我们首先通过对 $C_f$ 递归定义一个类型族 $P:C_f\to\prop$，这是可行的，因为 \prop 是一个集合。
+在点构造子上，我们定义
 \begin{align*}
 P(t) & \defeq \unit\\
 P(\iota(b)) & \defeq \brck{\hfiber{f}b}.
 \end{align*}
-To complete the construction of $P$, it remains to give a path
+为了完成 $P$ 的构造，还需要给出一条道路
 \narrowequation{\brck{\hfiber{f}{f(a)}} =_\prop \unit}
-for all $a:A$.
-However, $\brck{\hfiber{f}{f(a)}}$ is inhabited by $(f(a),\refl{f(a)})$.
-Since it is a mere proposition, this means it is contractible --- and thus equivalent, hence equal, to \unit.
-This completes the definition of $P$.
-Now, since $C_f$ is assumed to be contractible, it follows that $P(x)$ is equivalent to $P(t)$ for any $x:C_f$.
-In particular, $P(\iota(b))\jdeq \brck{\hfiber{f}b}$ is equivalent to $P(t)\jdeq \unit$ for each $b:B$, and hence contractible.
-Thus, $f$ is surjective.
+对所有 $a:A$。
+然而，$\brck{\hfiber{f}{f(a)}}$ 有实例 $(f(a),\refl{f(a)})$。
+由于它是一个命题，这意味着它是可缩的——从而等价，因此相等，于 \unit。
+这就完成了 $P$ 的定义。
+现在，既然 $C_f$ 被假设为可缩的，那么对任意 $x:C_f$，$P(x)$ 等价于 $P(t)$。
+特别地，对每个 $b:B$，$P(\iota(b))\jdeq \brck{\hfiber{f}b}$ 等价于 $P(t)\jdeq \unit$，因此是可缩的。
+于是，$f$ 是满的。
 
-Finally, suppose $f:A\to B$ to be surjective, and consider a set $C$ and two functions
-$g,h:B\to C$ with the property that $g\circ f = h\circ f$. Since $f$
-is assumed to be surjective, for all $b:B$ the type $\brck{\hfib f b}$ is contractible.
-Thus we have the following equivalences:
+最后，假设 $f:A\to B$ 是满的，并考虑一个集合 $C$ 以及两个函数 $g,h:B\to C$ 满足 $g\circ f = h\circ f$。
+由于 $f$ 被假设为满的，对所有 $b:B$，类型 $\brck{\hfib f b}$ 是可缩的。
+因此我们有如下等价：
 \begin{align*}
 \prd{b:B} (g(b)= h(b))
 & \eqvsym \prd{b:B} \Parens{\brck{\hfib f b} \to (g(b)= h(b))}\\
@@ -252,8 +249,8 @@ Thus we have the following equivalences:
 & \eqvsym \prd{b:B}{a:A}{p:f(a)= b} g(b)= h(b)\\
 & \eqvsym \prd{a:A} g(f(a))= h(f(a))
 \end{align*}
-using on the second line the fact that $g(b)=h(b)$ is a mere proposition, since $C$ is a set.
-But by assumption, there is an element of the latter type.
+在第二行中我们用到了 $g(b)=h(b)$ 是一个命题这一事实，因为 $C$ 是一个集合。
+但由假设，后一个类型是有实例的。
 \end{proof}
 
 % \begin{rem}
@@ -265,57 +262,51 @@ But by assumption, there is an element of the latter type.
 % \end{rem}
 
 \begin{thm}\label{thm:set_regular}\label{lem:images_are_coequalizers}
-The category $\uset$ is regular. Moreover, surjective functions between sets are regular epimorphisms.
+范畴 $\uset$ 是正则范畴。此外，集合之间的满函数是正则满态射。
 \end{thm}
 
 \begin{proof}
-It is a standard lemma in category theory that a category is regular as soon as it admits finite limits and a pullback-stable orthogonal
-factorization system\index{orthogonal factorization system} $(\mathcal{E},\mathcal{M})$ with $\mathcal{M}$ the monomorphisms, in which case $\mathcal{E}$ consists automatically of
-the regular epimorphisms.
-(See e.g.~\cite[A1.3.4]{elephant}.)
-The existence of the factorization system was proved in \cref{thm:orth-fact}.
+范畴论中有一个标准引理：如果一个范畴有有限极限，并且有一个拉回稳定的正交分解系统\index{orthogonal factorization system} $(\mathcal{E},\mathcal{M})$，其中 $\mathcal{M}$ 是单态射，那么该范畴是正则的，此时 $\mathcal{E}$ 自动由正则满态射组成。
+（例如参见~\cite[A1.3.4]{elephant}。）
+该分解系统的存在性已在 \cref{thm:orth-fact} 中证明。
 \end{proof}
 
 \begin{lem}\label{lem:pb_of_coeq_is_coeq}
-Pullbacks of regular epis in \uset are regular epis.
+在 \uset 中，正则满态射的拉回仍是正则满态射。
 \end{lem}
+
 \begin{proof}
-  We showed in \cref{thm:stable-images} that pullbacks of $n$-connected functions are $n$-connected.
-  By \cref{lem:images_are_coequalizers}, it suffices to apply this when $n=-1$.
+  我们在 \cref{thm:stable-images} 中证明了 $n$-连通函数的拉回是 $n$-连通的。
+  根据 \cref{lem:images_are_coequalizers}，只需取 $n=-1$ 应用此结论即可。
 \end{proof}
 
 \indexdef{image!of a subset}
-One of the consequences of \uset being a regular category is that we have an ``image'' operation on subsets.
-That is, given $f:A\to B$, any subset $P:\power A$ (i.e.\ a predicate $P:A\to \prop$) has an \define{image} which is a subset of $B$.
-This can be defined directly as $\setof{ y:B | \exis{x:A} f(x)=y \land P(x)}$, or indirectly as the image (in the previous sense) of the composite function
+作为 \uset（集合的范畴）是正则范畴的一个推论，我们可以在子集上定义“像”操作。
+也就是说，给定 $f:A\to B$，$A$ 的任意子集 $P:\power A$（即一个谓词 $P:A\to \prop$）都有一个\define{像（image）}，它是 $B$ 的一个子集。
+这可以直接定义为 $\setof{ y:B | \exis{x:A} f(x)=y \land P(x)}$，或者间接地定义为复合函数
 \[ \setof{ x:A | P(x) } \to A \xrightarrow{f} B.\]
 \symlabel{subset-image}
-We will also sometimes use the common notation $\setof{f(x) | P(x)}$ for the image of $P$.
+的像（按前述意义）。
+我们有时也会使用常见的记号 $\setof{f(x) | P(x)}$ 来表示 $P$ 的像。
 
-
-\subsection{Quotients}\label{subsec:quotients}
+\subsection{商}\label{subsec:quotients}
 
 \index{set-quotient|(}%
-Now that we know that $\uset$ is regular, to show that $\uset$ is exact, we need to show that every
-equivalence relation is effective.
+既然我们已经知道 $\uset$ 是正则的，那么为了证明 $\uset$ 是正合的，就需要证明每个等价关系都是有效的。
 \index{effective!equivalence relation|(}%
 \index{relation!effective equivalence|(}%
-In other words, given an equivalence
-relation $R:A\to A\to\prop$, there is a coequalizer $c_R$ of the pair
-$\proj1,\proj2:\sm{x,y:A} R(x,y)\to A$ and, moreover, the $\proj1$ and $\proj2$
-form the kernel\index{kernel!pair} pair of $c_R$.
+换句话说，给定一个等价关系 $R:A\to A\to\prop$，存在一对映射
+$\proj1,\proj2:\sm{x,y:A} R(x,y)\to A$
+的余等子 $c_R$；并且，$\proj1$ 和 $\proj2$ 构成了 $c_R$ 的核偶\index{kernel!pair}。
 
-We have already seen, in \cref{sec:set-quotients}, two general ways to construct the quotient of a set by an equivalence relation $R:A\to A\to\prop$.
-The first can be described as the set-coequalizer of the two projections
+我们已经在 \cref{sec:set-quotients} 中见过两种由等价关系 $R:A\to A\to\prop$ 构造集合商的一般方法。
+第一种可以描述为两个投影
 \[\proj1,\proj2:\Parens{\sm{x,y:A} R(x,y)} \to A.\]
-The important property of such a quotient is the following.
+的集合余等子。
+这类商的一个重要性质如下所述。
 
 \begin{defn}
-  A relation $R:A\to A\to\prop$ is said to be \define{effective}
-  \indexdef{effective!relation}
-  \indexdef{effective!equivalence relation}%
-  \indexdef{relation!effective equivalence}%
-  if the square
+  如果下面的方块
 \begin{equation*}
   \xymatrix{
     {\sm{x,y:A} R (x,y)}
@@ -331,43 +322,38 @@ The important property of such a quotient is the following.
     {A/R}
     }
 \end{equation*}
-is a pullback.
+是一个拉回，那么关系 $R:A\to A\to\prop$ 就被称为是\define{有效的}。
+\indexdef{effective!relation}
+\indexdef{effective!equivalence relation}%
+\indexdef{relation!effective equivalence}%
 \end{defn}
 
-Since the standard pullback of $c_R$ and itself is $\sm{x,y:A} (c_R(x)=c_R(y))$, by \cref{thm:total-fiber-equiv} this is equivalent to asking that the canonical transformation $\prd{x,y:A} R(x,y) \to (c_R(x)=c_R(y))$ be a fiberwise equivalence.
+由于 $c_R$ 和自身的标准拉回是 $\sm{x,y:A} (c_R(x)=c_R(y))$，根据 \cref{thm:total-fiber-equiv}，这等价于要求典范变换 $\prd{x,y:A} R(x,y) \to (c_R(x)=c_R(y))$ 是一个逐纤维等价。
 
 \begin{lem}\label{lem:sets_exact}
-Suppose $\pairr{A,R}$ is an equivalence relation. Then there is an equivalence
+假设 $\pairr{A,R}$ 是一个等价关系。那么对任意 $x,y:A$，存在一个等价
 \begin{equation*}
 (c_R(x)= c_R(y))\eqvsym R(x,y)
 \end{equation*}
-for any $x,y:A$. In other words, equivalence relations are effective.
+换言之，等价关系是有效的。
 \end{lem}
 
 \begin{proof}
-We begin by extending $R$ to a relation $\widetilde{R}:A/R\to A/R\to\prop$, which we will then show is equivalent
-to the identity type on $A/R$. We define $\widetilde{R}$ by double induction on
-$A/R$ (note that $\prop$ is a set by univalence for mere propositions). We
-define $\widetilde{R}(c_R(x),c_R(y)) \defeq R(x,y)$. For $r:R(x,x')$ and $s:R(y,y')$,
-the transitivity and symmetry
-of $R$ gives an equivalence from $R(x,y)$ to $R(x',y')$. This completes the
-definition of $\widetilde{R}$.
+我们首先将 $R$ 延拓成一个关系 $\widetilde{R}:A/R\to A/R\to\prop$，随后我们将证明它等价于 $A/R$ 上的相等类型。我们通过对 $A/R$ 进行双重归纳来定义 $\widetilde{R}$（注意，根据命题的泛等公理，$\prop$ 是一个集合）。我们定义 $\widetilde{R}(c_R(x),c_R(y)) \defeq R(x,y)$。对于 $r:R(x,x')$ 和 $s:R(y,y')$，利用 $R$ 的传递性与对称性，我们可以从 $R(x,y)$ 到 $R(x',y')$ 给出一个等价。这就完成了 $\widetilde{R}$ 的定义。
 
-It remains to show that $\widetilde{R}(w,w')\eqvsym (w= w')$ for every $w,w':A/R$.
-The direction $(w=w')\to \widetilde{R}(w,w')$ follows by transport once we show that $\widetilde{R}$ is reflexive, which is an easy induction.
-The other direction $\widetilde{R}(w,w')\to (w= w')$ is a mere proposition, so since $c_R:A\to A/R$ is surjective, it suffices to assume that $w$ and $w'$ are of the form $c_R(x)$ and $c_R(y)$.
-But in this case, we have the canonical map $\widetilde{R}(c_R(x),c_R(y)) \defeq R(x,y) \to (c_R(x)=c_R(y))$.
-(Note again the appearance of the encode-decode method.\index{encode-decode method})
+剩下只需证明，对每一对 $w,w':A/R$，都有 $\widetilde{R}(w,w')\eqvsym (w= w')$。
+方向 $(w=w')\to \widetilde{R}(w,w')$ 可以通过传送得到，只要我们证明 $\widetilde{R}$ 是自反的，而这可以通过一个简单的归纳完成。
+另一个方向 $\widetilde{R}(w,w')\to (w= w')$ 是一个命题，并且由于 $c_R:A\to A/R$ 是满的，我们只需假设 $w$ 和 $w'$ 具有 $c_R(x)$ 和 $c_R(y)$ 的形式。
+但在这种情况下，我们已有典范映射 $\widetilde{R}(c_R(x),c_R(y)) \defeq R(x,y) \to (c_R(x)=c_R(y))$。
+（再次注意，这里出现了编码-解码方法。\index{encode-decode method}）
 \end{proof}
 
-The second construction of quotients is as the set of equivalence classes of $R$ (a subset
-of its power set\index{power set}):
+商的第二种构造是作为 $R$ 的等价类组成的集合（即其幂集\index{power set}的一个子集）：
 \[ A\sslash R \defeq \setof{ P:A\to\prop | P \text{ is an equivalence class of } R}. \]
-This requires propositional resizing\index{propositional resizing}\index{impredicative!quotient}\index{resizing} in order to remain in the same universe as $A$ and $R$.
+为了使该构造与 $A$ 和 $R$ 保持在同一个宇宙中，需要命题大小重整\index{propositional resizing}\index{impredicative!quotient}\index{resizing}。
 
-Note that if we regard $R$ as a function from $A$ to $A\to \prop$, then $A\sslash R$ is equivalent to $\im(R)$, as constructed in \cref{sec:image}.
-Now in \cref{lem:images_are_coequalizers} we have shown that images are
-coequalizers. In particular, we immediately get the coequalizer diagram
+注意，如果我们把 $R$ 看作从 $A$ 到 $A\to \prop$ 的函数，那么 $A\sslash R$ 就等价于 \cref{sec:image} 中构造的像 $\im(R)$。
+现在，在 \cref{lem:images_are_coequalizers} 中我们已经证明了像是余等子。特别地，我们立刻得到余等子图表
 \begin{equation*}
   \xymatrix{
     **[l]{\sm{x,y:A} R (x)= R (y)}
@@ -380,48 +366,47 @@ coequalizers. In particular, we immediately get the coequalizer diagram
     {A \sslash R.}
   }
 \end{equation*}
-We can use this to give an alternative proof that any equivalence relation is effective and that the two definitions of quotients agree.
+我们可以利用这个来给出另一个证明：任何等价关系都是有效的，并且两种商的定义是一致的。
 
 \begin{thm}\label{prop:kernels_are_effective}
-For any function $f:A\to B$ between any two sets,
-the relation $\ker(f):A\to A\to\prop$ given by
-$\ker(f,x,y)\defeq (f(x)= f(y))$ is effective.
+对于任意两个集合之间的任意函数 $f:A\to B$，由
+$\ker(f,x,y)\defeq (f(x)= f(y))$
+给出的关系 $\ker(f):A\to A\to\prop$ 是有效的。
 \end{thm}
 
 \begin{proof}
-We will use that $\im(f)$ is the coequalizer of $\proj1,\proj2:
-(\sm{x,y:A} f(x)= f(y))\to A$.
+我们将使用 $\im(f)$ 是 $\proj1,\proj2:
+(\sm{x,y:A} f(x)= f(y))\to A$ 的余等子这一事实。
 %we get this equivalence from~\cref{prop:images_are_coequalizers}
-Note that the kernel pair of the function
+注意，函数
 \[c_f\defeq\lam{a} \Parens{f(a),\brck{\pairr{a,\refl{f(a)}}}}
 : A \to \im(f)
 \]
-consists of the two projections
+的核偶由两个投影
 \begin{equation*}
 \proj1,\proj2:\Parens{\sm{x,y:A} c_f(x)= c_f(y)}\to A.
 \end{equation*}
-For any $x,y:A$, we have equivalences
+组成。
+对于任意 $x,y:A$，我们有等价
 \begin{align*}
   (c_f(x)= c_f(y))
   & \eqvsym \Parens{\sm{p:f(x)= f(y)} \trans{p}{\brck{\pairr{x,\refl{f(x)}}}} =\brck{\pairr{y,\refl{f(x)}}}}\\
   & \eqvsym (f(x)= f(y)),
 \end{align*}
-where the last equivalence holds because
-$\brck{\hfiber{f}b}$ is a mere proposition for any $b:B$.
-Therefore, we get that
+其中最后一个等价成立，是因为对于任意 $b:B$，$\brck{\hfiber{f}b}$ 是一个命题。
+因此，我们得到
 \begin{equation*}
 \Parens{\sm{x,y:A} c_f(x)= c_f(y)}\eqvsym \Parens{\sm{x,y:A} f(x)= f(y)}
 \end{equation*}
-and hence we may conclude that $\ker f$ is an effective relation
-for any function $f$.
+由此我们可以得出结论：对于任意函数 $f$，其核 $\ker f$ 都是一个有效关系。
 \end{proof}
 
 \begin{thm}
-Equivalence relations are effective and there is an equivalence $A/R \eqvsym A\sslash  R $.
+等价关系是有效的，并且存在一个等价 $A/R \eqvsym A\sslash  R $。
 \end{thm}
 
 \begin{proof}
-We need to analyze the coequalizer diagram
+我们需要分析余等子图表
 \begin{equation*}
   \xymatrix{
     **[l]{\sm{x,y:A} R (x)= R (y)}
@@ -434,12 +419,9 @@ We need to analyze the coequalizer diagram
     {A \sslash R}
   }
 \end{equation*}
-By the univalence axiom, the type $R(x) = R(y)$ is equivalent to the type of homotopies from $R(x)$ to $R(y)$, which is
-equivalent to
+根据泛等公理，类型 $R(x) = R(y)$ 等价于从 $R(x)$ 到 $R(y)$ 的同伦的类型，而这个类型又等价于
 \narrowequation{\prd{z:A} R (x,z)\eqvsym R (y,z).}
-Since $R$ is an equivalence relation, the latter space is equivalent to $R(x,y)$. To
-summarize, we get that $(R(x) = R(y)) \eqvsym R(x,y)$, so $R $ is effective since it is equivalent to an effective relation. Also,
-the diagram
+由于 $R$ 是一个等价关系，后一个类型等价于 $R(x,y)$。综上所述，我们得到 $(R(x) = R(y)) \eqvsym R(x,y)$，因此 $R$ 是有效的，因为它等价于一个有效关系。并且，图表
 \begin{equation*}
   \xymatrix{
     **[l]{\sm{x,y:A} R(x, y)}
@@ -452,128 +434,121 @@ the diagram
     {A \sslash R.}
   }
 \end{equation*}
-is a coequalizer diagram. Since coequalizers are unique up to equivalence, it follows that $A/R \eqvsym A\sslash  R $.
+是一个余等子图表。由于余等子在等价意义下是唯一的，于是有 $A/R \eqvsym A\sslash  R $。
 \end{proof}
 
-We finish this section by mentioning a possible third construction of the quotient of a set $A$ by an equivalence relation $R$.
-Consider the precategory with objects $A$ and hom-sets $R$; the type of objects of the Rezk completion
+我们以商的第三种可能的构造来结束本节。设 $A$ 是一个集合，$R$ 是其上的一个等价关系。考虑以 $A$ 为对象、以 $R$ 为态射集的预范畴；那么该预范畴的 Rezk 完备化
 \index{completion!Rezk}%
-(see \cref{sec:rezk}) of this precategory will then be the
-quotient. The reader is invited to check the details.
+（参见 \cref{sec:rezk}）的对象类型就是这个商。请读者自行验证其中的细节。
 
 \index{effective!equivalence relation|)}%
 \index{relation!effective equivalence|)}%
 \index{set-quotient|)}%
 
-\subsection{\texorpdfstring{$\uset$}{Set} is a \texorpdfstring{$\Pi\mathsf{W}$}{ΠW}-pretopos}
+\subsection{\texorpdfstring{$\uset$}{Set} 是一个 \texorpdfstring{$\Pi\mathsf{W}$}{ΠW}-预意象}
 \label{subsec:piw}
 
 \index{structural!set theory|(}%
 
-The notion of a \emph{$\Pi\mathsf{W}$-pretopos}
+所谓 \emph{$\Pi\mathsf{W}$-预意象}
 \index{PiW-pretopos@$\Pi\mathsf{W}$-pretopos}%
-\indexsee{pretopos}{$\Pi\mathsf{W}$-pretopos}
---- that is, a locally cartesian closed category
+\indexsee{pretopos}{$\Pi\mathsf{W}$-预意象}
+——即一个具有不相交有限余积、有效等价关系以及多项式自函子之初始代数的局部笛卡尔闭范畴
 \index{locally cartesian closed category}%
 \index{category!locally cartesian closed}%
-with disjoint finite coproducts, effective equivalence relations, and initial algebras for polynomial endofunctors --- is intended as a ``predicative''
+——旨在作为一种“直谓的”
 \index{mathematics!predicative}%
-notion of topos, i.e.\ a category of ``predicative sets'', which can serve the purpose for constructive mathematics
+意象概念，亦即一个“直谓集合”的范畴。它可以为构造性数学
 \index{mathematics!constructive}%
-that the usual category of sets does for classical
+提供基础，其作用类似于通常的集合范畴之于经典
 \index{mathematics!classical}%
-mathematics.
+数学。
 
-Typically, in constructive type theory, one resorts to an external construction of ``setoids'' --- an exact completion --- to obtain a category with such closure properties.
+通常，在构造性类型论中，人们需要诉诸于一种外部的 ``setoid'' 构造——即正合完备化——以得到一个具有此类闭包性质的范畴。
 \index{setoid}\index{completion!exact}%
-  In particular, the well-behaved quotients are required for many constructions in mathematics that usually involve (non-constructive) power sets.  It is noteworthy that univalent foundations provides these constructions \emph{internally} (via higher inductive types), without requiring such external constructions.  This represents a powerful advantage of our approach, as we shall see in subsequent examples.
+  特别是，数学中许多通常涉及（非构造性）幂集的构造都需要性质良好的商。值得注意的是，泛等基础能够\emph{在内部}（通过高阶归纳类型）提供这些构造，而无须借助此类外部构造。这体现了我们方法的一项显著优势，在后续的例子中我们将看到这一点。
 
 \begin{thm}
-  \index{PiW-pretopos@$\Pi\mathsf{W}$-pretopos}
-  The category $\uset$ is a $\Pi\mathsf{W}$-pretopos.
+  \index{PiW-pretopos@$\Pi\mathsf{W}$-预意象}
+  范畴 $\uset$ 是一个 $\Pi\mathsf{W}$-预意象（$\Pi\mathsf{W}$-pretopos）。
 \end{thm}
+
 \begin{proof}
-  We have an initial object
+  我们有一个初始对象
   \index{initial!set}%
-  $\emptyt$ and finite, disjoint sums $A+B$.  These are stable under pullback, simply because pullback has a right adjoint\index{adjoint!functor}.  Indeed, $\uset$ is locally cartesian closed, since for any map $f:A\to B$ between sets, the ``fibrant replacement'' \index{fibrant replacement} $\sm{a:A}f(a)=b$ is equivalent to $A$ (over $B$), and we have dependent function types for the replacement.
-We've just shown that $\uset$ is regular (\cref{thm:set_regular}) and that quotients are effective (\cref{lem:sets_exact}). We thus have a locally cartesian closed pretopos. Finally, since the $n$-types are closed under the formation of $W$-types by \cref{ex:ntypes-closed-under-wtypes}, and by \cref{thm:w-hinit} $W$-types are initial algebras for polynomial endofunctors, we see that $\uset$ is a $\Pi\mathsf{W}$-pretopos.
+  $\emptyt$ 以及有限的、不相交的和 $A+B$。  这些结构在拉回下是稳定的，原因仅在于拉回具有右伴随\index{adjoint!functor}。  事实上，$\uset$ 是局部笛卡尔闭的：因为对于集合间的任意映射 $f:A\to B$，其``纤维化替换''\index{fibrant replacement} $\sm{a:A}f(a)=b$ 在 $B$ 之上等价于 $A$，并且该替换具有依值函数类型。
+
+我们刚刚已经证明了 $\uset$ 是正则的（\cref{thm:set_regular}）并且其商是有效的（\cref{lem:sets_exact}）。因此，我们得到了一个局部笛卡尔闭的预意象。最后，根据\cref{ex:ntypes-closed-under-wtypes}，$n$-类型对 $W$-类型的形成是封闭的，并且根据\cref{thm:w-hinit}，$W$-类型是多项式自函子的初始代数。由此可知，$\uset$ 是一个 $\Pi\mathsf{W}$-预意象。
 \end{proof}
 
-
 \index{topos|(}
-One naturally wonders what, if anything, prevents $\uset$ from being an (elementary) topos?
-In addition to the structure already mentioned, a topos has a
-\emph{subobject classifier}:
+人们自然会问，是否有某种因素阻碍 $\uset$ 成为（初等）意象？
+除了已经提到的结构外，一个意象还具有一个
+\emph{子对象分类子（subobject classifier）}：
 \indexdef{subobject classifier}%
 \index{classifier!subobject}%
 \index{power set}%
-a pointed object classifying (equivalence classes of) monomorphisms\index{monomorphism}.  (In fact, in the presence of a subobject
-classifier, things become somewhat simpler: one merely needs cartesian closure in order to get the colimits.)
-In homotopy type theory, univalence implies that the type $\prop \defeq \sm{X:\UU}\isprop(X)$ does classify monomorphisms (by an argument similar to \cref{sec:object-classification}), but in general it is as large as the ambient universe $\UU$.
-Thus, it is a ``set'' in the sense of being a $0$-type, but it is not ``small'' in the sense of being an object of $\UU$, hence not an object of the category \uset.
-However, if we assume an appropriate form of propositional resizing (see \cref{subsec:prop-subsets}), then we can find a small version of $\prop$, so that \uset becomes an elementary topos.
+即一个带点对象，分类单态射（的等价类）。\index{monomorphism}（事实上，有了子对象分类子后，事情会变得更简单一些：只需笛卡尔闭性就能得到余极限。）
+
+在同伦类型论中，泛等性意味着类型$\prop \defeq \sm{X:\UU}\isprop(X)$确实分类单态射（论证类似于\cref{sec:object-classification}），但一般来说，它和背景宇宙 $\UU$ 一样大。
+因此，在"是 $0$-类型"的意义上它是一个"集合"，但在"是 $\UU$ 中对象"的意义上它并非"小的"，故而也不属于范畴 \uset。
+然而，如果我们假定一种恰当的命题大小重整形式（参见\cref{subsec:prop-subsets}），那么我们就能找到一个 $\prop$ 的小版本，使得 $\uset$ 成为一个初等意象。
 
 \begin{thm}\label{thm:settopos}
   \index{propositional!resizing}%
-  If there is a type $\Omega:\UU$ of all mere propositions, then the category $\uset_\UU$ is an elementary topos.
+  如果存在一个包含所有命题的类型 $\Omega:\UU$，那么范畴 $\uset_\UU$ 是一个初等意象。
 \end{thm}
+
+
 \index{topos|)}
 
-A sufficient condition for this is the law of excluded middle, in the ``mere-propositional'' form that we have called \LEM{}; for then we have $\prop = \bool$, which \emph{is} small, and which then also classifies all mere propositions.
-Moreover, in topos theory a well-known sufficient condition for \LEM{} is the axiom of choice, which is of course often assumed as an axiom in classical\index{mathematics!classical} set theory.
-In the next section, we briefly investigate the relation between these conditions in our setting.
+为此的一个充分条件是排中律，即我们称之为 \LEM{} 的"命题"形式；因为此时有 $\prop = \bool$，而 $\bool$ \emph{是}小的，并且它也分类所有命题。
+此外，在意象理论中，\LEM{} 的一个众所周知的充分条件是选择公理，而选择公理在经典\index{mathematics!classical}集合论中当然通常被假定为公理。
+在下一节中，我们将简要探讨在我们的框架下这些条件之间的关系。
 
 \index{structural!set theory|)}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The axiom of choice implies excluded middle}
+\subsection{选择公理蕴含排中律}
 \label{subsec:emacinsets}
 
 % In this section we prove a classic result that the axiom of choice implies excluded
 % middle.
 
-We begin with the following lemma.
+我们先给出以下引理。
 
 \begin{lem}\label{prop:trunc_of_prop_is_set}
-If $A$ is a mere proposition then its suspension $\susp(A)$ is a set,
-and $A$ is equivalent to $\id[\susp(A)]{\north}{\south}$.
+若 $A$ 是一个命题，则其纬悬 $\susp(A)$ 是一个集合，且 $A$ 等价于$\id[\susp(A)]{\north}{\south}$。
 \end{lem}
 
 \begin{proof}
-To show that $\susp(A)$ is a set, we define a
-family $P:\susp(A)\to\susp(A)\to\type$ with the
-property that $P(x,y)$ is a mere proposition for each $x,y:\susp(A)$,
-and which is equivalent to its identity type $\idtypevar{\susp(A)}$.
+为了证明 $\susp(A)$ 是一个集合，我们定义一个族 $P:\susp(A)\to\susp(A)\to\type$，它具有下述性质：对每个 $x,y:\susp(A)$，$P(x,y)$ 是一个命题，并且它等价于恒等类型 $\idtypevar{\susp(A)}$。
 %
-We make the following definitions:
+我们作如下定义：
 \begin{align*}
 P(\north,\north) & \defeq \unit &
 P(\south,\north) & \defeq A\\
 P(\north,\south) & \defeq A &
 P(\south,\south) & \defeq \unit.
 \end{align*}
-We have to check that the definition preserves paths.
-Given any $a : A$, there is a meridian $\merid(a) : \north = \south$,
-so we should also have
+我们必须验证该定义保持路径。
+给定任意 $a : A$，存在一条经线 $\merid(a) : \north = \south$，因此我们也应该有
 %
 \begin{equation*}
   P(\north, \north) = P(\north, \south) = P(\south, \north) = P(\south, \south).
 \end{equation*}
 %
-But since $A$ is inhabited by $a$, it is equivalent to $\unit$, so we have
+但由于 $A$ 有实例 $a$，它等价于 $\unit$，所以我们有
 %
 \begin{equation*}
   P(\north, \north) \eqvsym P(\north, \south) \eqvsym P(\south, \north) \eqvsym P(\south, \south).
 \end{equation*}
 %
-The univalence axiom turns these into the desired equalities. Also, $P(x,y)$ is a mere
-proposition for all $x, y : \susp(A)$, which is proved by induction on $x$ and $y$, and
-using the fact that being a mere proposition is a mere proposition.
+泛等公理将这些转化为所需的相等性。同时，$P(x,y)$ 对于所有 $x, y : \susp(A)$ 都是一个命题，这可以通过对 $x$ 和 $y$ 进行归纳，并利用"是命题"本身是一个命题这一事实来证明。
 
-Note that $P$ is a reflexive relation.
-Therefore we may apply \cref{thm:h-set-refrel-in-paths-sets}, so it suffices to
-construct $\tau : \prd{x,y:\susp(A)}P(x,y)\to(x=y)$. We do this by a double induction.
-When $x$ is $\north$, we define $\tau(\north)$ by
+注意 $P$ 是一个自反关系。
+因此我们可以应用 \cref{thm:h-set-refrel-in-paths-sets}，于是只需构造 $\tau : \prd{x,y:\susp(A)}P(x,y)\to(x=y)$。我们通过双归纳来完成这一构造。
+当 $x$ 是 $\north$ 时，我们通过下式定义 $\tau(\north)$：
 %
 \begin{equation*}
   \tau(\north,\north,u) \defeq \refl{\north}
@@ -581,11 +556,11 @@ When $x$ is $\north$, we define $\tau(\north)$ by
   \tau(\north,\south,a) \defeq \merid(a).
 \end{equation*}
 %
-If $A$ is inhabited by $a$ then $\merid(a) : \north = \south$ so we also need
+如果 $A$ 有实例 $a$，那么 $\merid(a) : \north = \south$，因此我们还需要
 \narrowequation{
   \trans{\merid(a)}{\tau(\north, \north)} = \tau(\north, \south).
 }
-This we get by function extensionality using the fact that, for all $x : A$,
+这可由函数外延性得到，利用如下事实：对于所有 $x : A$，
 %
 \begin{multline*}
   \trans{\merid(a)}{\tau(\north,\north,x)} =
@@ -595,7 +570,7 @@ This we get by function extensionality using the fact that, for all $x : A$,
   \merid(x) \jdeq
   \tau(\north, \south, x).
 \end{multline*}
-In a symmetric fashion we may define $\tau(\south)$ by
+对称地，我们可以通过下式定义 $\tau(\south)$：
 %
 \begin{equation*}
   \tau(\south,\north, a) \defeq \opp{\merid(a)}
@@ -603,46 +578,40 @@ In a symmetric fashion we may define $\tau(\south)$ by
   \tau(\south,\south, u) \defeq \refl{\south}.
 \end{equation*}
 %
-To complete the construction of $\tau$, we need to check $\trans{\merid(a)}{\tau(\north)} = \tau(\south)$,
-given any $a : A$. The verification proceeds much along the same lines by induction on the
-second argument of $\tau$.
+为了完成 $\tau$ 的构造，需要验证 $\trans{\merid(a)}{\tau(\north)} = \tau(\south)$，给定任意 $a : A$。验证过程与前类似，通过对 $\tau$ 的第二个参数进行归纳来完成。
 
-Thus, by \cref{thm:h-set-refrel-in-paths-sets} we have that $\susp(A)$ is a set and that $P(x,y) \eqvsym (\id{x}{y})$ for all $x,y:\susp(A)$.
-Taking $x\defeq \north$ and $y\defeq \south$ yields $\eqv{A}{(\id[\susp(A)]\north\south)}$ as desired.
+因此，由 \cref{thm:h-set-refrel-in-paths-sets}，我们有 $\susp(A)$ 是一个集合，并且对于所有 $x,y:\susp(A)$，$P(x,y) \eqvsym (\id{x}{y})$。
+取 $x\defeq \north$ 和 $y\defeq \south$ 即得到所需的 $\eqv{A}{(\id[\susp(A)]\north\south)}$。
 \end{proof}
 
-\begin{thm}[Diaconescu]\label{thm:1surj_to_surj_to_pem}
+\begin{thm}[Diaconescu（迪亚科内斯库）]\label{thm:1surj_to_surj_to_pem}
   \index{axiom!of choice}%
   \index{excluded middle}%
   \index{Diaconescu's theorem}\index{theorem!Diaconescu's}%
-  The axiom of choice implies the law of excluded middle.
+  选择公理蕴含排中律。
 \end{thm}
 
 \begin{proof}
-We use the equivalent form of choice given in \cref{thm:ac-epis-split}.
-Consider a mere proposition $A$.
-The function $f:\bool\to\susp(A)$ defined by
-$f(\bfalse) \defeq \north$ and $f(\btrue) \defeq \south$
-is surjective.
-Indeed, we have
+我们使用在 \cref{thm:ac-epis-split} 中给出的选择公理的等价形式。
+考虑一个命题 $A$。
+由 $f(\bfalse) \defeq \north$ 和 $f(\btrue) \defeq \south$ 定义的函数 $f:\bool\to\susp(A)$ 是满的。
+事实上，我们有
 $\pairr{\bfalse,\refl{\north}} : \hfiber{f}{\north}$
-and $\pairr{\btrue,\refl{\south}} :\hfiber{f}{\south}$.
-Since $\bbrck{\hfiber{f}{x}}$ is a mere proposition, by induction the claimed surjectivity follows.
+以及 $\pairr{\btrue,\refl{\south}} :\hfiber{f}{\south}$。
+由于 $\bbrck{\hfiber{f}{x}}$ 是一个命题，通过归纳即可得证所述的满射性。
 
-By \cref{prop:trunc_of_prop_is_set} the suspension $\susp(A)$
-is a set, so by the axiom of choice there merely exists a
-section $g: \susp(A) \to \bool$ of $f$.
-As equality on $\bool$ is decidable we get
+由 \cref{prop:trunc_of_prop_is_set}，纬悬 $\susp(A)$ 是一个集合，因此根据选择公理，仅仅存在 $f$ 的一个截面 $g: \susp(A) \to \bool$。
+由于 $\bool$ 上的相等性是可判定的，我们得到
 \begin{equation*}
  (g(f(\bfalse))= g(f(\btrue))) +
  \lnot (g(f(\bfalse))= g(f(\btrue))),
 \end{equation*}
-and, since $g$ is a section of $f$, hence injective,
+并且，由于 $g$ 是 $f$ 的截面，从而是单的，
 \begin{equation*}
 (f(\bfalse) = f(\btrue)) +
 \lnot (f(\bfalse) = f(\btrue)).
 \end{equation*}
-Finally, since $(f(\bfalse)=f(\btrue)) = (\north=\south) = A$ by \cref{prop:trunc_of_prop_is_set}, we have $A+\neg A$.
+最后，因为由 \cref{prop:trunc_of_prop_is_set} 有 $(f(\bfalse)=f(\btrue)) = (\north=\south) = A$，我们得到 $A+\neg A$。
 \end{proof}
 
 % This conclusion needs only \LEM{}, see \cref{ex:lemnm}.
@@ -664,34 +633,33 @@ Finally, since $(f(\bfalse)=f(\btrue)) = (\north=\south) = A$ by \cref{prop:trun
 % \end{proof}
 
 \index{denial}
+
+
 \begin{thm}\label{thm:ETCS}
   \index{Elementary Theory of the Category of Sets}%
   \index{category!well-pointed}%
-  If the axiom of choice holds then the category $\uset$ is a well-pointed boolean\index{topos!boolean}\index{boolean!topos} elementary topos\index{topos} with choice.
+  如果选择公理成立，那么范畴 $\uset$ 是一个良点化的、带选择公理的布尔初等意象。
 \end{thm}
 
 \begin{proof}
-  Since \choice{} implies \LEM{}, we have a boolean elementary topos with choice by \cref{thm:settopos} and the remark following it.  We leave the proof of well-pointedness as
-an exercise for the reader (\cref{ex:well-pointed}).
+  由于 \choice{} 蕴含 \LEM{}，根据 \cref{thm:settopos} 及其后的注记，我们得到一个带选择公理的布尔初等意象。我们将良点性的证明留给读者作为练习（\cref{ex:well-pointed}）。
 \end{proof}
 
 \begin{rmk}
-  The conditions on a category mentioned in the theorem are known as Lawvere's\index{Lawvere}
-  axioms for the \emph{Elementary Theory of the Category of Sets}~\cite{lawvere:etcs-long}.
+  定理中提到的范畴条件被称为 Lawvere（劳维尔）为\emph{集合范畴的初等理论（Elementary Theory of the Category of Sets）}~\cite{lawvere:etcs-long} 所提出的公理。
 \end{rmk}
 
-\section{Cardinal numbers}
+\section{基数}
 \label{sec:cardinals}
 
 \begin{defn}\label{defn:card}
-  The \define{type of cardinal numbers}
+  \define{基数类型（type of cardinal numbers）}
   \indexdef{type!of cardinal numbers}%
   \indexdef{cardinal number}%
   \indexsee{number!cardinal}{cardinal number}%
-  is the 0-truncation of the type \set of sets:
+  是集合类型 \set 的 0-截断：
   \[ \card \defeq \pizero{\set} \]
-  Thus, a \define{cardinal number}, or \define{cardinal}, is an inhabitant of $\card\jdeq \pizero\set$.
-  Technically, of course, there is a separate type $\card_\UU$ associated to each universe \type.
+  因此，一个\define{基数（cardinal number）}，或简称\define{基数（cardinal）}，是 $\card\jdeq \pizero\set$ 的一个实例。当然，从技术上讲，每个宇宙 \type 都关联有一个独立的类型 $\card_\UU$。
 \end{defn}
 
 %\begin{rmk}
@@ -699,36 +667,37 @@ an exercise for the reader (\cref{ex:well-pointed}).
   % , but with these conventions we can state theorems beginning with ``for all cardinal numbers\dots''\ and give them exactly the same sort of meaning as those beginning ``for all types\dots''.
 %\end{rmk}
 
-As usual for truncations, if $A$ is a set, then $\cd{A}$ denotes its image under the canonical projection $\set \to \trunc0\set \jdeq \card$; we call $\cd{A}$ the \define{cardinality}\indexdef{cardinality} of $A$.
-By definition, \card is a set.
-It also inherits the structure of a semiring from \set.
+按照截断的惯例，如果 $A$ 是一个集合，则 $\cd{A}$ 表示其在典范投影 $\set \to \trunc0\set \jdeq \card$ 下的像；我们称 $\cd{A}$ 为 $A$ 的\define{基数（cardinality）}\indexdef{cardinality}。
+根据定义，\card 是一个集合。
+它还从 \set 继承了半环结构。
 
 \begin{defn}
-  The operation of \define{cardinal addition}
+  \define{基数加法（cardinal addition）}
   \indexdef{addition!of cardinal numbers}%
   \index{cardinal number!addition of}%
   \[ (\blank+\blank) : \card \to \card \to \card \]
-  is defined by induction on truncation:
+  通过截断上的归纳来定义：
   \[ \cd{A} + \cd{B} \defeq \cd{A+B}.\]
 \end{defn}
+
 \begin{proof}
-  Since $\card\to\card$ is a set, to define $(\alpha+\blank):\card\to\card$ for all $\alpha:\card$, by induction it suffices to assume that $\alpha$ is $\cd{A}$ for some $A:\set$.
-  Now we want to define $(\cd{A}+\blank) :\card\to\card$, i.e.\ we want to define $\cd{A}+\beta :\card$ for all $\beta:\card$.
-  However, since $\card$ is a set, by induction it suffices to assume that $\beta$ is $\cd{B}$ for some $B:\set$.
-  But now we can define $\cd{A}+\cd{B}$ to be $\cd{A+B}$.
+  由于 $\card\to\card$ 是一个集合，要为所有 $\alpha:\card$ 定义 $(\alpha+\blank):\card\to\card$，由归纳法，只需假设 $\alpha$ 是 $\cd{A}$，其中 $A:\set$。
+  现在我们要定义 $(\cd{A}+\blank) :\card\to\card$，即要为所有 $\beta:\card$ 定义 $\cd{A}+\beta :\card$。
+  然而，由于 $\card$ 是一个集合，由归纳法只需假设 $\beta$ 是 $\cd{B}$，其中 $B:\set$。
+  此时，我们可以将 $\cd{A}+\cd{B}$ 定义为 $\cd{A+B}$。
 \end{proof}
 
 \begin{defn}
-  Similarly, the operation of \define{cardinal multiplication}
+  类似地，\define{基数乘法}
   \indexdef{multiplication!of cardinal numbers}%
   \index{cardinal number!multiplication of}%
   \[ (\blank\cdot\blank) : \card \to \card \to \card \]
-  is defined by induction on truncation:
+  运算也由截断归纳定义：
   \[ \cd{A} \cdot \cd{B} \defeq \cd{A\times B} \]
 \end{defn}
 
 \begin{lem}\label{card:semiring}
-  \card is a commutative semiring\index{semiring}, i.e.\ for $\alpha,\beta,\gamma:\card$ we have the following.
+  \card 是一个交换半环\index{semiring}，即对任意 $\alpha,\beta,\gamma:\card$，我们有：
   \begin{align*}
     (\alpha+\beta)+\gamma &= \alpha+(\beta+\gamma)\\
     \alpha+0 &= \alpha\\
@@ -738,26 +707,27 @@ It also inherits the structure of a semiring from \set.
     \alpha\cdot\beta &= \beta\cdot\alpha\\
     \alpha\cdot(\beta+\gamma) &= \alpha\cdot\beta + \alpha\cdot\gamma
   \end{align*}
-  where $0 \defeq \cd{\emptyt}$ and $1\defeq\cd{\unit}$.
+  其中 $0 \defeq \cd{\emptyt}$，$1\defeq\cd{\unit}$。
 \end{lem}
+
 \begin{proof}
-  We prove the commutativity of multiplication, $\alpha\cdot\beta = \beta\cdot\alpha$; the others are exactly analogous.
-  Since \card is a set, the type $\alpha\cdot\beta = \beta\cdot\alpha$ is a mere proposition, and in particular a set.
-  Thus, by induction it suffices to assume $\alpha$ and $\beta$ are of the form $\cd{A}$ and $\cd{B}$ respectively, for some $A,B:\set$.
-  Now $\cd{A}\cdot \cd{B} \jdeq \cd{A\times B}$ and $\cd{B}\cdot\cd{A} \jdeq \cd{B\times A}$, so it suffices to show $A\times B = B\times A$.
-  Finally, by univalence, it suffices to give an equivalence $A\times B \eqvsym B\times A$.
-  But this is easy: take $(a,b) \mapsto (b,a)$ and its obvious inverse.
+  我们证明乘法的交换律 $\alpha\cdot\beta = \beta\cdot\alpha$；其他性质的证明完全类似。
+  由于 \card 是一个集合，类型 $\alpha\cdot\beta = \beta\cdot\alpha$ 是一个命题，特别地也是一个集合。
+  于是，由归纳法，只需假设存在 $A,B:\set$ 使得 $\alpha$ 和 $\beta$ 分别是 $\cd{A}$ 和 $\cd{B}$。
+  此时，$\cd{A}\cdot \cd{B} \jdeq \cd{A\times B}$ 且 $\cd{B}\cdot\cd{A} \jdeq \cd{B\times A}$，因此只需证明 $A\times B = B\times A$。
+  最后，由泛等性，只需给出一个等价 $A\times B \eqvsym B\times A$。
+  这很简单：取 $(a,b) \mapsto (b,a)$ 及其显然的逆即可。
 \end{proof}
 
 \begin{defn}
-  The operation of \define{cardinal exponentiation} is also defined by induction on truncation:
+  \define{基数幂}运算同样由截断归纳定义：
   \indexdef{exponentiation, of cardinal numbers}%
   \index{cardinal number!exponentiation of}%
   \[ \cd{A}^{\cd{B}} \defeq \cd{B\to A}. \]
 \end{defn}
 
 \begin{lem}\label{card:exp}
-  For $\alpha,\beta,\gamma:\card$ we have
+  对任意 $\alpha,\beta,\gamma:\card$，有：
   \begin{align*}
     \alpha^0 &= 1\\
     1^\alpha &= 1\\
@@ -767,182 +737,189 @@ It also inherits the structure of a semiring from \set.
     (\alpha\cdot\beta)^\gamma &= \alpha^\gamma \cdot \beta^\gamma
   \end{align*}
 \end{lem}
+
 \begin{proof}
-  Exactly like \cref{card:semiring}.
+  证明方法同 \cref{card:semiring}。
 \end{proof}
 
 \begin{defn}
-  The relation of \define{cardinal inequality}
+  \define{基数不等式}这一关系
   \index{order!non-strict}%
   \index{cardinal number!inequality of}%
   \[ (\blank\le\blank) : \card\to\card\to\prop \]
-  is defined by induction on truncation:
+  由截断归纳定义：
   \symlabel{inj}
   \[ \cd{A} \le \cd{B} \defeq \brck{\inj(A,B)} \]
-  where $\inj(A,B)$ is the type of injections from $A$ to $B$.
+  其中 $\inj(A,B)$ 是从 $A$ 到 $B$ 的单射的类型。
   \index{function!injective}%
-  In other words, $\cd{A} \le \cd{B}$ means that there merely exists an injection from $A$ to $B$.
+  换句话说，$\cd{A} \le \cd{B}$ 意味着仅知存在从 $A$ 到 $B$ 的单射。
 \end{defn}
 
 \begin{lem}
-  Cardinal inequality is a preorder, i.e.\ for $\alpha,\beta:\card$ we have
+  基数不等式是一个预序，即对于 $\alpha,\beta:\card$，有
   \index{preorder!of cardinal numbers}%
   \begin{gather*}
     \alpha \le \alpha\\
     (\alpha \le \beta) \to (\beta\le\gamma) \to (\alpha\le\gamma)
   \end{gather*}
 \end{lem}
+
 \begin{proof}
-  As before, by induction on truncation.
-  For instance, since $(\alpha \le \beta) \to (\beta\le\gamma) \to (\alpha\le\gamma)$ is a mere proposition, by induction on 0-truncation we may assume $\alpha$, $\beta$, and $\gamma$ are $\cd{A}$, $\cd{B}$, and $\cd{C}$ respectively.
-  Now since $\cd{A} \le \cd{C}$ is a mere proposition, by induction on $(-1)$-truncation we may assume given injections $f:A\to B$ and $g:B\to C$.
-  But then $g\circ f$ is an injection from $A$ to $C$, so $\cd{A} \le \cd{C}$ holds.
-  Reflexivity is even easier.
+  与之前一样，由截断归纳。
+  以传递性为例：由于 $(\alpha \le \beta) \to (\beta\le\gamma) \to (\alpha\le\gamma)$ 是一个命题，由 0-截断归纳，可以假设 $\alpha$、$\beta$ 和 $\gamma$ 分别是 $\cd{A}$、$\cd{B}$ 和 $\cd{C}$。
+  现在，由于 $\cd{A} \le \cd{C}$ 也是一个命题，由 $(-1)$-截断归纳，可以假设给定了单射 $f:A\to B$ 和 $g:B\to C$。
+  那么 $g\circ f$ 就是从 $A$ 到 $C$ 的一个单射，因此 $\cd{A} \le \cd{C}$ 成立。
+  自反性的证明则更为简单。
 \end{proof}
 
-We may likewise show that cardinal inequality is compatible with the semiring operations.
+同样地，可以证明基数不等式与半环运算是相容的。
 
 \begin{lem}\label{thm:injsurj}
   \index{function!injective}%
   \index{function!surjective}%
-  Consider the following statements:
+  考虑以下陈述：
   \begin{enumerate}
-  \item There is an injection $A\to B$.\label{item:cle-inj}
-  \item There is a surjection $B\to A$.\label{item:cle-surj}
+  \item 存在一个单射 $A\to B$。\label{item:cle-inj}
+  \item 存在一个满射 $B\to A$。\label{item:cle-surj}
   \end{enumerate}
-  Then, assuming excluded middle:
+  那么，在假设排中律的前提下：
   \index{excluded middle}%
   \index{axiom!of choice}%
   \begin{itemize}
-  \item Given $a_0:A$, we have~\ref{item:cle-inj}$\to$\ref{item:cle-surj}.
-  \item Therefore, if $A$ is merely inhabited, we have~\ref{item:cle-inj} $\to$ merely \ref{item:cle-surj}.
-  \item Assuming the axiom of choice, we have~\ref{item:cle-surj} $\to$ merely \ref{item:cle-inj}.
+  \item 给定 $a_0:A$，有 \ref{item:cle-inj} $\to$ \ref{item:cle-surj}。
+  \item 因此，如果 $A$ 仅知有实例，有 \ref{item:cle-inj} $\to$ 仅知 \ref{item:cle-surj}。
+  \item 假设选择公理，有 \ref{item:cle-surj} $\to$ 仅知 \ref{item:cle-inj}。
   \end{itemize}
 \end{lem}
-\begin{proof}
-  If $f:A\to B$ is an injection, define $g:B\to A$ at $b:B$ as follows.
-  Since $f$ is injective, the fiber of $f$ at $b$ is a mere proposition.
-  Therefore, by excluded middle, either there is an $a:A$ with $f(a)=b$, or not.
-  In the first case, define $g(b)\defeq a$; otherwise set $g(b)\defeq a_0$.
-  Then for any $a:A$, we have $a = g(f(a))$, so $g$ is surjective.
 
-  The second statement follows from this by induction on truncation.
-  For the third, if $g:B\to A$ is surjective, then by the axiom of choice, there merely exists a function $f:A\to B$ with $g(f(a)) = a$ for all $a$.
-  But then $f$ must be injective.
+\begin{proof}
+  如果 $f:A\to B$ 是一个单射，如下定义 $g:B\to A$。
+  对于 $b:B$，由于 $f$ 是单的，$f$ 在 $b$ 处的纤维是一个命题。
+  因此，根据排中律，要么存在 $a:A$ 使得 $f(a)=b$，要么不存在。
+  在第一种情况下，定义 $g(b)\defeq a$；否则令 $g(b)\defeq a_0$。
+  那么对于任意 $a:A$，都有 $a = g(f(a))$，所以 $g$ 是满射。
+
+  第二个陈述由第一个陈述经截断归纳得出。
+  对于第三个陈述，如果 $g:B\to A$ 是满射，那么根据选择公理，仅知存在一个函数 $f:A\to B$，使得对所有 $a$ 都有 $g(f(a)) = a$。
+  而这个 $f$ 必然是单射。
 \end{proof}
 
 \begin{thm}[Schroeder--Bernstein]
   \index{theorem!Schroeder--Bernstein}%
   \index{Schroeder--Bernstein theorem}%
-  Assuming excluded middle, for sets $A$ and $B$ we have
+  假设排中律，对于集合 $A$ 和 $B$，有
   \[ \inj(A,B) \to \inj(B,A) \to (A\cong B) \]
 \end{thm}
+
 \begin{proof}
-  The usual ``back-and-forth'' argument applies without significant changes.
-  Note that it actually constructs an isomorphism $A\cong B$ (assuming excluded middle so that we can decide whether a given element belongs to a cycle, an infinite chain, a chain beginning in $A$, or a chain beginning in $B$).
+  通常的"来回"论证可直接适用，无需显著改动。
+  注意，它实际上构造了一个同构 $A\cong B$（这里假设了排中律，以便判定一个给定元素是属于一个循环、一条无限链、一条始于 $A$ 的链，还是一条始于 $B$ 的链）。
 \end{proof}
 
 \begin{cor}
-  Assuming excluded middle, cardinal inequality is a partial order, i.e.\ for $\alpha,\beta:\card$ we have
+  假设排中律，基数不等式是一个偏序，即对于 $\alpha,\beta:\card$，有
   \[ (\alpha\le\beta) \to (\beta\le\alpha) \to (\alpha=\beta). \]
 \end{cor}
+
 \begin{proof}
-  Since $\alpha=\beta$ is a mere proposition, by induction on truncation we may assume $\alpha$ and $\beta$ are $\cd{A}$ and $\cd{B}$, respectively, and that we have injections $f:A\to B$ and $g:B\to A$.
-  But then the Schroeder--Bernstein theorem gives an isomorphism $A\cong B$, hence an equality $\cd{A}=\cd{B}$.
+  由于 $\alpha=\beta$ 是一个命题，由截断归纳，可以假设 $\alpha$ 和 $\beta$ 分别是 $\cd{A}$ 和 $\cd{B}$，并且有单射 $f:A\to B$ 和 $g:B\to A$。
+  那么由 Schroeder--Bernstein 定理，得到一个同构 $A\cong B$，进而得到相等 $\cd{A}=\cd{B}$。
 \end{proof}
 
-Finally, we can reproduce Cantor's theorem, showing that for every cardinal there is a greater one.
+最后，我们可以复现 Cantor 定理，它表明对于每个基数，都存在一个更大的基数。
 
 \begin{thm}[Cantor]
   \index{Cantor's theorem}%
   \index{theorem!Cantor's}%
-  For $A:\set$, there is no surjection $A \to (A\to \bool)$.
+  对于 $A:\set$，不存在满射 $A \to (A\to \bool)$。
 \end{thm}
+
 \begin{proof}
-  Suppose $f:A \to (A\to \bool)$ is any function, and define $g:A\to \bool$ by $g(a) \defeq \neg f(a)(a)$.
-  If $g = f(a_0)$, then $g(a_0) = f(a_0)(a_0)$ but $g(a_0) = \neg f(a_0)(a_0)$, a contradiction.
-  Thus, $f$ is not surjective.
+  假设 $f:A \to (A\to \bool)$ 是任意函数，定义 $g:A\to \bool$ 为 $g(a) \defeq \neg f(a)(a)$。
+  如果 $g = f(a_0)$，则 $g(a_0) = f(a_0)(a_0)$ 但 $g(a_0) = \neg f(a_0)(a_0)$，产生矛盾。
+  因此，$f$ 不是满射。
 \end{proof}
 
 \begin{cor}
-  Assuming excluded middle, for any $\alpha:\card$, there is a cardinal $\beta$ such that $\alpha\le\beta$ and $\alpha\neq\beta$.
+  假设排中律，对于任意 $\alpha:\card$，存在基数 $\beta$ 使得 $\alpha\le\beta$ 且 $\alpha\neq\beta$。
 \end{cor}
+
 \begin{proof}
-  Let $\beta = 2^\alpha$.
-  Now we want to show a mere proposition, so by induction we may assume $\alpha$ is $\cd{A}$, so that $\beta\jdeq \cd{A\to \bool}$.
-  Using excluded middle, we have a function $f:A\to (A\to \bool)$ defined by
+  令 $\beta = 2^\alpha$。
+  现在我们要证明的是一个命题，因此由归纳法，可以假设 $\alpha$ 是 $\cd{A}$，于是 $\beta\jdeq \cd{A\to \bool}$。
+  利用排中律，定义函数 $f:A\to (A\to \bool)$ 如下：
   \[f(a)(a') \defeq
   \begin{cases}
     \btrue &\quad a=a'\\
     \bfalse &\quad a\neq a'.
   \end{cases}
   \]
-  And if $f(a)=f(a')$, then $f(a')(a) = f(a)(a) = \btrue$, so $a=a'$; hence $f$ is injective.
-  Thus, $\alpha \jdeq \cd{A} \le \cd{A\to \bool} \jdeq 2^\alpha$.
+  如果 $f(a)=f(a')$，则 $f(a')(a) = f(a)(a) = \btrue$，从而 $a=a'$；因此 $f$ 是单射。
+  所以，$\alpha \jdeq \cd{A} \le \cd{A\to \bool} \jdeq 2^\alpha$。
 
-  On the other hand, if $2^\alpha \le \alpha$, then we would have an injection $(A\to\bool)\to A$.
-  By \cref{thm:injsurj}, since we have $(\lam{x} \bfalse):A\to \bool$ and excluded middle, there would then be a surjection $A \to (A\to \bool)$, contradicting Cantor's theorem.
+  另一方面，如果 $2^\alpha \le \alpha$，则会存在一个单射 $(A\to\bool)\to A$。
+  由 \cref{thm:injsurj}，由于我们有 $(\lam{x} \bfalse):A\to \bool$ 且假设了排中律，则会存在一个满射 $A \to (A\to \bool)$，这与 Cantor 定理矛盾。
 \end{proof}
 
-\section{Ordinal numbers}
+\section{序数}
 \label{sec:ordinals}
 
 \index{ordinal|(}%
 
 \begin{defn}\label{defn:accessibility}
-  Let $A$ be a set and
+  设 $A$ 是一个集合，且
   \[(\blank<\blank):A\to A\to \prop\]
-  a binary relation on $A$.
-  We define by induction what it means for an element $a:A$ to be \define{accessible}
+  是 $A$ 上的一个二元关系。
+  我们归纳地定义元素 $a:A$ 关于 $<$ 是\define{可达的}的含义：
   \indexdef{accessibility}%
   \indexsee{accessible}{accessibility}%
-  by $<$:
   \begin{itemize}
-  \item If $b$ is accessible for every $b<a$, then $a$ is accessible.
+  \item 如果每个 $b<a$ 都是可达的，那么 $a$ 就是可达的。
   \end{itemize}
-  We write $\acc(a)$ to mean that $a$ is accessible.
+  我们记 $\acc(a)$ 表示 $a$ 是可达的。
 \end{defn}
 
-It may seem that such an inductive definition can never get off the ground, but of course if $a$ has the property that there are \emph{no} $b$ such that $b<a$, then $a$ is vacuously accessible.
+乍看之下，这样的归纳定义似乎永远无法启动，但显然，如果 $a$ 满足\emph{不存在} $b$ 使得 $b<a$ 这一性质，那么 $a$ 就是空虚地可达的。
 
-Note that this is an inductive definition of a family of types, like the type of vectors considered in \cref{sec:generalizations}.
-More precisely, it has one constructor, say $\acc_<$, with type
+注意，这是一个类型族的归纳定义，类似于 \cref{sec:generalizations} 中考虑的向量类型。
+更准确地说，它有一个构造子，比如说 $\acc_<$，其类型为
 \[ \acc_< : \prd{a:A} \Parens{\prd{b:A} (b<a) \to \acc(b)} \to \acc(a). \]
 \index{induction principle!for accessibility}%
-The induction principle for $\acc$ says that for any $P:\prd{a:A} \acc(a) \to \type$, if we have
+$\acc$ 的归纳原理是指，对于任意 $P:\prd{a:A} \acc(a) \to \type$，如果我们有
 \[f:\prd{a:A}{h:\prd{b:A} (b<a) \to \acc(b)}
 \Parens{\prd{b:A}{l:b<a} P(b,h(b,l))} \to
 P(a,\acc_<(a,h)),
 \]
-then we have $g:\prd{a:A}{c:\acc(a)} P(a,c)$ defined by induction, with
+那么就有一个由归纳定义的 $g:\prd{a:A}{c:\acc(a)} P(a,c)$，满足
 \[g(a,\acc_<(a,h)) \jdeq f(a,\,h,\,\lam{b}{l} g(b,h(b,l))).\]
-This is a mouthful, but generally we apply it only in the simpler case where $P:A\to\type$ depends only on $A$.
-In this case the second and third arguments of $f$ may be combined, so that what we have to prove is
+这一表述颇为繁琐，但我们通常只在 $P:A\to\type$ 仅依赖于 $A$ 这一更简单的情况下应用它。
+在这种情况下，$f$ 的第二和第三个参数可以合并，因此我们需要证明的是：
 \[f:\prd{a:A} \Parens{\prd{b:A} (b<a) \to \acc(b) \times P(b)}
 \to P(a).
 \]
-That is, we assume every $b<a$ is accessible and $g(b):P(b)$ is defined, and from these define $g(a):P(a)$.
+也就是说，假设每个 $b<a$ 都是可达的且 $g(b):P(b)$ 已定义，由此定义 $g(a):P(a)$。
 
-The omission of the second argument of $P$ is justified by the following lemma, whose proof is the only place where we use the more general form of the induction principle.
+省略 $P$ 的第二个参数是合理的，这由下面的引理保证，而该引理的证明也是我们使用归纳原理更一般形式的唯一场合。
 
 \begin{lem}
-  Accessibility\index{accessibility} is a mere property.
+  可达性\index{accessibility}是一个命题。
 \end{lem}
+
 \begin{proof}
-  We must show that for any $a:A$ and $s_1,s_2:\acc(a)$ we have $s_1=s_2$.
-  We prove this by induction on $s_1$, with
+  我们必须证明，对于任意 $a:A$ 和 $s_1,s_2:\acc(a)$，有 $s_1=s_2$。
+  我们通过对 $s_1$ 的归纳来证明这一点，令
   \[P_1(a,s_1) \defeq \prd{s_2:\acc(a)} (s_1=s_2). \]
-  Thus, we must show that for any $a:A$ and ${h_1:\prd{b:A} (b<a) \to \acc(b)}$ and
+  因此，我们必须证明，对于任意 $a:A$、${h_1:\prd{b:A} (b<a) \to \acc(b)}$ 以及
   \[ k_1:{\prd{b:A}{l:b<a}{t:\acc(b)} h_1(b,l) = t},\]
-  we have $\acc_<(a,h) = s_2$ for any $s_2:\acc(a)$.
-  We regard this statement as $\prd{a:A}{s_2:\acc(a)} P_2(a,s_2)$, where
+  对任意 $s_2:\acc(a)$ 都有 $\acc_<(a,h) = s_2$。
+  我们将此陈述视为 $\prd{a:A}{s_2:\acc(a)} P_2(a,s_2)$，其中
   \[P_2(a,s_2) \defeq
   \prd{h_1 : \cdots } %{h_1:\prd{b:A} (b<a) \to \acc(b)}
   {k_1 : \cdots} % \Parens{\prd{b:A}{l:b<a}{t:\acc(b)} h_1(b,l) = t} \to
   (\acc_<(a,h_1) = s_2);
   \]
-  thus we may prove it by induction on $s_2$.
-  Therefore, we assume $h_2 : \prd{b:A} (b<a) \to \acc(b)$, and $k_2$ with a monstrous but irrelevant type,
+  因此可以通过对 $s_2$ 的归纳来证明。
+  于是，假设 $h_2 : \prd{b:A} (b<a) \to \acc(b)$，以及 $k_2$ 具有一个极其复杂但在此无关紧要的类型，
   % \begin{narrowmultline*}
   %   k_2:\prd{b:A}{l:b<a}
   %   \prd{h_1:\prd{b':A} (b'<b) \to \acc(b')}
@@ -950,559 +927,572 @@ The omission of the second argument of $P$ is justified by the following lemma, 
   %   \Parens{\prd{b':A}{l':b'<b}{t':\acc(b')} h_1(b',l') = t'} \to
   %   (\acc_<(b,h_1) = h_2(b,l)).
   % \end{narrowmultline*}
-  and must show that for any $h_1$ and $k_1$ with types as above,
-  we have $\acc_<(a,h_1) = \acc_<(a,h_2)$.
-  By function extensionality, it suffices to show $h_1(b,l) = h_2(b,l)$ for all $b:A$ and $l:b<a$.
-  This follows from $k_1$.
+  并且必须证明，对于任何具有上述类型的 $h_1$ 和 $k_1$，有 $\acc_<(a,h_1) = \acc_<(a,h_2)$。
+  根据函数外延性，只需证明对所有 $b:A$ 和 $l:b<a$，有 $h_1(b,l) = h_2(b,l)$。
+  而这由 $k_1$ 即得。
 \end{proof}
 
 \begin{defn}
-  A binary relation $<$ on a set $A$ is \define{well-founded}
+  集合 $A$ 上的二元关系 $<$ 称为\define{良基的}
   \indexdef{relation!well-founded}%
   \indexdef{well-founded!relation}%
-  if every element of $A$ is accessible.
+  如果 $A$ 的每个元素都是可达的。
 \end{defn}
 
-The point of well-foundedness is that for $P:A\to \type$, we can use the induction principle of $\acc$ to conclude $\prd{a:A} \acc(a) \to P(a)$, and then apply well-foundedness to conclude $\prd{a:A} P(a)$.
-In other words, if from $\fall{b:A} (b<a) \to P(b)$ we can prove $P(a)$, then $\fall{a:A} P(a)$.
-This is called \define{well-founded induction}\indexdef{well-founded!induction}.
+良基性的要旨在于：对于 $P:A\to \type$，我们可以利用 $\acc$ 的归纳原理得出 $\prd{a:A} \acc(a) \to P(a)$，然后应用良基性得出 $\prd{a:A} P(a)$。
+换言之，如果从 $\fall{b:A} (b<a) \to P(b)$ 可以推出 $P(a)$，那么就有 $\fall{a:A} P(a)$。
+这种方法称为\define{良基归纳}\indexdef{well-founded!induction}。
 
 \begin{lem}
-  Well-foundedness is a mere property.
+  良基性是一个命题。
 \end{lem}
+
 \begin{proof}
-  Well-foundedness of $<$ is the type $\prd{a:A} \acc(a)$, which is a mere proposition since each $\acc(a)$ is.
+  $<$ 的良基性是类型 $\prd{a:A} \acc(a)$，由于每个 $\acc(a)$ 都是命题，所以它也是命题。
 \end{proof}
 
 \begin{eg}\label{thm:nat-wf}
-  Perhaps the most familiar well-founded relation is the usual strict ordering on \nat.
-  To show that this is well-founded, we must show that $n$ is accessible for each $n:\nat$.
+  或许最常见的良基关系是 $\nat$ 上通常的严格序关系。
+  为了证明它是良基的，需要对每个 $n:\nat$ 证明 $n$ 是可达的。
   \index{strong!induction}%
-  This is just the usual proof of ``strong induction'' from ordinary induction on \nat.
+  这正是用 $\nat$ 上的普通归纳法证明"强归纳法"的常见证法。
 
-  Specifically, we prove by induction on $n:\nat$ that $k$ is accessible for all $k\le n$.
-  The base case is just that $0$ is accessible, which is vacuously true since nothing is strictly less than $0$.
-  For the inductive step, we assume that $k$ is accessible for all $k\le n$, which is to say for all $k<n+1$; hence by definition $n+1$ is also accessible.
+  具体而言，我们对 $n:\nat$ 作归纳，证明对所有 $k\le n$，$k$ 都是可达的。
+  基本情形是 $0$ 可达，这空虚成立，因为没有任何东西严格小于 $0$。
+  在归纳步骤中，假设对所有 $k\le n$（即对所有 $k < n+1$），$k$ 都是可达的；于是根据定义，$n+1$ 也是可达的。
 
-  A different relation on \nat which is also well-founded is obtained by setting only $n < \suc(n)$ for all $n:\nat$.
-  Well-foundedness of this relation is almost exactly the ordinary induction principle of \nat.
+  $\nat$ 上的另一种良基关系可以通过如下方式定义：对所有 $n:\nat$，令 $n < \suc(n)$。
+  这个关系的良基性几乎就是 $\nat$ 的普通归纳原理。
 \end{eg}
 
 \begin{eg}\label{thm:wtype-wf}
-  Let $A:\set$ and $B : A \to \set$ be a family of sets.
-  Recall from \cref{sec:w-types} that the $W$-type $\wtype{a:A} B(a)$ is inductively generated by the single constructor
+  设 $A:\set$ 且 $B : A \to \set$ 为一族集合。
+  回顾 \cref{sec:w-types}，$W$ 类型 $\wtype{a:A} B(a)$ 由如下唯一的构造子归纳地生成：
   \begin{itemize}
   \item $\supp : \prd{a:A} (B(a) \to \wtype{x:A} B(x)) \to \wtype{x:A} B(x)$
   \end{itemize}
-  We define the relation $<$ on $\wtype{x:A} B(x)$ by recursion on its second argument:
+  我们通过对其第二个参数递归来定义 $\wtype{x:A} B(x)$ 上的关系 $<$：
   \begin{itemize}
-  \item For any $a:A$ and $f:B(a) \to \wtype{x:A} B(x)$, we define $w<\supp(a,f)$ to mean that there merely exists a $b:B(a)$ such that $w = f(b)$.
+  \item 对任意 $a:A$ 和 $f:B(a) \to \wtype{x:A} B(x)$，定义 $w<\supp(a,f)$ 为：仅仅存在 $b:B(a)$ 使得 $w = f(b)$。
   \end{itemize}
-  Now we prove that every $w:\wtype{x:A} B(x)$ is accessible for this relation, using the usual induction principle for $\wtype{x:A}B(x)$.
-  This means we assume given $a:A$ and $f:B(a) \to \wtype{x:A} B(x)$, and also a lifting $f' : \prd{b:B(a)} \acc(f(b))$.
-  But then by definition of $<$, we have $\acc(w)$ for all $w<\supp(a,f)$; hence $\supp(a,f)$ is accessible.
+  现在我们用 $\wtype{x:A}B(x)$ 的通常归纳原理证明每个 $w:\wtype{x:A} B(x)$ 对此关系都是可达的。
+  即假设给定 $a:A$ 和 $f:B(a) \to \wtype{x:A} B(x)$，以及一个提升 $f' : \prd{b:B(a)} \acc(f(b))$。
+  于是根据 $<$ 的定义，对所有 $w<\supp(a,f)$ 都有 $\acc(w)$；因此 $\supp(a,f)$ 是可达的。
 \end{eg}
 
-Well-foundedness allows us to define functions by recursion and prove statements by induction, such as for instance the following.
-Recall from \cref{subsec:prop-subsets} that $\power B$ denotes the \emph{power set}\index{power set} $\power B \defeq (B\to\prop)$.
+良基性允许我们递归地定义函数、通过归纳证明命题，如下面的引理所示。
+回顾 \cref{subsec:prop-subsets}，$\power B$ 表示\emph{幂集}\index{power set} $\power B \defeq (B\to\prop)$。
 
 \begin{lem}\label{thm:wfrec}
-  Suppose $B$ is a set and we have a function
+  设 $B$ 为集合，且我们有一个函数
   \[ g : \power B \to B \]
-  Then if $<$ is a well-founded relation on $A$, there is a function $f:A\to B$ such that for all $a:A$ we have
+  那么，如果 $<$ 是 $A$ 上的良基关系，则存在一个函数 $f:A\to B$，使得对所有 $a:A$ 都有
   \begin{equation*}
     f(a) = g\Big(\setof{ f(a') | a'<a }\Big).
   \end{equation*}
 \end{lem}
+
+
 \noindent
-(We are using the notation for images of subsets from \cref{sec:image}.)
+（这里使用了 \cref{sec:image} 中子集像的记号。）
+
+
 \begin{proof}
-  We first define, for every $a:A$ and $s:\acc(a)$, an element $\bar f(a,s):B$.
-  By induction, it suffices to assume that $s$ is a function assigning to each $a'<a$ a witness $s(a'):\acc(a')$, and that moreover for each such $a'$ we have an element $\bar f(a',s(a')):B$.
-  In this case, we define
+  我们首先对每个 $a:A$ 和 $s:\acc(a)$ 定义一个元素 $\bar f(a,s):B$。
+  由归纳原理，只需假设 $s$ 是一个函数，为每个 $a'<a$ 指派一个见证 $s(a'):\acc(a')$，而且对每个这样的 $a'$ 已有元素 $\bar f(a',s(a')):B$。
+  在此情形下，我们定义
   \begin{equation*}
     \bar f(a,s) \defeq g\Big(\setof{ \bar f(a',s(a')) | a'<a }\Big).
   \end{equation*}
 
-  Now since $<$ is well-founded, we have a function $w:\prd{a:A} \acc(a)$.
-  Thus, we can define $f(a)\defeq \bar f (a,w(a))$.
+  现在，由于 $<$ 是良基的，我们有一个函数 $w:\prd{a:A} \acc(a)$。
+  因此，我们可以定义 $f(a)\defeq \bar f (a,w(a))$。
 \end{proof}
 
-In classical\index{mathematics!classical} logic, well-foundedness has a more well-known reformulation.
-In the following, we say that a subset $B: \power A$ is \define{nonempty}
+在经典\index{mathematics!classical}逻辑中，良基性有一种更为人熟知的等价表述。
+在下文中，我们称一个子集 $B: \power A$ 是\define{非空的}
 \indexdef{nonempty subset}
-if it is unequal to the empty subset $(\lam{x}\bot) : \power X$.
-We leave it to the reader to verify that assuming excluded middle, this is equivalent to mere inhabitation, i.e.\ to the condition $\exis{x:A} x\in B$.
+如果它与空子集 $(\lam{x}\bot) : \power X$ 不相等。
+我们留待读者验证：在假设排中律的前提下，这等价于仅被居住，即条件 $\exis{x:A} x\in B$。
 
 \begin{lem}\label{thm:wfmin}
   \index{excluded middle}%
-  Assuming excluded middle, $<$ is well-founded if and only if every nonempty subset $B: \power A$ merely has a minimal element.
+  假设排中律，则 $<$ 是良基的当且仅当每个非空子集 $B: \power A$ 仅仅有一个极小元。
 \end{lem}
+
 \begin{proof}
-  Suppose first $<$ is well-founded, and suppose $B\subseteq A$ is a subset with no minimal element.
-  That is, for any $a:A$ with $a\in B$, there merely exists a $b:A$ with $b<a$ and $b\in B$.
+  先假设 $<$ 是良基的，并设 $B\subseteq A$ 是一个没有极小元的子集。
+  也就是说，对任意满足 $a\in B$ 的 $a:A$，都仅仅存在某个 $b:A$ 使得 $b<a$ 且 $b\in B$。
 
-  We claim that for any $a:A$ and $s:\acc(a)$, we have $a\notin B$.
-  By induction, we may assume $s$ is a function assigning to each $a'<a$ a proof $s(a'):\acc(a')$, and that moreover for each such $a'$ we have $a'\notin B$.
-  If $a\in B$, then by assumption, there would merely exist a $b<a$ with $b\in B$, which contradicts this assumption.
-  Thus, $a\notin B$; this completes the induction.
-  Since $<$ is well-founded, we have $a\notin B$ for all $a:A$, i.e. $B$ is empty.
+  我们断言：对任意 $a:A$ 和 $s:\acc(a)$，都有 $a\notin B$。对此作归纳证明。
+  可假设 $s$ 是一个函数，对每个 $a'<a$ 指派一个证明 $s(a'):\acc(a')$，而且对每个这样的 $a'$，已有 $a'\notin B$。
+  若 $a\in B$，则由假设，将仅仅存在某个 $b<a$ 使得 $b\in B$，这与归纳假设矛盾。
+  因此，$a\notin B$；这就完成了归纳。
+  由于 $<$ 是良基的，对所有 $a:A$ 都有 $a\notin B$，即 $B$ 是空集。
 
-  Now suppose each nonempty subset merely has a minimal element.
-  Let $B = \setof{ a:A | \neg \acc(a) }$.
-  Then if $B$ is nonempty, it merely has a minimal element.
-  Thus there merely exists an $a:A$ with $a\in B$ such that for all $b<a$, we have $\acc(b)$.
-  But then by definition (and induction on truncation), $a$ is merely accessible, and hence accessible, contradicting $a\in B$.
-  Thus, $B$ is empty, so $<$ is well-founded.
+  现在反过来假设每个非空子集都仅仅有一个极小元。
+  令 $B = \setof{ a:A | \neg \acc(a) }$。
+  若 $B$ 非空，则它仅仅有一个极小元。
+  于是，仅仅存在某个满足 $a\in B$ 的 $a:A$，使得对所有 $b<a$，都有 $\acc(b)$。
+  但根据定义（并通过对截断作归纳），$a$ 仅仅可达，从而可达，这与 $a\in B$ 矛盾。
+  因此 $B$ 是空集，故 $<$ 是良基的。
 \end{proof}
 
 \begin{defn}
-  A well-founded relation $<$ on a set $A$ is \define{extensional}
+  集合 $A$ 上的良基关系 $<$ 被称为\define{外延的}
   \indexdef{relation!extensional}%
   \indexdef{extensional!relation}%
-  if for any $a,b:A$, we have
+  若对任意 $a,b:A$，都有
   \[ \Parens{\fall{c:A} (c<a) \Leftrightarrow (c<b)} \to (a=b). \]
 \end{defn}
 
-Note that since $A$ is a set, extensionality is a mere proposition.
-This notion of ``extensionality'' is unrelated to function extensionality, and also unrelated to the extensionality of identity types.
+注意，由于 $A$ 是集合，外延性是命题。
+这里的"外延性"与函数外延性无关，也与相等类型的外延性无关。
 \index{axiom!of extensionality}%
-Rather, it is a ``local'' counterpart of the axiom of extensionality in classical set theory.
+更确切地说，它是经典集合论中外延公理的"局部"对应物。
 
 \begin{thm}
-  The type of extensional well-founded relations is a set.
+  外延良基关系所构成的类型是一个集合。
 \end{thm}
-\begin{proof}
-  By the univalence axiom, it suffices to show that if $(A,<)$ is extensional and well-founded and $f:(A,<) \cong (A,<)$, then $f=\idfunc[A]$.
-  \index{automorphism!of extensional well-founded relations}%
-  We prove by induction on $<$ that $f(a)=a$ for all $a:A$.
-  The inductive hypothesis is that for all $a'<a$, we have $f(a')=a'$.
 
-  Now since $A$ is extensional, to conclude $f(a)=a$ it is sufficient to show
+\begin{proof}
+  根据泛等公理，只需证明：如果 $(A,<)$ 是外延且良基的，并且 $f:(A,<) \cong (A,<)$，那么 $f=\idfunc[A]$。
+  \index{automorphism!of extensional well-founded relations}%
+  我们通过对 $<$ 作归纳来证明对所有 $a:A$ 都有 $f(a)=a$。
+  归纳假设是：对于所有 $a'<a$，有 $f(a')=a'$。
+
+  现在，由于 $A$ 是外延的，要证 $f(a)=a$，只需证明
   \[\fall{c:A}(c<f(a)) \Leftrightarrow (c<a).\]
-  However, since $f$ is an automorphism, we have $(c<a) \Leftrightarrow (f(c)<f(a))$.
-  But $c<a$ implies $f(c)=c$ by the inductive hypothesis, so $(c<a) \to (c<f(a))$.
-  On the other hand, if $c<f(a)$, then $f^{-1}(c)<a$, and so $c = f(f^{-1}(c)) = f^{-1}(c)$ by the inductive hypothesis again; thus $c<a$.
-  Therefore, we have $(c<a) \Leftrightarrow (c<f(a))$ for any $c:A$, so $f(a)=a$.
+  然而，因为 $f$ 是一个自同构，我们有 $(c<a) \Leftrightarrow (f(c)<f(a))$。
+  但由归纳假设，$c<a$ 意味着 $f(c)=c$，所以 $(c<a) \to (c<f(a))$。
+  另一方面，如果 $c<f(a)$，那么 $f^{-1}(c)<a$，从而再次利用归纳假设得到 $c = f(f^{-1}(c)) = f^{-1}(c)$；于是有 $c<a$。
+  因此，对任意 $c:A$，我们有 $(c<a) \Leftrightarrow (c<f(a))$，故 $f(a)=a$。
 \end{proof}
 
 \begin{defn}\label{def:simulation}
-  If $(A,<)$ and $(B,<)$ are extensional and well-founded, a \define{simulation}
+  如果 $(A,<)$ 和 $(B,<)$ 都是外延且良基的，则称满足以下条件的函数 $f:A\to B$ 为\define{模拟}
   \indexdef{simulation}%
   \indexsee{function!simulation}{simulation}%
-  is a function $f:A\to B$ such that
+  ：
   \begin{enumerate}
-  \item if $a<a'$, then $f(a)<f(a')$, and\label{item:sim1}
-  \item for all $a:A$ and $b:B$, if $b<f(a)$, then there merely exists an $a'<a$ with $f(a')=b$.\label{item:sim2}
+  \item 若 $a<a'$，则 $f(a)<f(a')$；并且\label{item:sim1}
+  \item 对所有 $a:A$ 和 $b:B$，若 $b<f(a)$，则仅仅存在 $a'<a$ 满足 $f(a')=b$。\label{item:sim2}
   \end{enumerate}
 \end{defn}
 
 \begin{lem}
-  Any simulation is injective.
+  任意模拟都是单的。
 \end{lem}
-\begin{proof}
-  We prove by double well-founded induction that for any $a,b:A$, if $f(a)=f(b)$ then $a=b$.
-  The inductive hypothesis for $a:A$ says that for any $a'<a$, and any $b:B$, if $f(a')=f(b)$ then $a=b$.
-  The inner inductive hypothesis for $b:A$ says that for any $b'<b$, if $f(a)=f(b')$ then $a=b'$.
 
-  Suppose $f(a)=f(b)$; we must show $a=b$.
-  By extensionality, it suffices to show that for any $c:A$ we have $(c<a)\Leftrightarrow (c<b)$.
-  If $c<a$, then $f(c)<f(a)$ by \cref{def:simulation}\ref{item:sim1}.
-  Hence $f(c)<f(b)$, so by \cref{def:simulation}\ref{item:sim2} there merely exists $c':A$ with $c'<b$ and $f(c)=f(c')$.
-  By the inductive hypothesis for $a$, we have $c=c'$, hence $c<b$.
-  The dual argument is symmetrical.
+\begin{proof}
+  我们通过双重良基归纳法证明：对任意 $a,b:A$，若 $f(a)=f(b)$，则 $a=b$。
+  关于 $a:A$ 的归纳假设是：对任意 $a'<a$ 和任意 $b:B$，若 $f(a')=f(b)$，则 $a=b$。
+  关于 $b:A$ 的内层归纳假设是：对任意 $b'<b$，若 $f(a)=f(b')$，则 $a=b'$。
+
+  假设 $f(a)=f(b)$；我们需要证明 $a=b$。
+  由外延性，只需证明对任意 $c:A$ 我们有 $(c<a)\Leftrightarrow (c<b)$。
+  如果 $c<a$，那么由 \cref{def:simulation}\ref{item:sim1} 可得 $f(c)<f(a)$。
+  故 $f(c)<f(b)$，于是由 \cref{def:simulation}\ref{item:sim2} 可知，仅仅存在 $c':A$ 使得 $c'<b$ 且 $f(c)=f(c')$。
+  由关于 $a$ 的归纳假设，我们有 $c=c'$，因此 $c<b$。
+  对偶的论证同理可证。
 \end{proof}
 
-In particular, this implies that in \cref{def:simulation}\ref{item:sim2} the word ``merely'' could be omitted without change of sense.
+特别地，这表明在 \cref{def:simulation}\ref{item:sim2} 中，"仅仅"一词可以省略而不改变意思。
 
 \begin{cor}
-  If $f:A\to B$ is a simulation, then for all $a:A$ and $b:B$, if $b<f(a)$, there \emph{purely} exists an $a'<a$ with $f(a')=b$.
+  如果 $f:A\to B$ 是模拟，那么对所有 $a:A$ 和 $b:B$，若 $b<f(a)$，则\emph{纯粹存在} $a'<a$ 使得 $f(a')=b$。
 \end{cor}
+
 \begin{proof}
-  Since $f$ is injective, $\sm{a:A} (f(a)=b)$ is a mere proposition.
+  由于 $f$ 是单的，$\sm{a:A} (f(a)=b)$ 是命题。
 \end{proof}
 
-We say that a subset $C :\power B$ is an \define{initial segment}
+我们称子集 $C :\power B$ 为\define{初始段}
 \indexdef{initial!segment}%
 \indexsee{segment, initial}{initial segment}%
-if $c\in C$ and $b<c$ imply $b\in C$.
-The image of a simulation must be an initial segment, while the inclusion of any initial segment is a simulation.
-Thus, by univalence, every simulation $A\to B$ is \emph{equal} to the inclusion of some initial segment of $B$.
+，如果 $c\in C$ 且 $b<c$ 蕴含 $b\in C$。
+模拟的像必为初始段，而任意初始段的包含映射都是模拟。
+因此，由泛等性，每个模拟 $A\to B$ 都\emph{相等于} $B$ 的某个初始段的包含映射。
 
 \begin{thm}
-  For a set $A$, let $P(A)$ be the type of extensional well-founded relations on $A$.
-  If $\mathord{<_A} : P(A)$ and $\mathord{<_B} : P(B)$ and $f:A\to B$, let $H_{\mathord{<_A}\mathord{<_B}}(f)$ be the mere proposition that $f$ is a simulation.
-  Then $(P,H)$ is a standard notion of structure over \uset in the sense of \cref{sec:sip}.
+  对一个集合 $A$，令 $P(A)$ 为 $A$ 上外延良基关系的类型。
+  若 $\mathord{<_A} : P(A)$ 与 $\mathord{<_B} : P(B)$ 且 $f:A\to B$，令 $H_{\mathord{<_A}\mathord{<_B}}(f)$ 为命题"$f$ 是模拟"。
+  则 $(P,H)$ 是 \cref{sec:sip} 意义下 \uset 上的标准结构概念。
 \end{thm}
+
 \begin{proof}
-  We leave it to the reader to verify that identities are simulations, and that composites of simulations are simulations.
-  Thus, we have a notion of structure.
-  For standardness, we must show that if $<$ and $\prec$ are two extensional well-founded relations on $A$, and $\idfunc[A]$ is a simulation in both directions, then $<$ and $\prec$ are equal.
-  Since extensionality and well-foundedness are mere propositions, for this it suffices to have $\fall{a,b:A} (a<b) \Leftrightarrow (a\prec b)$.
-  But this follows from \cref{def:simulation}\ref{item:sim1} for $\idfunc[A]$.
+  恒等映射是模拟、模拟的复合仍是模拟，这些留给读者验证。
+  因此，模拟构成了一个结构概念。
+  为验证标准性，我们须证：若 $<$ 和 $\prec$ 是 $A$ 上的两个外延良基关系，且 $\idfunc[A]$ 在两个方向都是模拟，则 $<$ 与 $\prec$ 相等。
+  由于外延性和良基性都是命题，为此只需 $\fall{a,b:A} (a<b) \Leftrightarrow (a\prec b)$ 成立。
+  而这由 $\idfunc[A]$ 的 \cref{def:simulation}\ref{item:sim1} 即可推出。
 \end{proof}
 
 \begin{cor}\label{thm:wfcat}
-  There is a category whose objects are sets equipped with extensional well-founded relations, and whose morphisms are simulations.
+  存在一个范畴，其对象为配备外延良基关系的集合，态射为模拟。
 \end{cor}
 
-In fact, this category is a poset.
+实际上，这个范畴是一个偏序集。
 
 \begin{lem}
-  For extensional and well-founded $(A,<)$ and $(B,<)$, there is at most one simulation $f:A\to B$.
+  对于外延良基的 $(A,<)$ 和 $(B,<)$，至多存在一个模拟 $f:A\to B$。
 \end{lem}
-\begin{proof}
-  Suppose $f,g:A\to B$ are simulations.
-  Since being a simulation is a mere property, it suffices to show $\fall{a:A}(f(a)=g(a))$.
-  By induction on $<$, we may suppose $f(a')=g(a')$ for all $a'<a$.
-  And by extensionality of $B$, to have $f(a)=g(a)$ it suffices to have $\fall{b:B}(b<f(a)) \Leftrightarrow (b<g(a))$.
 
-  But since $f$ is a simulation, if $b<f(a)$, then we have $a'<a$ with $f(a')=b$.
-  By the inductive hypothesis, we have also $g(a')=b$, hence $b<g(a)$.
-  The dual argument is symmetrical.
+\begin{proof}
+  假设 $f,g:A\to B$ 都是模拟。
+  由于"是模拟"是一个命题，只需证明 $\fall{a:A}(f(a)=g(a))$。
+  对 $<$ 作归纳，可假设对所有 $a'<a$ 均有 $f(a')=g(a')$。
+  而由 $B$ 的外延性，要证 $f(a)=g(a)$，只需 $\fall{b:B}(b<f(a)) \Leftrightarrow (b<g(a))$ 成立。
+
+  由于 $f$ 是模拟，若 $b<f(a)$，则存在 $a'<a$ 使得 $f(a')=b$。
+  由归纳假设亦有 $g(a')=b$，从而 $b<g(a)$。
+  对偶论证同理可证。
 \end{proof}
 
-Thus, if $A$ and $B$ are equipped with extensional and well-founded relations, we may write $A\le B$ to mean there exists a simulation $f:A\to B$.
-\cref{thm:wfcat} implies that if $A\le B$ and $B\le A$, then $A=B$.
+因此，若 $A$ 和 $B$ 配备了外延良基关系，可记 $A\le B$ 表示存在模拟 $f:A\to B$。
+\cref{thm:wfcat} 表明：若 $A\le B$ 且 $B\le A$，则 $A=B$。
 
 \begin{defn}
-  An \define{ordinal}
+  一个\define{序数}
   \indexdef{ordinal}%
   \indexsee{number!ordinal}{ordinal}%
-  is a set $A$ with an extensional well-founded relation which is \emph{transitive}, i.e.\ satisfies $\fall{a,b,c:A}(a<b)\to (b<c) \to (a<c)$.
+  是一个集合 $A$ 连同其上的一个外延良基关系，且该关系是\emph{传递的}，即满足 $\fall{a,b,c:A}(a<b)\to (b<c) \to (a<c)$。
 \end{defn}
 
 \begin{eg}
-  Of course, the usual strict order on \nat is transitive.
-  It is easily seen to be extensional as well; thus it is an ordinal.
-  As usual, we denote this ordinal by $\omega$.
+  当然，$\nat$ 上通常的严格序是传递的。
+  不难看出它也是外延的；因此它是一个序数。
+  依照惯例，我们记这个序数为 $\omega$。
 \end{eg}
 
 \symlabel{ord}
-Let \ord denote the type of ordinals.
-By the previous results, \ord is a set and has a natural partial order.
-We now show that \ord also admits a well-founded relation.
+令 $\ord$ 表示序数的类型。
+根据之前的结果，$\ord$ 是一个集合并具有自然的偏序。
+我们现在证明 $\ord$ 也容许一个良基关系。
 
 \symlabel{initial-segment}
-If $A$ is an ordinal and $a:A$, let $\ordsl A a \defeq \setof{ b:A | b<a}$ denote the initial segment.
+如果 $A$ 是一个序数且 $a:A$，令 $\ordsl A a \defeq \setof{ b:A | b<a}$ 表示\emph{初始段}。
 \index{initial!segment}%
-Note that if $\ordsl A a = \ordsl A b$ as ordinals, then that isomorphism must respect their inclusions into $A$ (since simulations form a poset), and hence they are equal as subsets of $A$.
-Therefore, since $A$ is extensional, $a=b$.
-Thus the function $a\mapsto \ordsl A a$ is an injection $A\to \ord$.
+注意，若 $\ordsl A a = \ordsl A b$ 作为序数相等，则该同构必须保持它们到 $A$ 的包含映射（因为模拟构成偏序集），从而它们作为 $A$ 的子集也是相等的。
+因此，由 $A$ 的外延性知 $a=b$。
+于是，函数 $a\mapsto \ordsl A a$ 是一个单射 $A\to \ord$。
 
 \begin{defn}
-  For ordinals $A$ and $B$, a simulation $f:A\to B$ is said to be \define{bounded}
+  对于序数 $A$ 和 $B$，一个模拟 $f:A\to B$ 被称为\define{有界的}
   \indexdef{simulation!bounded}%
   \indexdef{bounded!simulation}%
-  if there exists $b:B$ such that $A = \ordsl B b$.
+  如果存在 $b:B$ 使得 $A = \ordsl B b$。
 \end{defn}
 
-The remarks above imply that such a $b$ is unique when it exists, so that boundedness is a mere property.
+上述讨论表明，这样的 $b$ 若存在则唯一，因此有界性是一个命题。
 
-We write $A<B$ if there exists a bounded simulation from $A$ to $B$.
-Since simulations are unique, $A<B$ is also a mere proposition.
+我们记 $A<B$ 表示存在一个从 $A$ 到 $B$ 的有界模拟。
+由于模拟是唯一的，$A<B$ 也是一个命题。
 
 \begin{thm}\label{thm:ordord}
-  $(\ord,<)$ is an ordinal.
+  $(\ord,<)$ 是一个序数。
 \end{thm}
 
 \noindent
-More precisely, this theorem says that the type $\ord_{\UU_i}$ of ordinals in one universe\index{universe level} is itself an ordinal in the next higher universe, i.e.\ $(\ord_{\UU_i},<):\ord_{\UU_{i+1}}$.
+更准确地说，该定理断言：某个宇宙\index{universe level}中的序数类型 $\ord_{\UU_i}$ 本身是更高一层宇宙中的序数，即 $(\ord_{\UU_i},<):\ord_{\UU_{i+1}}$。
 
 \begin{proof}
-  Let $A$ be an ordinal; we first show that $\ordsl A a$ is accessible (in \ord) for all $a:A$.
-  By well-founded induction on $A$, suppose $\ordsl A b$ is accessible for all $b<a$.
-  By definition of accessibility, we must show that $B$ is accessible in \ord for all $B<\ordsl A a$.
-  However, if $B<\ordsl A a$ then there is some $b<a$ such that $B = \ordsl{(\ordsl A a)}{b} = \ordsl A b$, which is accessible by the inductive hypothesis.
-  Thus, $\ordsl A a$ is accessible for all $a:A$.
+  设 $A$ 是一个序数；首先证明对所有 $a:A$，$\ordsl A a$ 在 $\ord$ 中是可达的。
+  对 $A$ 作良基归纳，假设对所有 $b<a$，$\ordsl A b$ 是可达的。
+  根据可达性的定义，须证对所有 $B<\ordsl A a$，$B$ 在 $\ord$ 中是可达的。
+  然而，若 $B<\ordsl A a$，则存在某个 $b<a$ 使得 $B = \ordsl{(\ordsl A a)}{b} = \ordsl A b$，而由归纳假设知后者是可达的。
+  因此，对所有 $a:A$，$\ordsl A a$ 是可达的。
 
-  Now to show that $A$ is accessible in \ord, by definition we must show $B$ is accessible for all $B<A$.
-  But as before, $B<A$ means $B=\ordsl A a$ for some $a:A$, which is accessible as we just proved.
-  Thus, \ord is well-founded.
+  现在证明 $A$ 在 $\ord$ 中是可达的。根据定义，须证对所有 $B<A$，$B$ 是可达的。
+  但如前所述，$B<A$ 意味着存在某个 $a:A$ 使得 $B=\ordsl A a$，而由刚才的证明知这是可达的。
+  因此，$\ord$ 是良基的。
 
-  For extensionality, suppose $A$ and $B$ are ordinals such that
+  对于外延性，假设 $A$ 和 $B$ 是满足下式的序数：
   \narrowequation{\prd{C:\ord} (C<A) \Leftrightarrow (C<B).}
-  Then for every $a:A$, since $\ordsl A a<A$, we have $\ordsl A a<B$, hence there is $b:B$ with $\ordsl A a = \ordsl B b$.
-  Define $f:A\to B$ to take each $a$ to the corresponding $b$; it is straightforward to verify that $f$ is an isomorphism.
-  Thus $A\cong B$, hence $A=B$ by univalence.
+  那么对每个 $a:A$，由于 $\ordsl A a<A$，我们有 $\ordsl A a<B$，从而存在 $b:B$ 使得 $\ordsl A a = \ordsl B b$。
+  定义 $f:A\to B$ 将每个 $a$ 映到相应的 $b$；可以直接验证 $f$ 是一个同构。
+  于是 $A\cong B$，由泛等性知 $A=B$。
 
-  Finally, it is easy to see that $<$ is transitive.
+  最后，容易看出 $<$ 是传递的。
 \end{proof}
 
-Treating \ord as an ordinal is often very convenient, but it has its pitfalls as well.
-For instance, consider the following lemma, where we pay attention to how universes are used.
+将 $\ord$ 视为序数通常非常方便，但也有其隐患。
+例如，考虑以下引理，我们需留意其中宇宙的使用方式。
 
 \begin{lem}\label{thm:ordsucc}
-  Let \bbU be a universe.
-  For any $A:\ord_\bbU$, there is a $B:\ord_\bbU$ such that $A<B$.
+  设 \bbU 为一个宇宙。
+  对于任意 $A:\ord_\bbU$，存在 $B:\ord_\bbU$ 使得 $A<B$。
 \end{lem}
+
 \begin{proof}
-  Let $B=A+\unit$, with the element $\ttt:\unit$ being greater than all elements of $A$.
-  Then $B$ is an ordinal and it is easy to see that $A\cong \ordsl B \ttt$.
+  令 $B=A+\unit$，并规定 $\unit$ 中的元素 $\ttt$ 大于 $A$ 的所有元素。
+  则 $B$ 是一个序数，且容易看出 $A\cong \ordsl B \ttt$。
 \end{proof}
 
-The ordinal $B$ constructed in the proof of \cref{thm:ordsucc} is called the \define{successor}\indexdef{successor!of an ordinal} of $A$.
+在 \cref{thm:ordsucc} 证明中所构造的序数 $B$ 称为 $A$ 的\define{后继}\indexdef{successor!of an ordinal}。
 
-This lemma illustrates a potential pitfall of the ``typically ambiguous''\index{typical ambiguity} style of using \UU to denote an arbitrary, unspecified universe.
-Consider the following alternative proof of it.
+这条引理揭示了使用"类型歧义"\index{typical ambiguity}风格——即用 \UU 表示一个任意且未指定的宇宙——可能带来的隐患。
+考虑如下另一种证明。
 
-\begin{proof}[Another putative proof of \cref{thm:ordsucc}]
-  Note that $C<A$ if and only if $C=\ordsl A a$ for some $a:A$.
-  This gives an isomorphism $A \cong \ordsl \ord A$, so that $A<\ord$.
-  Thus we may take $B\defeq\ord$.
+\begin{proof}[\cref{thm:ordsucc} 的另一种拟议证明]
+  注意到 $C<A$ 当且仅当存在某个 $a:A$ 使得 $C=\ordsl A a$。
+  这给出了一个同构 $A \cong \ordsl \ord A$，从而 $A<\ord$。
+  于是我们可以取 $B\defeq\ord$。
 \end{proof}
 
-The second proof would be valid if we had stated \cref{thm:ordsucc} in a typically ambiguous style.
-But the resulting lemma would be less useful, because the second proof would constrain the second ``\ord'' in the lemma statement to refer to a higher universe level than the first one.
-The first proof allows both universes to be the same.
+如果我们用类型歧义的风格陈述 \cref{thm:ordsucc}，则第二种证明是有效的。
+但这样得到的引理用处较小，因为第二种证明会强制引理陈述中第二个"\ord"所指的宇宙层级高于第一个"\ord"。
+而第一种证明则允许两个宇宙是同一个。
 
-Similar remarks apply to the next lemma, which could be proved in a less useful way by observing that $A\le \ord$ for any $A:\ord$.
+类似的讨论也适用于下一条引理：该引理也可通过观察"对任意 $A:\ord$ 皆有 $A\le \ord$"来证明，但那样得到的结论用处较小。
 
 \begin{lem}\label{thm:ordunion}
-  Let \bbU be a universe.
-  For any $X:\type$ and $F:X\to \ord_\bbU$, there exists $B:\ord_\bbU$ such that $Fx\le B$ for all $x:X$.
+  设 \bbU 为一个宇宙。
+  对于任意 $X:\type$ 与 $F:X\to \ord_\bbU$，存在 $B:\ord_\bbU$ 使得对所有 $x:X$ 均有 $Fx\le B$。
 \end{lem}
+
 \begin{proof}
-  Let $B$ be the set-quotient (see \cref{rmk:quotient-of-non-set}) of the equivalence relation $\eqr$ on $\sm{x:X} Fx$ defined as follows:
+  在 $\sm{x:X} Fx$ 上定义等价关系 $\eqr$ 如下，并令 $B$ 为其集合商（参见 \cref{rmk:quotient-of-non-set}）：
   \[ (x,y) \eqr (x',y')
   \;\defeq\;
   \Big(\ordsl{(Fx)}{y} \cong \ordsl{(Fx')}{y'}\Big).
   \]
-  Define $(x,y)<(x',y')$ if $\ordsl{(Fx)}{y} < \ordsl{(Fx')}{y'}$.
-  This clearly descends to the quotient, and can be seen to make $B$ into an ordinal.
-  Moreover, for each $x:X$ the induced map $Fx\to B$ is a simulation.
+  定义 $(x,y)<(x',y')$ 当且仅当 $\ordsl{(Fx)}{y} < \ordsl{(Fx')}{y'}$。
+  该关系显然下降到商上，并可验证使 $B$ 成为一个序数。
+  此外，对每个 $x:X$，诱导的映射 $Fx\to B$ 是一个模拟。
 \end{proof}
 
-
-
-\section{Classical well-orderings}
+\section{经典良序}
 \label{sec:wellorderings}
 
 \index{denial|(}%
-We now show the equivalence of our ordinals with the more familiar classical\index{mathematics!classical} well-orderings.
+现在我们证明，我们的序数与更为人熟知的经典\index{mathematics!classical}良序等价。
 
 \begin{lem}
   \index{excluded middle}%
-  Assuming excluded middle, every ordinal is trichotomous:
+  假设排中律，每个序数都是三分的：
   \index{trichotomy of ordinals}%
   \index{ordinal!trichotomy of}%
   \[ \fall{a,b:A} (a<b) \vee (a=b) \vee (b<a). \]
 \end{lem}
+
 \begin{proof}
-  By induction on $a$, we may assume that for every $a'<a$ and every $b':A$, we have $(a'<b') \vee (a'=b') \vee (b'<a')$.
-  Now by induction on $b$, we may assume that for every $b'<b$, we have $(a<b') \vee (a=b') \vee (b'<a)$.
+  对 $a$ 归纳，可假设对任意 $a'<a$ 及任意 $b':A$，有 $(a'<b') \vee (a'=b') \vee (b'<a')$。
+  现在对 $b$ 归纳，可假设对任意 $b'<b$，有 $(a<b') \vee (a=b') \vee (b'<a)$。
 
-  By excluded middle, either there merely exists a $b'<b$ such that $a<b'$, or there merely exists a $b'<b$ such that $a=b'$, or for every $b'<b$ we have $b'<a$.
-  In the first case, merely $a<b$ by transitivity, hence $a<b$ as it is a mere proposition.
-  Similarly, in the second case, $a<b$ by transport.
-  Thus, suppose $\fall{b':A}(b'<b)\to (b'<a)$.
+  根据排中律，要么仅存在 $b'<b$ 使得 $a<b'$，要么仅存在 $b'<b$ 使得 $a=b'$，要么对任意 $b'<b$ 皆有 $b'<a$。
+  在第一种情形，由传递性仅知 $a<b$，而 $a<b$ 是命题，故确实有 $a<b$。
+  类似地，在第二种情形，由迁移可得 $a<b$。
+  因此，我们假设 $\fall{b':A}(b'<b)\to (b'<a)$。
 
-  Now analogously, either there merely exists $a'<a$ such that $b<a'$, or there merely exists $a'<a$ such that $a'=b$, or for every $a'<a$ we have $a'<b$.
-  In the first and second cases, $b<a$, so we may suppose $\fall{a':A}(a'<a)\to (a'<b)$.
-  However, by extensionality, our two suppositions now imply $a=b$.
+  现在类似地，要么仅存在 $a'<a$ 使得 $b<a'$，要么仅存在 $a'<a$ 使得 $a'=b$，要么对任意 $a'<a$ 皆有 $a'<b$。
+  在第一种和第二种情形，$b<a$，因此我们可假设 $\fall{a':A}(a'<a)\to (a'<b)$。
+  然而，由外延性，这两个假设现在蕴涵 $a=b$。
 \end{proof}
 
 \begin{lem}
-  A well-founded relation contains no cycles, i.e.\
+  良基关系不包含循环，即
   \[ \fall{n:\mathbb{N}}{a:\mathbb{N}_n\to A} \neg\Big((a_0<a_1) \wedge \dots \wedge (a_{n-1}<a_n)\wedge (a_n<a_0)\Big). \]
 \end{lem}
+
 \begin{proof}
-  We prove by induction on $a:A$ that there is no cycle containing $a$.
-  Thus, suppose by induction that for all $a'<a$, there is no cycle containing $a'$.
-  But in any cycle containing $a$, there is some element less than $a$ and contained in the same cycle.
+  我们对 $a:A$ 归纳证明：不存在包含 $a$ 的循环。
+  于是，由归纳可假设对所有 $a'<a$，不存在包含 $a'$ 的循环。
+  但在任何包含 $a$ 的循环中，都存在某个小于 $a$ 且属于该循环的元素。
 \end{proof}
 
 \indexdef{relation!irreflexive}%
 \index{irreflexivity!of well-founded relation}%
-In particular, a well-founded relation must be \define{irreflexive}, i.e.\ $\neg(a<a)$ for all $a$.
+特别地，良基关系必须是\define{不自反的}，即对任意 $a$ 有 $\neg(a<a)$。
 
 \begin{thm}\label{thm:wellorder}
-  Assuming excluded middle, $(A,<)$ is an ordinal if and only if every nonempty subset $B\subseteq A$ has a least element.
+  假设排中律，则 $(A,<)$ 是一个序数当且仅当 $A$ 的每个非空子集 $B\subseteq A$ 都有最小元。
 \end{thm}
-\begin{proof}
-  If $A$ is an ordinal, then by \cref{thm:wfmin} every nonempty subset merely has a minimal element.
-  But trichotomy implies that any minimal element is a least element.
-  Moreover, least elements are unique when they exist, so merely having one is as good as having one.
 
-  Conversely, if every nonempty subset has a least element, then by \cref{thm:wfmin}, $A$ is well-founded.
-  We also have trichotomy, since for any $a,b$ the subset
+\begin{proof}
+  若 $A$ 是序数，则由 \cref{thm:wfmin}，其每个非空子集都仅有一个极小元。
+  但三分性保证了任何极小元都是最小元。
+  此外，最小元若存在则唯一，因此仅存在一个最小元与实际拥有一个效果相同。
+
+  反之，若每个非空子集都有最小元，则由 \cref{thm:wfmin} 知 $A$ 是良基的。
+  我们也有三分性，因为对任意 $a,b$，子集
   $ \setof{a,b} \defeq \setof{x:A | x=a \lor x=b} $
-  merely has a least element, which must be either $a$ or $b$.
-  This implies transitivity, since if $a<b$ and $b<c$, then either $a=c$ or $c<a$ would produce a cycle.
-  Similarly, it implies extensionality, for if $\fall{c:A}(c<a)\Leftrightarrow (c<b)$, then $a<b$ implies (letting $c$ be $a$) that $a<a$, which is a cycle, and similarly if $b<a$; hence $a=b$.
+  仅有一个最小元，而该最小元必定是 $a$ 或 $b$。
+  这蕴含传递性：若 $a<b$ 且 $b<c$，则 $a=c$ 或 $c<a$ 都会产生循环。
+  类似地，它也蕴含外延性：若 $\fall{c:A}(c<a)\Leftrightarrow (c<b)$，则 $a<b$ 将导致（取 $c$ 为 $a$ 时）$a<a$，这构成循环；$b<a$ 的情形同理；故必有 $a=b$。
 \end{proof}
 
-In classical\index{mathematics!classical} mathematics, the characterization of \cref{thm:wellorder} is taken as the definition of a \emph{well-ordering}, with the \emph{ordinals} being a canonical set of representatives of isomorphism classes for well-orderings.
-In our context, the structure identity principle means that there is no need to look for such representatives: any well-ordering is as good as any other.
+在经典\index{mathematics!classical}数学中，\cref{thm:wellorder} 这一刻画被直接当作\emph{良序}的定义，而\emph{序数}则构成良序同构类的一组标准代表元。
+在我们的语境中，结构同一性原理意味着无需寻找这样的代表元：任何一个良序都不逊于任何其他良序。
 
-We now move on to consider consequences of the axiom of choice.
-For any set $X$, let $\powerp X$ denote the type of merely inhabited subsets of $X$:
+现在我们转而考虑选择公理的推论。
+对任意集合 $X$，令 $\powerp X$ 表示由 $X$ 的\emph{仅知有实例的子集}构成的类型：
 \symlabel{inhabited-powerset}
 \[ \powerp X \defeq \setof{ Y : \power X | \exis{x:X} x\in Y}. \]
-Assuming excluded middle, this is equivalently the type of \emph{nonempty}\index{nonempty subset} subsets of $X$, and we have $\power X \eqvsym (\powerp X) + \unit$.
+若假设排中律，这便等价于由 $X$ 的\emph{非空}\index{nonempty subset}子集构成的类型，且有 $\power X \eqvsym (\powerp X) + \unit$。
 
 \begin{thm}\label{thm:wop}
   \index{axiom!of choice}%
   \index{excluded middle}%
-  Assuming excluded middle, the following are equivalent.
+  在假设排中律的前提下，以下两条陈述等价：
   \begin{enumerate}
-  \item For every set $X$, there merely exists a function
-    $ f: \powerp X \to X $
-    such that $f(Y)\in Y$ for all $Y:\powerp X$.\label{item:wop1}
-  \item Every set merely admits the structure of an ordinal.\label{item:wop2}
+  \item 对每个集合 $X$，仅存在一个函数 $f: \powerp X \to X$，使得对所有 $Y:\powerp X$ 都有 $f(Y)\in Y$。\label{item:wop1}
+  \item 每个集合仅具有一个序数结构。\label{item:wop2}
   \end{enumerate}
 \end{thm}
 
 \noindent
-Of course,~\ref{item:wop1} is a standard classical\index{mathematics!classical} version of the axiom of choice; see \cref{ex:choice-function}.
+当然，~\ref{item:wop1} 是选择公理的经典\index{mathematics!classical}标准形式；参见 \cref{ex:choice-function}。
 
 \begin{proof}
-  One direction is easy: suppose~\ref{item:wop2}.
-  Since we aim to prove the mere proposition~\ref{item:wop1}, we may assume $A$ is an ordinal.
-  But then we can define $f(B)$ to be the least element of $B$.
+  一个方向的证明很简单：假设~\ref{item:wop2}。
+  由于我们要证明的是命题~\ref{item:wop1}，可以假定 $A$ 是一个序数。
+  于是就可以把 $f(B)$ 定义为 $B$ 中的最小元。
 
-  Now suppose~\ref{item:wop1}.
-  As before, since~\ref{item:wop2} is a mere proposition, we may assume given such an $f$.
-  We extend $f$ to a function
+  现在假设~\ref{item:wop1}。
+  同前，由于~\ref{item:wop2} 是一个命题，可以假定已经给定了这样的 $f$。
+  我们以显然的方式将 $f$ 延拓为函数
   \[ \bar f:\power X \eqvsym (\powerp X) + \unit \longrightarrow X+\unit
   \]
-  in the obvious way.
-  Now for any ordinal $A$, we can define $g_A:A\to X+\unit$ by well-founded recursion:
+
+  现在，对任意序数 $A$，可通过良基递归定义 $g_A : A \to X + \unit$：
   \[ g_A(a) \defeq
     \bar f\Big(X \setminus \setof{ g_A(b) | \strut (b<a) \wedge (g_A(b) \in X) }\Big)
   \]
-  (regarding $X$ as a subset of $X+\unit$ in the obvious way).
+  （显然地将 $X$ 视作 $X + \unit$ 的子集）。
 
-  Let $A'\defeq \setof{a:A | g_A(a) \in X}$ be the preimage of $X\subseteq X+\unit$; then we claim the restriction $g_A':A' \to X$ is injective.
-  For if $a,a':A$ with $a\neq a'$, then by trichotomy and without loss of generality, we may assume $a'<a$.
-  Thus $g_A(a') \in \setof{ g_A(b) | b<a }$, so since $f(Y)\in Y$ for all $Y$ we have $g_A(a) \neq g_A(a')$.
+  令 $A'\defeq \setof{a:A | g_A(a) \in X}$ 为 $X \subseteq X + \unit$ 的原像；则我们断言限制映射 $g_A' : A' \to X$ 是单射。
+  因为若 $a, a' : A$ 且 $a \neq a'$，则由三分性且不失一般性，可假设 $a' < a$。
+  于是 $g_A(a') \in \setof{ g_A(b) | b<a }$，再由对所有 $Y$ 都有 $f(Y) \in Y$ 便知 $g_A(a) \neq g_A(a')$。
 
-  Moreover, $A'$ is an initial segment of $A$.
-  For $g_A(a)$ lies in \unit if and only if $\setof{g_A(b)|b<a} = X$, and if this holds then it also holds for any $a'>a$.
-  Thus, $A'$ is itself an ordinal.
+  此外，$A'$ 是 $A$ 的一个初始段。
+  因为 $g_A(a)$ 属于 \unit 当且仅当 $\setof{g_A(b)|b<a} = X$，且若此条件成立，则它对任意 $a' > a$ 亦成立。
+  因此，$A'$ 本身也是一个序数。
 
-  Finally, since \ord is an ordinal, we can take $A\defeq\ord$.
-  Let $X'$ be the image of $g_\ord':\ord' \to X$; then the inverse of $g_\ord'$ yields an injection $H:X'\to \ord$.
-  By \cref{thm:ordunion}, there is an ordinal $C$ such that $Hx\le C$ for all $x:X'$.
-  Then by \cref{thm:ordsucc}, there is a further ordinal $D$ such that $C<D$, hence $Hx<D$ for all $x:X'$.
-  Now we have
+  最后，由于 \ord 是一个序数，我们可以取 $A \defeq \ord$。
+  令 $X'$ 为 $g_\ord' : \ord' \to X$ 的像；则 $g_\ord'$ 的逆给出一个单射 $H : X' \to \ord$。
+  由 \cref{thm:ordunion}，存在一个序数 $C$，使得对所有 $x : X'$ 都有 $Hx \le C$。
+  再由 \cref{thm:ordsucc}，存在另一个序数 $D$ 使得 $C < D$，从而对所有 $x : X'$ 都有 $Hx < D$。
+  现在我们有
   \begin{align*}
     g_{\ord}(D) &= \bar f\Big( X \setminus \setof{ g_\ord(B) | \rule{0pt}{1em} B<D \wedge (g_\ord(B) \in X)} \Big)\\
     &=\bar f\Big( X \setminus \setof{ g_\ord(B) | \rule{0pt}{1em} g_\ord(B) \in X} \Big)
   \end{align*}
-  since if $B:\ord$ and $(g_\ord(B) \in X)$, then $B = Hx$ for some $x:X'$, hence $B<D$.
-  Now if
+  因为若 $B : \ord$ 且 $g_\ord(B) \in X$，则存在某个 $x : X'$ 使得 $B = Hx$，从而 $B < D$。
+  现在，如果
   \[\setof{ g_\ord(B) | \rule{0pt}{1em} g_\ord(B) \in X}\]
-  is not all of $X$, then $g_\ord(D)$ would lie in $X$ but not in this subset, which would be a contradiction since $D$ is itself a potential value for $B$.
-  So this set must be all of $X$, and hence $g_\ord'$ is surjective as well as injective.
-  Thus, we can transport the ordinal structure on $\ord'$ to $X$.
+  不等于整个 $X$，则 $g_\ord(D)$ 将属于 $X$ 却不在此子集中，而由于 $D$ 本身也是 $B$ 的一个可能取值，这将导致矛盾。
+  因此这个子集必须是整个 $X$，从而 $g_\ord'$ 不仅是单射，还是满射。
+  于是，我们就可以将 $\ord'$ 上的序数结构迁移到 $X$ 上。
 \end{proof}
 
 \begin{rmk}
-  If we had given the wrong proof of \cref{thm:ordsucc} or \cref{thm:ordunion}, then the resulting proof of \cref{thm:wop} would be invalid: there would be no way to consistently assign universe levels\index{universe level}.
-  As it is, we require propositional resizing (which follows from \LEM{}) to ensure that $X'$ lives in the same universe as $X$ (up to equivalence).
+  如果我们之前对 \cref{thm:ordsucc} 或 \cref{thm:ordunion} 给出了错误的证明，那么由此得到的 \cref{thm:wop} 的证明将是无效的：因为那样将无法一致地指定宇宙层级\index{universe level}。
+  事实上，我们需要命题大小重整（它可由 \LEM{} 推出）来确保 $X'$ 在等价意义下与 $X$ 处于同一宇宙。
 \end{rmk}
 
 \begin{cor}
-  Assuming the axiom of choice, the function $\ord\to\set$ (which forgets the order structure) is a surjection.
+  假设选择公理，函数 $\ord\to\set$（它忘记序结构）是一个满射。
 \end{cor}
 
-Note that \ord is a set, while \set is a 1-type.
-In general, there is no reason for a 1-type to admit any surjective function from a set.
-Even the axiom of choice does not appear to imply that \emph{every} 1-type does so (although see \cref{ex:acnm-surjset}), but it readily implies that this is so for 1-types constructed out of \set, such as the types of objects of categories of structures as in \cref{sec:sip}.
-The following corollary also applies to such categories.
+注意，\ord 是一个集合，而 \set 是一个 $1$-类型。
+一般而言，没有理由指望 $1$-类型能接受来自某个集合的满射函数。
+即使选择公理似乎也不蕴含\emph{每个} $1$-类型都能如此（尽管参见 \cref{ex:acnm-surjset}），但它可以直接推出这一点对于由 \set 构造出来的 $1$-类型是成立的，例如 \cref{sec:sip} 中结构范畴的对象类型。
+下面的推论也适用于这类范畴。
 
 \begin{cor}
   \index{weak equivalence!of precategories}%
-  Assuming \choice{}, \uset admits a weak equivalence functor from a strict category.
+  假设 \choice{}，\uset 接受一个来自严格范畴的弱等价函子。
 \end{cor}
+
 \begin{proof}
-  Let $X_0\defeq \ord$, and for $A,B:X_0$ let $\hom_X(A,B) \defeq (A\to B)$.
-  Then $X$ is a strict category, since \ord is a set, and the above surjection $X_0 \to \set$ extends to a weak equivalence functor $X\to \uset$.
+  令 $X_0\defeq \ord$，并且对于 $A,B:X_0$，令 $\hom_X(A,B) \defeq (A\to B)$。
+  由于 \ord 是一个集合，$X$ 是一个严格范畴，且上述满射 $X_0 \to \set$ 可扩张为弱等价函子 $X\to \uset$。
 \end{proof}
 
-Now recall from \cref{sec:cardinals} that we have a further surjection $\cd{\blank}:\set\to\card$, and hence a composite surjection $\ord\to\card$ which sends each ordinal to its cardinality.
+现在回顾 \cref{sec:cardinals}，我们还有一个进一步的满射 $\cd{\blank}:\set\to\card$，从而得到一个复合的满射 $\ord\to\card$，它把每个序数映到它的基数。
 
 \begin{thm}
-  Assuming \choice{}, the surjection $\ord\to\card$ has a section.
+  假设 \choice{}，满射 $\ord\to\card$ 具有一个截面。
 \end{thm}
+
 \begin{proof}
-  There is an easy and wrong proof of this: since \ord and \card are both sets, \choice{} implies that any surjection between them \emph{merely} has a section.
-  However, we actually have a canonical \emph{specified} section: because \ord is an ordinal, every nonempty subset of it has a uniquely specified least element.
-  Thus, we can map each cardinal to the least element in the corresponding fiber.
+  对此有一个简单但错误的证明：因为 \ord 和 \card 都是集合，\choice{} 蕴含它们之间的任何满射\emph{仅}存在一个截面。
+  然而，我们实际上拥有一个\emph{具体的}典范截面：因为 \ord 是一个序数，其每个非空子集都有一个唯一确定的最小元。
+  因此，我们可以将每个基数映射到其对应纤维中的那个最小元。
 \end{proof}
 
-It is traditional in set theory to identify cardinals with their image in \ord: the least ordinal having that cardinality.
+集合论中的传统做法是将基数等同于它们在 \ord 中的像，即具有该基数的那个最小序数。
 
-It follows that \card also canonically admits the structure of an ordinal: in fact, one isomorphic to \ord.
-Specifically, we define by well-founded recursion a function $\aleph:\ord\to\ord$, such that $\aleph(A)$ is the least ordinal having cardinality greater than $\aleph({\ordsl A a})$ for all $a:A$.
-Then (assuming \choice{}) the image of $\aleph$ is exactly the image of \card.
+由此可知，\card 也典范地具有序数结构：事实上，是一个与 \ord 同构的结构。
+具体来说，我们通过良基递归定义一个函数 $\aleph:\ord\to\ord$，使得 $\aleph(A)$ 是满足如下条件的最小序数：其基数大于所有 $a:A$ 对应的 $\aleph({\ordsl A a})$。
+那么（在假设 \choice{} 下）$\aleph$ 的像恰好就是 \card 的像。
 
 \index{denial|)}%
 
 \index{ordinal|)}%
 
-\section{The cumulative hierarchy}
+\section{累积层次}
 \label{sec:cumulative-hierarchy}
 
 \index{bargaining|(}%
-We can define a cumulative hierarchy $V$ of all sets in a given universe $\UU$ as a higher inductive type, in such a way that $V$ is again a set (in a larger universe $\UU'$), equipped with a binary ``membership'' relation $x\in y$ which satisfies the usual laws of set theory.
+对于给定的宇宙 $\UU$，我们可以将其中所有集合的累积层次 $V$ 定义为一个高阶归纳类型。这种定义方式使得 $V$ 本身也是一个集合（位于更大的宇宙 $\UU'$ 中），并配备一个满足集合论常见定律的二元“隶属”关系 $x\in y$。
 
 \begin{defn}\label{defn:V}
-  The \define{cumulative hierarchy}
+  相对于类型宇宙 $\UU$ 的\define{累积层次}
   \indexdef{cumulative!hierarchy, set-theoretic}%
   \indexdef{hierarchy!cumulative, set-theoretic}%
-  $V$ relative to a type universe $\UU$ is the
-  higher inductive type generated by the following constructors.
+  $V$ 是由以下构造子生成的高阶归纳类型。
   %
   \begin{enumerate}
-  \item For every $A : \UU$ and $f : A \to V$, there is an element $\vset(A, f) : V$.
-  \item For all $A, B : \UU$, $f : A \to V$ and $g : B \to V$ such that
+  \item 对于每一个 $A : \UU$ 和 $f : A \to V$，有一个元素 $\vset(A, f) : V$。
+  \item 对所有 $A, B : \UU$，以及 $f : A \to V$ 和 $g : B \to V$，若满足
     %
     \begin{narrowmultline} \label{eq:V-path}
       \big(\fall{a:A} \exis{b:B} \id[V]{f(a)}{g(b)}\big) \land \narrowbreak
       \big(\fall{b:B} \exis{a:A} \id[V]{f(a)}{g(b)}\big)
     \end{narrowmultline}
     %
-    there is a path $\id[V]{\vset(A,f)}{\vset(B,g)}$.
-  \item The 0-truncation constructor: for all $x,y:V$ and $p,q:x=y$, we have $p=q$.
+    则存在一条路径 $\id[V]{\vset(A,f)}{\vset(B,g)}$。
+  \item 0-截断构造子：对所有 $x,y:V$ 和 $p,q:x=y$，有 $p=q$。
   \end{enumerate}
 \end{defn}
 
-In set-theoretic language, $\vset(A,f)$ can be understood as the set (in the sense of classical set theory) that is the image of $A$ under $f$, i.e.\ $\setof{ f(a) | a \in A }$.
-However, we will avoid this notation, since it would clash with our notation for subtypes (but see~\eqref{eq:class-notation} and \cref{def:TypeOfElements} below).
+用集合论的语言来说，$\vset(A,f)$ 可以理解为经典集合论意义下 $A$ 在 $f$ 下的像所构成的集合，即 $\setof{ f(a) | a \in A }$。
+但是，我们将避免使用这种记法，因为它会与我们用于子类型的记法冲突（不过可以参见下面的 \eqref{eq:class-notation} 和 \cref{def:TypeOfElements}）。
 
-The hierarchy $V$ is
-bootstrapped from the empty map $\rec\emptyt(V) : \emptyt \to V$, which gives the empty set as $\emptyset = \vset(\emptyt,\rec\emptyt(V))$.
-Then the singleton $\{\emptyset\}$ enters $V$ through $\unit \to V$, defined as $\ttt \mapsto \emptyset$, and so
-on.
-(The definition can also be adapted to include an arbitrary set of ``atoms'' or ``urelements'', by adding an additional point constructor.)
-The type $V$ lives in the same universe as the base universe $\UU$.
+层次 $V$ 是从空映射 $\rec\emptyt(V) : \emptyt \to V$（由空类型的递归原理给出）起步的，它给出的空集是 $\emptyset = \vset(\emptyt,\rec\emptyt(V))$。
+接着，单点集 $\{\emptyset\}$ 通过映射 $\unit \to V$（定义为 $\ttt \mapsto \emptyset$）进入 $V$，以此类推。
+（通过添加额外的点构造子，该定义也可调整以包含任意由“原子”或“本元”构成的集合。）
+类型 $V$ 与基础宇宙 $\UU$ 处于同一宇宙层级。
 
-The second constructor of $V$ has a form unlike any we have seen before: it involves not only paths in $V$ (which in \cref{sec:hittruncations} we claimed were slightly fishy) but truncations of sums of them.
-It certainly does not fit the general scheme described in \cref{sec:naturality}, and thus it may not be obvious what its induction principle should be.
-Fortunately, like our first definition of the 0-truncation in \cref{sec:hittruncations}, it can be re-expressed using auxiliary higher inductive types.
-We leave it to the reader to work out the details (see \cref{ex:cumhierhit}).
+$V$ 的第二个构造子的形式与我们之前见过的任何构造子都不同：它不仅仅涉及 $V$ 中的路径（我们在 \cref{sec:hittruncations} 中曾说过这有点奇怪），还涉及对其求和的截断。
+它当然不符合 \cref{sec:naturality} 中描述的一般模式，因此它的归纳原理应该是什么可能并不显然。
+幸运的是，就像我们在 \cref{sec:hittruncations} 中对 0-截断的第一个定义那样，它可以利用辅助的高阶归纳类型重新表达。
+我们将其细节留给读者探索（参见 \cref{ex:cumhierhit}）。
 
 \index{induction principle!for cumulative hierarchy}%
-At the end of the day, the induction principle for $V$ (written in pattern matching language) says that given $P:V\to \set$, in order to construct $h:\prd{x:V} P(x)$, it suffices to give the following.
+最终，$V$ 的归纳原理（用模式匹配的语言写出来）是说：给定 $P:V\to \set$，为了构造 $h:\prd{x:V} P(x)$，只需给出以下内容。
+
 \begin{enumerate}
-\item For any $f:A\to V$, construct $h(\vset(A,f))$, assuming as given $h(f(a))$ for all $a:A$.
-\item Verify that if $f : A \to V$ and $g : B \to V$ satisfy~\eqref{eq:V-path}, then $\dpath{P}{q}{h(\vset(A,f))}{h(\vset(B,g))}$, where $q$ is the path arising from the second constructor of $V$ and~\eqref{eq:V-path}, assuming inductively that $h(f(a))$ and $h(g(b))$ are defined for all $a:A$ and $b:B$, and that the following condition holds:
+\item 对于任意 $f:A\to V$，在假设已对所有 $a:A$ 给出 $h(f(a))$ 的前提下，构造 $h(\vset(A,f))$。
+\item 验证若 $f : A \to V$ 和 $g : B \to V$ 满足~\eqref{eq:V-path}，则 $\dpath{P}{q}{h(\vset(A,f))}{h(\vset(B,g))}$，其中 $q$ 是由 $V$ 的第二个构造子及~\eqref{eq:V-path} 产生的路径；这里需归纳地假设 $h(f(a))$ 和 $h(g(b))$ 对所有 $a:A$ 和 $b:B$ 均有定义，并且满足以下条件：
 \begin{eqnarray*}
     &       & \big(\fall{a:A} \exis{b:B} \exis{p:f(a)=g(b)} \dpath{P}{p}{h(f(a))}{h(g(b))}\big) \\
     & \land & \big(\fall{b:B} \exis{a:A} \exis{p:f(a)=g(b)} \dpath{P}{p}{h(f(a))}{h(g(b))}\big)
 \end{eqnarray*}
 \end{enumerate}
-The second clause checks that the map being defined must respect the paths introduced in \eqref{eq:V-path}.
-As usual when we state higher induction principles using pattern matching, it may seem tautologous, but is not.
-The point is that ``$h(f(a))$'' is essentially a formal symbol which we cannot peek inside of, which $h(\vset(A,f))$ must be defined in terms of. Thus, in the second clause, we assume equality of these formal symbols when appropriate, and verify that the elements resulting from the construction of the first clause are also equal.
-Of course, if $P$ is a family of mere propositions, then the second clause is automatic.
 
-Observe that, by induction, for each $v:V$ there merely exist $A:\UU$ and $f:A\to V$ such that $v=\vset(A,f)$.
-Thus, it is reasonable to try to define the \define{membership relation}
+第二个条款检查正在定义的映射必须尊重在 \eqref{eq:V-path} 中引入的路径。
+正如我们通常在使用模式匹配陈述高阶归纳原理时那样，这看起来像是同义反复，其实不然。
+关键在于，“$h(f(a))$”本质上是一个我们无法窥探其内部的形式符号，而 $h(\vset(A,f))$ 必须依据它来定义。
+因此，在第二个条款中，我们在适当的时候假设这些形式符号相等，然后验证由第一个条款的构造所产生的元素也相等。
+当然，如果 $P$ 是一个命题族，那么第二个条款会自动满足。
+
+注意到，通过归纳可知，对于每个 $v:V$，仅有 $A:\UU$ 和 $f:A\to V$ 使得 $v=\vset(A,f)$。
+因此，尝试如下定义 $V$ 上的 \define{隶属关系}
 \indexdef{membership, for cumulative hierarchy}%
-$x\in v$ on $V$ by setting:
+$x\in v$ 是合理的：
 %
 % Note: "membership" rather than "elementhood", because "element" is taken.
 %
@@ -1511,253 +1501,250 @@ $x\in v$ on $V$ by setting:
   (x \in \vset(A,f)) \defeq (\exis{a : A} x = f(a)).
 \end{equation*}
 %
-To see that the definition is valid, we must use the recursion principle of $V$.  Thus, suppose we have a path $\vset(A, f) = \vset(B, g)$
-constructed through~\eqref{eq:V-path}. If $x \in \vset(A,f)$ then there merely is $a : A$ such
-that $x = f(a)$, but by~\eqref{eq:V-path} there merely is $b : B$ such that $f(a) = g(b)$, hence
-$x = g(b)$ and $x \in \vset(B,g)$. The converse is symmetric.
+要验证该定义是有效的，我们必须使用 $V$ 的递归原理。假设我们有一条通过~\eqref{eq:V-path} 构造的道路 $\vset(A, f) = \vset(B, g)$。若 $x \in \vset(A,f)$，则仅有 $a : A$ 使得 $x = f(a)$；但由~\eqref{eq:V-path}，仅有 $b : B$ 使得 $f(a) = g(b)$，因此 $x = g(b)$ 且 $x \in \vset(B,g)$。反之亦然。
 
-The \define{subset relation}
+$V$ 上的 \define{子集关系}
 \indexdef{subset!relation on the cumulative hierarchy}%
-$x\subseteq y$ is defined on $V$ as usual by
+$x\subseteq y$ 按通常方式定义为：
 %
 \begin{equation*}
   (x \subseteq y) \defeq \fall{z : V} z \in x \Rightarrow z \in y.
 \end{equation*}
 
-A \define{class}
+一个 \define{类}
 \indexdef{class}%
-may be taken to be a mere predicate on~$V$. We can say that a class $C : V \to \prop$ is a
-\define{$V$-set}
+可以视作 $V$ 上的一个纯命题谓词。我们说一个类 $C : V \to \prop$ 是一个 \define{$V$-集（$V$-set）}
 \indexdef{set!in the cumulative hierarchy}%
-if there merely exists $v:V$ such that
+，如果仅存在 $v:V$ 使得
 %
 \begin{equation*}
   \fall{x : V} C(x) \Leftrightarrow x \in v.
 \end{equation*}
-We may also use the conventional notation for classes, which matches our standard notation for subtypes:
+我们也可以使用类的常规记法，这与我们对于子类型的标准记法一致：
 \begin{equation}
   \setof{ x | C(x) } \defeq \lam{x}C(x).\label{eq:class-notation}
 \end{equation}
 %
-A class $C: V\to \prop$ will be called \define{$\UU$-small}
+一个类 $C: V\to \prop$ 被称为 \define{$\UU$-小的（$\UU$-small）}
 \indexdef{class!small}%
 \indexdef{small!class}%
-if all of its values $C(x)$ lie in $\UU$, specifically $C: V\to \prop_{\UU}$.
-Since $V$ lives in the same universe $\UU'$ as does the base universe $\UU$ from which it is built, the same is true for the identity types $v=_V w$ for any $v,w:V$. To obtain a well-behaved theory in the absence of propositional resizing,
+，如果它的所有值 $C(x)$ 都位于 $\UU$ 中，具体而言即 $C: V\to \prop_{\UU}$。
+由于 $V$ 与构建它所基于的基础宇宙 $\UU$ 位于同一宇宙 $\UU'$ 中，这对于任意 $v,w:V$ 的相等类型 $v=_V w$ 同样成立。因此，为了在缺乏命题大小重整的情况下获得一个行为良好的理论，
 \index{propositional!resizing}%
 \index{resizing}%
-therefore, it will be convenient to have a $\UU$-small ``resizing'' of the identity relation, which we can define by induction as follows.
+拥有一个 $\UU$-小的相等关系的“重整”会很方便，我们可以如下通过归纳来定义它。
 
 \begin{defn}\label{def:bisimulation}
-  Define the \define{bisimulation}
+  通过对 $V$ 进行双重归纳来定义 \define{双模拟}
   \indexdef{bisimulation}%
-  relation
+  关系
   %
   \begin{equation*}
     \mathord\bisim : V \times V \longrightarrow \prop_{\UU}
   \end{equation*}
   %
-  by double induction over $V$, where for $\vset(A,f)$ and $\vset(B,g)$ we let:
+  ，其中对于 $\vset(A,f)$ 和 $\vset(B,g)$，我们令：
   \begin{narrowmultline*}
     \vset(A,f)  \bisim \vset(B,g) \defeq \narrowbreak
     \big(\fall{a:A}\exis{b:B} f(a)  \bisim g(b)\big) \land
     \big(\fall{b:B}\exis{a:A} f(a) \bisim g(b)\big).
   \end{narrowmultline*}
 \end{defn}
+
+
 %
-To verify that the definition is correct, we just need to check that it respects paths $\vset(A, f) = \vset(B, g)$ constructed through~\eqref{eq:V-path}, but this is obvious, and that $\prop_{\UU}$ is a set, which it is.  Note that $u \bisim v$ is in $\propU$ by construction.
+为验证该定义是正确的，我们只需检查它与通过~\eqref{eq:V-path} 构造的道路 $\vset(A, f) = \vset(B, g)$ 相容，而这是显然的；此外还需验证 $\prop_{\UU}$ 是一个集合，而它确实是。注意，由构造可知 $u \bisim v$ 位于 $\propU$ 中。
 
 \begin{lem}\label{lem:BisimEqualsId}
-For any $u,v:V$ we have $(u=_V v) = (u \bisim v)$.
+对于任意 $u,v:V$，我们有 $(u=_V v) = (u \bisim v)$。
 \end{lem}
 
 \begin{proof}
-An easy induction shows that $\bisim$ is reflexive, so by transport we have $(u=_V v)\to (u \bisim v)$.
-Thus, it remains to show that $(u \bisim v)\to (u=_V v)$.
-By induction on $u$ and $v$, we may assume they are $\vset(A,f)$ and $\vset(B,g)$ respectively.
-(We can ignore the path constructors of $V$, since $(u \bisim v)\to (u=_V v)$ is a mere proposition.)
-Then by definition, $\vset(A,f)\bisim\vset(B,g)$ implies $(\fall{a:A}\exis{b:B}f(a)  \bisim g(b))$ and conversely.
-But the inductive hypothesis then tells us that $(\fall{a:A}\exis{b:B}f(a) = g(b))$ and conversely.
-So by the path con\-struc\-tor for $V$ we have $\vset(A,f) =_V \vset(B,g)$.
+容易通过归纳证明 $\bisim$ 是自反的，因此通过传输我们有 $(u=_V v)\to (u \bisim v)$。
+因此，只需再证 $(u \bisim v)\to (u=_V v)$。
+通过对 $u$ 和 $v$ 进行归纳，我们可以假设它们分别是 $\vset(A,f)$ 和 $\vset(B,g)$。
+（我们可以忽略 $V$ 的道路构造子，因为 $(u \bisim v)\to (u=_V v)$ 是一个命题。）
+那么根据定义，$\vset(A,f)\bisim\vset(B,g)$ 蕴含 $(\fall{a:A}\exis{b:B}f(a)  \bisim g(b))$，反之亦然。
+而归纳假设告诉我们 $(\fall{a:A}\exis{b:B}f(a) = g(b))$，反之亦然。
+因此，由 $V$ 的道路构造子，我们有 $\vset(A,f) =_V \vset(B,g)$。
 \end{proof}
 
-One might think that we could omit the 0-truncation constructor of $V$ and \emph{prove} that $V$ is 0-truncated by applying \cref{thm:h-set-refrel-in-paths-sets} to the bisimulation.
-However, in the proof of \cref{lem:BisimEqualsId} we used the fact that $V$ is 0-truncated, to conclude that $(u \bisim v)\to (u=_V v)$ is a mere proposition so that in the induction it suffices to assume $u$ and $v$ are $\vset(A,f)$ and $\vset(B,g)$.
+人们也许认为可以省略 $V$ 的 0-截断构造子，并通过将 \cref{thm:h-set-refrel-in-paths-sets} 应用于双模拟来\emph{证明} $V$ 是 0-截断的。然而，在 \cref{lem:BisimEqualsId} 的证明中，我们使用了 $V$ 是 0-截断的这一事实，从而得出 $(u \bisim v)\to (u=_V v)$ 是一个命题，使得在归纳中只需假设 $u$ 和 $v$ 是 $\vset(A,f)$ 和 $\vset(B,g)$ 即可。
 
-Now we can use the resized identity relation to get the following useful principle.
+现在，我们可以利用重整后的相等关系来得到以下有用的原理。
 
 \begin{lem}\label{lem:MonicSetPresent}
-For every $u:V$ there is a given $A_u:\UU$ and monic $m_u: A_u \mono V$ such that $u = \vset(A_u, m_u)$.
+对于每个 $u:V$，都存在给定的 $A_u:\UU$ 和单射 $m_u: A_u \mono V$，使得 $u = \vset(A_u, m_u)$。
 \end{lem}
 
 \begin{proof}
-  Take any presentation $u = \vset(A,f)$ and factor $f:A\to V$ as a surjection followed by an injection:
+  任取一个表示 $u = \vset(A,f)$，并将 $f:A\to V$ 分解为一个满射后接一个单射：
   %
   \begin{equation*}
     f = m_u\circ e_u : A \epi A_u \mono V.
   \end{equation*}
   %
-  Clearly $u = \vset(A_u, m_u)$ if only $A_u$ is still in $\UU$, which holds if the kernel of $e_u : A \epi A_u$ is in $\UU$.  But the kernel of $e_u : A \epi A_u$ is the pullback along $f : A\to V$ of the identity on $V$, which we just showed to be $\UU$-small, up to equivalence.  Now, this construction of the pair $(A_u, m_u)$ with $m_u :A_u \mono V$ and $u = \vset(A_u, m_u)$ from $u:V$ is unique up to equivalence over $V$, and hence up to identity by univalence.  Thus by the principle of unique choice \eqref{cor:UC} there is a map $c : V\to\sm{A:\UU}(A\to V)$ such that $c(u) = (A_u, m_u)$, with $m_u :A_u \mono V$ and $u = \vset(c(u))$, as claimed.
+  显然 $u = \vset(A_u, m_u)$，只要 $A_u$ 仍在 $\UU$ 中即可；而若 $e_u : A \epi A_u$ 的核在 $\UU$ 中，则此条件成立。但 $e_u : A \epi A_u$ 的核是 $V$ 上恒等映射沿 $f : A\to V$ 的拉回，而由我们刚刚所证，在等价意义下它是 $\UU$-小的。现在，从 $u:V$ 构造满足 $m_u :A_u \mono V$ 和 $u = \vset(A_u, m_u)$ 的对 $(A_u, m_u)$ 在 $V$ 之上等价意义下唯一，从而由泛等性知在相等意义下唯一。于是，由唯一选择原理~\eqref{cor:UC}，存在映射 $c : V\to\sm{A:\UU}(A\to V)$ 使得 $c(u) = (A_u, m_u)$，其中 $m_u :A_u \mono V$ 且 $u = \vset(c(u))$，如所断言。
 \end{proof}
 
 \begin{defn}\label{def:TypeOfElements}
-  For $u:V$, the just constructed monic presentation $m_u: A_u \mono V$ such that $u = \vset(A_u, m_u)$ may be called the \define{type of members}
+  对于 $u:V$，刚才构造的满足 $u = \vset(A_u, m_u)$ 的单的表示 $m_u: A_u \mono V$ 可以称为 $u$ 的 \define{成员类型}
   \indexdef{type!of members}%
-  of $u$ and denoted $m_u : [u] \mono V$, or even $[u] \mono V$.  We can think of $[u]$ as the ``subclass of $V$ consisting of members of $u$''.
+  ，并记作 $m_u : [u] \mono V$，甚至简记为 $[u] \mono V$。我们可以将 $[u]$ 视作“由 $u$ 的成员组成的 $V$ 的子类”。
 \end{defn}
 
 \begin{thm}\label{thm:VisCST}
   \index{axiom!of set theory, for the cumulative hierarchy}%
-  The following hold for $(V, {\in})$:
+  对于 $(V, {\in})$，以下性质成立：
   %
   \begin{enumerate}
-  \item \emph{extensionality:}
+  \item \emph{外延性（extensionality）:}
     %
     \begin{equation*}
       \fall{x, y : V} x \subseteq y \land y \subseteq x \Leftrightarrow x = y.
     \end{equation*}
     %
-     \item \emph{empty set:} for all $x:V$, we have $\neg (x\in \emptyset)$.
+     \item \emph{空集（empty set）:} 对所有 $x:V$，均有 $\neg (x\in \emptyset)$。
     %
-    \item \emph{pairing:} for all $u, v:V$, the class $\{u, v\} \defeq \setof{ x | x = u \vee x = v}$ is a $V$-set.
+    \item \emph{无序对（pairing）:} 对所有 $u, v:V$，类 $\{u, v\} \defeq \setof{ x | x = u \vee x = v}$ 是一个 $V$-集。
       %
-    \item \emph{infinity:}\index{axiom!of infinity}  there is a $v:V$ with $\emptyset\in v$ and $x\in v$ implies $x\cup \{x\}\in v$.
+    \item \emph{无穷（infinity）:}\index{axiom!of infinity} 存在一个 $v:V$，满足 $\emptyset\in v$，且 $x\in v$ 蕴含 $x\cup \{x\}\in v$。
     %
-  \item \emph{union:} for all $v:V$, the class $\cup v\defeq \setof{ x | \exis{u:V} x \in u \in v}$ is a $V$-set.
+  \item \emph{并集（union）:} 对所有 $v:V$，类 $\cup v\defeq \setof{ x | \exis{u:V} x \in u \in v}$ 是一个 $V$-集。
     %
-    \item \emph{function set:} for all $u, v:V$, the class $v^u \defeq \setof{ x | x : u\to v}$ is a $V$-set.%
-      \footnote{Here $x:u\to v$ means that $x$ is an appropriate set of ordered pairs, according to the usual way of encoding functions in set theory.}
+    \item \emph{函数集（function set）:} 对所有 $u, v:V$，类 $v^u \defeq \setof{ x | x : u\to v}$ 是一个 $V$-集。%
+      \footnote{此处 $x:u\to v$ 意指 $x$ 是一个适当的、由有序对所组成的集合，这是集合论中编码函数的惯常方式。}
     %
-   \item \emph{$\in$-induction:} if $C : V \to \prop$ is a class such that $C(a)$ holds whenever $C(x)$ for all $x\in a$, then $C(v)$ for all $v:V$.
+   \item \emph{$\in$-归纳（$\in$-induction）:} 如果 $C : V \to \prop$ 是一个类，使得只要对所有 $x\in a$ 都有 $C(x)$ 成立，则 $C(a)$ 便成立，那么对所有 $v:V$，均有 $C(v)$。
    %
-     \item \emph{replacement:}\index{axiom!of replacement} given any $r : V \to V$ and $x : V$, the class
+     \item \emph{替换（replacement）:}\index{axiom!of replacement} 给定任意 $r : V \to V$ 和 $x : V$，类
        %
        \begin{equation*}
          \setof{ y | \exis{z : V} z \in x \land y = r(z)}
        \end{equation*}
        %
-       is a $V$-set.
+       是一个 $V$-集。
   %
-   \item \emph{separation:}\index{axiom!of separation}  given any $a : V$ and $\UU$-small $C : V \to \propU$, the class
+   \item \emph{分离（separation）:}\index{axiom!of separation} 给定任意 $a : V$ 和 $\UU$-小的 $C : V \to \propU$，类
      %
      \begin{equation*}
        \setof{ x | x \in a \land C(x)}
      \end{equation*}
      %
-     is a $V$-set.
+     是一个 $V$-集。
   \end{enumerate}
 \end{thm}
 
-
-\begin{proof}[Sketch of proof]
+\begin{proof}[证明概要]
   \mbox{}
   %
   \begin{enumerate}
-  \item Extensionality: if $\vset(A,f) \subseteq \vset(B, g)$ then $f(a) \in \vset(B, g)$
-    for every $a : A$, therefore for every $a : A$ there merely exists $b : B$ such that
-    $f(a) = g(b)$. The assumption $\vset(B, g) \subseteq \vset(A, f)$ gives the other half
-    of~\eqref{eq:V-path}, therefore $\vset(A,f) = \vset(B,g)$.
+  \item 外延性（extensionality）：如果 $\vset(A,f) \subseteq \vset(B, g)$，那么对每个 $a : A$ 都有 $f(a) \in \vset(B, g)$，因此对每个 $a : A$ 仅有 $b:B$ 使得
+    $f(a) = g(b)$。由假设 $\vset(B, g) \subseteq \vset(A, f)$ 可得~\eqref{eq:V-path} 的另一半，因此 $\vset(A,f) = \vset(B,g)$。
 
-  \item Empty set: suppose $x\in \emptyset = \vset(\emptyt,\rec\emptyt(V))$.  Then $\exis{a:\emptyt}x=\, \rec\emptyt(V,a)$, which is absurd.
+  \item 空集（empty set）：假设 $x\in \emptyset = \vset(\emptyt,\rec\emptyt(V))$。那么 $\exis{a:\emptyt}x=\, \rec\emptyt(V,a)$，这是荒谬的。
 
-  \item Pairing: given $u$ and $v$, let $w=\vset(\bool,\rec\bool(V,u,v))$.
+  \item 无序对（pairing）：给定 $u$ 和 $v$，令 $w=\vset(\bool,\rec\bool(V,u,v))$。
     \index{pair!unordered}
 
-  \item Infinity: take $w = \vset(\nat,I)$, where $I: \nat \to V$ is given by the recursion $I(0) \defeq \emptyset$ and $I(n+1) \defeq I(n)\cup \{I(n)\}$.
+  \item 无穷（infinity）：取 $w = \vset(\nat,I)$，其中 $I: \nat \to V$ 由递归式 $I(0) \defeq \emptyset$ 及 $I(n+1) \defeq I(n)\cup \{I(n)\}$ 给出。
 
-  \item Union: Take any $v:V$ and any presentation $f :A\to V$ with $v=\vset(A,f)$.  Then let $\tilde{A} \defeq \sm{a:A}[fa]$, where $m_{fa} : [fa] \mono V$ is the type of members from \cref{def:TypeOfElements}.  $\tilde{A}$ is plainly $\UU$-small, and we have $\cup v \defeq \vset(\tilde{A}, \lam{x} m_{f(\proj1(x))}(\proj2(x)))$.
+  \item 并集（union）：任取 $v:V$ 及其任意一个表示 $f :A\to V$ 满足 $v=\vset(A,f)$。然后令 $\tilde{A} \defeq \sm{a:A}[fa]$，其中 $m_{fa} : [fa] \mono V$ 是来自 \cref{def:TypeOfElements} 的成员类型。显然 $\tilde{A}$ 是 $\UU$-小的，并且我们有 $\cup v \defeq \vset(\tilde{A}, \lam{x} m_{f(\proj1(x))}(\proj2(x)))$。
 
-  \item Function set: given $u, v:V$, take the types of members $[u] \mono V$ and $[v] \mono V$, and the function type $[u]\to [v]$.  We want to define a map
+  \item 函数集（function set）：给定 $u, v:V$，取成员类型 $[u] \mono V$ 和 $[v] \mono V$，以及函数类型 $[u]\to [v]$。我们想定义一个映射
   \[
  r: ([u]\to [v])\ \longrightarrow\ V
   \]
-   with ``$r(f) = \setof{ \pairr{x, f(x)} | x : [u] }$'', but in order for this to make sense we must first define the ordered pair $\pairr{x, y}$, and then we take the map $r': x \mapsto \pairr{x, f(x)}$, and then we can put $r(f)\defeq \vset([u], r')$.  But the ordered pair can be defined in terms of unordered pairing as usual.
+   使其满足“$r(f) = \setof{ \pairr{x, f(x)} | x : [u] }$”；但为使该式有意义，我们必须先定义有序对 $\pairr{x, y}$，然后取映射 $r': x \mapsto \pairr{x, f(x)}$，接着便可令 $r(f)\defeq \vset([u], r')$。我们可按惯常的方式，用无序对来定义有序对。
 
-  \item $\in$-induction: let $C : V \to \prop$ be a class such that $C(a)$ holds whenever $C(x)$ for all $x\in a$, and take any $v=\vset(B,g)$.  To show that $C(v)$ by induction, assume that $C(g(b))$ for all $b:B$.  For every $x\in v$ there merely exists some $b:B$ with $x = g(b)$, and so $C(x)$.  Thus $C(v)$.
+  \item $\in$-归纳（$\in$-induction）：令 $C : V \to \prop$ 为一个类，使得只要对所有 $x\in a$ 有 $C(x)$ 成立，则 $C(a)$ 成立；并任取 $v=\vset(B,g)$。为了通过归纳证明 $C(v)$，假设对所有 $b:B$ 有 $C(g(b))$。对任意 $x\in v$，仅有某个 $b:B$ 使得 $x = g(b)$，因此 $C(x)$ 成立。从而 $C(v)$ 得证。
 
-  \item Replacement: let $C$ denote the class in question.
-    The statement ``$C$ is a $V$-set'' is a mere proposition, so we may
-    proceed by induction as follows. Supposing $x$ is $\vset(A, f)$, we claim that $w
-    \defeq \vset(A, r \circ f)$ is the set we are looking for.  If $C(y)$ then there merely exists
-    $z : V$ and $a : A$ such that $z = f(a)$ and $y = r(z)$, therefore $y \in w$.
-    Conversely, if $y \in w$ then there merely exists $a : A$ such that $y = r(f(a))$, so
-    if we take $z \defeq f(a)$ we see that $C(y)$ holds.
+  \item 替换（replacement）：用 $C$ 表示所讨论的类。
+    断言“$C$ 是一个 $V$-集”是一个命题，因此我们可以如下进行归纳证明。
+    假设 $x$ 是 $\vset(A, f)$，我们断言 $w \defeq \vset(A, r \circ f)$ 即为我们所寻找的集合。
+    若 $C(y)$，则仅有 $z : V$ 和 $a : A$ 使得 $z = f(a)$ 且 $y = r(z)$，因此 $y \in w$。
+    反之，若 $y \in w$，则仅有 $a : A$ 使得 $y = r(f(a))$，所以若取 $z \defeq f(a)$，便知 $C(y)$ 成立。
 
-  \item Let us say that a class $C: V\to\prop$ is \define{separable}
+  \item 我们称一个类 $C: V\to\prop$ 是 \define{可分的}
     \indexdef{class!separable}%
     \indexdef{separable class}%
-    if for any $a:V$ the class
+    如果对任意 $a:V$，类
   %
   \symlabel{class-intersection}
   \begin{equation*}
     a \cap C \defeq\setof{x | x\in a \wedge C(x)}
   \end{equation*}
   %
-  is a $V$-set.
-We need to show that any $\UU$-small  $C: V \to \propU$ is separable. Indeed, given $a=\vset(A,f)$, let $A' = \sm{x:A}C(fx)$, and take $f' = f\circ i$, where $i : A' \to A$ is the obvious inclusion.  Then we can take $a' = \vset(A',f')$ and we have $x\in a\wedge C(x) \Leftrightarrow x\in a'$ as claimed.  We needed the assumption that $C$ lands in $\UU$ in order for $A' = \sm{x:A}C(fx)$ to be in $\UU$.\qedhere
+  是一个 $V$-集。
+我们需要证明任何 $\UU$-小的 $C: V \to \propU$ 都是可分的。实际上，给定 $a=\vset(A,f)$，令 $A' = \sm{x:A}C(fx)$，并取 $f' = f\circ i$，其中 $i : A' \to A$ 是显然的包含映射。然后我们可以取 $a' = \vset(A',f')$，并且 $x\in a\wedge C(x) \Leftrightarrow x\in a'$ 如所断言。我们需要 $C$ 取值于 $\UU$ 的假设，以便 $A' = \sm{x:A}C(fx)$ 能落在 $\UU$ 中。\qedhere
 \end{enumerate}
 \end{proof}
 
-It is also convenient to have a strictly syntactic criterion of separability, so that one can read off from the expression for a class that it produces a $V$-set.  One such familiar condition is being ``$\Delta_0$'', which means that the expression is built up from equality $x=_V y$ and membership $x\in y$, using only mere-propositional connectives $\neg$, $\land$, $\lor$, $\Rightarrow$ and quantifiers $\forall$, $\exists$ over particular sets, i.e.\ of the form $\exists(x\in a)$ and $\forall(y\in b)$ (these are called \define{bounded} quantifiers\index{bounded!quantifier}\index{quantifier!bounded}).\indexdef{separation!.Delta0@$\Delta_0$}%
+另外，拥有一个关于可分性的严格句法判据也很方便，这样从类的表达式就能直接看出它产生的是一个 $V$-集。一个熟悉的此类条件就是“$\Delta_0$”，它意味着表达式仅由相等关系 $x=_V y$ 和隶属关系 $x\in y$ 经由纯命题联结词 $\neg$、$\land$、$\lor$、$\Rightarrow$ 以及关于特定集合的量词（即形如 $\exists(x\in a)$ 和 $\forall(y\in b)$ 的量词，这些称为\define{有界的（bounded）}量词\index{bounded!quantifier}\index{quantifier!bounded}）构造而成。\indexdef{separation!.Delta0@$\Delta_0$}%
 
 \begin{cor}\label{cor:Delta0sep}
-If the class $C: V \to \prop$ is $\Delta_0$ in the above sense, then it is separable.
+如果类 $C: V \to \prop$ 是上述意义上的 $\Delta_0$ 类，那么它是可分的。
 \end{cor}
+
+
 \index{axiom!of $\Delta_0$-separation}%
 
 \begin{proof}
-Recall that we have a $\UU$-small resizing $x \bisim y$ of identity $x = y$. Since $x\in y$ is defined in terms of $x=y$, we also have a $\UU$-small resizing of membership
+回顾一下，$x = y$ 有一个 $\UU$-小的调整 $x \bisim y$。由于 $x\in y$ 是通过 $x=y$ 定义的，我们同样有隶属关系的一个 $\UU$-小的调整
 %
 \symlabel{resized-membership}
 \begin{equation*}
   x\bin\vset(A,f) \defeq \exis{a:A} x \bisim f(a).
 \end{equation*}
 %
-Now, let $\Phi$ be a $\Delta_0$ expression for $C$, so that as classes $\Phi = C$ (strictly speaking, we should distinguish expressions from their meanings, but we will blur the difference). Let $\widetilde{\Phi}$ be the result of replacing all occurrences of $=$ and $\in$ by their resized equivalents $\bisim$ and $\bin$.  Clearly then $\widetilde{\Phi}$ also expresses $C$, in the sense that for all $x:V$, $\widetilde{\Phi}(x) \Leftrightarrow C(x)$, and hence $\widetilde{\Phi}=C$ by univalence.  It now suffices to show that $\widetilde{\Phi}$ is $\UU$-small, for then it will be separable by the theorem.
+现在，令 $\Phi$ 为 $C$ 的一个 $\Delta_0$ 表达式，使得作为类有 $\Phi = C$（严格来说，我们应当区分表达式与其含义，但这里我们模糊这一区别）。令 $\widetilde{\Phi}$ 为将其中所有 $=$ 和 $\in$ 的出现替换为调整后的对应物 $\bisim$ 和 $\bin$ 所得的结果。显然 $\widetilde{\Phi}$ 也表示 $C$，即对所有 $x:V$ 有 $\widetilde{\Phi}(x) \Leftrightarrow C(x)$，因而由泛等性得 $\widetilde{\Phi}=C$。现在只需证明 $\widetilde{\Phi}$ 是 $\UU$-小的，那么根据定理，它便是可分的。
 
-We show that  $\widetilde{\Phi}$ is $\UU$-small by induction on the construction of the expression.  The base cases are $x \bisim y$ and $x\bin y$, which have already been resized into $\UU$.  It is also clear that $\UU$ is closed under the mere-propositional operations (and $(-1)$-truncation), so it just remains to check the bounded quantifiers $\exists(x\in a)$ and $\forall(y\in b)$.  By definition,
+我们通过对表达式的构造进行归纳来证明 $\widetilde{\Phi}$ 是 $\UU$-小的。基础情形是 $x \bisim y$ 和 $x\bin y$，它们已被调整到 $\UU$ 中。$\UU$ 显然在单纯命题运算（以及 $(-1)$-截断）下封闭，于是只剩下有界量词 $\exists(x\in a)$ 和 $\forall(y\in b)$ 需要检查。根据定义，
 \begin{align*}
 \exists(x\in a) P(x) &\defeq \Brck {\sm{x:V}(x\bin a \land P(x))},\\
 \forall(y\in b) P(x) &\defeq  \prd{x:V}(x\bin a \to P(x)).
 \end{align*}
-Let us consider $\brck {\sm{x:V}(x\bin a \land P(x))}$.  Although the body $(x\bin a \land P(x))$ is $\UU$-small since $P(x)$ is so by the inductive hypothesis, the quantification over $V$ need not stay inside $\UU$.  However, in the present case we can replace this with a quantification over the type $[a]\mono V$ of members of $a$, and easily show that
+考虑 $\brck {\sm{x:V}(x\bin a \land P(x))}$。根据归纳假设 $P(x)$ 是 $\UU$-小的，从而主体 $(x\bin a \land P(x))$ 是 $\UU$-小的，但对 $V$ 的量化不一定保持在 $\UU$ 内。然而，在当前情形下，我们可以将其替换为对 $a$ 的成员类型 $[a]\mono V$ 的量化，且不难证明
 \begin{equation*}
   \sm{x:V}(x\bin a \land P(x)) = \sm{x:[a]} P(x).
 \end{equation*}
-The right-hand side does remain in $\UU$, since both $[a]$ and $P(x)$ are in $\UU$.  The case of $\prd{x:V}(x\bin a \to P(x))$ is analogous, using $\prd{x:V}(x\bin a \to P(x)) = \prd{x:[a]}P(x)$.
+由于 $[a]$ 和 $P(x)$ 都在 $\UU$ 中，右端确实仍在 $\UU$ 中。$\prd{x:V}(x\bin a \to P(x))$ 的情形类似，利用 $\prd{x:V}(x\bin a \to P(x)) = \prd{x:[a]}P(x)$ 即可。
 \end{proof}
 
-We have shown that in type theory with a universe $\UU$, the cumulative hierarchy $V$ is a model of a ``constructive set theory''
+我们已经证明，在带有一个宇宙 $\UU$ 的类型论中，累积层次 $V$ 是一个包含许多标准公理的"构造性集合论"
 \index{constructive!set theory}%
-with many of the standard axioms.
-However, as far as we know, it lacks the \emph{strong collection}
+的模型。
+然而，据我们所知，它缺少 \emph{强收集}
 \index{axiom!strong collection}%
 \index{collection!strong}%
 \index{strong!collection}%
-and \emph{subset collection}
+与 \emph{子集收集}
 \index{axiom!subset collection}%
 \index{collection!subset}%
 \index{subset!collection}%
-axioms which are included in \CZF{}~\cite{AczelCZF}.
-In the usual interpretation of this set theory into type theory, these two axioms are consequences of the setoid-like definition of equality; while in other constructed models of set theory, strong collection may hold for other reasons.
-We do not know whether either of these axioms holds in our model $(V,\in)$, but it seems unlikely.
-Since $V$ is a higher inductive type \emph{inside} the system, rather than being an \emph{external} construction, it is not surprising that it differs in some ways from prior interpretations.
+公理，而这两条公理包含在 \CZF{}~\cite{AczelCZF} 中。
+在这种集合论到类型论的通常解释中，这两条公理是类似集囿的相等定义的推论；而在其他构造出的集合论模型中，强收集可能因其他原因而成立。
+我们不知道这两条公理是否在我们的模型 $(V,\in)$ 中成立，但似乎不太可能。
+由于 $V$ 是系统\emph{内}的高阶归纳类型，而非\emph{外部}构造，它在某些方面与以往的解释不同并不令人意外。
 
-Finally, consider the result of adding the axiom of choice for sets to our type theory, in the form  $\choice{}$ from \cref{subsec:emacinsets} above.  This has the consequence that $\LEM{}$ then also holds, by \cref{thm:1surj_to_surj_to_pem}, and so $\set$ is a topos\index{topos} with subobject classifier $\bool$, by \cref{thm:settopos}.  In this case, we have $\prop = \bool:\UU$, and so \emph{all classes are separable}.
-Thus we have shown:
+最后，考虑将集合的选择公理以 $\choice{}$ 的形式（来自上文的 \cref{subsec:emacinsets}）添加到我们的类型论中。根据 \cref{thm:1surj_to_surj_to_pem}，可得 $\LEM{}$ 也成立，进而由 \cref{thm:settopos} 知 $\set$ 是一个带有子对象分类子 $\bool$ 的意象\index{topos}。此时，有 $\prop = \bool:\UU$，因而\emph{所有类都是可分的}。
+于是我们证明了：
 
 \begin{lem}\label{lem:fullsep}
-  In type theory with $\choice{}$, the law of \define{(full) separation}
+  在带有 $\choice{}$ 的类型论中，$V$ 满足 \define{（完全）分离}
   \indexdef{separation!full}%
-  holds for $V$: given \emph{any} class $C : V \to \prop$ and $a : V$, the class $a \cap C$ is a $V$-set.
+  律：给定\emph{任意}类 $C : V \to \prop$ 和 $a : V$，类 $a \cap C$ 是一个 $V$-集。
 \end{lem}
 
 \begin{thm}\label{thm:zfc}
-In type theory with $\choice{}$ and a universe $\UU$, the cumulative hierarchy $V$ is a model of Zermelo--Fraenkel\index{set theory!Zermelo--Fraenkel} set theory with choice, ZFC.
+在带选择公理 $\choice{}$ 和宇宙 $\UU$ 的类型论中，累积层次 $V$ 是带选择公理的 Zermelo--Fraenkel\index{set theory!Zermelo--Fraenkel} 集合论（ZFC）的一个模型。
 \end{thm}
 
 \begin{proof}
-We have all the axioms listed in \cref{thm:VisCST}, plus full separation, so we just need to show that there are power sets\index{power set} $\power a:V$ for all $a:V$.  But since we have $\LEM{}$ these are simply function types $\power a = (a\to\bool)$.  Thus $V$ is a model of Zermelo--Fraenkel set theory ZF. We leave the verification of the set-theoretic axiom of choice from $\choice{}$ as an easy exercise.
+我们已经具备了 \cref{thm:VisCST} 所列的所有公理，以及完全分离律，因此只需证明对每个 $a:V$ 都存在幂集\index{power set} $\power a:V$。
+但由于我们有排中律 $\LEM{}$，这些幂集即为函数类型 $\power a = (a\to\bool)$。
+于是 $V$ 便成为 Zermelo--Fraenkel 集合论（ZF）的一个模型。
+从 $\choice{}$ 验证集合论的选择公理，我们留作一个简单的练习。
 \end{proof}
 
 \index{bargaining|)}%
@@ -1765,56 +1752,58 @@ We have all the axioms listed in \cref{thm:VisCST}, plus full separation, so we 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \sectionNotes
 
-The basic properties one expects of the category of sets date back to the early days of elementary topos theory.
-The \emph{Elementary theory of the category of sets} referred to in \cref{subsec:emacinsets} was introduced by Lawvere\index{Lawvere} in
-\cite{lawvere:etcs-long}, as a category-theoretic axiomatization of set theory.
+人们对集合范畴所期望的基本性质，可以追溯到初等意象理论的早期。
+在 \cref{subsec:emacinsets} 中提及的\emph{集合范畴的初等理论（Elementary theory of the category of sets）}是由 Lawvere\index{Lawvere} 在 \cite{lawvere:etcs-long} 中引入的，作为对集合论的一种范畴论公理化。
 \index{Elementary Theory of the Category of Sets}%
-The notion of $\Pi W$-pretopos, regarded as a predicative version of an elementary topos, was introduced in~\cite{MoerdijkPalmgren2002}; see also~\cite{palmgren:cetcs}.
+$\Pi W$-预意象（$\Pi W$-pretopos）的概念，被视为初等意象的一个直谓版本，是在~\cite{MoerdijkPalmgren2002} 中提出的；亦可参阅~\cite{palmgren:cetcs}。
 
-The treatment of the category of sets in \cref{sec:piw-pretopos} roughly follows that in~\cite{RijkeSpitters}.
-The fact that epimorphisms are surjective (\cref{epis-surj}) is well known in classical mathematics, but is not as trivial as it may seem to prove \emph{predicatively}.
-\index{mathematics!predicative}%
-The proof in~\cite{Mines/R/R:1988} uses the power set operation (which is impredicative), although it can also be seen as a predicative proof of the weaker statement that a map in a universe $\UU_i$ is surjective if it is an epimorphism in the next universe $\UU_{i+1}$.
-A predicative proof for setoids was given by Wilander~\cite{Wilander2010}.
-Our proof is similar to Wilander's, but avoids setoids by using pushouts and univalence.
+\cref{sec:piw-pretopos} 中对集合范畴的处理大体遵循了~\cite{RijkeSpitters}。
+满态射是满射这一事实（\cref{epis-surj}）在经典数学中广为人知，但要\emph{直谓地}证明它却并不像看起来那么平凡。
+\index{数学!直谓的}%
+\cite{Mines/R/R:1988} 中的证明用到了幂集运算（这一运算本身是非直谓的），不过，该证明也可以看作如下较弱命题的一个直谓证明：若一个映射在宇宙 $\UU_i$ 中是满态射，则它在下一个宇宙 $\UU_{i+1}$ 中是满射。
+Wilander~\cite{Wilander2010} 给出了关于集囿（setoids）的一个直谓证明。
+我们的证明与 Wilander 的类似，但通过使用推出和泛等性避开了集囿。
 
-The implication in \cref{thm:1surj_to_surj_to_pem} from $\choice{}$ to $\LEM{}$ is an adaptation to homotopy type
-theory of a theorem from topos theory due to Diaconescu~\cite{Diaconescu}; it was posed as a problem already by Bishop~\cite[Problem~2]{Bishop1967}.
+\cref{thm:1surj_to_surj_to_pem} 中从 $\choice{}$ 推出 $\LEM{}$ 的蕴含关系，是 Diaconescu~\cite{Diaconescu} 在意象理论中证明的一个定理在同伦类型论中的改编；Bishop~\cite[Problem~2]{Bishop1967} 早已将其作为一个问题提出。
 
-For the intuitionistic theory of ordinal numbers, see~\cite{taylor:ordinals,Taylor99} and also \cite{JoyalMoerdijk1995}.
-Definitions of well-foundedness in type theory by an induction principle, including the inductive predicate of accessibility\index{accessibility}, were studied in~\cite{Huet80,Paulson86,Nordstrom88}, although the idea dates back to Gentzen's proof of the consistency\index{consistency!of arithmetic} of arithmetic~\cite{Gentzen36}.
+关于序数的直觉主义理论，参见~\cite{taylor:ordinals,Taylor99} 以及 \cite{JoyalMoerdijk1995}。
+在类型论中通过归纳原理（包括可达性\index{accessibility}这一归纳谓词）定义良基性的研究，见于~\cite{Huet80,Paulson86,Nordstrom88}，尽管这一思想可以追溯到 Gentzen 对算术一致性\index{一致性!算术的}的证明~\cite{Gentzen36}。
 
-The idea of algebraic set theory, which informs our development in \cref{sec:cumulative-hierarchy} of the cumulative hierarchy, is due to~\cite{JoyalMoerdijk1995}, but it derives from earlier work by~\cite{AczelCZF}.
+代数集合论（algebraic set theory）的思想启发了我们在 \cref{sec:cumulative-hierarchy} 中对累积层次的发展，这一思想归功于~\cite{JoyalMoerdijk1995}，但它源自更早的工作~\cite{AczelCZF}。
 \index{algebraic set theory}%
-\index{set theory!algebraic}%
-
+\index{集合论!代数的}%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \sectionExercises
 
 \begin{ex}\label{ex:utype-ct}
-  Following the pattern of $\uset$, we would like to make a category $\utype$ of all types and maps between them (in a given universe $\UU$).  In order for this to be a category in the sense of \cref{sec:cats}, however, we must first declare $\hom(X,Y) \defeq \pizero{X\to Y}$, with composition defined by induction on truncation from ordinary composition $(Y\to Z) \to (X\to Y) \to (X\to Z)$.  This was defined as the \emph{homotopy precategory of types} in \cref{ct:hoprecat}.  It is still not a category, however, but only a precategory (its type of objects $\UU$ is not even a $0$-type).  It becomes a category by Rezk completion
+  仿照 $\uset$ 的模式，我们希望构造一个由所有类型（在给定宇宙 $\UU$ 中）以及它们之间的映射组成的范畴 $\utype$。
+  然而，为了使它成为 \cref{sec:cats} 意义上的范畴，我们必须先声明 $\hom(X,Y) \defeq \pizero{X\to Y}$，其上的复合由截断归纳从普通复合 $(Y\to Z) \to (X\to Y) \to (X\to Z)$ 来定义。
+  这在 \cref{ct:hoprecat} 中被定义为\emph{类型的同伦预范畴（homotopy precategory of types）}。
+  但它仍然不是一个范畴，而只是一个预范畴（其对象类型 $\UU$ 甚至连 $0$-类型都不是）。
+  经过 Rezk 完备化
   \index{completion!Rezk}%
-  (see \cref{ct:hocat}), and its type of objects can be identified with $\trunc1\type$ by \cref{ct:ex:hocat}.  Show that the resulting category $\utype$, unlike $\uset$, is not a pretopos.
+  （参见 \cref{ct:hocat}），它成为一个范畴，并且根据 \cref{ct:ex:hocat}，其对象类型可以等同于 $\trunc1\type$。
+  证明所得到的范畴 $\utype$ 与 $\uset$ 不同，它不是一个预意象。
 \end{ex}
 
 \begin{ex}\label{ex:surjections-have-sections-impl-ac}
-  Show that if every surjection has a section in the category $\uset$, then the axiom of choice holds.
+  证明：如果在范畴 $\uset$ 中每个满射都有一个截面，那么选择公理成立。
 \end{ex}
 
 \begin{ex}\label{ex:well-pointed}
-  Show that with $\LEM{}$, the category $\uset$ is well-pointed,
+  证明：在 $\LEM{}$ 下，范畴 $\uset$ 是良点的，
   \indexdef{category!well-pointed}%
-  in the sense that the following statement holds: for any $f, g : A\to B$, if $f \neq g$ then there is a function $a : 1\to A$ such that $f(a) \neq g(a)$.
-  Show that the slice category
+  即以下陈述成立：对于任意 $f, g : A\to B$，如果 $f \neq g$，则存在函数 $a : 1\to A$ 使得 $f(a) \neq g(a)$。
+  证明切片范畴
   \index{category!slice}%
-  $\uset/\bool$ consisting of functions $A\to \bool$ and commutative triangles does not have this property.
-  (Hint: the terminal object in $\uset/\bool$ is the identity function $\bool \to \bool$, so in this category, there are objects $X$ that have no elements $1\to X$.)
+  $\uset/\bool$（由函数 $A\to \bool$ 和交换三角形构成）不具备此性质。
+  （提示：$\uset/\bool$ 中的终对象是恒等函数 $\bool \to \bool$，因此在这个范畴中，存在没有元素 $1\to X$ 的对象 $X$。）
 \end{ex}
 
 \begin{ex}\label{ex:add-ordinals}
   \index{addition!of ordinal numbers}%
-  Prove that if $(A,<_A)$ and $(B,<_B)$ are well-founded, extensional, or ordinals, then so is $A+B$, with $<$ defined by
+  证明：如果 $(A,<_A)$ 和 $(B,<_B)$ 是良基的、外延的，或者是序数，那么 $A+B$ 同样如此，其中 $<$ 定义为
   \begin{align*}
     (a<a') &\defeq (a<_A a') & \text{for }& a,a':A\\
     (b<b') &\defeq (b<_B b') & \text{for }& b,b':B\\
@@ -1822,6 +1811,8 @@ The idea of algebraic set theory, which informs our development in \cref{sec:cum
     (b<a) &\defeq \emptyt    & \text{for }& (a:A),(b:B).
   \end{align*}
 \end{ex}
+
+
 % \begin{proof}
 %   We first prove by induction on $<_A$ that every element of $A$ is accessible in $A+B$.
 %   This is easy since the only elements less than $a:A$ in $A+B$ are also in $A$.
@@ -1831,9 +1822,11 @@ The idea of algebraic set theory, which informs our development in \cref{sec:cum
 
 \begin{ex}\label{ex:multiply-ordinals}
   \index{multiplication!of ordinal numbers}%
-  Prove that if $(A,<_A)$ and $(B,<_B)$ are well-founded, extensional, or ordinals, then so is $A\times B$, with $<$ defined by
+  证明：如果 $(A,<_A)$ 和 $(B,<_B)$ 是良基的、外延的，或者是序数，那么 $A\times B$ 同样如此，其中 $<$ 定义为
   \[ ((a,b) <(a',b')) \defeq (a<_A a') \vee ((a=a') \wedge (b<_B b')). \]
 \end{ex}
+
+
 % \begin{proof}
 %   We prove by induction on $<_A$ that for every $a:A$, every element of the form $(a,b)$ is accessible in $A\times B$.
 %   The inductive hypothesis is that for all $a'<_A a$, every pair $(a',b)$ is accessible.
@@ -1845,121 +1838,120 @@ The idea of algebraic set theory, which informs our development in \cref{sec:cum
 % \end{proof}
 
 \begin{ex}\label{ex:algebraic-ordinals}
-  Define the usual algebraic operations on ordinals, and prove that they satisfy the usual properties.
+  在序数上定义通常的代数运算，并证明它们满足通常的性质。
 \end{ex}
 
 \begin{ex}\label{ex:prop-ord}
-  Note that $\bool$ is an ordinal, under the obvious relation $<$ such that $\bfalse<\btrue$ only.
+  注意 $\bool$ 是一个序数，它带有一个显然的 $<$ 关系，其中仅 $\bfalse<\btrue$ 成立。
   \begin{enumerate}
-  \item Define a relation $<$ on $\prop$ which makes it into an ordinal.
-  \item Show that $\id[\ord]\bool\prop$ if and only if \LEM{} holds.
+  \item 在 $\prop$ 上定义一个 $<$ 关系，使其成为一个序数。
+  \item 证明 $\id[\ord]\bool\prop$ 当且仅当 \LEM{} 成立。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:ninf-ord}
-  Recall that we denote \nat by $\omega$ when regarding it as an ordinal; thus we have also the ordinal $\omega+1$.
-  On the other hand, let us define
+  回顾，当把 $\nat$ 视为序数时，我们称其为 $\omega$；因此我们也有序数 $\omega+1$。
+  另一方面，我们定义
   \[ \nat_\infty \defeq \setof{a:\nat\to\bool | \fall{n:\nat} (a_n \le a_{\suc(n)}) } \]
-  where $\le$ denotes the obvious partial order on $\bool$, with $\bfalse\le\btrue$.
+  其中 $\le$ 表示 $\bool$ 上显然的偏序关系，满足 $\bfalse\le\btrue$。
   \begin{enumerate}
-  \item Define a relation $<$ on $\nat_\infty$ which makes it into an ordinal.
-  \item Show that $\id[\ord]{\omega+1}{\nat_\infty}$ if and only if the limited principle of omniscience~\eqref{eq:lpo} holds.%
+  \item 在 $\nat_\infty$ 上定义一个 $<$ 关系，使其成为一个序数。
+  \item 证明 $\id[\ord]{\omega+1}{\nat_\infty}$ 当且仅当有限全知原理~\eqref{eq:lpo} 成立。%
     \index{limited principle of omniscience}%
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:well-founded-extensional-simulation}
-  Show that if $(A,<)$ is well-founded and extensional and $A:\UU$, then there is a simulation $A\to V$, where $(V,\in)$ is the cumulative hierarchy from \cref{sec:cumulative-hierarchy} built from the universe~\UU.
+  证明：若 $(A,<)$ 是良基且外延的，并且 $A:\UU$，则存在一个模拟 $A\to V$，其中 $(V,\in)$ 是从宇宙~\UU 构建的累积层次（见 \cref{sec:cumulative-hierarchy}）。
 \end{ex}
 
 \begin{ex}\label{ex:choice-function}
-  Show that \cref{thm:wop}\ref{item:wop1} is equivalent to the axiom of choice~\eqref{eq:ac}.
+  证明 \cref{thm:wop}\ref{item:wop1} 等价于选择公理~\eqref{eq:ac}。
 \end{ex}
 
 \begin{ex}\label{ex:cumhierhit}
-  Given types $A$ and $B$, define a \define{bitotal relation}
+  给定类型 $A$ 和 $B$，定义一个\define{双完全关系}
   \indexsee{bitotal relation}{relation, bitotal}%
   \indexdef{relation!bitotal}%
-  to be $R:A\to B\to \prop$ such that
+  为 $R:A\to B\to \prop$，使得
   \[ \Big(\fall{a:A}\exis{b:B} R(a,b) \Big) \land \Big(\fall{b:B}\exis{a:A} R(a,b) \Big). \]
-  For such $A,B,R$, let $A\sqcup^R B$ be the higher inductive type generated by
+  对于这样的 $A$、$B$、$R$，令 $A\sqcup^R B$ 为由以下构造子生成的高阶归纳类型：
   \begin{itemize}
-  \item $i:A\to A\sqcup^R B$
-  \item $j:B\to A\sqcup^R B$
-  \item For each $a:A$ and $b:B$ such that $R(a,b)$, a path $i(a)=j(b)$.
+  \item $i:A\to A\sqcup^R B$，
+  \item $j:B\to A\sqcup^R B$，
+  \item 对每一对满足 $R(a,b)$ 的 $a:A$ 和 $b:B$，有一条道路 $i(a)=j(b)$。
   \end{itemize}
-  Show that the cumulative hierarchy $V$ can be defined by the following more straightforward list of constructors, and that the resulting induction principle is the one given in \cref{sec:cumulative-hierarchy}.
+  证明累积层次 $V$ 可以用以下更直接的构造子列表来定义，并且所得的归纳原理就是 \cref{sec:cumulative-hierarchy} 中给出的那个：
   \begin{itemize}
-  \item For every $A : \UU$ and $f : A \to V$, there is an element $\vset(A, f) : V$.
-  \item For any $A,B:\UU$ and bitotal relation
+  \item 对每个 $A : \UU$ 和 $f : A \to V$，有一个元素 $\vset(A, f) : V$。
+  \item 对任意 $A,B:\UU$ 和双完全关系
     \index{relation!bitotal}%
-    $R:A\to B\to \prop$, and any map $h:A\sqcup^R B \to V$, there is a path $\id{\vset(A,h\circ i)}{\vset(B,h\circ j)}$.
-  \item The 0-truncation constructor.
+    $R:A\to B\to \prop$，以及任意映射 $h:A\sqcup^R B \to V$，存在一条道路 $\id{\vset(A,h\circ i)}{\vset(B,h\circ j)}$。
+  \item 0-截断构造子。
   \end{itemize}
 \end{ex}
 
 \begin{ex}\label{ex:strong-collection}
-  In \CZF, the \define{axiom of strong collection}
+  在 \CZF 中，\define{强收集公理}
   \indexdef{axiom!strong collection}%
   \indexdef{collection!strong}%
   \indexdef{strong!collection}%
-  has the form:
+  的形式为：
    \begin{multline*}
    \Parens{\fall{x\in v}\exis{y} R(x,y)} \Rightarrow \\
    \exis{w}\big[\big(\fall{x\in v}\exis{y\in w}R(x,y)\big)\land \big(\fall{y\in w}\exis{x\in v}R(x,y) \big)\big]
    \end{multline*}
-   Does it hold in the cumulative hierarchy $V$?  (We do not know the answer to this.)
+   它在累积层次 $V$ 中成立吗？（我们不知道这个问题的答案。）
 \end{ex}
 
 \begin{ex}\label{ex:choice-cumulative-hierarchy-choice}
-Verify that, if we assume $\choice{}$, then the cumulative hierarchy $V$ satisfies the usual set-theoretic axiom of choice, which may be stated in the form:
+验证：若假定 $\choice{}$，则累积层次 $V$ 满足通常集合论意义上的选择公理，该公理可以表述为：
   \[
    \fall{x:V} \Parens{(\fall{y\in x}\exis{z:V} z\in y) \Rightarrow  \exis{c\in(\cup x)^x}\fall{y\in x} c(y)\in y}
    \]
 \end{ex}
 
 \begin{ex}\label{ex:plump-ordinals}
-  Assuming propositional resizing, show that there is a mere predicate $\mathsf{isPlump}:\ord\to\prop$ such that for any $A:\ord$ we have
+  假定命题大小重整，证明存在一个单纯的谓词 $\mathsf{isPlump}:\ord\to\prop$，使得对于任意 $A:\ord$ 有
   \begin{multline*}\label{eq:plump}
     \mathsf{isPlump}(A) = \Parens{\fall{B<A} \mathsf{isPlump}(B)} \wedge\narrowbreak
     \Parens{\fall{C,B:\ord} C\le B < A \wedge \mathsf{isPlump}(C) \Rightarrow C < A}.
   \end{multline*}
-  Note that $\mathsf{isPlump}$ cannot be defined by a simple well-founded induction over \ord; you must use a different well-founded relation.
-  We say that an ordinal $A$ is \define{plump}~\cite{taylor:ordinals,Taylor99} if $\mathsf{isPlump}(A)$.
+  注意，$\mathsf{isPlump}$ 不能简单地通过关于 \ord 的良基归纳来定义；你必须使用一个不同的良基关系。
+  我们说一个序数 $A$ 是\define{丰满的}~\cite{taylor:ordinals,Taylor99}，如果 $\mathsf{isPlump}(A)$。
   \index{plump!ordinal}\index{ordinal!plump}%
 \end{ex}
 
 \begin{ex}\label{ex:not-plump}
-  Show that \LEM{} is equivalent to the statement ``all ordinals are plump''.
+  证明 \LEM{} 等价于"所有序数都是丰满的"这一陈述。
 \end{ex}
 
 \begin{ex}\label{ex:plump-successor}
-  Define the \define{plump successor}\index{plump!successor}\indexdef{successor!plump} of an ordinal $A$ to be
+  定义序数 $A$ 的\define{丰满后继}\index{plump!successor}\indexdef{successor!plump}为
   \[ t(A) \defeq \setof{ B:\ord | (B\le A) \wedge \mathsf{isPlump}(B) } \]
   \begin{enumerate}
-  \item By definition, $t(A)$ belongs to the next higher universe.
-    Show that assuming propositional resizing, it is equal to an ordinal in the same universe as $A$.
-  \item Again assuming propositional resizing, show that if $A$ is plump (\cref{ex:plump-ordinals}) then so is $t(A)$.
+  \item 根据定义，$t(A)$ 属于下一个更高的宇宙。证明：在假定命题大小重整的条件下，它等于一个与 $A$ 在同一宇宙中的序数。
+  \item 再次假定命题大小重整，证明如果 $A$ 是丰满的（\cref{ex:plump-ordinals}），那么 $t(A)$ 也是丰满的。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:ZF-algebras}
-  A \define{ZF-algebra}~\cite{JoyalMoerdijk1995}
+  相对于宇宙 $\UU_i$ 的一个\define{ZF-代数}~\cite{JoyalMoerdijk1995}
   \index{ZF-algebra}%
-  relative to a universe $\UU_i$ is a poset (see \cref{ct:orders}) $V:\UU_{i+1}$, which has all suprema indexed by types in $\UU_i$, and is equipped with a ``successor'' function $s:V\to V$ (not necessarily respecting $\le$ in any way).
+  是一个偏序集（见 \cref{ct:orders}）$V:\UU_{i+1}$，它具有所有以 $\UU_i$ 中类型为指标的上确界，并且配备了一个"后继"函数 $s:V\to V$（不一定在任何意义上保持 $\le$）。
   \begin{enumerate}
-  \item Show that the cumulative hierarchy $(V_{\UU_i},\subseteq,s)$ is the initial ZF-algebra, where $s(x)$ is the singleton $\setof{x}$.
-  \item Show that $(\ord_{\UU_i},\le,s)$ is the initial ZF-algebra with the property that $x\le s(x)$ for all $x$, where $s(A)=A+\unit$ is the successor\index{successor!of an ordinal} from \cref{thm:ordsucc}.
-  \item Assuming propositional resizing, show that $\Parens{\setof{A:\ord_{\UU_i} | \mathsf{isPlump}(A) },\le,t}$ is the initial ZF-algebra with the property that $(x\le y) \Rightarrow (t(x)\le t(y))$ for all $x,y$, where $t$ is the plump successor from \cref{ex:plump-successor}.
+  \item 证明累积层次 $(V_{\UU_i},\subseteq,s)$ 是初始 ZF-代数，其中 $s(x)$ 是单点集 $\setof{x}$。
+  \item 证明 $(\ord_{\UU_i},\le,s)$ 是满足"对所有 $x$ 有 $x\le s(x)$"这一性质的初始 ZF-代数，其中 $s(A)=A+\unit$ 是来自 \cref{thm:ordsucc} 的后继\index{successor!of an ordinal}。
+  \item 假定命题大小重整，证明 $\Parens{\setof{A:\ord_{\UU_i} | \mathsf{isPlump}(A) },\le,t}$ 是满足"对所有 $x,y$ 有 $(x\le y) \Rightarrow (t(x)\le t(y))$"这一性质的初始 ZF-代数，其中 $t$ 是来自 \cref{ex:plump-successor} 的丰满后继。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:monos-are-split-monos-iff-LEM-holds}
-  For a category $A$, a morphism $f: \hom_A(a,b)$ is said to be a \define{split monomorphism} if there exists a morphism $g: \hom_A(b,a)$ such that $\id{g \circ f}{1_a}$. (Such $g$ is called a \define{retraction} of $f$.)
-  Prove that the following are logically equivalent.
+  对于范畴 $A$，态射 $f: \hom_A(a,b)$ 被称为是一个\define{可分裂单态射}，如果存在一个态射 $g: \hom_A(b,a)$ 使得 $\id{g \circ f}{1_a}$。（这样的 $g$ 称为 $f$ 的一个\define{收缩}。）
+  证明以下陈述逻辑等价：
   \begin{enumerate}
-  \item $\LEM{}$.
-  \item For every sets $A$ and $B$, if $A$ is inhabited then for every monomorphism $f: A \to B$ in $\uset$, $f$ is also a split monomorphism in $\uset$.
+  \item $\LEM{}$。
+  \item 对所有集合 $A$ 和 $B$，如果 $A$ 是有实例的，那么对于 $\uset$ 中的每一个单态射 $f: A \to B$，$f$ 在 $\uset$ 中也是可分裂单态射。
   \end{enumerate}
 \end{ex}
 

@@ -1,440 +1,393 @@
-\chapter{Type theory}
+\chapter{类型论}
 \label{cha:typetheory}
 
-\section{Type theory versus set theory}
+\section{类型论 vs. 集合论}
 \label{sec:types-vs-sets}
 \label{sec:axioms}
 
 \index{type theory}
-Homotopy type theory is (among other things) a foundational language for mathematics, i.e., an alternative to Zermelo--Fraenkel\index{set theory!Zermelo--Fraenkel} set theory.
-However, it behaves differently from set theory in several important ways, and that can take some getting used to.
-Explaining these differences carefully requires us to be more formal here than we will be in the rest of the book.
-As stated in the introduction, our goal is to write type theory \emph{informally}; but for a mathematician accustomed to set theory, more precision at the beginning can help avoid some common misconceptions and mistakes.
+同伦类型论除了其他用途外，还是数学的一种基础语言，换言之，是 Zermelo--Fraenkel\index{set theory!Zermelo--Fraenkel} 集合论的一种替代方案。
+然而，它在几个重要方面的运作方式与集合论不同，可能需要一些时间来适应。
+若要仔细解释这些差异，就需要我们在这里比本书其余部分更为形式化。
+正如引言所述，我们的目标是以\emph{非形式化}的方式来写类型论；但对惯用集合论的数学家而言，在开头给出更精确的说明，有助于避免一些常见的误解和错误。
 
-We note that a set-theoretic foundation has two ``layers'': the deductive system of first-order logic,\index{first-order!logic} and, formulated inside this system, the axioms of a particular theory, such as ZFC.
-Thus, set theory is not only about sets, but rather about the interplay between sets (the objects of the second layer) and propositions (the objects of the first layer).
+我们注意到，集合论的基础有两个“层次”：一阶逻辑的演绎系统\index{first-order!logic}，以及在这个系统内部表述的特定理论（例如 ZFC）的公理。
+因此，集合论不仅关乎集合，更关乎集合（第二层的对象）与命题（第一层的对象）之间的相互作用。
 
-By contrast, type theory is its own deductive system: it need not be formulated inside any superstructure, such as first-order logic.
-Instead of the two basic notions of set theory, sets and propositions, type theory has one basic notion: \emph{types}.
-Propositions (statements which we can prove, disprove, assume, negate, and so on\footnote{Confusingly, it is also a common practice (dating 
-back to Euclid) to use the word ``proposition'' synonymously with ``theorem''.
-  We will confine ourselves to the logician's usage, according to which a \emph{proposition} is a statement \emph{susceptible to} proof, whereas a \emph{theorem}\indexfoot{theorem} (or ``lemma''\indexfoot{lemma} or ``corollary''\indexfoot{corollary}) is such a statement that \emph{has been} proven.
-Thus ``$0=1$'' and its negation ``$\neg(0=1)$'' are both propositions, but only the latter is a theorem.}) are identified with particular types, via the correspondence shown in \cref{tab:pov} on page~\pageref{tab:pov}.
-Thus, the mathematical activity of \emph{proving a theorem} is identified with a special case of the mathematical activity of \emph{constructing an object} --- in this case, an inhabitant of a type that represents a proposition.
+相比之下，类型论本身就是一个演绎系统：它不必在任何上层结构（例如一阶逻辑）内部来表述。
+类型论的基本概念不是集合论中的那两个（集合与命题），而是只有一个：\emph{类型}。
+命题（那些我们可以证明、反驳、假设、否定等等\footnote{容易混淆的是，将“命题（proposition）”一词与“定理（theorem）”作为同义词使用也是一种常见做法（可追溯至Euclid）。
+  我们将遵循逻辑学家的用法：一个\emph{命题}是一个\emph{可以}被证明的陈述，而一个\emph{定理}\indexfoot{theorem}（或“引理”\indexfoot{lemma}、或“推论”\indexfoot{corollary}）则是这样一个\emph{已被}证明的陈述。
+因此，“$0=1$”和它的否定“$\neg (0=1)$”都是命题，但只有后者是定理。}的陈述）被等同于特定类型，这种对应关系见第~\pageref{tab:pov} 页的 \cref{tab:pov}。
+于是，\emph{证明定理}这一数学活动，就被等同于\emph{构造对象}这一数学活动的一个特例——在这里，构造的就是一个代表命题的类型的实例。
 
 \index{deductive system}%
-This leads us to another difference between type theory and set theory, but to explain it we must say a little about deductive systems in general.
-Informally, a deductive system is a collection of \define{rules}
+这引出了类型论与集合论之间的另一个差异，但为了解释它，我们必须先一般性地谈谈演绎系统。
+非正式地说，一个演绎系统就是一套\define{规则}，
 \indexdef{rule}%
-for deriving things called \define{judgments}.
+用于推导所谓\define{判断}。
 \indexdef{judgment}%
-If we think of a deductive system as a formal game,
-\index{game!deductive system as}%
-then the judgments are the ``positions'' in the game which we reach by following the game rules.
-We can also think of a deductive system as a sort of algebraic theory, in which case the judgments are the elements (like the elements of a group) and the deductive rules are the operations (like the group multiplication).
-From a logical point of view, the judgments can be considered to be the ``external'' statements, living in the metatheory, as opposed to the ``internal'' statements of the theory itself.
+如果我们将演绎系统视为一个形式化的游戏\index{game!deductive system as}%
+那么判断就是遵循游戏规则后所到达的“位置”。
+我们也可以将演绎系统视作某种代数理论，在这种情况下，判断就是其中的元素（好比群中的元素），而演绎规则就是其中的运算（好比群的乘法）。
+从逻辑的观点来看，判断可以被认为是“外部”的陈述，居于元理论之中，与理论自身的“内部”陈述相对。
 
-In the deductive system of first-order logic (on which set theory is based), there is only one kind of judgment: that a given proposition has a proof.
-That is, each proposition $A$ gives rise to a judgment ``$A$ has a proof'', and all judgments are of this form.
-A rule of first-order logic such as ``from $A$ and $B$ infer $A\wedge B$'' is actually a rule of ``proof construction'' which says that given the judgments ``$A$ has a proof'' and ``$B$ has a proof'', we may deduce that ``$A\wedge B$ has a proof''.
-Note that the judgment ``$A$ has a proof'' exists at a different level from the \emph{proposition} $A$ itself, which is an internal statement of the theory.
+在（作为集合论基础的）一阶逻辑的演绎系统中，只有一种判断：某个给定的命题有一个证明。
+也就是说，每个命题 $A$ 都对应着一个判断“$A$ 有一个证明”，而所有判断都具有这种形式。
+一条一阶逻辑的规则，例如“由 $A$ 和 $B$ 可推出 $A\wedge B$”，实际上是一条“证明构造”规则：它说的是，给定判断“$A$ 有一个证明”和“$B$ 有一个证明”，我们可以推导出“$A\wedge B$ 有一个证明”。
+请注意，判断“$A$ 有一个证明”所处的层次，与命题 $A$ 本身——作为理论的一个内部陈述——是不同的。
 % In particular, we cannot manipulate it to construct propositions such as ``if $A$ has a proof, then $B$ does not have a proof'' --- unless we are using our set-theoretic foundation as a meta-theory with which to talk about some other axiomatic system.
 
-The basic judgment of type theory, analogous to ``$A$ has a proof'', is written ``$a:A$'' and pronounced as ``the term $a$ has type $A$'', or more loosely ``$a$ is an element of $A$'' (or, in homotopy type theory, ``$a$ is a point of $A$'').
+类型论的基本判断，类似于“$A$ 有一个证明”，写作“$a:A$”，读作“项 $a$ 具有类型 $A$”（the term $a$ has type $A$），或者更宽松地说“$a$ 是 $A$ 的一个元素”——在同伦类型论中，也常说“$a$ 是 $A$ 的一个点”。
 \indexdef{term}%
 \indexdef{element}%
 \indexdef{point!of a type}%
-When $A$ is a type representing a proposition, then $a$ may be called a \emph{witness}\index{witness!to the truth of a proposition} to the provability of $A$, or \emph{evidence}\index{evidence, of the truth of a proposition} of the truth of $A$ (or even a \emph{proof}\index{proof} of $A$, but we will try to avoid this confusing terminology).
-In this case, the judgment $a:A$ is derivable in type theory (for some $a$) precisely when the analogous judgment ``$A$ has a proof'' is derivable in first-order logic (modulo differences in the axioms assumed and in the encoding of mathematics, as we will discuss throughout the book).
- 
-On the other hand, if the type $A$ is being treated more like a set than like a proposition (although as we will see, the distinction can become blurry), then ``$a:A$'' may be regarded as analogous to the set-theoretic statement ``$a\in A$''.
-However, there is an essential difference in that ``$a:A$'' is a \emph{judgment} whereas ``$a\in A$'' is a \emph{proposition}.
-In particular, when working internally in type theory, we cannot make statements such as ``if $a:A$ then it is not the case that $b:B$'', nor can we ``disprove'' the judgment ``$a:A$''.
+当 $A$ 是一个代表命题的类型时，$a$ 可以称为 $A$ 之可证性的一个\emph{见证}\index{witness!to the truth of a proposition}，或其真理性的\emph{证据}\index{evidence, of the truth of a proposition}（有时甚至称为 $A$ 的一个\emph{证明}\index{proof}，但我们会尽量避免使用这种易混淆的术语）。
+此时，在类型论中（对某个 $a$）可以推导出判断 $a:A$，恰对应于在一阶逻辑中可以推导出类似的判断“$A$ 有一个证明”（除去所设公理及数学编码方式的差异，这些差异将贯穿全书加以讨论）。
 
-A good way to think about this is that in set theory, ``membership'' is a relation which may or may not hold between two pre-existing objects ``$a$'' and ``$A$'', while in type theory we cannot talk about an element ``$a$'' in isolation: every element \emph{by its very nature} is an element of some type, and that type is (generally speaking) uniquely determined.
-Thus, when we say informally ``let $x$ be a natural number'', in set theory this is shorthand for ``let $x$ be a thing and assume that $x\in\nat$'', whereas in type theory ``let $x:\nat$'' is an atomic statement: we cannot introduce a variable without specifying its type.\index{membership}
+另一方面，如果类型 $A$ 更多地被当作一个集合而非一个命题来对待（尽管我们将会看到，这种区别有时是模糊的），那么“$a:A$”就可以看作类似于集合论中的陈述“$a\in A$”。
+然而，二者有一个本质区别：“$a:A$”是一个\emph{判断}，而“$a\in A$”是一个\emph{命题}。
+具体来说，在类型论内部工作时，我们不能做出像“如果 $a:A$，那么并非 $b:B$”这样的陈述，也不能“反驳”判断“$a:A$”。
 
+理解这一点的一个好办法是：在集合论中，“属于”是两个预先存在的对象“$a$”和“$A$”之间可能成立也可能不成立的一种\emph{关系}；而在类型论中，我们不能孤立地谈论一个“元素” $a$：每个元素\emph{依其本质}就是某个类型的元素，并且该类型（一般而言）是唯一确定的。
+因此，当我们非正式地说“令 $x$ 是一个自然数”时，在集合论中这是“令 $x$ 是一个东西，并假设 $x\in\nat$”的简写；而在类型论中，“令 $x:\nat$”则是一个原子语句：我们不能在不指明其类型的情况下引入一个变量。\index{membership}
 
-At first glance, this may seem an uncomfortable restriction, but it is arguably closer to the intuitive mathematical meaning of ``let $x$ be a natural number''.
-In practice, it seems that whenever we actually \emph{need} ``$a\in A$'' to be a proposition rather than a judgment, there is always an ambient set $B$ of which $a$ is known to be an element and $A$ is known to be a subset.
-This situation is also easy to represent in type theory, by taking $a$ to be an element of the type $B$, and $A$ to be a predicate on $B$; see \cref{subsec:prop-subsets}.
+初看之下，这似乎是一种不便的限制，但它可以说更接近于“令 $x$ 是一个自然数”的直观数学含义。
+在实践中，似乎每当我们真正\emph{需要}“$a\in A$”作为一个命题而非判断时，总存在一个背景集合 $B$，使得已知 $a$ 是 $B$ 的元素，且 $A$ 是 $B$ 的子集。
+这种情况在类型论中也容易表示，只需取 $a$ 为类型 $B$ 的一个元素，而 $A$ 为 $B$ 上的一个谓词；参见\cref{subsec:prop-subsets}。
 
-A last difference between type theory and set theory is the treatment of equality.
-The familiar notion of equality in mathematics is a proposition: e.g.\ we can disprove an equality or assume an equality as a hypothesis.
-Since in type theory, propositions are types, this means that equality is a type: for elements $a,b:A$ (that is, both $a:A$ and $b:A$) we have a type ``$\id[A]ab$''.
-(In \emph{homotopy} type theory, of course, this equality proposition can behave in unfamiliar ways: see \cref{sec:identity-types,cha:basics}, and the rest of the book).
-When $\id[A]ab$ is inhabited, we say that $a$ and $b$ are \define{(propositionally) equal}.
+类型论与集合论之间的最后一个区别在于对相等性的处理。
+数学中熟悉的相等性概念是一个命题：例如，我们可以反驳一个等式，或者将一个等式作为假设。
+由于在类型论中，命题就是类型，这意味着相等性也是一个类型：对于元素 $a,b:A$（即同时有 $a:A$ 和 $b:A$），我们有一个类型“$\id[A]ab$”。
+（当然，在\emph{同伦}类型论中，这个相等命题可能表现出不熟悉的行为：参见\cref{sec:identity-types,cha:basics}及本书其余部分。）
+当 $\id[A]ab$ 有实例时，我们说 $a$ 和 $b$ 是\define{（命题）相等的}。
 \index{propositional!equality}%
 \index{equality!propositional}%
 
-However, in type theory there is also a need for an equality \emph{judgment}, existing at the same level as the judgment ``$x:A$''.\index{judgment}
+然而，在类型论中还需要一种相等性\emph{判断}，它存在于与判断“$x:A$”相同的层面。\index{judgment}
 \symlabel{defn:judgmental-equality}%
-This is called \define{judgmental equality}
+这被称为\define{判断相等性}
 \indexdef{equality!judgmental}%
 \indexdef{judgmental equality}%
-or \define{definitional equality},
+或\define{定义相等性}，
 \indexdef{equality!definitional}%
 \indexsee{definitional equality}{equality, definitional}%
-and we write it as $a\jdeq b : A$ or simply $a \jdeq b$.
-It is helpful to think of this as meaning ``equal by definition''.
-For instance, if we define a function $f:\nat\to\nat$ by the equation $f(x)=x^2$, then the expression $f(3)$ is equal to $3^2$ \emph{by definition}.
-Inside the theory, it does not make sense to negate or assume an equality-by-definition; we cannot say ``if $x$ is equal to $y$ by definition, then $z$ is not equal to $w$ by definition''.
-Whether or not two expressions are equal by definition is just a matter of expanding out the definitions; in particular, it is algorithmically\index{algorithm} decidable (though the algorithm is necessarily meta-theoretic, not internal to the theory).\index{decidable!definitional equality}
+我们将其写作 $a\jdeq b : A$ 或简写为 $a \jdeq b$。
+可以这样理解：它意味着“依定义相等”。
+例如，如果我们用方程 $f(x)=x^2$ 定义一个函数 $f:\nat\to\nat$，那么表达式 $f(3)$ 就\emph{依定义}等于 $3^2$。
+在理论内部，对“依定义相等”进行否定或假设是没有意义的；我们不能说“如果 $x$ 依定义等于 $y$，那么 $z$ 就不依定义等于 $w$”。
+两个表达式是否依定义相等，只需展开定义便可判定；特别地，这是\emph{算法上可判定的}\index{algorithm}（尽管该算法必然是\emph{元理论的}，而非理论内部的）。\index{decidable!definitional equality}
 
-As type theory becomes more complicated, judgmental equality can get more subtle than this, but it is a good intuition to start from.
-Alternatively, if we regard a deductive system as an algebraic theory, then judgmental equality is simply the equality in that theory, analogous to the equality between elements of a group --- the only potential for confusion is that there is \emph{also} an object \emph{inside} the deductive system of type theory (namely the type ``$a=b$'') which behaves internally as a notion of ``equality''.
+随着类型论变得日益复杂，判断相等性也会比这里描述的更加微妙，但以此为起点已是一种很好的直觉。
+换一个角度看，若我们将演绎系统视作一个代数理论，那么判断相等性无非就是该理论内部的相等性，类似于群元素之间的相等——唯一可能造成混淆之处在于，在类型论的演绎系统\emph{内部}，\emph{也}存在着一个对象（即类型``$a=b$''），它在系统内部扮演着``相等性''的角色。
 
-The reason we \emph{want} a judgmental notion of equality is so that it can control the other form of judgment, ``$a:A$''.
-For instance, suppose we have given a proof that $3^2=9$, i.e.\ we have derived the judgment $p:(3^2=9)$ for some $p$.
-Then the same witness $p$ ought to count as a proof that $f(3)=9$, since $f(3)$ is $3^2$ \emph{by definition}.
-The best way to represent this is with a rule saying that given the judgments $a:A$ and $A\jdeq B$, we may derive the judgment $a:B$.
+我们之所以\emph{需要}判断相等性这个概念，是为了用它来控制另一种判断形式``$a:A$''。
+举例来说，假设我们已经证明了 $3^2=9$，即对某个 $p$，我们已经推出了判断 $p:(3^2=9)$。
+那么，同一个见证元 $p$ 理应同样算作 $f(3)=9$ 的证明，因为按照定义，$f(3)$ 就是 $3^2$。
+表达这一点的最佳方式是一条规则：给定判断 $a:A$ 和 $A\jdeq B$，可推出判断 $a:B$。
 
-Thus, for us, type theory will be a deductive system based on two forms of judgment:
+因此，对我们而言，类型论将是一个基于以下两种判断形式的演绎系统：
+
+
 \begin{center}
 \medskip
 \begin{tabular}{cl}
   \toprule
-  Judgment & Meaning\\
+  判断 & 含义\\
   \midrule
-  $a : A$       & ``$a$ is an object of type $A$''\\
-  $a \jdeq b : A$ & ``$a$ and $b$ are definitionally equal objects of type $A$''\\
+  $a : A$       & ``$a$ 是类型 $A$ 的对象''\\
+  $a \jdeq b : A$ & ``$a$ 和 $b$ 是类型 $A$ 的定义相等的对象''\\
   \bottomrule
 \end{tabular}
 \medskip
 \end{center}
+
+
 %
 \symlabel{defn:defeq}%
-When introducing a definitional equality, i.e., defining one thing to be equal to another, we will use the symbol ``$\defeq$''.
-Thus, the above definition of the function $f$ would be written as $f(x)\defeq x^2$.
+当引入定义相等，亦即将一个对象定义为与另一个对象相等时，我们将使用符号``$\defeq$''。
+因此，上面提到的函数 $f$ 的定义将写作 $f(x)\defeq x^2$。
 
-Because judgments cannot be put together into more complicated statements, the symbols ``$:$'' and ``$\jdeq$'' bind more loosely than anything else.%
-\footnote{In formalized\indexfoot{mathematics!formalized} type theory, commas and turnstiles can bind even more loosely.
-  For instance, $x:A,y:B\vdash c:C$ is parsed as $((x:A),(y:B))\vdash (c:C)$.
-  However, in this book we refrain from such notation until \cref{cha:rules}.}
-Thus, for instance, ``$p:\id{x}{y}$'' should be parsed as ``$p:(\id{x}{y})$'', which makes sense since ``$\id{x}{y}$'' is a type, and not as ``$\id{(p:x)}{y}$'', which is senseless since ``$p:x$'' is a judgment and cannot be equal to anything.
-Similarly, ``$A\jdeq \id{x}{y}$'' can only be parsed as ``$A\jdeq(\id{x}{y})$'', although in extreme cases such as this, one ought to add parentheses anyway to aid reading comprehension.
-Moreover, later on we will fall into the common notation of chaining together equalities --- e.g.\ writing $a=b=c=d$ to mean ``$a=b$ and $b=c$ and $c=d$, hence $a=d$'' --- and we will also include judgmental equalities in such chains.
-Context usually suffices to make the intent clear.
+由于判断无法组合成更复杂的陈述，符号``$:$''和``$\jdeq$''的结合力比任何其他符号都弱。%
+\footnote{在形式化的\indexfoot{mathematics!formalized}类型论中，逗号和推断符（$\vdash$）的结合力可能更弱。
+  例如，$x:A,y:B\vdash c:C$ 会被解析为 $((x:A),(y:B))\vdash (c:C)$。
+  但在本书中，在\cref{cha:rules}之前，我们暂不使用这种记法。}
+因此，举例来说，``$p:\id{x}{y}$''应解析为``$p:(\id{x}{y})$''，这是有意义的，因为``$\id{x}{y}$''是一个类型；而不应解析为``$\id{(p:x)}{y}$''，这是无意义的，因为``$p:x$''是一个判断，不能与任何东西相等。
+类似地，``$A\jdeq \id{x}{y}$''只能被解析为``$A\jdeq(\id{x}{y})$''，尽管在这种极端情况下，为了辅助阅读理解，最好还是加上括号。
+此外，后续我们还将采用一种常见的等式链记号——例如写 $a=b=c=d$ 来表示``$a=b$ 且 $b=c$ 且 $c=d$，因此 $a=d$''——并且我们也会在链中包含判断相等性。语境通常足以说明意图。
 
-This is perhaps also an appropriate place to mention that the common mathematical notation ``$f:A\to B$'', expressing the fact that $f$ is a function from $A$ to $B$, can be regarded as a typing judgment, since we use ``$A\to B$'' as notation for the type of functions from $A$ to $B$ (as is standard practice in type theory; see \cref{sec:pi-types}).
+或许在这里也可以顺便指出，常见的数学记号``$f:A\to B$''（表示 $f$ 是从 $A$ 到 $B$ 的函数）可以看作一个类型判断，因为我们用``$A\to B$''作为从 $A$ 到 $B$ 的函数类型的记号（这是类型论的标准做法；参见 \cref{sec:pi-types}）。
 
 \index{assumption|(defstyle}%
-Judgments may depend on \emph{assumptions} of the form $x:A$, where $x$ is a variable
-\indexdef{variable}%
-and $A$ is a type.
-For example, we may construct an object $m + n : \nat$ under the assumptions that $m,n : \nat$.
-Another example is that assuming $A$ is a type, $x,y : A$, and $p : \id[A]{x}{y}$, we may construct an element $p^{-1} : \id[A]{y}{x}$.
-The collection of all such assumptions is called the \define{context};%
+判断可以依赖于形如 $x:A$ 的\emph{假设}，其中 $x$ 是一个变量\indexdef{variable}，%
+$A$ 是一个类型。
+例如，在假设 $m,n : \nat$ 下，我们可以构造一个对象 $m + n : \nat$。
+另一个例子是，假设 $A$ 是一个类型，$x,y : A$，并且 $p : \id[A]{x}{y}$，我们可以构造一个元素 $p^{-1} : \id[A]{y}{x}$。
+所有这些假设的集合称为\define{上下文（context）}；%
 \index{context}
-from a topological point of view it may be thought of as a ``parameter\index{parameter!space} space''.
-In fact, technically the context must be an ordered list of assumptions, since later assumptions may depend on previous ones: the assumption $x:A$ can only be made \emph{after} the assumptions of any variables appearing in the type $A$.
+从拓扑的观点来看，它可以被视为一个``参数\index{parameter!space}空间''。
+事实上，严格来说，上下文必须是一个有序的假设列表，因为后面的假设可能依赖于前面的假设：只有在类型 $A$ 中出现的任何变量的假设都已给出\emph{之后}，才能做出假设 $x:A$。
 
-If the type $A$ in an assumption $x:A$ represents a proposition, then the assumption is a type-theoretic version of a \emph{hypothesis}:
-\indexdef{hypothesis}%
-we assume that the proposition $A$ holds.
-When types are regarded as propositions, we may omit the names of their proofs.
-Thus, in the second example above we may instead say that assuming $\id[A]{x}{y}$, we can prove $\id[A]{y}{x}$.
-However, since we are doing ``proof-relevant'' mathematics,
-\index{mathematics!proof-relevant}%
-we will frequently refer back to proofs as objects.
-In the example above, for instance, we may want to establish that $p^{-1}$ together with the proofs of transitivity and reflexivity behave like a groupoid; see \cref{cha:basics}.
+如果假设 $x:A$ 中的类型 $A$ 代表一个命题，那么该假设就是\emph{假说}\indexdef{hypothesis}在类型论中的对应物：我们假设命题 $A$ 成立。
+当类型被视为命题时，我们可以省略其证明的名称。
+因此，在上面的第二个例子中，我们可以改为说：假设 $\id[A]{x}{y}$，可以证明 $\id[A]{y}{x}$。
+然而，由于我们从事的是``证明相关''\index{mathematics!proof-relevant}的数学，我们会频繁地将证明本身作为对象来提及。
+例如在上面的例子中，我们可能想要证明 $p^{-1}$ 连同传递性和自反性的证明一起表现得像一个群胚；参见 \cref{cha:basics}。
 
-Note that under this meaning of the word \emph{assumption}, we can assume a propositional equality (by assuming a variable $p:x=y$), but we cannot assume a judgmental equality $x\jdeq y$, since it is not a type that can have an element.
-However, we can do something else which looks kind of like assuming a judgmental equality: if we have a type or an element which involves a variable $x:A$, then we can \emph{substitute} any particular element $a:A$ for $x$ to obtain a more specific type or element.
-We will sometimes use language like ``now assume $x\jdeq a$'' to refer to this process of substitution, even though it is not an \emph{assumption} in the technical sense introduced above.
+注意，在``假设''一词的上述含义下，我们可以假设一个命题相等（通过假设一个变量 $p:x=y$），但不能假设一个判断相等性 $x\jdeq y$，因为它不是一个可以拥有元素的类型。
+不过，我们可以做另一件看起来有点像假设判断相等性的事情：如果我们有一个涉及变量 $x:A$ 的类型或元素，那么可以用某个特定的元素 $a:A$ 来\emph{替换} $x$，从而得到一个更具体的类型或元素。
+我们有时会使用诸如``现在假设 $x\jdeq a$''这样的语言来指代这一替换过程，即使它严格来说并非上文所引入的\emph{假设}。
 \index{assumption|)}%
 
-By the same token, we cannot \emph{prove} a judgmental equality either, since it is not a type in which we can exhibit a witness.
-Nevertheless, we will sometimes state judgmental equalities as part of a theorem, e.g.\ ``there exists $f:A\to B$ such that $f(x)\jdeq y$''.
-This should be regarded as the making of two separate judgments: first we make the judgment $f:A\to B$ for some element $f$, then we make the additional judgment that $f(x)\jdeq y$.
+同理，我们也不能\emph{证明}一个判断相等性，因为它不是一个可以展示见证元的类型。
+尽管如此，我们有时会将判断相等性作为定理的一部分来陈述，例如``存在 $f:A\to B$ 使得 $f(x)\jdeq y$''。
+这应被视为作出了两个独立的判断：首先，我们对某个元素 $f$ 作出判断 $f:A\to B$；然后，我们作出附加的判断 $f(x)\jdeq y$。
 
-In the rest of this chapter, we attempt to give an informal presentation of type theory, sufficient for the purposes of this book; we give a more formal account in \cref{cha:rules}.
-Aside from some fairly obvious rules (such as the fact that judgmentally equal things can always be substituted\index{substitution} for each other), the rules of type theory can be grouped into \emph{type formers}.
-Each type former consists of a way to construct types (possibly making use of previously constructed types), together with rules for the construction and behavior of elements of that type.
-In most cases, these rules follow a fairly predictable pattern, but we will not attempt to make this precise here; see however the beginning of \cref{sec:finite-product-types} and also \cref{cha:induction}.\index{type theory!informal}
-
+在本章剩余部分，我们将尝试对类型论做一个非正式的介绍，这足以满足本书的需要；我们会在\cref{cha:rules}中给出更形式化的描述。
+除了一些相当明显的规则（例如判断相等的对象总是可以相互替换\index{substitution}），类型论的规则可以按\emph{类型形成子}进行分组。
+每个类型形成子由一种构造类型的方法（可能利用先前构造的类型），连同该类型元素的构造与行为规则组成。
+在大多数情况下，这些规则遵循相当可预测的模式，但我们不会在此尝试精确描述这一点；不过可以参见\cref{sec:finite-product-types}的开头以及\cref{cha:induction}。\index{type theory!informal}
 
 \index{axiom!versus rules}%
 \index{rule!versus axioms}%
-An important aspect of the type theory presented in this chapter is that it consists entirely of \emph{rules}, without any \emph{axioms}.
-In the description of deductive systems in terms of judgments, the \emph{rules} are what allow us to conclude one judgment from a collection of others, while the \emph{axioms} are the judgments we are given at the outset.
-If we think of a deductive system as a formal game, then the rules are the rules of the game, while the axioms are the starting position.
-And if we think of a deductive system as an algebraic theory, then the rules are the operations of the theory, while the axioms are the \emph{generators} for some particular free model of that theory.
+本章介绍的类型论的一个重要方面是，它完全由\emph{规则}构成，没有任何\emph{公理}。
+在用判断来描述演绎系统时，\emph{规则}允许我们从一组判断推导出另一个判断，而\emph{公理}则是初始给定的判断。
+如果我们把演绎系统看作一个形式游戏，那么规则就是游戏的规则，而公理则是起始位置。
+如果我们把演绎系统看作一个代数理论，那么规则就是理论中的运算，而公理则是该理论某个特定自由模型的\emph{生成元}。
 
-In set theory, the only rules are the rules of first-order logic (such as the rule allowing us to deduce ``$A\wedge B$ has a proof'' from ``$A$ has a proof'' and ``$B$ has a proof''): all the information about the behavior of sets is contained in the axioms.
-By contrast, in type theory, it is usually the \emph{rules} which contain all the information, with no axioms being necessary.
-For instance, in \cref{sec:finite-product-types} we will see that there is a rule allowing us to deduce the judgment ``$(a,b):A\times B$'' from ``$a:A$'' and ``$b:B$'', whereas in set theory the analogous statement would be (a consequence of) the pairing axiom.
+在集合论中，唯一的规则是一阶逻辑的规则（例如允许我们从``$A$ 有一个证明''和``$B$ 有一个证明''推导出``$A\wedge B$ 有一个证明''的规则）：关于集合行为的所有信息都包含在公理中。
+相比之下，在类型论中，通常\emph{规则}包含了所有的信息，而不需要公理。
+例如，在\cref{sec:finite-product-types}中我们将看到，存在一条规则允许我们从``$a:A$''和``$b:B$''推导出判断``$(a,b):A\times B$''，而在集合论中，类似的陈述将是配对公理的（推论）。
 
-The advantage of formulating type theory using only rules is that rules are ``procedural''.
-In particular, this property is what makes possible (though it does not automatically ensure) the good computational properties of type theory, such as ``canonicity''.\index{canonicity}
-However, while this style works for traditional type theories, we do not yet understand how to formulate everything we need for \emph{homotopy} type theory in this way.
-In particular, in \cref{sec:compute-pi,sec:compute-universe,cha:hits} we will have to augment the rules of type theory presented in this chapter by introducing additional axioms, notably the \emph{univalence axiom}.
-In this chapter, however, we confine ourselves to a traditional rule-based type theory.
+仅以规则来表述类型论的一个优点是，规则是``过程性的''。
+特别是，正是这一特性使类型论可能具有良好的计算性质（尽管并不能自动保证），例如``典范性''。\index{canonicity}
+然而，尽管这种风格适用于传统的类型论，我们尚未完全理解如何以这种方式来表述\emph{同伦}类型论所需的一切。
+特别地，在\cref{sec:compute-pi,sec:compute-universe,cha:hits}中，我们将不得不引入额外的公理——尤其是\emph{泛等公理}——来扩充本章所介绍的类型论规则。
+但在本章中，我们仅限于讨论传统的、基于规则的类型论。
 
-
-\section{Function types}
+\section{函数类型}
 \label{sec:function-types}
 
 \index{type!function|(defstyle}%
 \indexsee{function type}{type, function}%
-Given types $A$ and $B$, we can construct the type $A \to B$ of \define{functions}
+给定类型 $A$ 和 $B$，我们可以构造类型 $A \to B$，其中的\define{函数}
 \index{function|(defstyle}%
 \indexsee{map}{function}%
 \indexsee{mapping}{function}%
-with domain $A$ and codomain $B$.
-We also sometimes refer to functions as \define{maps}.
+以 $A$ 为定义域、$B$ 为陪域。
+我们有时也称函数为\define{映射}。
 \index{domain!of a function}%
 \index{codomain, of a function}%
 \index{function!domain of}%
 \index{function!codomain of}%
 \index{functional relation}%
-Unlike in set theory, functions are not defined as
-functional relations; rather they are a primitive concept in type theory.
-We explain the function type by prescribing what we can do with functions, 
-how to construct them and what equalities they induce.
+与集合论不同，在类型论中，我们不把函数定义为函数关系；相反，函数是一个原始概念。
+我们通过规定以下内容来解释函数类型：可以对函数做什么操作，如何构造函数，以及函数会诱导出哪些相等关系。
 
-Given a function $f : A \to B$ and an element of the domain $a : A$, we
-can \define{apply}
+给定一个函数 $f : A \to B$ 和定义域中的一个元素 $a : A$，我们可以\define{应用}
 \indexdef{application!of function}%
 \indexdef{function!application}%
 \indexsee{evaluation}{application, of a function}
-the function to obtain an element of the codomain $B$,
-denoted $f(a)$ and called the \define{value} of $f$ at $a$.
+这个函数，从而得到陪域 $B$ 中的一个元素，记作 $f(a)$，并称之为 $f$ 在 $a$ 处的\define{值}。
 \indexdef{value!of a function}%
-It is common in type theory to omit the parentheses\index{parentheses} and denote $f(a)$ simply by $f\,a$, and we will sometimes do this as well.
+在类型论中，省略括号\index{parentheses}而将 $f(a)$ 简记为 $f\,a$ 是很常见的做法，我们有时也会这样写。
 
-But how can we construct elements of $A \to B$? There are two equivalent ways:
-either by direct definition or by using
-$\lambda$-abstraction. Introducing a function by definition
+但是，我们该如何构造 $A \to B$ 中的元素呢？有两种等价的方法：要么通过直接定义，要么使用 $\lambda$-抽象。
+通过定义来引入函数
 \indexdef{definition!of function, direct}%
-means that
-we introduce a function by giving it a name --- let's say, $f$ --- and saying
-we define $f : A \to B$ by giving an equation
+指的是，我们为它取一个名字——比方说 $f$——然后通过给出一个方程
 \begin{equation}
   \label{eq:expldef}
   f(x) \defeq \Phi
 \end{equation}
-where $x$ is a variable
+来定义 $f : A \to B$，其中 $x$ 是一个
 \index{variable}%
-and $\Phi$ is an expression which may use $x$.
-In order for this to be valid, we have to check that $\Phi : B$ assuming $x:A$.
+变量，而 $\Phi$ 是一个可能用到 $x$ 的表达式。
+为了使这个定义有效，我们必须验证在假设 $x:A$ 时有 $\Phi : B$。
 
-Now we can compute $f(a)$ by replacing the variable $x$ in $\Phi$ with
-$a$. As an example, consider the function $f : \nat \to \nat$ which is
-defined by $f(x) \defeq x+x$.  (We will define $\nat$ and $+$ in \cref{sec:inductive-types}.)
-Then $f(2)$ is judgmentally equal to $2+2$.
+这样，我们就可以通过把表达式 $\Phi$ 中的变量 $x$ 替换成 $a$ 来计算 $f(a)$。
+举一个例子，考虑函数 $f : \nat \to \nat$，它由 $f(x) \defeq x+x$ 定义。（我们将在 \cref{sec:inductive-types} 中定义 $\nat$ 和 $+$。）
+那么 $f(2)$ 与 $2+2$ 判断相等。
 
-If we don't want to introduce a name for the function, we can use
-\define{$\lambda$-abstraction}.
+如果我们不想为函数引入名字，可以使用
+\define{$\lambda$-抽象}。
 \index{lambda abstraction@$\lambda$-abstraction|defstyle}%
 \indexsee{function!lambda abstraction@$\lambda$-abstraction}{$\lambda$-abstraction}%
 \indexsee{abstraction!lambda-@$\lambda$-}{$\lambda$-abstraction}%
-Given an expression $\Phi$ of type $B$ which may use $x:A$, as above, we write $\lam{x:A} \Phi$ to indicate the same function defined by~\eqref{eq:expldef}.
-Thus, we have
+给定一个如上所述的类型为 $B$、可能用到 $x:A$ 的表达式 $\Phi$，我们写作 $\lam{x:A} \Phi$ 以表示由~\eqref{eq:expldef} 定义的同一个函数。
+因此，我们有
 \[ (\lamt{x:A}\Phi) : A \to B. \]
-For the example in the previous paragraph, we have the typing judgment
+对于上一段的例子，我们有类型判断
 \[ (\lam{x:\nat}x+x) : \nat \to \nat. \]
-As another example, for any types $A$ and $B$ and any element $y:B$, we have a \define{constant function}
+作为另一个例子，对于任意类型 $A$ 和 $B$ 以及任意元素 $y:B$，我们有一个\define{常值函数}
 \indexdef{constant!function}%
 \indexdef{function!constant}%
-$(\lam{x:A} y): A\to B$.
+$(\lam{x:A} y): A\to B$。
 
-We generally omit the type of the variable $x$ in a $\lambda$-abstraction and write $\lam{x}\Phi$, since the typing $x:A$ is inferable from the judgment that the function $\lam x \Phi$ has type $A\to B$.
-By convention, the ``scope''
+我们通常会省略 $\lambda$-抽象中变量 $x$ 的类型标注，直接写作 $\lam{x}\Phi$，这是因为从函数 $\lam x \Phi$ 具有类型 $A\to B$ 这一判断，就可以推断出 $x:A$。
+按约定，变量绑定符“$\lam{x}$”的\define{作用域}
 \indexdef{variable!scope of}%
 \indexdef{scope}%
-of the variable binding ``$\lam{x}$'' is the entire rest of the expression, unless delimited with parentheses\index{parentheses}.
-Thus, for instance, $\lam{x} x+x$ should be parsed as $\lam{x} (x+x)$, not as $(\lam{x}x)+x$ (which would, in this case, be ill-typed anyway).
+为表达式中紧随其后的整个剩余部分，除非被括号\index{parentheses}隔开。
+因此，举例来说，$\lam{x} x+x$ 应被解析为 $\lam{x} (x+x)$，而不是 $(\lam{x}x)+x$（而且，在此例中后者无论如何都会是类型错误的）。
 
-Another equivalent notation is
+另一种等价的记法是
 \symlabel{mapsto}%
 \[ (x \mapsto \Phi) : A \to B. \]
 \symlabel{blank}%
-We may also sometimes use a blank ``$\blank$'' in the expression $\Phi$ in place of a variable, to denote an implicit $\lambda$-abstraction.
-For instance, $g(x,\blank)$ is another way to write $\lam{y} g(x,y)$.
+我们有时也会在表达式 $\Phi$ 中使用空白记号“$\blank$”来代替变量，以表示一个隐式的 $\lambda$-抽象。
+例如，$g(x,\blank)$ 就是 $\lam{y} g(x,y)$ 的另一种写法。
 
-Now a $\lambda$-abstraction is a function, so we can apply it to an argument $a:A$.
-We then have the following \define{computation rule}\indexdef{computation rule!for function types}\footnote{Use of this equality is often referred to as \define{$\beta$-conversion}
+$\lambda$-抽象是一个函数，因此我们可以把它应用于参数 $a:A$。
+于是我们得到下面的 \define{计算规则}\indexdef{computation rule!for function types}\footnote{这个等式的使用常被称为 \define{$\beta$-变换}
 \indexsee{beta-conversion@$\beta $-conversion}{$\beta$-reduction}%
 \indexsee{conversion!beta@$\beta $-}{$\beta$-reduction}%
-or \define{$\beta$-reduction}.%
+或 \define{$\beta$-归约}。%
 \index{beta-reduction@$\beta $-reduction|footstyle}%
 \indexsee{reduction!beta@$\beta $-}{$\beta$-reduction}%
-}, which is a definitional equality:
+}，它是一个定义相等：
 \[(\lamu{x:A}\Phi)(a) \jdeq \Phi'\]
-where $\Phi'$ is the
-expression $\Phi$ in which all occurrences of $x$ have been replaced by $a$.
-Continuing the above example, we have
+其中 $\Phi'$ 是将表达式 $\Phi$ 中所有 $x$ 的出现都替换为 $a$ 后得到的结果。
+
+沿用前面的例子，我们有
 %
 \[ (\lamu{x:\nat}x+x)(2) \jdeq 2+2. \]
 %
-Note that from any function $f:A\to B$, we can construct a lambda abstraction function $\lam{x} f(x)$.
-Since this is by definition ``the function that applies $f$ to its argument'' we consider it to be definitionally equal to $f$:\footnote{Use of this equality is often referred to as \define{$\eta$-conversion}
+
+注意，从任何函数 $f:A\to B$，我们都能构造一个 $\lambda$-抽象函数 $\lam{x} f(x)$。
+因为按照定义它就是“将 $f$ 应用于其参数的函数”，所以我们认为它与 $f$ 定义相等：\footnote{这个等式的使用常被称为 \define{$\eta$-变换}
 \indexsee{eta-conversion@$\eta $-conversion}{$\eta$-expansion}%
 \indexsee{conversion!eta@$\eta $-}{$\eta$-expansion}%
-or \define{$\eta$-expansion.
+或 \define{$\eta$-展开}。
 \index{eta-expansion@$\eta $-expansion|footstyle}%
 \indexsee{expansion, eta-@expansion, $\eta $-}{$\eta$-expansion}%
-}}
+}
 \[ f \jdeq (\lam{x} f(x)). \]
-This equality is the \define{uniqueness principle for function types}\indexdef{uniqueness!principle!for function types}, because it shows that $f$ is uniquely determined by its values.
+这个等式就是\define{函数类型的唯一性原理}\indexdef{uniqueness!principle!for function types}，因为它表明 $f$ 由其值唯一决定。
 
-The introduction of functions by definitions with explicit parameters can be reduced
-to simple definitions by using $\lambda$-abstraction: i.e., we can read 
-a definition of $f: A\to B$ by
+通过带显式参数的定义来引入函数，可以借助 $\lambda$-抽象归约为简单定义：也就是说，我们可以将形如
 \[ f(x) \defeq \Phi \]
-as 
+的 $f: A\to B$ 的定义，读作
 \[ f \defeq \lamu{x:A}\Phi.\]
 
-When doing calculations involving variables, we have to be 
-careful when replacing a variable with an expression that also involves
-variables, because we want to preserve the binding structure of
-expressions. By the \emph{binding structure}\indexdef{binding structure} we mean the
-invisible link generated by binders such as $\lambda$, $\Pi$ and
-$\Sigma$ (the latter we are going to meet soon) between the place where the variable is introduced and where it is used. As an example, consider $f : \nat \to (\nat \to \nat)$
-defined as 
-\[ f(x) \defeq \lamu{y:\nat} x + y. \] 
-Now if we have assumed somewhere that $y : \nat$, then what is $f(y)$? It would be wrong to just naively replace $x$ by $y$ everywhere in the expression ``$\lam{y}x+y$'' defining $f(x)$, obtaining $\lamu{y:\nat} y + y$, because this means that $y$ gets \define{captured}.
+当我们进行涉及变量的计算时，若要将一个变量替换为也含有变量的表达式，就必须格外小心，因为我们希望保持表达式的绑定结构。这里所说的\emph{绑定结构}\indexdef{binding structure}，指的是由绑定符（比如 $\lambda$、$\Pi$ 和 $\Sigma$——后两个我们很快就会遇到）在变量被引入的位置与它被使用的位置之间生成的不可见链接。
+
+举个例子，考虑定义为
+\[ f(x) \defeq \lamu{y:\nat} x + y. \]
+的 $f : \nat \to (\nat \to \nat)$。
+现在，如果我们事先假设了 $y : \nat$，那么 $f(y)$ 是什么呢？如果只是简单地在定义 $f(x)$ 的表达式 ``$\lam{y}x+y$'' 中把所有 $x$ 都替换成 $y$，得到 $\lamu{y:\nat} y + y$，那就错了，因为这意味着 $y$ 被\define{捕获}了。
 \indexdef{capture, of a variable}%
 \indexdef{variable!captured}%
-Previously, the substituted\index{substitution} $y$ was referring to our assumption, but now it is referring to the argument of the $\lambda$-abstraction. Hence, this naive substitution would destroy the binding structure, allowing us to perform calculations which are semantically unsound.
+此前，被代入的\index{substitution} $y$ 指的是我们的假设，可现在它却指代了 $\lambda$-抽象的参数。于是，这种简单替换会破坏绑定结构，使我们得以进行语义上不正确的计算。
 
-But what \emph{is} $f(y)$ in this example? Note that bound (or ``dummy'')
-variables
+但是，在这个例子中，$f(y)$ 究竟\emph{是}什么呢？注意，约束变量（或称“哑变量”）
 \indexdef{variable!bound}%
 \indexdef{variable!dummy}%
 \indexsee{bound variable}{variable, bound}%
 \indexsee{dummy variable}{variable, bound}%
-such as $y$ in the expression $\lamu{y:\nat} x + y$
-have only a local meaning, and can be consistently replaced by any
-other variable, preserving the binding structure. Indeed, $\lamu{y:\nat} x + y$ is declared to be judgmentally equal\footnote{Use of this equality is often referred to as \define{$\alpha$-conversion.
+——比如表达式 $\lamu{y:\nat} x + y$ 中的 $y$——只在局部有意义，并且可以一致地替换为任何其他变量，同时保持绑定结构不变。事实上，$\lamu{y:\nat} x + y$ 被规定为与 $\lamu{z:\nat} x + z$ 判断相等\footnote{这个等式的使用常被称为 \define{$\alpha$-变换}。
 \indexfoot{alpha-conversion@$\alpha $-conversion}
 \indexsee{conversion!alpha@$\alpha$-}{$\alpha$-conversion}
-}} to
-$\lamu{z:\nat} x + z$.  It follows that 
-$f(y)$ is judgmentally equal to  $\lamu{z:\nat} y + z$, and that answers our question.  (Instead of $z$,
-any variable distinct from $y$ could have been used, yielding an equal result.)
+}。由此可见，
+$f(y)$ 与 $\lamu{z:\nat} y + z$ 判断相等，而这正是我们的答案。（除了 $z$，任何与 $y$ 不同的变量都可以使用，得到的结果都是相等的。）
 
-Of course, this should all be familiar to any mathematician: it is the same phenomenon as the fact that if $f(x) \defeq \int_1^2 \frac{dt}{x-t}$, then $f(t)$ is not $\int_1^2 \frac{dt}{t-t}$ but rather $\int_1^2 \frac{ds}{t-s}$.
-A $\lambda$-abstraction binds a dummy variable in exactly the same way that an integral does.
+当然，这对任何数学家来说都应该很熟悉：它与积分中的现象是同一回事——如果 $f(x) \defeq \int_1^2 \frac{dt}{x-t}$，那么 $f(t)$ 不是 $\int_1^2 \frac{dt}{t-t}$ 而是 $\int_1^2 \frac{ds}{t-s}$。
+$\lambda$-抽象绑定一个哑变量的方式，与积分绑定积分变量的方式完全一样。
 
-We have seen how to define functions in one variable. One
-way to define functions in several variables would be to use the
-cartesian product, which will be introduced later; a function with
-parameters $A$ and $B$ and results in $C$ would be given the type 
-$f : A \times B \to C$. However, there is another choice that avoids
-using product types, which is called \define{currying}
+我们已经看到了如何定义单变量函数。定义多变量函数的一种方法是使用 Cartesian 积（这将在后面介绍）；一个参数为 $A$ 与 $B$、结果为 $C$ 的函数，其类型将是 $f : A \times B \to C$。
+然而，还有另一种选择可以避免使用积类型，它被称为 \define{柯里化}
 \indexdef{currying}%
 \indexdef{function!currying of}%
-(after the mathematician Haskell Curry).
+（得名于数学家 Haskell Curry）。
 \index{programming}%
 
-The idea of currying is to represent a function of two inputs $a:A$ and $b:B$ as a function which takes \emph{one} input $a:A$ and returns \emph{another function}, which then takes a second input $b:B$ and returns the result.
-That is, we consider two-variable functions to belong to an iterated function type, $f : A \to (B \to C)$.
-We may also write this without the parentheses\index{parentheses}, as $f : A \to B \to C$, with
-associativity\index{associativity!of function types} to the right as the default convention.  Then given $a : A$ and $b : B$,
-we can apply $f$ to $a$ and then apply the result to $b$, obtaining
-$f(a)(b) : C$. To avoid the proliferation of parentheses, we allow ourselves to
-write $f(a)(b)$ as $f(a,b)$ even though there are no products
-involved.
-When omitting parentheses around function arguments entirely, we write $f\,a\,b$ for $(f\,a)\,b$, with the default associativity now being to the left so that $f$ is applied to its arguments in the correct order.
+柯里化的核心思想是：将接受两个输入 $a:A$ 和 $b:B$ 的函数，表示为这样一个函数——它只接受\emph{一个}输入 $a:A$，然后返回\emph{另一个函数}，而后者再接受第二个输入 $b:B$ 并给出最终结果。
+也就是说，我们将双变量函数视为属于迭代函数类型 $f : A \to (B \to C)$。
+我们也可以省略括号\index{parentheses}，将其写作 $f : A \to B \to C$，并以右结合\index{associativity!of function types}为默认约定。
+这样，给定 $a : A$ 和 $b : B$，我们可以先将 $f$ 应用于 $a$，再将结果应用于 $b$，从而得到 $f(a)(b) : C$。
+为了避免括号过多，我们约定可将 $f(a)(b)$ 写作 $f(a,b)$，尽管这里并没有涉及任何积类型。
+当我们完全省略函数参数周围的括号时，我们用 $f\,a\,b$ 表示 $(f\,a)\,b$，此时的默认结合性为左结合，以保证 $f$ 能按正确的顺序应用于其参数。
 
-Our notation for definitions with explicit parameters extends to
-this situation: we can define a named function $f : A \to B \to C$ by
-giving an equation
+我们带有显式参数的定义记号也可以推广到这种情况：我们可以通过给出一个等式
 \[ f(x,y) \defeq \Phi\]
-where $\Phi:C$ assuming $x:A$ and $y:B$. Using $\lambda$-abstraction\index{lambda abstraction@$\lambda$-abstraction} this
-corresponds to
+来定义一个命名函数 $f : A \to B \to C$，其中在给定 $x:A$ 和 $y:B$ 时有 $\Phi:C$。
+利用 $\lambda$-抽象\index{lambda abstraction@$\lambda$-abstraction}，这对应着
 \[ f \defeq \lamu{x:A}{y:B} \Phi, \]
-which may also be written as 
-\[ f \defeq x \mapsto y \mapsto \Phi. \] 
-We can also implicitly abstract over multiple variables by writing multiple blanks, e.g.\ $g(\blank,\blank)$ means $\lam{x}{y} g(x,y)$.
-Currying a function of three or more arguments is a straightforward extension of what we have just described.
+也可以写作
+\[ f \defeq x \mapsto y \mapsto \Phi. \]
+我们还可以通过写出多个空位来隐式地对多个变量进行抽象，例如 $g(\blank,\blank)$ 表示 $\lam{x}{y} g(x,y)$。
+对三个或更多参数的函数进行柯里化，是刚才所述内容的直接推广。
  
 \index{type!function|)}%
 \index{function|)}%
 
-
-\section{Universes and families}
+\section{宇宙与类型族}
 \label{sec:universes}
 
-So far, we have been using the expression ``$A$ is a type'' informally. We
-are going to make this more precise by introducing \define{universes}.
+到目前为止，我们一直非正式地使用“$A$ 是一个类型”这种说法。
+为了使其更加精确，我们将引入\define{宇宙（universes）}。
 \index{type!universe|(defstyle}%
 \indexsee{universe}{type, universe}%
-A universe is a type whose elements are types. As in naive set theory,
-we might wish for a universe of all types $\UU_\infty$ including itself
-(that is, with $\UU_\infty : \UU_\infty$).
-However, as in set
-theory, this is unsound, i.e.\ we can deduce from it that every type,
-including the empty type representing the proposition False (see \cref{sec:coproduct-types}), is inhabited.
-For instance, using a
-representation of sets as trees, we can directly encode Russell's
-paradox\index{paradox} \cite{coquand:paradox}.
+宇宙是其元素为类型的类型。
+就像在朴素集合论中那样，我们或许希望有一个包含所有类型的宇宙 $\UU_\infty$，并且它包含自身（即 $\UU_\infty : \UU_\infty$）。
+然而，与集合论中的情况一样，这是不可靠的；也就是说，我们可以由此推导出每一个类型（包括代表命题“假”的空类型，见 \cref{sec:coproduct-types}）都是\emph{有实例的}。
+例如，利用集合的树形表示，我们可以直接编码 Russell（罗素）的悖论\index{paradox} \cite{coquand:paradox}。
 %  or alternatively, in order to avoid the use of
 % inductive types to define trees, we can follow Girard \cite{girard:paradox} and encode the Burali-Forti paradox,
 % which shows that the collection of all ordinals cannot be an ordinal.
 
-To avoid the paradox we introduce a hierarchy of universes
+为了避免这个悖论，我们引入一个宇宙的层级结构
 \indexsee{hierarchy!of universes}{type, universe}%
 \[ \UU_0 : \UU_1 : \UU_2 : \cdots \]
-where every universe $\UU_i$ is an element of the next universe
-$\UU_{i+1}$. Moreover, we assume that our universes are
-\define{cumulative},
+其中每一个宇宙 $\UU_i$ 都是下一个宇宙 $\UU_{i+1}$ 的元素。
+此外，我们假设我们的宇宙是\define{累积的（cumulative）}，
 \indexdef{type!universe!cumulative}%
 \indexdef{cumulative!universes}%
-that is that all the elements of the $i^{\mathrm{th}}$
-universe are also elements of the $(i+1)^{\mathrm{st}}$ universe, i.e.\ if
-$A:\UU_i$ then also $A:\UU_{i+1}$.
-This is convenient, but has the slightly unpleasant consequence that elements no longer have unique types, and is a bit tricky in other ways that need not concern us here; see the Notes.
+也就是说，第 $i$ 个宇宙的所有元素也都是第 $(i+1)^{\mathrm{st}}$ 个宇宙的元素，即若 $A:\UU_i$，则也有 $A:\UU_{i+1}$。
+这样做很方便，但有一个略有不便的后果：元素不再具有唯一的类型；而且在其他一些此处无需深究的方面也略有些棘手；详见注释。
 
-When we say that $A$ is a type, we mean that it inhabits some universe
-$\UU_i$. We usually want to avoid mentioning the level
+当我们说 $A$ 是一个类型时，我们的意思是它属于某个宇宙 $\UU_i$。
+我们通常希望避免显式地提及层级
 \indexdef{universe level}%
 \indexsee{level}{universe level or $n$-type}%
 \indexsee{type!universe!level}{universe level}%
-$i$ explicitly,
-and just assume that levels can be assigned in a consistent way; thus we
-may write $A:\UU$ omitting the level. This way we can even write
-$\UU:\UU$, which can be read as $\UU_i:\UU_{i+1}$, having left the
-indices implicit.  Writing universes in this style is referred to as
-\define{typical ambiguity}.
+$i$，而只是假设可以一致地指定层级；
+因此我们可以省略层级，直接写作 $A:\UU$。
+这样一来，我们甚至可以写出 $\UU:\UU$，它可以读作 $\UU_i:\UU_{i+1}$，因为我们隐去了指标。
+这种书写宇宙的方式被称为\define{典型歧义（typical ambiguity）}。
 \indexdef{typical ambiguity}%
-It is convenient but a bit dangerous, since it allows us to write valid-looking proofs that reproduce the paradoxes of self-reference.
-If there is any doubt about whether an argument is correct, the way to check it is to try to assign levels consistently to all universes appearing in it.
-When some universe \UU is assumed, we may refer to types belonging to \UU as \define{small types}.
+它很方便，但也有一点危险，因为它允许我们写出看似有效、实则重现了自指悖论的证明。
+如果对一个论证是否正确存在任何疑问，检查的方法就是尝试为其中出现的所有宇宙一致地分配层级。
+当我们假设某个宇宙 \UU 时，我们将属于 \UU 的类型称为\define{小类型（small types）}。
 \indexdef{small!type}%
 \indexdef{type!small}%
 
-To model a collection of types varying over a given type $A$, we use functions $B : A \to \UU$  whose
-codomain is a universe. These functions are called
-\define{families of types} (or sometimes \emph{dependent types});
+为了对随给定类型 $A$ 变化的一组类型进行建模，我们使用陪域为宇宙的函数 $B : A \to \UU$。
+这样的函数称为\define{类型族（families of types）}（有时也称为\emph{依值类型（dependent types）}）；
 \indexsee{family!of types}{type, family of}%
 \indexdef{type!family of}%
 \indexsee{type!dependent}{type, family of}%
 \indexsee{dependent!type}{type, family of}%
-they correspond to families of sets as used in
-set theory.
+它们对应于集合论中使用的集合族。
 
 \symlabel{fin}%
-An example of a type family is the family of finite sets $\Fin
-: \nat \to \UU$, where $\Fin(n)$ is a type with exactly $n$ elements.
-(We cannot \emph{define} the family $\Fin$ yet --- indeed, we have not even introduced its domain $\nat$ yet --- but we will be able to soon; see \cref{ex:fin}.)
-We may denote the elements of $\Fin(n)$ by $0_n,1_n,\dots,(n-1)_n$, with subscripts to emphasize that the elements of $\Fin(n)$ are different from those of $\Fin(m)$ if $n$ is different from $m$, and all are different from the ordinary natural numbers (which we will introduce in \cref{sec:inductive-types}).
+类型族的一个例子是有限集族 $\Fin : \nat \to \UU$，其中 $\Fin(n)$ 是一个恰好有 $n$ 个元素的类型。
+（我们目前还不能\emph{定义}这个族 $\Fin$——事实上，我们甚至尚未引入其定义域 $\nat$——但我们很快就能做到；参见\cref{ex:fin}。）
+我们可以用 $0_n,1_n,\dots,(n-1)_n$ 来记 $\Fin(n)$ 中的元素，并给这些元素加上下标，以强调当 $n$ 与 $m$ 不同时，$\Fin(n)$ 的元素与 $\Fin(m)$ 的元素是不同的，并且它们全都不同于普通的自然数（后者我们将在\cref{sec:inductive-types}中引入）。
 \index{finite!sets, family of}%
 
-A more trivial (but very important) example of a type family is the \define{constant} type family
+一个更平凡（却非常重要）的类型族例子是\define{常值类型族（constant type family）}
 \indexdef{constant!type family}%
 \indexdef{type!family of!constant}%
-at a type $B:\UU$, which is of course the constant function $(\lam{x:A} B):A\to\UU$.
+，即取值恒为某个类型 $B:\UU$，自然也就是常值函数 $(\lam{x:A} B):A\to\UU$。
 
-As a \emph{non}-example, in our version of type theory there is no type family ``$\lam{i:\nat} \UU_i$''.
-Indeed, there is no universe large enough to be its codomain.
-Moreover, we do not even identify the indices $i$ of the universes $\UU_i$ with the natural numbers \nat of type theory (the latter to be introduced in \cref{sec:inductive-types}).
+作为一个\emph{反}例，在我们这个版本的类型论中，不存在“$\lam{i:\nat} \UU_i$”这样的类型族。
+的确，没有哪个宇宙足够大，能够充当其陪域。
+此外，我们甚至不把诸宇宙 $\UU_i$ 的指标 $i$ 与类型论中的自然数 $\nat$ 视为等同（后者将在\cref{sec:inductive-types}中引入）。
 
 \index{type!universe|)}%
 
-\section{Dependent function types (\texorpdfstring{$\Pi$}{Π}-types)}
+\section{依值函数类型（\texorpdfstring{$\Pi$}{Π} 类型）}
 \label{sec:pi-types}
 
 \index{type!dependent function|(defstyle}%
@@ -442,30 +395,22 @@ Moreover, we do not even identify the indices $i$ of the universes $\UU_i$ with 
 \indexsee{dependent!function}{function, dependent}%
 \indexsee{type!Pi-@$\Pi$-}{type, dependent function}%
 \indexsee{Pi-type@$\Pi$-type}{type, dependent function}%
-In type theory we often use a more general version of function
-types, called a \define{$\Pi$-type} or \define{dependent function type}. The elements of
-a $\Pi$-type are functions
-whose codomain type can vary depending on the
-element of the domain to which the function is applied, called \define{dependent functions}. The name ``$\Pi$-type''
-is used because this type can also be regarded as the  cartesian
-product over a given type.
+在类型论中，我们经常使用函数类型的一个更一般的版本，称为\define{$\Pi$ 类型（$\Pi$-type）}或\define{依值函数类型（dependent function type）}。
+$\Pi$ 类型的元素是一些函数，其陪域类型可随函数所应用的定义域元素而变化，这样的函数称为\define{依值函数（dependent functions）}。
+之所以使用“$\Pi$ 类型”这个名称，是因为这种类型也可以被视为给定类型上的 Cartesian 积。
 
-Given a type $A:\UU$ and a family $B:A \to \UU$, we may construct
-the type of dependent functions $\prd{x:A}B(x) : \UU$.
-There are many alternative notations for this type, such as
-\[ \tprd{x:A} B(x) \qquad \dprd{x:A}B(x) \qquad \lprd{x:A} B(x). \]
-If $B$ is a constant family, then the dependent product type is the ordinary function type:
+给定一个类型 $A:\UU$ 和一个类型族 $B:A \to \UU$，我们可以构造依值函数的类型 $\prd{x:A}B(x) : \UU$。
+这个类型有许多替代记法，例如 \[ \tprd{x:A} B(x) \qquad \dprd{x:A}B(x) \qquad \lprd{x:A} B(x). \]。
+如果 $B$ 是一个常值族，那么这个依值乘积类型就是通常的函数类型：
 \[\tprd{x:A} B \jdeq (A \to B).\]
-Indeed, all the constructions of $\Pi$-types are generalizations of the corresponding constructions on ordinary function types.
+事实上，所有关于 $\Pi$ 类型的构造都是普通函数类型上相应构造的推广。
 
 \indexdef{definition!of function, direct}%
-We can introduce dependent functions by explicit definitions: to
-define $f : \prd{x:A}B(x)$, where $f$ is the name of a dependent function to be
-defined, we need an expression $\Phi : B(x)$ possibly involving the variable $x:A$,
+我们可以通过显式定义来引入依值函数：要定义 $f : \prd{x:A}B(x)$，其中 $f$ 是待定义的依值函数的名字，我们需要一个可能涉及变量 $x:A$ 的表达式 $\Phi : B(x)$，
 \index{variable}%
-and we write
+并写作
 \[ f(x) \defeq \Phi \qquad \mbox{for $x:A$}.\]
-Alternatively, we can use \define{$\lambda$-abstraction}%
+另一种方式是使用\define{$\lambda$-抽象（$\lambda$-abstraction）}。%
 \index{lambda abstraction@$\lambda$-abstraction|defstyle}%
 \begin{equation}
   \label{eq:lambda-abstraction}
@@ -473,233 +418,210 @@ Alternatively, we can use \define{$\lambda$-abstraction}%
 \end{equation}
 \indexdef{application!of dependent function}%
 \indexdef{function!dependent!application}%
-As with non-dependent functions, we can \define{apply} a dependent function $f : \prd{x:A}B(x)$ to an argument $a:A$ to obtain an element $f(a):B(a)$.
-The equalities are the same as for the ordinary function type, i.e.\ we have the following computation rule:
+与非依值函数一样，我们可以将一个依值函数 $f : \prd{x:A}B(x)$ \define{应用（apply）}到一个参数 $a:A$ 上，从而得到一个元素 $f(a):B(a)$。
+其等式与普通函数类型相同，即我们有以下计算规则：
 \index{computation rule!for dependent function types}%
-given $a:A$ we have $f(a) \jdeq \Phi'$ and  
-$(\lamu{x:A} \Phi)(a) \jdeq \Phi'$, where $\Phi' $ is obtained by replacing all
-occurrences of $x$ in $\Phi$ by $a$ (avoiding variable capture, as always).
-Similarly, we have the uniqueness principle $f\jdeq (\lam{x} f(x))$ for any $f:\prd{x:A} B(x)$.
+给定 $a:A$，我们有 $f(a) \jdeq \Phi'$ 且 $(\lamu{x:A} \Phi)(a) \jdeq \Phi'$，其中 $\Phi'$ 是通过将 $\Phi$ 中所有 $x$ 的出现替换为 $a$ 而得到的（并像往常一样避免变量捕获）。
+类似地，对于任何 $f:\prd{x:A} B(x)$，我们有唯一性原理 $f\jdeq (\lam{x} f(x))$。
 \index{uniqueness!principle!for dependent function types}%
 
-As an example, recall from \cref{sec:universes} that there is a type family $\Fin:\nat\to\UU$ whose values are the standard finite sets, with elements $0_n,1_n,\dots,(n-1)_n : \Fin(n)$.
-There is then a dependent function $\fmax : \prd{n:\nat} \Fin(n+1)$
-which returns the ``largest'' element of each nonempty finite type, $\fmax(n) \defeq n_{n+1}$.
+作为一个例子，回忆 \cref{sec:universes}，那里有一个类型族 $\Fin:\nat\to\UU$，其值是标准有限集，元素为 $0_n,1_n,\dots,(n-1)_n : \Fin(n)$。
+那么存在一个依值函数 $\fmax : \prd{n:\nat} \Fin(n+1)$，它返回每个非空有限类型的“最大”元素，即 $\fmax(n) \defeq n_{n+1}$。
 \index{finite!sets, family of}%
-As was the case for $\Fin$ itself, we cannot define $\fmax$ yet, but we will be able to soon; see \cref{ex:fin}.
+正如 $\Fin$ 本身的情况，我们现在还不能定义 $\fmax$，但很快就可以；参见 \cref{ex:fin}。
 
-Another important class of dependent function types, which we can define now, are functions which are \define{polymorphic}
+另一类我们现在就能定义的重要依值函数类型，是那些在给定宇宙上\define{多态的（polymorphic）}函数。
 \indexdef{function!polymorphic}%
 \indexdef{polymorphic function}%
-over a given universe.
-A polymorphic function is one which takes a type as one of its arguments, and then acts on elements of that type (or of other types constructed from it).
+一个多态函数接受一个类型作为其参数之一，然后对该类型（或由它构造的其他类型）的元素进行操作。
 \symlabel{idfunc}%
 \indexdef{function!identity}%
 \indexdef{identity!function}%
-An example is the polymorphic identity function $\idfunc : \prd{A:\UU} A \to A$, which we define by $\idfunc{} \defeq \lam{A:\type}{x:A} x$.
-(Like $\lambda$-abstractions, $\Pi$s automatically scope\index{scope} over the rest of the expression unless delimited; thus $\idfunc : \prd{A:\UU} A \to A$ means $\idfunc : \prd{A:\UU} (A \to A)$.
-This convention, though unusual in mathematics, is common in type theory.)
+一个例子是多态恒等函数 $\idfunc : \prd{A:\UU} A \to A$，我们通过 $\idfunc{} \defeq \lam{A:\type}{x:A} x$ 来定义它。
+（与 $\lambda$-抽象类似，除非被限定，否则 $\Pi$ 会自动将其作用域\index{scope}扩展到表达式的其余部分；因此 $\idfunc : \prd{A:\UU} A \to A$ 表示 $\idfunc : \prd{A:\UU} (A \to A)$。
+这个约定在数学中虽不常见，但在类型论中很普遍。）
 
-We sometimes write some arguments of a dependent function as subscripts.
-For instance, we might equivalently define the polymorphic identity function by $\idfunc[A](x) \defeq x$.
-Moreover, if an argument can be inferred from context, we may omit it altogether.
-For instance, if $a:A$, then writing $\idfunc(a)$ is unambiguous, since $\idfunc$ must mean $\idfunc[A]$ in order for it to be applicable to $a$.
+我们有时把依值函数的某些参数写作下标。
+例如，我们可以用 $\idfunc[A](x) \defeq x$ 等价地定义多态恒等函数。
+此外，如果某个参数能从上下文中推断出来，我们也可以将其完全省略。
+例如，如果 $a:A$，那么写 $\idfunc(a)$ 是没有歧义的，因为要使 $\idfunc$ 能应用于 $a$，它就必须指 $\idfunc[A]$。
 
-Another, less trivial, example of a polymorphic function is the ``swap'' operation that switches the order of the arguments of a (curried) two-argument function:
+另一个不那么平凡的多态函数例子是``$\mathsf{swap}$''操作，它交换一个（柯里化的）两参数函数的参数顺序：
 \[ \mathsf{swap} : \prd{A:\UU}{B:\UU}{C:\UU} (A\to B\to C) \to (B\to A \to C). \]
-We can define this by
+我们可以通过下式定义它：
 \[ \mathsf{swap}(A,B,C,g) \defeq \lam{b}{a} g(a)(b). \]
-We might also equivalently write the type arguments as subscripts:
+我们也可以将类型参数等价地写作下标：
 \[ \mathsf{swap}_{A,B,C}(g)(b,a) \defeq g(a,b). \]
 
-Note that as we did for ordinary functions, we use currying to define dependent functions with
-several arguments (such as $\mathsf{swap}$). However, in the dependent case the second domain may
-depend on the first one, and the codomain may depend on both. That is,
-given $A:\UU$ and type families $B : A \to \UU$ and $C : \prd{x:A}B(x) \to \UU$, we may construct
-the type $\prd{x:A}{y : B(x)} C(x,y)$ of functions with two
-arguments.
-In the case when $B$ is constant and equal to $A$, we may condense the notation and write $\prd{x,y:A}$; for instance, the type of $\mathsf{swap}$ could also be written as
+注意，正如我们对普通函数所做的那样，我们使用柯里化来定义具有多个参数（例如 $\mathsf{swap}$）的依值函数。
+然而，在依值的情形下，第二个定义域可能依赖于第一个定义域，并且陪域可能依赖于两者。
+也就是说，给定 $A:\UU$ 以及类型族 $B : A \to \UU$ 和 $C : \prd{x:A}B(x) \to \UU$，我们可以构造具有两个参数的函数的类型 $\prd{x:A}{y : B(x)} C(x,y)$。
+当 $B$ 为常值且等于 $A$ 时，我们可以简化写法，记为 $\prd{x,y:A}$；例如，$\mathsf{swap}$ 的类型也可以写成
 \[ \mathsf{swap} : \prd{A,B,C:\UU} (A\to B\to C) \to (B\to A \to C). \]
-Finally, given $f:\prd{x:A}{y : B(x)} C(x,y)$ and arguments $a:A$ and $b:B(a)$, we have $f(a)(b) : C(a,b)$, which,
-as before, we write as $f(a,b) : C(a,b)$.
+最后，给定 $f:\prd{x:A}{y : B(x)} C(x,y)$ 以及参数 $a:A$ 和 $b:B(a)$，我们有 $f(a)(b) : C(a,b)$，如前所述，我们将其写作 $f(a,b) : C(a,b)$。
 
 \index{type!dependent function|)}%
 \index{function!dependent|)}%
 
-
-\section{Product types}
+\section{积类型}
 \label{sec:finite-product-types}
 
-Given types $A,B:\UU$ we introduce the type $A\times B:\UU$, which we call their \define{cartesian product}.
+给定类型 $A,B:\UU$，我们引入类型 $A\times B:\UU$，称之为它们的\define{Cartesian 积（cartesian product）}。
 \indexsee{cartesian product}{type, product}%
 \indexsee{type!cartesian product}{type, product}%
 \index{type!product|(defstyle}%
 \indexsee{product!of types}{type, product}%
-We also introduce a nullary product type, called the \define{unit type} $\unit : \UU$.
+我们还引入一种零元积类型，称为\define{单位类型（unit type）} $\unit : \UU$。
 \indexsee{nullary!product}{type, unit}%
 \indexsee{unit!type}{type, unit}%
 \index{type!unit|(defstyle}%
-We intend the elements of $A\times B$ to be pairs $\tup{a}{b} : A \times B$, where $a:A$ and $b:B$, and the only element of $\unit$ to be some particular object $\ttt : \unit$.
+我们希望 $A\times B$ 的元素是由 $a:A$ 和 $b:B$ 构成的对 $\tup{a}{b} : A \times B$，而 $\unit$ 的唯一元素是某个特定的对象 $\ttt : \unit$。
 \indexdef{pair!ordered}%
-However, unlike in set theory, where we define ordered pairs to be particular sets and then collect them all together into the cartesian product, in type theory, ordered pairs are a primitive concept, as are functions.   
+然而，与集合论的做法不同——在集合论中，有序对先被定义为特定的集合，再汇总成 Cartesian 积——在类型论中，有序对与函数一样，都是原始概念。
 
 \begin{rmk}\label{rmk:introducing-new-concepts}
-  There is a general pattern for introduction of a new kind of type in type theory.
-  We have already seen this pattern in \cref{sec:function-types,sec:pi-types}\footnote{The description of universes above is an exception.}, so it is worth emphasizing the general form.
-  To specify a type, we specify:
+  在类型论中，引入一种新类型有一个通用的模式。
+  我们已经在前文见过这个模式\cref{sec:function-types,sec:pi-types}\footnote{上文对宇宙的描述是一个例外。}，因此值得强调一下它的通用形式。
+  要规定一个类型，我们需要规定：
   \begin{enumerate}
-  \item how to form new types of this kind, via \define{formation rules}.
+  \item 如何通过\define{形成规则（formation rules）}来形成此类新类型。
     \indexdef{formation rule}%
     \index{rule!formation}%  
-(For example, we can form the function type $A \to B$ when $A$ is a type and when $B$ is a type. We can form the dependent function type $\prd{x:A} B(x)$ when $A$ is a type and $B(x)$ is a type for $x:A$.)
+（例如，当 $A$ 是一个类型且 $B$ 是一个类型时，我们可以构造函数类型 $A \to B$。当 $A$ 是一个类型且对 $x:A$ 有 $B(x)$ 是一个类型时，我们可以构造依值函数类型 $\prd{x:A} B(x)$。）
 
-  \item how to construct elements of that type.  
-    These are called the type's \define{constructors} or \define{introduction rules}.
+  \item 如何构造该类型的元素。
+    这些称为该类型的\define{构造子（constructors）}或\define{引入规则（introduction rules）}。
     \indexdef{constructor}%
     \indexdef{rule!introduction}%
     \indexdef{introduction rule}%
-    (For example, a function type has one constructor, $\lambda$-abstraction.
-    Recall that a direct definition like $f(x)\defeq 2x$ can equivalently be phrased
-    as a $\lambda$-abstraction $f\defeq \lam{x} 2x$.)
+    （例如，函数类型有一个构造子：$\lambda$-抽象。回想一下，像 $f(x)\defeq 2x$ 这样的直接定义，等价于用 $\lambda$-抽象写成 $f\defeq \lam{x} 2x$。）
 
-  \item how to use elements of that type.  
-    These are called the type's \define{eliminators} or \define{elimination rules}.
+  \item 如何使用该类型的元素。
+    这些称为该类型的\define{消去子（eliminators）}或\define{消去规则（elimination rules）}。
     \indexsee{rule!elimination}{eliminator}%
     \indexsee{elimination rule}{eliminator}%
     \indexdef{eliminator}%
-    (For example, the function type has one eliminator, namely function application.)
+    （例如，函数类型有一个消去子：函数应用。）
 
-  \item 
-    a \define{computation rule}\indexdef{computation rule}\footnote{also referred to as \define{$\beta$-reduction}\index{beta-reduction@$\beta $-reduction|footstyle}}, which expresses how an eliminator acts on a constructor.
-(For example, for functions, the computation rule states that $(\lamu{x:A}\Phi)(a)$ is judgmentally equal to the substitution of $a$ for $x$ in $\Phi$.)
+  \item
+    一条\define{计算规则（computation rule）}\indexdef{computation rule}\footnote{也被称为\define{$\beta$-归约（$\beta $-reduction）}\index{beta-reduction@$\beta $-reduction|footstyle}}，它表达了消去子如何作用于构造子。
+（例如，对于函数，计算规则断言 $(\lamu{x:A}\Phi)(a)$ 在判断相等性上等于将 $\Phi$ 中的 $x$ 替换为 $a$ 的结果。）
 
-  \item 
-    an optional \define{uniqueness principle}\indexdef{uniqueness!principle}\footnote{also referred to as \define{$\eta$-expansion}\index{eta-expansion@$\eta $-expansion|footstyle}}, which expresses
-uniqueness of maps into or out of that type.  
-For some types, the uniqueness principle characterizes maps into the type, by stating that 
-every element of the type is uniquely determined by the results of applying eliminators to it, and can be reconstructed from those results by applying a constructor --- thus expressing how constructors act on eliminators, dually to the computation rule.
-(For example, for functions, the uniqueness principle says that any function $f$ is judgmentally equal to the ``expanded'' function $\lamu{x} f(x)$, and thus is uniquely determined by its values.)
-For other types, the uniqueness principle says that every map (function) \emph{from} that type is uniquely determined by some data. (An example is the coproduct type introduced in \cref{sec:coproduct-types}, whose uniqueness principle is mentioned in \cref{sec:universal-properties}.)  
+  \item
+    一条可选的\define{唯一性原理（uniqueness principle）}\indexdef{uniqueness!principle}\footnote{也被称为\define{$\eta$-展开（$\eta $-expansion）}\index{eta-expansion@$\eta $-expansion|footstyle}}，它表达了进入或离开该类型的映射的唯一性。
+    对于某些类型，唯一性原理刻画的是进入该类型的映射：它断言该类型的每个元素都由对其应用消去子所得的结果唯一确定，并且可以对这些结果应用构造子来重建该元素——从而表达了构造子如何作用于消去子，与计算规则对偶。
+    （例如，对于函数，唯一性原理说任何函数 $f$ 在判断相等性上都等于``展开后的''函数 $\lamu{x} f(x)$，因此由其取值唯一确定。）
+    对于另一些类型，唯一性原理则说，每一个\emph{从}该类型出发的映射（函数）都由某些数据唯一确定。（一个例子是 \cref{sec:coproduct-types} 中引入的余积类型，其唯一性原理在 \cref{sec:universal-properties} 中提到。）
     
-    When the uniqueness principle is not taken as a rule of judgmental equality, it is often nevertheless provable as a \emph{propositional} equality from the other rules for the type.
-    In this case we call it a \define{propositional uniqueness principle}.
+    当唯一性原理不作为一条判断相等性规则时，它通常仍可从该类型的其他规则出发，作为一条\emph{命题}相等性得到证明。
+    在这种情况下，我们称之为\define{命题唯一性原理（propositional uniqueness principle）}。
     \indexdef{uniqueness!principle, propositional}%
     \indexsee{propositional!uniqueness principle}{uniqueness principle, propositional}%
-    (In later chapters we will also occasionally encounter \emph{propositional computation rules}.)
+    （在后面的章节中，我们偶尔也会遇到\emph{命题计算规则（propositional computation rules）}。）
     \indexdef{computation rule!propositional}%
   \end{enumerate}
-The inference rules in \cref{sec:syntax-more-formally} are organized and named accordingly; see, for example, \cref{sec:more-formal-pi}, where each possibility is realized.
+\cref{sec:syntax-more-formally} 中的推导规则正是据此组织和命名的；例如，可参见 \cref{sec:more-formal-pi}，其中每种可能性都得到了体现。
 \end{rmk}
 
-The way to construct pairs is obvious: given $a:A$ and $b:B$, we may form $(a,b):A\times B$.
-Similarly, there is a unique way to construct elements of $\unit$, namely we have $\ttt:\unit$.
-We expect that ``every element of $A\times B$ is a pair'', which is the uniqueness principle for products; we do not assert this as a rule of type theory, but we will prove it later on as a propositional equality.
+构造有序对的方式是显而易见的：给定 $a:A$ 和 $b:B$，我们可以构造 $(a,b):A\times B$。
+类似地，构造 $\unit$ 的元素也有唯一的方式，即我们有 $\ttt:\unit$。
+我们期望``$A\times B$ 的每个元素都是一个有序对''，这正是积类型的唯一性原理；我们并不将其作为类型论的一条规则来断言，但随后会将其作为一条命题相等性加以证明。
 
-Now, how can we \emph{use} pairs, i.e.\ how can we define functions out of a product type?
-Let us first consider the definition of a non-dependent function $f : A\times B \to C$.
-Since we intend the only elements of $A\times B$ to be pairs, we expect to be able to define such a function by prescribing the result
-when $f$ is applied to a pair $\tup{a}{b}$.
-We can prescribe these results by providing a function $g : A \to B \to C$.
-Thus, we introduce a new rule (the elimination rule for products), which says that for any such $g$, we can define a function $f : A\times B \to C$ by
+现在，我们该如何\emph{使用}这些对，也就是如何定义从积类型出发的函数呢？
+我们先来考虑非依值函数 $f : A\times B \to C$ 的定义。
+由于我们意图让 $A\times B$ 的元素仅为对，我们期望能够通过规定 $f$ 应用于对 $\tup{a}{b}$ 时的结果来定义这样的函数。
+我们可以通过给出一个函数 $g : A \to B \to C$ 来规定这些结果。
+于是，我们引入一条新的规则（积的消去规则），该规则说：对于任意这样的 $g$，我们可以定义一个函数 $f : A\times B \to C$，满足：
 \[ f(\tup{a}{b}) \defeq g(a)(b). \]
-We avoid writing $g(a,b)$ here, in order to emphasize that $g$ is not a function on a product.
-(However, later on in the book we will often write $g(a,b)$ both for functions on a product and for curried functions of two variables.)
-This defining equation is the computation rule for product types\index{computation rule!for product types}.
+我们在这里避免写作 $g(a,b)$，是为了强调 $g$ 并不是一个定义在积上的函数。
+（不过，在本书后续部分，我们将会经常用 $g(a,b)$ 同时表示积上的函数和两个变量的柯里化函数。）
+这个定义方程就是积类型的计算规则\index{computation rule!for product types}。
 
-Note that in set theory, we would justify the above definition of $f$ by the fact that every element of $A\times B$ is an ordered pair, so that it suffices to define $f$ on such pairs.
-By contrast, type theory reverses the situation: we assume that a function on $A\times B$ is well-defined as soon as we specify its values on pairs, and from this (or more precisely, from its more general version for dependent functions, below) we will be able to \emph{prove} that every element of $A\times B$ is a pair.
-From a category-theoretic perspective, we can say that we define the product $A\times B$ to be left adjoint to the ``exponential'' $B\to C$, which we have already introduced.
+请注意，在集合论中，我们这样定义 $f$ 的依据是这样一个事实：$A\times B$ 中的每个元素都是有序对，因此只需在这些对上定义 $f$ 即可。
+相比之下，类型论反转了这一情况：我们假定，只要规定了函数在对上的取值，该函数在 $A\times B$ 上就是良定义的；并且从这一点出发（更准确地说，从下面将要介绍的、针对依值函数的更一般版本出发），我们将能够\emph{证明} $A\times B$ 中的每个元素都是一个对。
+从范畴论的角度来看，我们可以说，我们把积 $A\times B$ 定义为我们已经引入的``指数'' $B\to C$ 的左伴随。
 
-As an example, we can derive the \define{projection}
+举个例子，我们可以推导出\define{投影（projection）}
 \indexsee{function!projection}{projection}%
 \indexsee{component, of a pair}{projection}%
 \indexdef{projection!from cartesian product type}%
-functions
+函数
 \symlabel{defn:proj}%
 \begin{align*}
   \fst & :  A \times B \to A \\
   \snd & :  A \times B \to B
 \end{align*}
-with the defining equations 
+其定义方程为：
 \begin{align*}
   \fst(\tup{a}{b}) & \defeq  a \\
   \snd(\tup{a}{b}) & \defeq  b.
 \end{align*}
 %
 \symlabel{defn:recursor-times}%
-Rather than invoking this principle of function definition every time we want to define a function, an alternative approach is to invoke it once, in a universal case, and then simply apply the resulting function in all other cases.
-That is, we may define a function of type
+与其每次定义函数时都援引这一函数定义原则，另一种方法是只在一个最一般的情形下援引它一次，然后在所有其他情形中直接应用所得到的函数。
+也就是说，我们可以定义类型为
 \begin{equation}
   \rec{A\times B} : \prd{C:\UU}(A \to B \to C) \to A \times B \to C
 \end{equation}
-with the defining equation
+的函数，其定义方程为：
 \[\rec{A\times B}(C,g,\tup{a}{b}) \defeq g(a)(b). \]
-Then instead of defining functions such as $\fst$ and $\snd$ directly by a defining equation, we could  define
+这样一来，我们就不必直接用定义方程来定义像 $\fst$ 和 $\snd$ 这样的函数，而是可以定义：
 \begin{align*}
   \fst &\defeq \rec{A\times B}(A, \lam{a}{b} a)\\
   \snd &\defeq \rec{A\times B}(B, \lam{a}{b} b).
 \end{align*}
-We refer to the function $\rec{A\times B}$ as the \define{recursor}
+我们称函数 $\rec{A\times B}$ 为积类型的 \define{递归子（recursor）}
 \indexsee{recursor}{recursion principle}%
-for product types.  The name ``recursor'' is a bit unfortunate here, since no recursion is taking place.  It comes from the fact that product types are a degenerate example of a general framework for inductive types, and for types such as the natural numbers, the recursor will actually be recursive.  We may also speak of the \define{recursion principle} for cartesian products, meaning the fact that we can define a function $f:A\times B\to C$ as above by giving its value on pairs.
+。``递归子''这个名字在这里有点不妥，因为并没有发生任何递归。这个名字来源于积类型是归纳类型一般框架下的一个退化例子；对于像自然数这样的类型，递归子才是真正递归的。我们也可以谈及 Cartesian 积的\define{递归原理（recursion principle）}，意思就是我们可以像上面那样，通过给出它在对上的值来定义一个函数 $f:A\times B\to C$。
 \index{recursion principle!for cartesian product}%
 
-We leave it as a simple exercise to show that the recursor can be
-derived from the projections and vice versa.
+递归子可以从投影函数推导出来，反之亦然，我们将此留作一个简单的练习。
 % Ex: Derive from projections
 
 \symlabel{defn:recursor-unit}%
-We also have a recursor for the unit type:
+单位类型也有一个递归子：
 \[\rec{\unit} : \prd{C:\UU}C \to \unit \to C\]
-with the defining equation
+其定义方程为：
 \[ \rec{\unit}(C,c,\ttt) \defeq c. \]
-Although we include it to maintain the pattern of type definitions, the recursor for $\unit$ is completely useless,
-because we could have defined such a function directly
-by simply ignoring the argument of type $\unit$.
+虽然我们为了保持类型定义的模式一致性而包含了它，但 $\unit$ 的递归子完全没有用，因为我们本可以直接定义一个这样的函数，只需简单地忽略类型为 $\unit$ 的那个参数即可。
 
-To be able to define \emph{dependent} functions over the product type, we have
-to generalize the recursor. Given $C: A \times B \to \UU$, we may
-define a function $f : \prd{x : A \times B} C(x)$ by providing a
-function
+为了能在积类型上定义\emph{依值}函数，我们必须推广递归子。给定 $C: A \times B \to \UU$，我们可以通过提供一个函数
 \narrowequation{
  g : \prd{x:A}\prd{y:B} C(\tup{x}{y})
 }
-with defining equation
-\[ f(\tup x y) \defeq g(x)(y). \] 
-For example, in this way we can prove the propositional uniqueness principle, which says that every element of $A\times B$ is equal to a pair.
+来定义一个函数 $f : \prd{x : A \times B} C(x)$，其定义方程为：
+\[ f(\tup x y) \defeq g(x)(y). \]
+例如，用这种方法我们可以证明命题唯一性原理，即 $A\times B$ 中的每个元素都等于一个对。
 \index{uniqueness!principle, propositional!for product types}%
-Specifically, we can construct a function
+具体来说，我们可以构造一个函数：
 \[ \uniq{A\times B} : \prd{x:A \times B} (\id[A\times B]{\tup{\fst {(x)}}{\snd {(x)}}}{x}). \]
-Here we are using the identity type, which we are going to introduce below in \cref{sec:identity-types}.
-However, all we need to know now is that there is a reflexivity element $\refl{x} : \id[A]{x}{x}$ for any $x:A$.
-Given this, we can define
+这里我们用到了相等类型，我们将在下文 \cref{sec:identity-types} 中介绍它。
+不过，我们现在只需要知道，对于任何 $x:A$，存在一个自反性元素 $\refl{x} : \id[A]{x}{x}$。
+据此，我们可以定义：
 \label{uniquenessproduct}
 \[ \uniq{A\times B}(\tup{a}{b}) \defeq \refl{\tup{a}{b}}. \]
-This construction works, because in the case that $x \defeq \tup{a}{b}$ we can 
-calculate 
+这个构造之所以有效，是因为在 $x \defeq \tup{a}{b}$ 的情形下，我们可以利用投影的定义方程来计算：
 \[ \tup{\fst(\tup{a}{b})}{\snd{(\tup{a}{b})}} \jdeq \tup{a}{b} \]
-using the defining equations for the projections. Therefore,
+因此，
 \[ \refl{\tup{a}{b}} : \id{\tup{\fst(\tup{a}{b})}{\snd{(\tup{a}{b})}}}{\tup{a}{b}} \]
-is well-typed, since both sides of the equality are judgmentally equal.
+是良类型的，因为等号两边是判断相等的。
 
-More generally, the ability to define dependent functions in this way means that to prove a property for all elements of a product, it is enough 
-to prove it for its canonical elements, the ordered pairs.
-When we come to inductive types such as the natural numbers, the analogous property will be the ability to write proofs by induction.
-Thus, if we do as we did above and apply this principle once in the universal case, we call the resulting function \define{induction} for product types: given $A,B : \UU$ we have
+更一般地说，以这种方式定义依值函数的能力意味着：要证明一个性质对于积类型的所有元素都成立，只需对它的规范元素——即有序对——证明该性质就够了。
+当我们后面遇到像自然数这样的归纳类型时，与之类似的性质就是进行归纳证明的能力。
+因此，如果我们仿照上面的做法，将这一原则在最一般的情形下应用一次，我们称所得到的函数为积类型的\define{归纳（induction）}：给定 $A,B : \UU$，我们有
 \symlabel{defn:induction-times}%
 \[ \ind{A\times B} : \prd{C:A \times B \to \UU}
 \Parens{\prd{x:A}{y:B} C(\tup{x}{y})} \to \prd{x:A \times B} C(x) \]
-with the defining equation 
+其定义方程为
 \[ \ind{A\times B}(C,g,\tup{a}{b}) \defeq g(a)(b). \]
-Similarly, we may speak of a dependent function defined on pairs being obtained from the \define{induction principle}
+类似地，我们也可以说，定义在有序对上的一个依值函数是从 Cartesian 积的\define{归纳原理（induction principle）}
 \index{induction principle}%
 \index{induction principle!for product}%
-of the cartesian product.
-It is easy to see that the recursor is just the special case of induction
-in the case that the family $C$ is constant.
-Because induction describes how to use an element of the product type, induction is also called the \define{(dependent) eliminator},
+得到的。
+容易看出，递归子只是归纳在类型族 $C$ 为常值时的特例。
+因为归纳描述了如何使用一个积类型的元素，所以归纳也被称为\define{（依值）消去子（(dependent) eliminator）}，
 \indexsee{eliminator!of inductive type!dependent}{induction principle}%
-and recursion the \define{non-dependent eliminator}.
+而递归则被称为\define{非依值消去子（non-dependent eliminator）}。
 \indexsee{eliminator!of inductive type!non-dependent}{recursion principle}%
 \indexsee{non-dependent eliminator}{recursion principle}%
 \indexsee{dependent eliminator}{induction principle}%
@@ -707,25 +629,24 @@ and recursion the \define{non-dependent eliminator}.
 % We can read induction propositionally as saying that a property which
 % is true for all pairs holds for all elements of the product type.
 
-Induction for the unit type turns out to be more useful than the
-recursor: 
+单位类型的归纳实际上比递归子更有用：
 \symlabel{defn:induction-unit}%
 \[ \ind{\unit} : \prd{C:\unit \to \UU} C(\ttt) \to \prd{x:\unit}C(x)\]
-with the defining equation
+其定义方程为
 \[ \ind{\unit}(C,c,\ttt) \defeq c. \]
-Induction enables us to prove the propositional uniqueness principle for $\unit$, which asserts that its only inhabitant is $\ttt$.
-That is, we can construct
+借助归纳，我们可以证明 $\unit$ 的命题唯一性原理，该原理断言 $\unit$ 中唯一的实例就是 $\ttt$。
+也就是说，我们可以构造
 \label{uniquenessunit}
 \[\uniq{\unit} : \prd{x:\unit} \id{x}{\ttt} \]
-by using the defining equations
+通过定义方程：
 \[\uniq{\unit}(\ttt) \defeq \refl{\ttt} \]
-or equivalently by using induction:
+或等价地通过归纳：
 \[\uniq{\unit} \defeq \ind{\unit}(\lamu{x:\unit} \id{x}{\ttt},\refl{\ttt}). \]
 
 \index{type!product|)}%
 \index{type!unit|)}%
 
-\section{Dependent pair types (\texorpdfstring{$\Sigma$}{Σ}-types)}
+\section{依值对类型 ($\Sigma$ 类型)}
 \label{sec:sigma-types}
 
 \index{type!dependent pair|(defstyle}%
@@ -734,76 +655,68 @@ or equivalently by using induction:
 \indexsee{Sigma-type@$\Sigma$-type}{type, dependent pair}%
 \indexsee{sum!dependent}{type, dependent pair}%
 
-Just as we generalized function types (\cref{sec:function-types}) to dependent function types (\cref{sec:pi-types}), it is often useful to generalize the product types from \cref{sec:finite-product-types} to allow the type of
-the second component of a pair to vary depending on the choice of the first
-component. This is called a \define{dependent pair type}, or \define{$\Sigma$-type}, because in set theory it
-corresponds to an indexed sum (in the sense of coproduct or
-disjoint union) over a given type.
+正如我们将函数类型（\cref{sec:function-types}）推广为依值函数类型（\cref{sec:pi-types}）一样，将 \cref{sec:finite-product-types} 中引入的积类型加以推广，使得一个``对''中第二个分量的类型可以随第一个分量的选择不同而变化，这也常常很有用。
+这被称为\define{依值对类型（dependent pair type）}，或\define{$\Sigma$ 类型（$\Sigma$-type）}，因为在集合论中，它对应于给定类型上的索引和（在余积或不相交并的意义上）。
 
-Given a type $A:\UU$ and a family $B : A \to \UU$, the dependent
-pair type is written as $\sm{x:A} B(x) : \UU$.
-Alternative notations are 
+给定一个类型 $A:\UU$ 以及一个类型族 $B : A \to \UU$，依值对类型写作 $\sm{x:A} B(x) : \UU$。
+其他的记法还有
 \[ \tsm{x:A} B(x) \hspace{2cm} \dsm{x:A}B(x) \hspace{2cm} \lsm{x:A} B(x). \]
-Like other binding constructs such as $\lambda$-abstractions and $\Pi$s, $\Sigma$s automatically scope\index{scope} over the rest of the expression unless delimited, so e.g.\ $\sm{x:A} B(x) \to C$ means $\sm{x:A} (B(x) \to C)$.
+与 $\lambda$-抽象和 $\Pi$ 类型这样的绑定构造类似，$\Sigma$ 也会自动作用于表达式的其余部分，除非被明确界定；例如，$\sm{x:A} B(x) \to C$ 表示 $\sm{x:A} (B(x) \to C)$。
 
 \symlabel{defn:dependent-pair}%
 \indexdef{pair!dependent}%
-The way to construct elements of a dependent pair type is by pairing: we have
-$\tup{a}{b} : \sm{x:A} B(x)$ given $a:A$ and $b:B(a)$.
-If $B$ is constant, then the dependent pair type is the
-ordinary cartesian product type:
+构造依值对类型元素的方式是通过配对：给定 $a:A$ 和 $b:B(a)$，我们有 $\tup{a}{b} : \sm{x:A} B(x)$。
+如果 $B$ 是常值的，那么依值对类型就是通常的 Cartesian 积类型：
 \[ \Parens{\sm{x:A} B} \jdeq (A \times B).\]
-All the constructions on $\Sigma$-types arise as straightforward generalizations of the ones for product types, with dependent functions often replacing non-dependent ones.
+$\Sigma$ 类型上的所有构造都是积类型相应构造的直接推广，其中非依值的函数常常被依值函数所取代。
 
-For instance, the recursion principle%
+例如，$\Sigma$ 类型的递归原理%
 \index{recursion principle!for dependent pair type}
-says that to define a non-dependent function out of a $\Sigma$-type
-$f : (\sm{x:A} B(x)) \to C$, we provide a function 
-$g : \prd{x:A} B(x) \to C$, and then we can define $f$ via the defining
-equation
+说的是，要定义一个从 $\Sigma$ 类型$f : (\sm{x:A} B(x)) \to C$出发的非依值函数，我们给出一个函数
+$g : \prd{x:A} B(x) \to C$，然后通过定义方程
 \[ f(\tup{a}{b}) \defeq g(a)(b). \]
+来定义 $f$。
 \indexdef{projection!from dependent pair type}%
-For instance, we can derive the first projection from a $\Sigma$-type:
+例如，我们可以推导出 $\Sigma$ 类型的第一投影：
 \symlabel{defn:dependent-proj1}%
 \begin{equation*}
   \fst : \Parens{\sm{x : A}B(x)} \to A
 \end{equation*}
-by the defining equation
+其定义方程为
 \begin{equation*}
   \fst(\tup{a}{b}) \defeq a.
 \end{equation*}
-However, since the type of the second component of a pair
+然而，由于一个配对
 \narrowequation{
   (a,b):\sm{x:A} B(x)
 }
-is $B(a)$, the second projection must be a \emph{dependent} function, whose type involves the first projection function:
+的第二分量的类型是 $B(a)$，第二投影必须是一个\emph{依值}函数，其类型涉及第一投影函数：
 \symlabel{defn:dependent-proj2}%
 \[ \snd : \prd{p:\sm{x : A}B(x)}B(\fst(p)). \]
-Thus we need the \emph{induction} principle%
+为此，我们需要 $\Sigma$ 类型的\emph{归纳}原理%
 \index{induction principle!for dependent pair type}
-for $\Sigma$-types (the ``dependent eliminator'').
-This says that to construct a dependent function out of a $\Sigma$-type into a family $C : (\sm{x:A} B(x)) \to \UU$, we need a function
+（即"依值消去子"）。
+该原理说，要构造一个从 $\Sigma$ 类型出发、取值于某个类型族$C : (\sm{x:A} B(x)) \to \UU$的依值函数，我们需要一个函数
 \[ g : \prd{a:A}{b:B(a)} C(\tup{a}{b}). \]
-We can then derive a function 
+然后我们可以导出一个函数
 \[ f : \prd{p : \sm{x:A}B(x)} C(p) \]
-with  defining equation\index{computation rule!for dependent pair type}
+其定义方程为\index{computation rule!for dependent pair type}
 \[ f(\tup{a}{b}) \defeq g(a)(b).\]
-Applying this with $C(p)\defeq B(\fst(p))$, we can define
+取$C(p)\defeq B(\fst(p))$，我们可以定义
 \narrowequation{
 \snd : \prd{p:\sm{x : A}B(x)}B(\fst(p))
 }
-with the obvious equation
+它满足如下自然的方程：
 \[ \snd(\tup{a}{b})  \defeq  b. \]
-To convince ourselves that this is correct, we note that $B (\fst(\tup{a}{b})) \jdeq B(a)$, using the defining equation for $\fst$, and
-indeed $b : B(a)$.
+为了确认这是正确的，我们注意到，利用 $\fst$ 的定义方程可得$B (\fst(\tup{a}{b})) \jdeq B(a)$，而确实有 $b : B(a)$。
 
-We can package the recursion and induction principles into the recursor for $\Sigma$:
+我们可以将递归原理和归纳原理整合为 $\Sigma$ 的递归子：
 \symlabel{defn:recursor-sm}%
 \[ \rec{\sm{x:A}B(x)} : \dprd{C:\UU}\Parens{\tprd{x:A} B(x) \to C} \to
 \Parens{\tsm{x:A}B(x)} \to C \]
-with the defining equation
+其定义方程为
 \[ \rec{\sm{x:A}B(x)}(C,g,\tup{a}{b}) \defeq g(a)(b) \]
-and the corresponding induction operator:
+以及相应的归纳算子：
 \symlabel{defn:induction-sm}%
 \begin{narrowmultline*}
   \ind{\sm{x:A}B(x)} : \narrowbreak
@@ -811,128 +724,123 @@ and the corresponding induction operator:
     \Parens{\tprd{a:A}{b:B(a)} C(\tup{a}{b})}
     \to \dprd{p : \sm{x:A}B(x)} C(p)
 \end{narrowmultline*}
-with the defining equation 
+其定义方程为
 \[ \ind{\sm{x:A}B(x)}(C,g,\tup{a}{b}) \defeq g(a)(b). \]
-As before, the recursor is the special case of induction
-when the family $C$ is constant.
+和之前一样，当族 $C$ 为常量时，递归子是归纳算子的特例。
 
-As a further example, consider the following principle, where $A$ and $B$ are types and $R:A\to B\to \UU$:
+再举一个例子，考虑以下原理，其中 $A$ 和 $B$ 是类型，且 $R:A\to B\to \UU$：
 \[ \ac : \Parens{\tprd{x:A} \tsm{y :B} R(x,y)} \to
 \Parens{\tsm{f:A\to B} \tprd{x:A} R(x,f(x))}.
 \]
-We may regard $R$ as a ``proof-relevant relation''
+我们可以将 $R$ 视为 $A$ 和 $B$ 之间的一个"证明相关关系"
 \index{mathematics!proof-relevant}%
-between $A$ and $B$, with $R(a,b)$ the type of witnesses for relatedness of $a:A$ and $b:B$.
-Then $\ac$ says intuitively that if we have a dependent function $g$ assigning to every $a:A$ a dependent pair $(b,r)$ where $b:B$ and $r:R(a,b)$, then we have a function $f:A\to B$ and a dependent function assigning to every $a:A$ a witness that $R(a,f(a))$.
-Our intuition tells us that we can just split up the values of $g$ into their components.
-Indeed, using the projections we have just defined, we can define:
+，其中 $R(a,b)$ 是 $a:A$ 与 $b:B$ 相关的见证的类型。
+那么，$\ac$ 直观上说的是：如果我们有一个依值函数 $g$，它为每个 $a:A$ 指派一个依值对 $(b,r)$，其中 $b:B$ 且 $r:R(a,b)$，那么我们就能得到一个函数 $f:A\to B$ 和一个依值函数，后者为每个 $a:A$ 指派一个 $R(a,f(a))$ 的见证。
+直觉告诉我们，只需将 $g$ 的值拆分为各自的分量即可。
+事实上，利用我们刚刚定义的投影，我们可以如下定义：
 \[ \ac(g) \defeq \Parens{\lamu{x:A} \fst(g(x)),\, \lamu{x:A} \snd(g(x))}. \]
-To verify that this is well-typed, note that if $g:\prd{x:A} \sm{y :B} R(x,y)$, we have
+为了验证这是良类型的，注意如果$g:\prd{x:A} \sm{y :B} R(x,y)$，我们有
 \begin{align*}
 \lamu{x:A} \fst(g(x)) &: A \to  B, \\
 \lamu{x:A} \snd(g(x)) &: \tprd{x:A} R(x,\fst(g(x))).
 \end{align*}
-Moreover, the type $\prd{x:A} R(x,\fst(g(x)))$ is the result of applying the type family $\lamu{f:A\to B} \tprd{x:A} R(x,f(x))$ being summed over in the codomain of \ac to the function $\lamu{x:A} \fst(g(x))$:
+此外，类型$\prd{x:A} R(x,\fst(g(x)))$是将 $\ac$ 陪域中参与求和的类型族$\lamu{f:A\to B} \tprd{x:A} R(x,f(x))$应用于函数$\lamu{x:A} \fst(g(x))$所得的结果：
 \[ \tprd{x:A} R(x,\fst(g(x))) \jdeq
 \Parens{\lamu{f:A\to B} \tprd{x:A} R(x,f(x))}\big(\lamu{x:A} \fst(g(x))\big). \]
-Thus, we have
+因此，我们得到
 \[ \Parens{\lamu{x:A} \fst(g(x)),\, \lamu{x:A} \snd(g(x))} : \tsm{f:A\to B} \tprd{x:A} R(x,f(x))\]
-as required.
+这正是所要求的。
 
-If we read $\Pi$ as ``for all'' and $\Sigma$ as ``there exists'', then the type of the function $\ac$ expresses:
-\emph{if for all $x:A$ there is a $y:B$ such that $R(x,y)$, then there is a function $f : A \to B$ such that for all $x:A$ we have $R(x,f(x))$}.
-Since this sounds like a version of the axiom of choice, the function \ac has traditionally been called the \define{type-theoretic axiom of choice}, and as we have just shown, it can be proved directly from the rules of type theory, rather than having to be taken as an axiom.
+如果我们把 $\Pi$ 读作"对所有"，把 $\Sigma$ 读作"存在"，那么函数 $\ac$ 的类型表达的是：
+\emph{如果对所有 $x:A$，都存在 $y:B$ 使得 $R(x,y)$ 成立，那么存在一个函数 $f : A \to B$，使得对所有 $x:A$ 我们都有 $R(x,f(x))$}。
+由于这听起来像是选择公理的一个版本，函数 \ac 传统上被称为\define{类型论选择公理}，而且正如我们刚才所展示的，它可以直接从类型论的规则中证明，而无须作为公理引入。
 \index{axiom!of choice!type-theoretic}%
-However, note that no choice is actually involved, since the choices have already been given to us in the premise: all we have to do is take it apart into two functions: one representing the choice and the other its correctness.
-In \cref{sec:axiom-choice} we will give another formulation of an ``axiom of choice'' which is closer to the usual one.
+然而，请注意这里实际上并不涉及任何"选择"，因为选择已经在前提中给出了：我们要做的仅仅是将其分解为两个函数——一个代表选择，另一个代表其正确性。
+在\cref{sec:axiom-choice}中，我们将给出"选择公理"的另一种表述，它更接近通常的形式。
 
-Dependent pair types are often used to define types of mathematical structures, which commonly consist of several dependent pieces of data.
-To take a simple example, suppose we want to define a \define{magma}\indexdef{magma} to be a type $A$ together with a binary operation $m:A\to A\to A$.
-The precise meaning of the phrase ``together with''\index{together with} (and the synonymous ``equipped with''\index{equipped with}) is that ``a magma'' is a \emph{pair} $(A,m)$ consisting of a type $A:\UU$ and an operation $m:A\to A\to A$.
-Since the type $A\to A\to A$ of the second component $m$ of this pair depends on its first component $A$, such pairs belong to a dependent pair type.
-Thus, the definition ``a magma is a type $A$ together with a binary operation $m:A\to A\to A$'' should be read as defining \emph{the type of magmas} to be
+依值对类型常被用来定义各种数学结构的类型，这些结构通常由若干相互依值的数据构成。
+举个简单的例子，假设我们想定义一个\define{原群}\indexdef{magma}为一个类型 $A$ 附带一个二元运算 $m:A\to A\to A$。
+短语"附带（together with）"\index{together with}（及其同义词"配备（equipped with）"\index{equipped with}）的精确含义是："一个原群"就是一个由类型 $A:\UU$ 和运算 $m:A\to A\to A$ 组成的\emph{对} $(A,m)$。
+由于这个对的第二个分量 $m$ 的类型 $A\to A\to A$ 依赖于其第一个分量 $A$，这样的对属于一个依值对类型。
+因此，定义"一个原群是一个类型 $A$ 附带一个二元运算 $m:A\to A\to A$"应理解为将\emph{原群的类型}定义为
 \[ \mathsf{Magma} \defeq \sm{A:\UU} (A\to A\to A). \]
-Given a magma, we extract its underlying type (its ``carrier''\index{carrier}) with the first projection $\proj1$, and its operation with the second projection $\proj2$.
-Of course, structures built from more than two pieces of data require iterated pair types, which may be only partially dependent; for instance the type of pointed magmas (magmas $(A,m)$ equipped with a basepoint $e:A$) is
+给定一个原群，我们用第一投影 $\proj1$ 提取它的底层类型（即"载体（carrier）"\index{carrier}），用第二投影 $\proj2$ 提取它的运算。
+当然，由多于两个数据构成的结构需要用到迭代的对类型，其中的依赖关系可能只是部分的；例如，带点原群（即附带基点 $e:A$ 的原群 $(A,m)$）的类型是
 \[ \mathsf{PointedMagma} \defeq \sm{A:\UU} (A\to A\to A) \times A. \]
-We generally also want to impose axioms on such a structure, e.g.\ to make a pointed magma into a monoid or a group.
-This can also be done using $\Sigma$-types; see \cref{sec:pat}.
+我们通常还想为这样的结构施加公理，例如将一个带点原群变成一个幺半群或一个群。
+这同样可以利用 $\Sigma$ 类型来实现；参见\cref{sec:pat}。
 
-In the rest of the book, we will sometimes make definitions of this sort explicit, but eventually we trust the reader to translate them from English into $\Sigma$-types.
-We also generally follow the common mathematical practice of using the same letter for a structure of this sort and for its carrier (which amounts to leaving the appropriate projection function implicit in the notation): that is, we will speak of a magma $A$ with its operation $m:A\to A\to A$.
+在本书后续部分，我们有时会明确写出这类定义，但最终我们信任读者能够自行将它们从英文描述翻译成 $\Sigma$ 类型。
+我们通常也遵循常见的数学惯例，用同一个字母来表示这类结构及其载体（这相当于在记法中省略相应的投影函数）：也就是说，我们会谈论一个原群 $A$ 及其运算 $m:A\to A\to A$。
 
-Note that the canonical elements of $\mathsf{PointedMagma}$ are of the form $(A,(m,e))$ where $A:\UU$, $m:A\to A\to A$, and $e:A$.
-Because of the frequency with which iterated $\Sigma$-types of this sort arise, we use the usual notation of ordered triples, quadruples and so on to stand for nested pairs (possibly dependent) associating to the right.
-That is, we have $(x,y,z) \defeq (x,(y,z))$ and $(x,y,z,w)\defeq (x,(y,(z,w)))$, etc.
+注意，$\mathsf{PointedMagma}$ 的典范元素具有形式 $(A,(m,e))$，其中 $A:\UU$，$m:A\to A\to A$，且 $e:A$。
+由于这类迭代的 $\Sigma$ 类型频繁出现，我们采用通常的有序三元组、四元组等记法来表示（可能依值的）嵌套对，且约定为右结合。
+也就是说，我们有 $(x,y,z) \defeq (x,(y,z))$ 与 $(x,y,z,w)\defeq (x,(y,(z,w)))$，等等。
 
 \index{type!dependent pair|)}%
 
-\section{Coproduct types}
+\section{余积类型}
 \label{sec:coproduct-types}
 
-Given $A,B:\UU$, we introduce their \define{coproduct} type $A+B:\UU$.
+给定 $A,B:\UU$，我们引入它们的\define{余积}\indexdef{coproduct}类型 $A+B:\UU$。
 \indexsee{coproduct}{type, coproduct}%
 \index{type!coproduct|(defstyle}%
 \indexsee{disjoint!sum}{type, coproduct}%
 \indexsee{disjoint!union}{type, coproduct}%
 \indexsee{sum!disjoint}{type, coproduct}%
 \indexsee{union!disjoint}{type, coproduct}%
-This corresponds to the \emph{disjoint union} in set theory, and we may also use that name for it.
-In type theory, as was the case with functions and products, the coproduct must be a fundamental construction, since there is no previously given notion of ``union of types''.
-We also introduce a
-nullary version: the \define{empty type $\emptyt:\UU$}.
+这对应于集合论中的\emph{不交并}，我们有时也用这个名称来称呼它。
+在类型论中，和函数类型、积类型的情况一样，余积必须作为一个基本构造来引入，因为此前并没有预先给定的"类型的并"的概念。
+我们同时还引入一个零元的版本：\define{空类型 $\emptyt:\UU$}。
 \indexsee{nullary!coproduct}{type, empty}%
 \indexsee{empty type}{type, empty}%
 \index{type!empty|(defstyle}%
 
-There are two ways to construct elements of $A+B$, either as $\inl(a) : A+B$ for $a:A$, or as
-$\inr(b):A+B$ for $b:B$.
-(The names $\inl$ and $\inr$ are short for ``left injection'' and ``right injection''.)
-There are no ways to construct elements of the empty type. 
+构造 $A+B$ 的元素有两种方式：对于 $a:A$，可以构造 $\inl(a) : A+B$；对于 $b:B$，可以构造 $\inr(b):A+B$。
+（名称 $\inl$ 和 $\inr$ 分别是"左嵌入（left injection）"和"右嵌入（right injection）"的缩写。）
+空类型则没有任何构造其元素的方式。
 
 \index{recursion principle!for coproduct}
-To construct a non-dependent function $f : A+B \to C$, we need 
-functions $g_0 : A \to C$ and $g_1 : B \to C$. Then $f$ is defined
-via the defining equations
+要构造一个非依值函数 $f : A+B \to C$，我们需要两个函数 $g_0 : A \to C$ 和 $g_1 : B \to C$。
+然后 $f$ 由以下定义方程定义：
 \begin{align*}
   f(\inl(a)) &\defeq g_0(a), \\
   f(\inr(b)) &\defeq g_1(b).
 \end{align*}
-That is, the function $f$ is defined by \define{case analysis}.
-\indexdef{case analysis}%
-As before, we can derive the recursor:
+也就是说，函数 $f$ 是通过\define{分情形讨论}\indexdef{case analysis}来定义的。
+%
+和之前一样，我们可以推导出递归子：
 \symlabel{defn:recursor-plus}%
 \[ \rec{A+B} : \dprd{C:\UU}(A \to C) \to (B\to C) \to A+B \to C\]
-with the defining equations
+其定义方程为
 \begin{align*}
 \rec{A+B}(C,g_0,g_1,\inl(a)) &\defeq g_0(a), \\
 \rec{A+B}(C,g_0,g_1,\inr(b)) &\defeq g_1(b).
 \end{align*}
 
 \index{recursion principle!for empty type}
-We can always construct a function $f : \emptyt \to C$ without
-having to give any defining equations, because there are no elements of \emptyt on which to define $f$.
-Thus, the recursor for $\emptyt$ is
+对于空类型，我们总是可以构造一个函数 $f : \emptyt \to C$，而无需给出任何定义方程，因为 $\emptyt$ 中根本没有元素可供定义 $f$。
+因此，$\emptyt$ 的递归子是
 \symlabel{defn:recursor-emptyt}%
 \[\rec{\emptyt} : \tprd{C:\UU} \emptyt \to C,\]
-which constructs the canonical function from the empty type to any other type.
-Logically, it corresponds to the principle \textit{ex falso quodlibet}.
+它构造了从空类型到任何其他类型的典范函数。
+在逻辑上，它对应于原则 \textit{ex falso quodlibet}。
 \index{ex falso quodlibet@\textit{ex falso quodlibet}}
 
 \index{induction principle!for coproduct}
-To construct a dependent function $f:\prd{x:A+B}C(x)$ out of a coproduct, we assume as given the family 
-$C: (A + B) \to \UU$, and 
-require 
+要构造一个从余积出发的依值函数 $f:\prd{x:A+B}C(x)$，我们假设给定了类型族
+$C: (A + B) \to \UU$，
+并要求
 \begin{align*}
   g_0 &: \prd{a:A} C(\inl(a)), \\
   g_1 &: \prd{b:B} C(\inr(b)).
 \end{align*}
-This yields $f$ with the defining equations:\index{computation rule!for coproduct type}
+这样我们就得到了 $f$，其定义方程是：\index{computation rule!for coproduct type}
 \begin{align*}
   f(\inl(a)) &\defeq g_0(a), \\
   f(\inr(b)) &\defeq g_1(b).
 \end{align*}
-We package this scheme into the induction principle for coproducts:
+我们将这一模式封装为余积的归纳原理：
 \symlabel{defn:induction-plus}%
 \begin{narrowmultline*}
   \ind{A+B} :
@@ -940,162 +848,152 @@ We package this scheme into the induction principle for coproducts:
   \Parens{\tprd{a:A} C(\inl(a))} \to \narrowbreak
   \Parens{\tprd{b:B} C(\inr(b))} \to \tprd{x:A+B}C(x). 
 \end{narrowmultline*}
-As before, the recursor arises in the case that the family $C$ is
-constant. 
+和之前一样，当族 $C$ 是常值的时候，我们就得到了递归子。
 
 \index{induction principle!for empty type}
-The induction principle for the empty type
+空类型的归纳原理
 \symlabel{defn:induction-emptyt}%
 \[ \ind{\emptyt} : \prd{C:\emptyt \to \UU}{z:\emptyt} C(z) \]
-gives us a way to define a trivial dependent function out of the
-empty type. % In the presence of $\eta$-equality it is derivable
+为我们提供了一种从空类型出发定义平凡依值函数的方法。% In the presence of $\eta$-equality it is derivable
 % from the recursor.
 % ex
 
 \index{type!coproduct|)}%
 \index{type!empty|)}%
 
-
-\section{The type of booleans}
+\section{布尔类型}
 \label{sec:type-booleans}
 
 \indexsee{boolean!type of}{type of booleans}%
 \index{type!of booleans|(defstyle}%
-The type of booleans $\bool:\UU$ is intended to have exactly two elements 
-$\bfalse,\btrue : \bool$. It is clear that we could construct this
-type out of coproduct
+布尔类型 $\bool:\UU$ 旨在恰好有两个元素
+$\bfalse,\btrue : \bool$。显然，我们可以用余积
 % this one results in a warning message just because it's on the same page as the previous entry 
 % for {type!coproduct}, so it's not our fault
 \index{type!coproduct}%
-and unit\index{type!unit} types as $\unit + \unit$. However,
-since it is used frequently, we give the explicit rules here.
-Indeed, we are going to observe that we can also go the other way
-and derive binary coproducts from $\Sigma$-types and $\bool$.
+与单位\index{type!unit}类型把它构造出来，即 $\unit + \unit$。不过，
+由于它很常用，我们在此给出显式规则。
+实际上，我们将看到反过来也是可以的：我们可以从 $\Sigma$-类型和 $\bool$ 出发来推导出二元余积。
 
 \index{recursion principle!for type of booleans}
-To derive a function $f : \bool \to C$ we need $c_0,c_1 : C$ and
-add the defining equations
+要推导出一个函数 $f : \bool \to C$，我们需要 $c_0,c_1 : C$，并附加定义方程
 \begin{align*}
   f(\bfalse) &\defeq c_0, \\
   f(\btrue)  &\defeq c_1.
 \end{align*}
-The recursor corresponds to the if-then-else construct in
-functional programming:
+这个递归子对应着函数式编程中的 if-then-else 结构：
 \symlabel{defn:recursor-bool}%
 \[ \rec{\bool} : \prd{C:\UU}  C \to C \to \bool \to C \]
-with the defining equations
+其定义方程是
 \begin{align*}
   \rec{\bool}(C,c_0,c_1,\bfalse) &\defeq c_0, \\
   \rec{\bool}(C,c_0,c_1,\btrue)  &\defeq c_1.
 \end{align*}
 
 \index{induction principle!for type of booleans}
-Given $C : \bool \to \UU$, to derive a dependent function 
-$f : \prd{x:\bool}C(x)$ we need $c_0:C(\bfalse)$ and $c_1 : C(\btrue)$, in which case we can give the defining equations
+给定 $C : \bool \to \UU$，要推导一个依值函数
+$f : \prd{x:\bool}C(x)$，我们需要 $c_0:C(\bfalse)$ 和 $c_1 : C(\btrue)$，在此情形下即可给出定义方程
 \begin{align*}
   f(\bfalse) &\defeq c_0, \\
   f(\btrue)  &\defeq c_1.
 \end{align*}
-We package this up into the induction principle
+我们将此封装为归纳原理
 \symlabel{defn:induction-bool}%
 \[ \ind{\bool} : \dprd{C:\bool \to \UU}  C(\bfalse) \to C(\btrue)
 \to \tprd{x:\bool} C(x) \]
-with the defining equations
+其定义方程为
 \begin{align*}
   \ind{\bool}(C,c_0,c_1,\bfalse) &\defeq c_0, \\
   \ind{\bool}(C,c_0,c_1,\btrue)  &\defeq c_1.
 \end{align*}
 
-As an example, using the induction principle we can deduce that, as we expect, every element of $\bool$ is either $\btrue$ or $\bfalse$.
-As before, in order to state this we use the equality types which we have not yet introduced, but we need only the fact that everything is equal to itself by $\refl{x}:x=x$.
-Thus, we construct an element of
-\begin{equation}\label{thm:allbool-trueorfalse}
+举个例子，使用归纳原理我们可以推导出——正如我们所料—— $\bool$ 的每个元素要么是 $\btrue$，要么是 $\bfalse$。
+和之前一样，为了表述这一点，我们需要用到尚未介绍的相等类型；但我们只需用到"每个对象都通过 $\refl{x}:x=x$ 等于自身"这一事实。
+于是，我们构造一个 \begin{equation}\label{thm:allbool-trueorfalse}
   \prd{x:\bool}(x=\bfalse)+(x=\btrue),
-\end{equation}
-i.e.\ a function assigning to each $x:\bool$ either an equality $x=\bfalse$ or an equality $x=\btrue$.
-We define this element using the induction principle for \bool, with $C(x) \defeq (x=\bfalse)+(x=\btrue)$;
-the two inputs are $\inl(\refl{\bfalse}) : C(\bfalse)$ and $\inr(\refl{\btrue}):C(\btrue)$.
-In other words, our element of~\eqref{thm:allbool-trueorfalse} is
+\end{equation} 的元素，即一个函数，它能给每个 $x:\bool$ 指派一个相等 $x=\bfalse$ 或 $x=\btrue$。
+我们使用 \bool 的归纳原理来定义这个元素，给定 $C(x) \defeq (x=\bfalse)+(x=\btrue)$；
+两个输入分别是 $\inl(\refl{\bfalse}) : C(\bfalse)$ 和 $\inr(\refl{\btrue}):C(\btrue)$。
+换句话说，我们所构造的 \eqref{thm:allbool-trueorfalse} 的元素是
 \[ \ind{\bool}\big(\lam{x}(x=\bfalse)+(x=\btrue),\, \inl(\refl{\bfalse}),\, \inr(\refl{\btrue})\big). \]
 
-We have remarked that $\Sigma$-types can be regarded as analogous to indexed disjoint unions, while coproducts are binary disjoint unions.
-It is natural to expect that a binary disjoint union $A+B$ could be constructed as an indexed one over the two-element type \bool.
-For this we need a type family $P:\bool\to\type$ such that $P(\bfalse)\jdeq A$ and $P(\btrue)\jdeq B$.
-Indeed, we can obtain such a family precisely by the recursion principle for $\bool$.
+我们曾提到，$\Sigma$ 类型可以类比为带索引的无交并，而余积则是二元无交并。
+自然地，我们会期望，一个二元无交并 $A+B$ 可以构造为在两元素类型 \bool 上的带索引的无交并。
+为此，我们需要一个类型族 $P:\bool\to\type$，使得 $P(\bfalse)\jdeq A$ 且 $P(\btrue)\jdeq B$。
+事实上，我们能恰好通过 $\bool$ 的递归原理得到这样一个族。
 \index{type!family of}%
-(The ability to define \emph{type families} by induction and recursion, using the fact that the universe $\UU$ is itself a type, is a subtle and important aspect of type theory.)
-Thus, we could have defined
+（利用宇宙 $\UU$ 本身也是一个类型这一事实，通过归纳和递归来定义\emph{类型族（type families）}，是类型论中一个微妙且重要的方面。）
+因此，我们本可以定义
 \index{type!coproduct}%
 \[ A + B \defeq \sm{x:\bool} \rec{\bool}(\UU,A,B,x) \]
-with
+其中
 \begin{align*}
   \inl(a) &\defeq \tup{\bfalse}{a}, \\
   \inr(b) &\defeq \tup{\btrue}{b}.
 \end{align*}
-We leave it as an exercise to derive the induction principle of a coproduct type from this definition.
-(See also \cref{ex:sum-via-bool,sec:appetizer-univalence}.)
+我们将其留作练习：从这一定义出发推导余积类型的归纳原理。
+（另见 \cref{ex:sum-via-bool,sec:appetizer-univalence}。）
 
-We can apply the same idea to products and $\Pi$-types: we could have defined
+我们可以将同样的想法应用到积类型和 $\Pi$ 类型上：我们本可以定义
 \[ A \times B \defeq \prd{x:\bool}\rec{\bool}(\UU,A,B,x). \]
-Pairs could then be constructed using induction for \bool:
+此时，可以借助 \bool 的归纳原理来构造配对：
 \[ \tup{a}{b} \defeq \ind{\bool}(\rec{\bool}(\UU,A,B),a,b) \]
-while the projections are straightforward applications
+而投影则是直接的应用：
 \begin{align*}
   \fst(p) &\defeq p(\bfalse), \\
   \snd(p) &\defeq p(\btrue).
 \end{align*}
-The derivation of the induction principle for binary products defined in this way is a bit more involved, and requires function extensionality, which we will introduce in \cref{sec:compute-pi}.
-Moreover, we do not get the same judgmental equalities; see \cref{ex:prod-via-bool}.
-This is a recurrent issue when encoding one type as another; we will return to it in \cref{sec:htpy-inductive}. 
+为以这种方式定义的二元积推导归纳原理要稍微复杂一些，并且需要用到我们将在 \cref{sec:compute-pi} 中引入的函数外延性。
+此外，我们也得不到相同的判断相等性；详见 \cref{ex:prod-via-bool}。
+这是在用一种类型编码另一种类型时会反复出现的问题；我们将在 \cref{sec:htpy-inductive} 中回头讨论它。
 
-We may occasionally refer to the elements $\bfalse$ and $\btrue$ of $\bool$ as ``false'' and ``true'' respectively.
-However, note that unlike in classical\index{mathematics!classical} mathematics, we do not use elements of $\bool$ as truth values
+我们偶尔会将 $\bool$ 的元素 $\bfalse$ 和 $\btrue$ 分别称为"假"和"真"。
+然而，需要注意的是，与经典\index{mathematics!classical}数学不同，我们并不把 $\bool$ 的元素当作真值
 \index{value!truth}%
-or as propositions.
-(Instead we identify propositions with types; see \cref{sec:pat}.)
-In particular, the type $A \to \bool$ is not generally the power set\index{power set} of $A$; it represents only the ``decidable'' subsets of $A$ (see \cref{cha:logic}).
+也不将其当作命题。
+（相反，我们将命题与类型等同起来；见 \cref{sec:pat}。）
+特别地，类型 $A \to \bool$ 通常并非 $A$ 的幂集\index{power set}；它仅表示 $A$ 的那些"可判定"子集（见 \cref{cha:logic}）。
 \index{decidable!subset}%
 
 \index{type!of booleans|)}%
 
-
-\section{The natural numbers}
+\section{自然数}
 \label{sec:inductive-types}
 
 \indexsee{type!of natural numbers}{natural numbers}%
 \index{natural numbers|(defstyle}%
 \indexsee{number!natural}{natural numbers}%
-So far we have rules for constructing new types by abstract operations, but for doing concrete mathematics we also require some concrete types, such as types of numbers.
-The most basic such is the type $\nat : \UU$ of natural numbers; once we have this we can construct integers, rational numbers, real numbers, and so on (see \cref{cha:real-numbers}).
+至此，我们已经有了通过抽象运算来构造新类型的规则，但要进行具体的数学工作，我们还需要一些具体的类型，例如数的类型。
+其中最基本的便是自然数类型 $\nat : \UU$；一旦有了它，我们就能构造整数、有理数、实数等等（参见\cref{cha:real-numbers}）。
 
-The elements of $\nat$ are constructed using $0 : \nat$\indexdef{zero} and the successor\indexdef{successor} operation $\suc : \nat \to \nat$.
-When denoting natural numbers, we adopt the usual decimal notation $1 \defeq \suc(0)$, $2 \defeq \suc(1)$, $3 \defeq \suc(2)$, \dots.
+$\nat$ 的元素由 $0 : \nat$\indexdef{zero} 与后继（successor）\indexdef{successor}运算 $\suc : \nat \to \nat$ 构造而成。
+在表示自然数时，我们采用常见的十进制记法：$1 \defeq \suc(0)$, $2 \defeq \suc(1)$, $3 \defeq \suc(2)$, \dots。
 
-The essential property of the natural numbers is that we can define functions by recursion and perform proofs by induction --- where now the words ``recursion'' and ``induction'' have a more familiar meaning.
+自然数的本质属性在于，我们可以通过递归来定义函数，并通过归纳来进行证明——此处"递归"与"归纳"这两个词具有更为熟悉的含义。
 \index{recursion principle!for natural numbers}%
-To construct a non-dependent function $f : \nat \to C$ out of the natural numbers by recursion, it is enough to provide a starting point $c_0 : C$ and a ``next step'' function $c_s : \nat \to C \to C$.
-This gives rise to $f$ with the defining equations\index{computation rule!for natural numbers}
+要通过递归构造一个从自然数出发的非依值函数 $f : \nat \to C$，只需提供一个起始点 $c_0 : C$ 以及一个"下一步"函数 $c_s : \nat \to C \to C$。
+这样便得到了 $f$，其定义方程为\index{computation rule!for natural numbers}
 \begin{align*}
   f(0) &\defeq c_0, \\
   f(\suc(n)) &\defeq c_s(n,f(n)).
 \end{align*}
-We say that $f$ is defined by \define{primitive recursion}.
+我们称 $f$ 是由\define{原始递归（primitive recursion）}定义的。
 \indexdef{primitive!recursion}%
 \indexdef{recursion!primitive}%
 
-As an example, we look at how to define a function on natural numbers which doubles its argument.
-In this case we have $C\defeq \nat$.
-We first need to supply the value of $\dbl(0)$, which is easy: we put $c_0 \defeq 0$.
-Next, to compute the value of $\dbl(\suc(n))$ for a natural number $n$, we first compute the value of $\dbl(n)$ and then perform the successor operation twice.
-This is captured by the recurrence\index{recurrence} $c_s(n,y) \defeq \suc(\suc(y))$.
-Note that the second argument $y$ of $c_s$ stands for the result of the \emph{recursive call}\index{recursive call} $\dbl(n)$.
+我们来看一个例子：如何定义一个将其参数加倍的函数。
+此时取 $C\defeq \nat$。
+我们首先需要给出 $\dbl(0)$ 的值，这很简单：令 $c_0 \defeq 0$。
+接着，要计算自然数 $n$ 对应的 $\dbl(\suc(n))$，我们先计算 $\dbl(n)$ 的值，然后执行两次后继运算。
+这由递推关系\index{recurrence} $c_s(n,y) \defeq \suc(\suc(y))$ 所刻画。
+注意，$c_s$ 的第二个参数 $y$ 代表了\emph{递归调用（recursive call）}\index{recursive call} $\dbl(n)$ 的结果。
 
-Defining $\dbl:\nat\to\nat$ by primitive recursion in this way, therefore, we obtain the defining equations:
+因此，以这种方式通过原始递归定义 $\dbl:\nat\to\nat$，我们得到如下定义方程：
 \begin{align*}
   \dbl(0) &\defeq 0\\
   \dbl(\suc(n)) &\defeq \suc(\suc(\dbl(n))).
 \end{align*}
-This indeed has the correct computational behavior: for example, we have 
+这确实具有正确的计算行为：例如，我们有
 \begin{align*}
   \dbl(2) &\jdeq \dbl(\suc(\suc(0)))\\
   & \jdeq c_s(\suc(0), \dbl(\suc(0))) \\
@@ -1106,547 +1004,541 @@ This indeed has the correct computational behavior: for example, we have
                  & \jdeq \suc(\suc(\suc(\suc(0))))\\
                  &\jdeq 4.
 \end{align*}
-We can define multi-variable functions by primitive recursion as well, by currying and allowing $C$ to be a function type.
+我们也可以通过原始递归来定义多变量函数，只需对函数进行柯里化，并允许 $C$ 自身是一个函数类型。
 \indexdef{addition!of natural numbers}
-For example, we define addition $\add : \nat \to \nat \to \nat$ with $C \defeq \nat \to \nat$ and the following ``starting point'' and ``next step'' data:
+例如，我们定义加法 $\add : \nat \to \nat \to \nat$，取 $C \defeq \nat \to \nat$ 及如下的"起始点"与"下一步"数据：
 \begin{align*}
   c_0 & : \nat \to \nat \\
   c_0 (n) & \defeq n \\
   c_s & : \nat \to (\nat \to \nat) \to (\nat \to \nat) \\
   c_s(m,g)(n) & \defeq \suc(g(n)).
 \end{align*}
-We thus obtain $\add : \nat \to \nat \to \nat$ satisfying the definitional equalities
+由此我们得到了满足如下定义相等性的 $\add : \nat \to \nat \to \nat$：
 \begin{align*}
   \add(0,n) &\jdeq n \\
   \add(\suc(m),n) &\jdeq \suc(\add(m,n)). 
 \end{align*}
-As usual, we write $\add(m,n)$ as $m+n$.
-The reader is invited to verify that $2+2\jdeq 4$.
+按惯例，我们将 $\add(m,n)$ 写作 $m+n$。
+请读者自行验证 $2+2\jdeq 4$。
 % ex: define multiplication and exponentiation.
 
-As in previous cases, we can package the principle of primitive recursion into a recursor:
+与之前的例子一样，我们可以将原始递归原理打包为一个递归子（recursor）：
 \[\rec{\nat}  : \dprd{C:\UU} C \to (\nat \to C \to C) \to \nat \to C \]
-with the defining equations
+其定义方程为
 \symlabel{defn:recursor-nat}%
 \begin{align*}
 \rec{\nat}(C,c_0,c_s,0)  &\defeq c_0, \\
 \rec{\nat}(C,c_0,c_s,\suc(n)) &\defeq c_s(n,\rec{\nat}(C,c_0,c_s,n)).
 \end{align*}
 %ex derive rec from it
-Using $\rec{\nat}$ we can present $\dbl$ and $\add$ as follows:
+利用 $\rec{\nat}$，我们可以将 $\dbl$ 和 $\add$ 表示如下：
 \begin{align}
 \dbl &\defeq \rec\nat\big(\nat,\, 0,\, \lamu{n:\nat}{y:\nat} \suc(\suc(y))\big) \label{eq:dbl-as-rec}\\
 \add &\defeq \rec{\nat}\big(\nat \to \nat,\, \lamu{n:\nat} n,\, \lamu{m:\nat}{g:\nat \to \nat}{n :\nat} \suc(g(n))\big).
 \end{align}
-Of course, all functions definable only using the primitive recursion principle will be \emph{computable}.
-(The presence of higher function types --- that is, functions with other functions as arguments --- does, however, mean we can define more than the usual primitive recursive functions; see e.g.~\cref{ex:ackermann}.)
-This is appropriate in constructive mathematics;
+当然，所有仅使用原始递归原理可定义的函数都是\emph{可计算的}。
+（然而，高阶函数类型——即以其他函数为参数的函数——的存在，确实意味着我们可以定义比通常的原始递归函数更多的函数；例如参见\cref{ex:ackermann}。）
+这在构造性数学中是合适的；
 \index{mathematics!constructive}%
-in \cref{sec:intuitionism,sec:axiom-choice} we will see how to augment type theory so that we can define more general mathematical functions.
+在\cref{sec:intuitionism,sec:axiom-choice}中，我们将看到如何扩充类型论，以便定义更一般的数学函数。
 
 \index{induction principle!for natural numbers}
-We now follow the same approach as for other types, generalizing primitive recursion to dependent functions to obtain an \emph{induction principle}.
-Thus, assume as given a family $C : \nat \to \UU$, an element $c_0 : C(0)$, and a function $c_s : \prd{n:\nat} C(n) \to C(\suc(n))$; then we can construct $f : \prd{n:\nat} C(n)$ with the defining equations:\index{computation rule!for natural numbers}
+我们现在沿用与其他类型相同的方法，将原始递归推广至依值函数，从而得到一个\emph{归纳原理}。
+因此，假设给定一个类型族 $C : \nat \to \UU$、一个元素 $c_0 : C(0)$ 以及一个函数 $c_s : \prd{n:\nat} C(n) \to C(\suc(n))$；那么我们可以构造 $f : \prd{n:\nat} C(n)$，其定义方程为：\index{computation rule!for natural numbers}
 \begin{align*}
   f(0) &\defeq c_0, \\
   f(\suc(n)) &\defeq c_s(n,f(n)).
 \end{align*}
-We can also package this into a single function
+我们也可以将其打包为单个函数
 \symlabel{defn:induction-nat}%
 \[\ind{\nat}  : \dprd{C:\nat\to \UU} C(0) \to \Parens{\tprd{n : \nat} C(n) \to C(\suc(n))} \to \tprd{n : \nat} C(n) \]
-with the defining equations
+其定义方程为
 \begin{align*}
 \ind{\nat}(C,c_0,c_s,0)  &\defeq c_0, \\
 \ind{\nat}(C,c_0,c_s,\suc(n)) &\defeq c_s(n,\ind{\nat}(C,c_0,c_s,n)).
 \end{align*}
-Here we finally see the connection to the classical notion of proof by induction.
-Recall that in type theory we represent propositions by types, and proving a proposition by inhabiting the corresponding type.
-In particular, a \emph{property} of natural numbers is represented by a family of types $P:\nat\to\type$.
-From this point of view, the above induction principle says that if we can prove $P(0)$, and if for any $n$ we can prove $P(\suc(n))$ assuming $P(n)$, then we have $P(n)$ for all $n$.
-This is, of course, exactly the usual principle of proof by induction on natural numbers.
+此处我们终于看到了与经典归纳证明概念的联系。
+回顾一下，在类型论中，我们用类型来表示命题，并通过给出对应类型的实例来证明该命题。
+特别地，自然数的一个\emph{性质}由一个类型族 $P:\nat\to\type$ 来表示。
+从这个角度来看，上述归纳原理是说：如果我们能证明 $P(0)$，并且对于任何 $n$，我们都能在假设 $P(n)$ 成立的前提下证明 $P(\suc(n))$，那么对任意 $n$ 都有 $P(n)$。
+这当然正是通常的自然数归纳证明原理。
 
 \index{associativity!of addition!of natural numbers}
-As an example, consider how we might represent an explicit proof that $+$ is associative.
-(We will not actually write out proofs in this style, but it serves as a useful example for understanding how induction is represented formally in type theory.)
-To derive
-\[\assoc : \prd{i,j,k:\nat} \id{i + (j + k)}{(i + j) + k}, \]
-it is sufficient to supply
+作为例子，考虑如何表示 $+$ 满足结合律的一个显式证明。
+（我们实际上不会以这种风格书写证明，但它作为例子有助于理解归纳在类型论中是如何被形式表示的。）
+为推导
+\[\assoc : \prd{i,j,k:\nat} \id{i + (j + k)}{(i + j) + k}, \]，
+只需提供
 \[ \assoc_0 :  \prd{j,k:\nat} \id{0 + (j + k)}{(0+ j) + k} \]
-and
+与
 \begin{narrowmultline*}
   \assoc_s  : \prd{i:\nat} \left(\prd{j,k:\nat} \id{i + (j + k)}{(i + j) + k}\right)
    \narrowbreak
    \to \prd{j,k:\nat} \id{\suc(i) + (j + k)}{(\suc(i) + j) + k}.
-\end{narrowmultline*}
-To derive $\assoc_0$, recall that $0+n \jdeq n$, and hence  $0 + (j + k) \jdeq j+k \jdeq (0+ j) + k$.
-Hence we can just set
-\[ \assoc_0(j,k) \defeq \refl{j+k}. \]
-For $\assoc_s$, recall that the definition of $+$ gives $\suc(m)+n \jdeq \suc(m+n)$, and hence 
+\end{narrowmultline*}。
+为推导 $\assoc_0$，回顾 $0+n \jdeq n$，因此 $0 + (j + k) \jdeq j+k \jdeq (0+ j) + k$。
+于是我们可以直接令
+\[ \assoc_0(j,k) \defeq \refl{j+k}. \]。
+对于 $\assoc_s$，回顾加法的定义给出 $\suc(m)+n \jdeq \suc(m+n)$，因此
 \begin{align*}
    \suc(i) + (j + k)  &\jdeq \suc(i+(j+k)) \qquad\text{and}\\
    (\suc(i)+j)+k &\jdeq \suc((i+j)+k).
-\end{align*}
-Thus, the output type of $\assoc_s$ is equivalently $\id{\suc(i+(j+k))}{\suc((i+j)+k)}$.
-But its input (the ``inductive hypothesis'')
+\end{align*}。
+这样一来，$\assoc_s$ 的输出类型便等价地变为 $\id{\suc(i+(j+k))}{\suc((i+j)+k)}$。
+但其输入（即"归纳假设"）
 \index{hypothesis!inductive}%
 \index{inductive!hypothesis}%
-yields $\id{i+(j+k)}{(i+j)+k}$, so it suffices to invoke the fact that if two natural numbers are equal, then so are their successors.
-(We will prove this obvious fact in \cref{lem:map}, using the induction principle of identity types.)
-We call this latter fact
+能给出 $\id{i+(j+k)}{(i+j)+k}$，因此只需援引以下事实：如果两个自然数相等，那么它们的后继也相等。
+（我们将在 \cref{lem:map} 中利用相等类型的归纳原理证明这个显然的事实。）
+我们将后一事实记作
 $\apfunc{\suc} : %\prd{m,n:\nat}
-(\id[\nat]{m}{n}) \to (\id[\nat]{\suc(m)}{\suc(n)})$, so we can define
+(\id[\nat]{m}{n}) \to (\id[\nat]{\suc(m)}{\suc(n)})$，于是可以定义
 \[\assoc_s(i,h,j,k) \defeq \apfunc{\suc}( %n+(j+k),(n+j)+k,
-h(j,k)). \]
-Putting these together with $\ind{\nat}$, we obtain a proof of associativity.
+h(j,k)). \]。
+将这些与 $\ind{\nat}$ 组合起来，我们就得到了结合律的一个证明。
 
 \index{natural numbers|)}%
 
-
-\section{Pattern matching and recursion}
+\section{模式匹配与递归}
 \label{sec:pattern-matching}
 
 \index{pattern matching|(defstyle}%
 \indexsee{matching}{pattern matching}%
 \index{definition!by pattern matching|(}%
-The natural numbers introduce an additional subtlety over the types considered up until now.
-In the case of coproducts, for instance, we could define a function $f:A+B\to C$ either with the recursor:
+与迄今为止考虑过的类型相比，自然数引入了一层额外的微妙之处。
+以余积为例，我们可以用递归子定义函数 $f:A+B\to C$：
 \[ f \defeq \rec{A+B}(C, g_0, g_1) \]
-or by giving the defining equations:
+也可以通过给出定义方程来定义：
 \begin{align*}
   f(\inl(a)) &\defeq g_0(a)\\
   f(\inr(b)) &\defeq g_1(b).
 \end{align*}
-To go from the former expression of $f$ to the latter, we simply use the computation rules for the recursor.
-Conversely, given any defining equations
+要从 $f$ 的前一种表达式得到后一种，只需使用递归子的计算规则。
+反之，给定任意定义方程
 \begin{align*}
   f(\inl(a)) &\defeq \Phi_0\\
   f(\inr(b)) &\defeq \Phi_1
 \end{align*}
-where $\Phi_0$ and $\Phi_1$ are expressions that may involve the variables
+其中 $\Phi_0$ 和 $\Phi_1$ 是可能分别涉及变量
 \index{variable}%
-$a$ and $b$ respectively, we can express these equations equivalently in terms of the recursor by using $\lambda$-abstraction\index{lambda abstraction@$\lambda$-abstraction}:
-\[ f\defeq \rec{A+B}(C, \lam{a} \Phi_0, \lam{b} \Phi_1).\]
-In the case of the natural numbers, however, the ``defining equations'' of a function such as $\dbl$:
+$a$ 与 $b$ 的表达式，我们也可以借助 $\lambda$-抽象\index{lambda abstraction@$\lambda$-abstraction}，用递归子等价地表达这些方程：
+\[ f\defeq \rec{A+B}(C, \lam{a} \Phi_0, \lam{b} \Phi_1).\]。
+然而，对于自然数，像 $\dbl$ 这样的函数的"定义方程"：
 \begin{align}
   \dbl(0) &\defeq 0 \label{eq:dbl0}\\
   \dbl(\suc(n)) &\defeq \suc(\suc(\dbl(n)))\label{eq:dblsuc}
 \end{align}
-involve \emph{the function $\dbl$ itself} on the right-hand side.
-However, we would still like to be able to give these equations, rather than~\eqref{eq:dbl-as-rec}, as the definition of \dbl, since they are much more convenient and readable.
-The solution is to read the expression ``$\dbl(n)$'' on the right-hand side of~\eqref{eq:dblsuc} as standing in for the result of the recursive call, which in a definition of the form $\dbl\defeq \rec{\nat}(\nat,c_0,c_s)$ would be the second argument of $c_s$.
+其右边涉及了\emph{函数 $\dbl$ 自身}。
+尽管如此，我们仍然希望以这些方程、而非 \eqref{eq:dbl-as-rec} 来作为 \dbl 的定义，因为它们要方便和易读得多。
+解决方案是：将 \eqref{eq:dblsuc} 右边出现的表达式"$\dbl(n)$"理解为递归调用的结果，而在 $\dbl\defeq \rec{\nat}(\nat,c_0,c_s)$ 这种形式的定义中，递归调用的结果正是 $c_s$ 的第二个参数。
 
-More generally, if we have a ``definition'' of a function $f:\nat\to C$ such as
+更一般地，如果我们有一个函数 $f:\nat\to C$ 的如下"定义"：
 \begin{align*}
   f(0) &\defeq \Phi_0\\
   f(\suc(n)) &\defeq \Phi_s
 \end{align*}
-where $\Phi_0$ is an expression of type $C$, and $\Phi_s$ is an expression of type $C$ which may involve the variable $n$ and also the symbol ``$f(n)$'', we may translate it to a definition
+其中 $\Phi_0$ 是类型为 $C$ 的表达式，而 $\Phi_s$ 也是类型为 $C$ 的表达式，且可能涉及变量 $n$ 以及符号"$f(n)$"；那么我们可以将其转化为如下定义：
 \[ f \defeq \rec{\nat}(C,\,\Phi_0,\,\lam{n}{r} \Phi_s') \]
-where $\Phi_s'$ is obtained from $\Phi_s$ by replacing all occurrences of ``$f(n)$'' by the new variable $r$.
+其中 $\Phi_s'$ 是将 $\Phi_s$ 中所有出现的"$f(n)$"替换为新变量 $r$ 后所得的结果。
 
-This style of defining functions by recursion (or, more generally, dependent functions by induction) is so convenient that we frequently adopt it.
-It is called definition by \define{pattern matching}.
-Of course, it is very similar to how a computer programmer may define a recursive function with a body that literally contains recursive calls to itself.
-However, unlike the programmer, we are restricted in what sort of recursive calls we can make: in order for such a definition to be re-expressible using the recursion principle, the function $f$ being defined can only appear in the body of $f(\suc(n))$ as part of the composite symbol ``$f(n)$''.
-Otherwise, we could write nonsense functions such as
+这种通过递归（或更一般地，通过归纳定义依值函数）来定义函数的方式非常方便，因此我们经常采用。
+这被称为通过\define{模式匹配（pattern matching）}来定义。
+当然，这与程序员定义递归函数的方式非常相似——其函数体中直接包含对自身的递归调用。
+然而，与程序员不同，我们在能够进行何种递归调用方面受到了限制：为了使这样的定义能够用递归原理重新表达，被定义的函数 $f$ 在 $f(\suc(n))$ 的函数体中只能作为复合符号"$f(n)$"的一部分出现。
+否则，我们可能会写出无意义的函数，例如
 \begin{align*}
   f(0)&\defeq 0\\
   f(\suc(n)) &\defeq f(\suc(\suc(n))).
-\end{align*}
-If a programmer wrote such a function, it would simply call itself forever on any positive input, going into an infinite loop and never returning a value.
-In mathematics, however, to be worthy of the name, a \emph{function} must always associate a unique output value to every input value, so this would be unacceptable.
+\end{align*}。
+如果程序员写出这样的函数，对于任何正数输入，它都会永远调用自身，陷入无限循环而永不返回值。
+然而在数学中，一个\emph{函数}要配得上这个名称，就必须为每个输入值关联唯一的输出值，因此上述做法是不可接受的。
 
-This point will be even more important when we introduce more complicated inductive types in \cref{cha:induction,cha:hits,cha:real-numbers}.
-Whenever we introduce a new kind of inductive definition, we always begin by deriving its induction principle.
-Only then do we introduce an appropriate sort of ``pattern matching'' which can be justified as a shorthand for the induction principle.
+当我们今后在 \cref{cha:induction,cha:hits,cha:real-numbers} 引入更复杂的归纳类型时，这一点将更加重要。
+每当引入一种新的归纳定义时，我们总是首先推导其归纳原理。
+然后，我们才引入一种恰当的"模式匹配"，并说明它可以作为归纳原理的简写形式。
 
 \index{pattern matching|)}%
 \index{definition!by pattern matching|)}%
 
-\section{Propositions as types}
+\section{命题即类型}
 \label{sec:pat}
 
 \index{proposition!as types|(defstyle}%
 \index{logic!propositions as types|(}%
-As mentioned in the introduction, to show that a proposition is true in type theory corresponds to exhibiting an element of the type corresponding to that proposition.
+正如引言中所说，在类型论中，要证明一个命题为真，就对应于展示与该命题对应的类型中的一个元素。
 \index{evidence, of the truth of a proposition}%
 \index{witness!to the truth of a proposition}%
 \index{proof|(}
-We regard the elements of this type as \emph{evidence} or \emph{witnesses} that the proposition is true. (They are sometimes even called \emph{proofs}, but this terminology can be misleading, so we generally avoid it.)
-In general, however, we will not construct witnesses explicitly; instead we present the proofs in ordinary mathematical prose, in such a way that they could be translated into an element of a type.
-This is no different from reasoning in classical set theory, where we don't expect to see an explicit derivation using the rules of predicate logic and the axioms of set theory.
+我们将该类型的元素视为该命题为真的\emph{证据}或\emph{见证}。
+（有时它们甚至被称为\emph{证明}，但这种叫法容易引起误解，因此我们通常避免使用它。）
 
-However, the type-theoretic perspective on proofs is nevertheless different in important ways.
-The basic principle of the logic of type theory is that a proposition is not merely true or false, but rather can be seen as the collection of all possible witnesses of its truth.
-Under this conception, proofs are not just the means by which mathematics is communicated, but rather are mathematical objects in their own right, on a par with more familiar objects such as numbers, mappings, groups, and so on.
-Thus, since types classify the available mathematical objects and govern how they interact, propositions are nothing but special  types --- namely, types whose elements are proofs.
+然而，我们通常不会显式地构造见证；
+相反，我们以常规的数学叙述方式来呈现证明，使得它们可以被转化为类型的元素。
+这与经典集合论中的推理并无不同：在那里，我们也不会期望看到使用谓词逻辑规则和集合论公理进行显式推导的过程。
+
+不过，类型论关于证明的视角确实在一些重要方面有所不同。
+类型论逻辑的基本原理是：命题不仅仅为真或假，而应被视为其所有可能见证的汇集。
+依照这一观念，证明就不只是用来交流数学的工具，其本身也是数学对象，与数、映射、群等更为熟悉的对象具有同等地位。
+因此，既然类型对可用的数学对象进行分类并规范它们之间的交互方式，那么命题无非就是特殊的类型——即其元素为证明的那些类型。
 
 \index{propositional!logic}%
 \index{logic!propositional}%
-The basic observation which makes this identification feasible is that we have the following natural correspondence between \emph{logical} operations on propositions, expressed in English, and \emph{type-theoretic} operations on their corresponding types of witnesses.
+使这一对应得以成立的基本观察是：在命题上的\emph{逻辑}运算（用英语表述）与其对应见证类型上的\emph{类型论}运算之间，存在如下自然对应。
 \index{false}%
 \index{true}%
 \index{conjunction}%
 \index{disjunction}%
 \index{implication}%
+
 \begin{center}
 \medskip
 \begin{tabular}{ll}
   \toprule
-  English & Type Theory\\
+  英语 & 类型论\\
   \midrule
-  True & $\unit$ \\
-  False & $\emptyt$ \\
-  $A$ and $B$ & $A \times B$ \\
-  $A$ or $B$ & $A + B$ \\
-  If $A$ then $B$ & $A \to B$ \\
-  $A$ if and only if $B$ & $(A \to B) \times (B \to A)$ \\
-  Not $A$ &  $A \to \emptyt$ \\
+  真 & $\unit$ \\
+  假 & $\emptyt$ \\
+  $A$ 且 $B$ & $A \times B$ \\
+  $A$ 或 $B$ & $A + B$ \\
+  若 $A$ 则 $B$ & $A \to B$ \\
+  $A$ 当且仅当 $B$ & $(A \to B) \times (B \to A)$ \\
+  非 $A$ &  $A \to \emptyt$ \\
   \bottomrule
 \end{tabular}
 \medskip
 \end{center}
 
-The point of the correspondence is that in each case, the rules for constructing and using elements of the type on the right correspond to the rules for reasoning about the proposition on the left.
-For instance, the basic way to prove a statement of the form ``$A$ and $B$'' is to prove $A$ and also prove $B$, while the basic way to construct an element of $A\times B$ is as a pair $(a,b)$, where $a$ is an element (or witness) of $A$ and $b$ is an element (or witness) of $B$.
-And if we want to use ``$A$ and $B$'' to prove something else, we are free to use both $A$ and $B$ in doing so, analogously to how the induction principle for $A\times B$ allows us to construct a function out of it by using elements of $A$ and of $B$.
+这一对应的要点在于：在每一种情形下，右侧类型的元素构造与使用规则，都对应着左侧命题的推理规则。
+例如，证明形如"$A$ 且 $B$"的命题的基本方式是分别证明 $A$ 和 $B$；
+而构造 $A\times B$ 的一个元素的基本方式则是给出一个对子 $(a,b)$，其中 $a$ 是 $A$ 的一个元素（或见证），$b$ 是 $B$ 的一个元素（或见证）。
+并且，如果我们想利用"$A$ 且 $B$"来证明别的结论，我们可以自由地同时使用 $A$ 和 $B$；
+这类似于 $A\times B$ 的归纳原理允许我们利用 $A$ 和 $B$ 的元素来构造从该类型出发的函数。
 
-Similarly, the basic way to prove an implication\index{implication} ``if $A$ then $B$'' is to assume $A$ and prove $B$, while the basic way to construct an element of $A\to B$ is to give an expression which denotes an element (witness) of $B$ which may involve an unspecified variable element (witness) of type $A$.
-And the basic way to use an implication ``if $A$ then $B$'' is deduce $B$ if we know $A$, analogously to how we can apply a function $f:A\to B$ to an element of $A$ to produce an element of $B$.
-We strongly encourage the reader to do the exercise of verifying that the rules governing the other type constructors translate sensibly into logic.
+类似地，证明蕴含\index{implication}"若 $A$ 则 $B$"的基本方式是假设 $A$ 并证明 $B$；
+而构造 $A\to B$ 的一个元素的基本方式，则是给出一个表示 $B$ 的元素（见证）的表达式，该表达式可以涉及类型 $A$ 的一个未指定的变量元素（见证）。
+使用蕴含"若 $A$ 则 $B$"的基本方式则是：若已知 $A$，便可推出 $B$；
+这类似于我们可以将函数 $f:A\to B$ 应用于 $A$ 的一个元素以产生 $B$ 的一个元素。
 
-Of special note is that the empty type $\emptyt$ corresponds to falsity.\index{false}
-When speaking logically, we refer to an inhabitant of $\emptyt$ as a \define{contradiction}:
+我们强烈建议读者自行练习，验证其他类型形成子的规则也能合理地翻译为逻辑规则。
+
+特别值得注意的是，空类型 $\emptyt$ 对应着假\index{false}。
+从逻辑上讲，我们将 $\emptyt$ 的一个实例称为\define{矛盾（contradiction）}：
 \indexdef{contradiction}%
-thus there is no way to prove a contradiction,%
-\footnote{More precisely, there is no \emph{basic} way to prove a contradiction, i.e.\ \emptyt has no constructors.
-If our type theory were inconsistent, then there would be some more complicated way to construct an element of \emptyt.}
-while from a contradiction anything can be derived.
-We also define the \define{negation}
+因此没有办法证明一个矛盾，%
+\footnote{更准确地说，没有\emph{基本的}方法来证明一个矛盾，即 \emptyt 没有构造子。
+如果我们的类型论不一致，那么将存在某种更复杂的方法来构造 \emptyt 的一个元素。}
+而从矛盾出发可以推出任何东西。
+我们还将类型 $A$ 的\define{否定（negation）}
 \indexdef{negation}%
-of a type $A$ as
+定义为
 %
 \begin{equation*}
   \neg A \ \defeq\ A \to \emptyt.
 \end{equation*}
 %
-Thus, a witness of $\neg A$ is a function $A \to \emptyt$, which we may construct by assuming $x : A$ and deriving an element of~$\emptyt$.
+这样一来，$\neg A$ 的一个见证就是一个函数 $A \to \emptyt$；我们可以通过假设 $x : A$ 并推导出~$\emptyt$ 的一个元素来构造它。
 \index{proof!by contradiction}%
 \index{logic!constructive vs classical}
-Note that although the logic we obtain is ``constructive'', as discussed in the introduction, this sort of ``proof by contradiction'' (assume $A$ and derive a contradiction, concluding $\neg A$) is perfectly valid constructively: it is simply invoking the \emph{meaning} of ``negation''.
-The sort of ``proof by contradiction'' which is disallowed is to assume $\neg A$ and derive a contradiction as a way of proving $A$.
-Constructively, such an argument would only allow us to conclude $\neg\neg A$, and the reader can verify that there is no obvious way to get from $\neg\neg A$ (that is, from $(A\to \emptyt)\to\emptyt$) to $A$.
+注意，尽管我们得到的是"构造性"逻辑（如引言中所讨论的），但这里所说的这种"通过反证法证明 $\neg A$"（即假设 $A$ 并推出矛盾，从而得出结论 $\neg A$）在构造性意义下是完全有效的：它仅仅是援引了"否定"的\emph{含义}。
+而不被允许的那种"通过反证法证明 $A$"，是指假设 $\neg A$ 并推出矛盾，以此来证明 $A$。
+构造性地，这样的论证只能让我们得出 $\neg\neg A$。读者可以验证，从 $\neg\neg A$（也就是从 $(A\to \emptyt)\to\emptyt$）并没有显而易见的方法能得到 $A$。
 
 \mentalpause
 
-The above translation of logical connectives into type-forming operations is referred to as \define{propositions as types}: it gives us a way to translate propositions and their proofs, written in English, into types and their elements.
-For example, suppose we want to prove the following tautology (one of ``de Morgan's laws''):
+上述将逻辑连接词翻译为类型形成操作的方式，被称为\define{命题即类型（propositions as types）}：它为我们提供了一种方法，将用语言陈述的命题及其证明，翻译为类型及其元素。
+例如，假设我们想证明下面的重言式（"德摩根律"之一）：
 \index{law!de Morgan's|(}%
 \index{de Morgan's laws|(}%
 \begin{equation}\label{eq:tautology1}
   \text{\emph{``If not $A$ and not $B$, then not ($A$ or $B$)''}.}
 \end{equation}
-An ordinary English proof of this fact might go as follows.
+对此，一段通常的文字证明可能如下所述。
+
 \begin{quote}
-  Suppose not $A$ and not $B$, and also suppose $A$ or $B$; we will derive a contradiction.
-  There are two cases.
-  If $A$ holds, then since not $A$, we have a contradiction.
-  Similarly, if $B$ holds, then since not $B$, we also have a contradiction.
-  Thus we have a contradiction in either case, so not ($A$ or $B$).
+  假设非 $A$ 且非 $B$，同时还假设 $A$ 或 $B$；我们将导出一个矛盾。
+  有两种情形。
+  若 $A$ 成立，则由非 $A$，我们得到矛盾。
+  类似地，若 $B$ 成立，则由非 $B$，我们也得到矛盾。
+  因此，在任何一种情形下我们都有矛盾，所以非（$A$ 或 $B$）。
 \end{quote}
-Now, the type corresponding to our tautology~\eqref{eq:tautology1}, according to the rules given above, is
+
+现在，根据上面给出的规则，对应于我们的重言式~\eqref{eq:tautology1} 的类型是
 \begin{equation}\label{eq:tautology2}
   (A\to \emptyt) \times (B\to\emptyt) \to (A+B\to\emptyt)
 \end{equation}
-so we should be able to translate the above proof into an element of this type.
+因此，我们应该能够将上述证明翻译为该类型的一个元素。
 
-As an example of how such a translation works, let us describe how a mathematician reading the English proof above might simultaneously construct, in their head, an element of~\eqref{eq:tautology2}.
-The introductory phrase ``Suppose not $A$ and not $B$'' translates into defining a function, with an implicit application of the recursion principle for the cartesian product in its domain $(A\to\emptyt)\times (B\to\emptyt)$.
-This introduces unnamed variables
+作为这种翻译如何运作的例子，让我们描述一下，一位阅读上述文字证明的数学家是如何在头脑中同时构造出~\eqref{eq:tautology2} 的一个元素的。
+起始句"假设非 $A$ 且非 $B$"翻译为定义一个函数，其中隐式应用了其定义域中 Cartesian 积 $(A\to\emptyt)\times (B\to\emptyt)$ 的递归原理。
+这引入了类型分别为 $A\to\emptyt$ 和 $B\to\emptyt$ 的未命名变量
 \index{variable}%
-(hypotheses)
-\index{hypothesis}%
-of types $A\to\emptyt$ and $B\to\emptyt$.
-When translating into type theory, we have to give these variables names; let us call them $x$ and $y$.
-At this point our partial definition of an element of~\eqref{eq:tautology2} can be written as
+（假设）
+\index{hypothesis}。%
+翻译到类型论时，我们必须给这些变量起名字；不妨称它们为 $x$ 和 $y$。
+此时，\eqref{eq:tautology2} 的一个元素的部分定义可以写为
 \[ f((x,y)) \defeq\; \Box\;:A+B\to\emptyt \]
-with a ``hole'' $\Box$ of type $A+B\to\emptyt$ indicating what remains to be done.
-(We could equivalently write $f \defeq \rec{(A\to\emptyt)\times (B\to\emptyt)}(A+B\to\emptyt,\lam{x}{y} \Box)$, using the recursor instead of pattern matching.)
-The next phrase ``also suppose $A$ or $B$; we will derive a contradiction'' indicates filling this hole by a function definition, introducing another unnamed hypothesis $z:A+B$, leading to the proof state:
+其中类型为 $A+B\to\emptyt$ 的"洞" $\Box$ 表示还有待完成的部分。
+（我们也可以等价地写成 $f \defeq \rec{(A\to\emptyt)\times (B\to\emptyt)}(A+B\to\emptyt,\lam{x}{y} \Box)$，即使用递归子而非模式匹配。）
+下一句"同时还假设 $A$ 或 $B$；我们将导出一个矛盾"表明要用一个函数定义来填充这个洞，并引入另一个未命名的假设 $z:A+B$，从而得到证明状态：
 \[ f((x,y))(z) \defeq \;\Box\; :\emptyt. \]
-Now saying ``there are two cases'' indicates a case split, i.e.\ an application of the recursion principle for the coproduct $A+B$.
-If we write this using the recursor, it would be
+现在，"有两种情形"表明要进行分情形讨论，即应用余积 $A+B$ 的递归原理。
+如果用递归子来写，就是
 \[ f((x,y))(z) \defeq \rec{A+B}(\emptyt,\lam{a} \Box,\lam{b}\Box,z) \]
-while if we write it using pattern matching, it would be
+而如果用模式匹配来写，则是
 \begin{align*}
   f((x,y))(\inl(a)) &\defeq \;\Box\;:\emptyt\\
   f((x,y))(\inr(b)) &\defeq \;\Box\;:\emptyt.
 \end{align*}
-Note that in both cases we now have two ``holes'' of type $\emptyt$ to fill in, corresponding to the two cases where we have to derive a contradiction.
-Finally, the conclusion of a contradiction from $a:A$ and $x:A\to\emptyt$ is simply application of the function $x$ to $a$, and similarly in the other case.
+注意，在这两种写法中，我们现在都有两个类型为 $\emptyt$ 的"洞"需要填充，这对应于我们必须导出矛盾的两种情形。
+最后，由 $a:A$ 和 $x:A\to\emptyt$ 得出矛盾，这仅仅是将函数 $x$ 应用于 $a$，另一种情形也类似。
 \index{application!of hypothesis or theorem}%
-(Note the convenient coincidence of the phrase ``applying a function'' with that of ``applying a hypothesis'' or theorem.)
-Thus our eventual definition is
+（注意"应用函数"与"应用假设或定理"在措辞上的巧妙重合。）
+因此，我们最终的定义是
 \begin{align*}
   f((x,y))(\inl(a)) &\defeq x(a)\\
   f((x,y))(\inr(b)) &\defeq y(b).
 \end{align*}
 
-As an exercise, you should verify 
-the converse tautology \emph{``If not ($A$ or $B$), then  (not $A$) and (not $B$)}'' by exhibiting an element of 
-\[ ((A + B) \to \emptyt) \to (A \to \emptyt) \times (B \to \emptyt), \]
-for any types $A$ and $B$, using the rules we have just introduced.
+作为练习，请运用刚刚介绍的规则，对任意类型 $A$ 和 $B$ 给出 \[ ((A + B) \to \emptyt) \to (A \to \emptyt) \times (B \to \emptyt), \] 的一个元素，以此验证逆重言式\emph{"若非（$A$ 或 $B$），则（非 $A$）且（非 $B$）"}。
 
 \index{logic!classical vs constructive|(}
-However, not all classical\index{mathematics!classical} tautologies hold under this interpretation.
-For example, the rule 
-\emph{``If not ($A$ and $B$), then (not $A$) or (not $B$)''} is not valid: we cannot, in general, construct an element of the corresponding type
+然而，并非所有经典\index{mathematics!classical}逻辑的重言式都能在这种解释下成立。
+例如，规则\emph{"若非（$A$ 且 $B$），则（非 $A$）或（非 $B$）"}并不成立：我们通常无法构造出对应类型
 \[ ((A \times B) \to \emptyt) \to (A \to \emptyt) + (B \to \emptyt).\]
-This reflects the fact that the ``natural'' propositions-as-types logic of type theory is \emph{constructive}.
-This means that it does not include certain classical principles, such as the law of excluded middle (\LEM{})\index{excluded middle}
-or proof by contradiction,\index{proof!by contradiction}
-and others which depend on them, such as this instance of de Morgan's law.
+中的一个实例。
+这反映出类型论中"命题即类型"这套"自然的"逻辑是\emph{构造性的}。
+这意味着它不包含某些经典原则，例如排中律 (\LEM{})\index{excluded middle}或反证法，\index{proof!by contradiction}以及其他依赖于这些原则的定律，比如上面这个德摩根定律的实例。
 \index{law!de Morgan's|)}%
 \index{de Morgan's laws|)}%
 
-Philosophically, constructive logic is so-called because it confines itself to constructions that can be carried out \emph{effectively}, which is to say those with a computational meaning.
-Without being too precise, this means there is some sort of algorithm\index{algorithm} specifying, step-by-step, how to build an object (and, as a special case, how to see that a theorem is true).
-This requires omission of \LEM{}, since there is no \emph{effective}\index{effective!procedure} procedure for deciding whether a proposition is true or false.
+从哲学上讲，构造逻辑之所以得名，是因为它将自身限制于那些可以\emph{能行地}完成的构造，也就是说，这些构造具有计算意义。
+在不求过分精确的前提下，这意味着存在某种算法\index{algorithm}，它能一步步指明如何构造一个对象（作为一种特例，如何看出一个定理为真）。
+这就必须把排中律排除在外，因为并不存在一个\emph{能行}的\index{effective!procedure}程序来判定一个命题是真还是假。
 
-The constructivity of type-theoretic logic means it has an intrinsic computational meaning, which is of interest to computer scientists.
-It also means that type theory provides \emph{axiomatic freedom}.\index{axiomatic freedom}
-For example, while by default there is no construction witnessing \LEM{}, the logic is still compatible with the existence of one (see \cref{sec:intuitionism}).
-Thus, because type theory does not \emph{deny} \LEM{}, we may consistently add it as an assumption, and work conventionally without restriction.
-In this respect, type theory enriches, rather than constrains, conventional mathematical practice.
+类型论逻辑的构造性意味着它具有内在的计算意义，这对计算机科学家也很有意义。
+同时，这也意味着类型论提供了\emph{公理选择的自由（axiomatic freedom）}。\index{axiomatic freedom}
+例如，尽管默认情况下不存在见证排中律的构造，但逻辑本身与排中律的存在是兼容的（参见\cref{sec:intuitionism}）。
+因此，由于类型论并不\emph{否认}排中律，我们可以一致地将其作为假设加入，从而如通常那样不受限制地做数学。
+从这个意义上说，类型论丰富而非限制了传统数学实践。
 
-We encourage the reader who is unfamiliar with constructive logic to work through some more examples as a means of getting familiar with it.
-See \cref{ex:tautologies,ex:not-not-lem} for some suggestions.
+我们建议不熟悉构造逻辑的读者多做一些练习来熟悉它。相关建议参见\cref{ex:tautologies,ex:not-not-lem}。
 \index{logic!classical vs constructive|)}
 
 \mentalpause
 
-So far we have discussed only propositional logic.
+到此为止，我们讨论的还只是命题逻辑。
 \index{quantifier}%
 \index{quantifier!existential}%
 \index{quantifier!universal}%
 \index{predicate!logic}%
 \index{logic!predicate}%
-Now we consider \emph{predicate} logic, where in addition to logical connectives like ``and'' and ``or'' we have quantifiers ``there exists'' and ``for all''.
-In this case, types play a dual role: they serve as propositions and also as types in the conventional sense, i.e., domains we quantify over.
-A predicate over a type $A$ is represented as a family $P : A \to \UU$, assigning to every element $a : A$ a type $P(a)$ corresponding to the proposition that $P$ holds for $a$. We now extend the above translation with an explanation of the quantifiers:
+现在我们来考虑\emph{谓词（predicate）}逻辑，其中除了像"且"和"或"这样的逻辑连接词，我们还有量词"存在"和"对所有"。
+在这种情况下，类型扮演着双重角色：它们既作为命题，也作为传统意义上的类型，即我们进行量化所基于的论域。
+一个关于类型 $A$ 的谓词表示为一个类型族 $P : A \to \UU$，它给每个元素 $a : A$ 指派一个类型 $P(a)$，这个类型对应于"$P$ 对 $a$ 成立"这个命题。现在我们通过解释量词来扩展上述翻译：
+
 \begin{center}
   \medskip
   \begin{tabular}{ll}
     \toprule
-    English & Type Theory\\
+    日常语言 & 类型论 \\
     \midrule
-    For all $x:A$, $P(x)$ holds & $\prd{x:A} P(x)$ \\
-    There exists $x:A$ such that $P(x)$ & $\sm{x:A}$ $P(x)$ \\
+    对所有 $x:A$，$P(x)$ 成立 & $\prd{x:A} P(x)$ \\
+    存在 $x:A$ 使得 $P(x)$ & $\sm{x:A}$ $P(x)$ \\
     \bottomrule
   \end{tabular}
   \medskip
 \end{center}
-As before, we can show that tautologies of (constructive) predicate logic translate into inhabited types.
-For example, \emph{If for all $x:A$, $P(x)$ and $Q(x)$ then (for all $x:A$, $P(x)$) and (for all $x:A$, $Q(x)$)} translates to
+
+和前面一样，我们可以证明（构造性）谓词逻辑的重言式会翻译成有实例的类型。
+例如，\emph{若对所有 $x:A$，有 $P(x)$ 且 $Q(x)$，则（对所有 $x:A$，有 $P(x)$）且（对所有 $x:A$，有 $Q(x)$）} 翻译为
 \[ (\tprd{x:A} P(x) \times Q(x)) \to (\tprd{x:A} P(x)) \times (\tprd{x:A} Q(x)). \]
-An informal proof of this tautology might go as follows:
+这个重言式的一个非形式证明可以这样进行：
+
 \begin{quote}
-  Suppose for all $x$, $P(x)$ and $Q(x)$.
-  First, we suppose given $x$ and prove $P(x)$.
-  By assumption, we have $P(x)$ and $Q(x)$, and hence we have $P(x)$.
-  Second, we suppose given $x$ and prove $Q(x)$.
-  Again by assumption, we have $P(x)$ and $Q(x)$, and hence we have $Q(x)$.
+  假设对所有 $x$，有 $P(x)$ 且 $Q(x)$。
+  首先，我们假设给定 $x$ 并证明 $P(x)$。
+  根据假设，我们有 $P(x)$ 且 $Q(x)$，因此我们有 $P(x)$。
+  其次，我们假设给定 $x$ 并证明 $Q(x)$。
+  再次根据假设，我们有 $P(x)$ 且 $Q(x)$，因此我们有 $Q(x)$。
 \end{quote}
-The first sentence begins defining an implication as a function, by introducing a witness for its hypothesis:\index{hypothesis}
+
+第一句话通过为假设引入一个见证，开始将蕴含式定义为函数：\index{hypothesis}
 \[ f(p) \defeq \;\Box\; : (\tprd{x:A} P(x)) \times (\tprd{x:A} Q(x)). \]
-At this point there is an implicit use of the pairing constructor to produce an element of a product type, which is somewhat signposted in this example by the words ``first'' and ``second'':
+此时隐式地使用了配对构造子来生成积类型的元素，在这个例子中，"第一"和"第二"两个词对此略有提示：
 \[ f(p) \defeq \Big( \;\Box\; : \tprd{x:A} P(x) \;,\; \Box\; : \tprd{x:A}Q(x) \;\Big). \]
-The phrase ``we suppose given $x$ and prove $P(x)$'' now indicates defining a \emph{dependent} function in the usual way, introducing a variable
-\index{variable}%
-for its input.
-Since this is inside a pairing constructor, it is natural to write it as a $\lambda$-abstraction\index{lambda abstraction@$\lambda$-abstraction}:
+"我们假设给定 $x$ 并证明 $P(x)$"这句话，现在表示以通常的方式定义一个\emph{依值}函数，为其输入引入一个变量 \index{variable}。%
+由于这是在配对构造子内部，将其写成一个 $\lambda$-抽象就很自然了：\index{lambda abstraction@$\lambda$-abstraction}
 \[ f(p) \defeq \Big( \; \lam{x} \;\big(\Box\; : P(x)\big) \;,\; \Box\; : \tprd{x:A}Q(x) \;\Big). \]
-Now ``we have $P(x)$ and $Q(x)$'' invokes the hypothesis, obtaining $p(x) : P(x)\times Q(x)$, and ``hence we have $P(x)$'' implicitly applies the appropriate projection:
+接着，"我们有 $P(x)$ 和 $Q(x)$"用到了假设，从而得到 $p(x) : P(x)\times Q(x)$；而"因此我们有 $P(x)$"则隐式地应用了恰当的投影：
 \[ f(p) \defeq \Big( \; \lam{x} \proj1(p(x))  \;,\; \Box\; : \tprd{x:A}Q(x) \;\Big). \]
-The next two sentences fill the other hole in the obvious way:
+后面两句话以显而易见的方式填上了另一个空位：
 \[ f(p) \defeq \Big( \; \lam{x} \proj1(p(x))  \;,\; \lam{x} \proj2(p(x)) \; \Big). \]
-Of course, the English proofs we have been using as examples are much more verbose than those that mathematicians usually use in practice; they are more like the sort of language one uses in an ``introduction to proofs'' class.
-The practicing mathematician has learned to fill in the gaps, so in practice we can omit plenty of details, and we will generally do so.
-The criterion of validity for proofs, however, is always that they can be translated back into the construction of an element of the corresponding type.
+当然，我们用作例子的这些英文证明，远比数学家在实践中通常使用的证明冗长；它们更像是"证明导论"课上会用到的那种语言。
+实践中的数学家已经学会了填补这些空白，因此在实践中我们可以省略大量细节，而且我们通常也会这样做。
+然而，证明有效性的判据始终是：它们能够还原为对相应类型中某个元素的构造。
 
 \symlabel{leq-nat}%
-As a more concrete example, consider how to define inequalities of natural numbers.
-One natural definition is that $n\le m$ if there exists a $k:\nat$ such that $n+k=m$.
-(This uses again the identity types that we will introduce in the next section, but we will not need very much about them.)
-Under the propositions-as-types translation, this would yield:
+作为一个更具体的例子，考虑如何定义自然数的不等关系。
+一个自然的定义是：$n\le m$ 当且仅当存在一个 $k:\nat$ 使得 $n+k=m$。
+（这里再次用到了我们将在下一节介绍的相等类型，不过我们暂时不需要了解太多。）
+根据命题即类型的对应关系，这会得到：
 \[ (n\le m) \defeq \sm{k:\nat} (\id{n+k}{m}). \]
-The reader is invited to prove the familiar properties of $\le$ from this definition.
-For strict inequality, there are a couple of natural choices, such as
+我们邀请读者根据这个定义来证明 $\le$ 的常见性质。
+对于严格不等式，有几个自然的选项，例如
 \[ (n<m) \defeq \sm{k:\nat} (\id{n+\suc(k)}{m}) \]
-or
+或者
 \[ (n<m) \defeq (n\le m) \times \neg(\id{n}{m}). \]
-The former is more natural in constructive mathematics, but in this case it is actually equivalent to the latter, since $\nat$ has ``decidable equality'' (see \cref{sec:intuitionism,prop:nat-is-set}).
+前者在构造性数学中更为自然，但在本例中，由于 $\nat$ 具有"可判定相等性"（参见 \cref{sec:intuitionism,prop:nat-is-set}），它实际上等价于后者。
 \index{decidable!equality}%
 
-There is also another interpretation of the type $\sm{x:A} P(x)$.
-Since an inhabitant of it is an element $x:A$ together with a witness that $P(x)$ holds, instead of regarding $\sm{x:A} P(x)$ as the proposition ``there exists an $x:A$ such that $P(x)$'', we can regard it as ``the type of all elements $x:A$ such that $P(x)$'', i.e.\ as a ``subtype'' of $A$.
+对于类型 $\sm{x:A} P(x)$，还有另一种解读方式。
+既然它的一个实例是一个元素 $x:A$ 连同 $P(x)$ 成立的一个见证，我们就可以不把 $\sm{x:A} P(x)$ 看作命题"存在 $x:A$ 使得 $P(x)$"，而是将其看作"所有满足 $P(x)$ 的元素 $x:A$ 构成的类型"，即 $A$ 的一个"子类型"。
 \index{subtype}%
 
-We will return to this interpretation in \cref{subsec:prop-subsets}.
-For now, we note that it allows us to incorporate axioms into the definition of types as mathematical structures which we discussed in \cref{sec:sigma-types}.
-For example, suppose we want to define a \define{semigroup}\index{semigroup} to be a type $A$ equipped with a binary operation $m:A\to A\to A$ (that is, a magma\index{magma}) and such that for all $x,y,z:A$ we have $m(x,m(y,z)) = m(m(x,y),z)$.
-This latter proposition is represented by the type
+我们将在 \cref{subsec:prop-subsets} 回到这种解读。
+现在，我们注意到它允许我们在将类型定义为数学结构时纳入公理——这一点我们曾在 \cref{sec:sigma-types} 讨论过。
+例如，假设我们想定义一个\define{半群}\index{semigroup}为一个配备了一个二元运算 $m:A\to A\to A$（即一个原群\index{magma}）的类型 $A$，并且满足对于所有 $x,y,z:A$ 都有 $m(x,m(y,z)) = m(m(x,y),z)$。
+这后一个命题由类型
 \[\prd{x,y,z:A} m(x,m(y,z)) = m(m(x,y),z),\]
-so the type of semigroups is
+来表示，所以半群的类型就是
 \[ \semigroup \defeq \sm{A:\UU}{m:A\to A\to A} \prd{x,y,z:A} m(x,m(y,z)) = m(m(x,y),z), \]
-i.e.\ the subtype of $\mathsf{Magma}$ consisting of the semigroups.
-From an inhabitant of $\semigroup$ we can extract the carrier $A$, the operation $m$, and a witness of the axiom, by applying appropriate projections.
-We will return to this example in \cref{sec:equality-of-structures}.
+即由所有半群组成的 $\mathsf{Magma}$ 的子类型。
+从一个 $\semigroup$ 的实例中，我们可以通过应用恰当的投影，提取出载体 $A$、运算 $m$ 以及该公理的一个见证。
+我们将在 \cref{sec:equality-of-structures} 回到这个例子。
 
-Note also that we can use the universes in type theory to represent ``higher order logic'' --- that is, we can quantify over all propositions or over all predicates.
-For example, we can represent the proposition \emph{for all properties $P : A \to \UU$, if $P(a)$ then $P(b)$} as
+还需注意的是，我们可以利用类型论中的宇宙来表示"高阶逻辑"——也就是说，我们可以对所有的命题或所有的谓词进行量化。
+例如，给定 $A : \UU$ 和 $a,b : A$，我们可以将命题\emph{对于所有性质 $P : A \to \UU$，如果 $P(a)$ 那么 $P(b)$} 表示为
 \[ \prd{P : A \to \UU} P(a) \to P(b) \]
-where $A : \UU$ and $a,b : A$.
-However, \emph{a priori} this proposition lives in a different, higher, universe than the
-propositions we are quantifying over; that is
+然而，\emph{先验地}，这个命题位于一个比我们所量化的命题更高、也不同的宇宙中；即
 \[ \Parens{\prd{P : A \to \UU_i} P(a) \to P(b)} : \UU_{i+1}. \]
-We will return to this issue in \cref{subsec:prop-subsets}.
+我们将在 \cref{subsec:prop-subsets} 回到这个问题。
 
 \mentalpause
 
-We have described here a ``proof-relevant''
+我们在此描述的是一种"证明相关"的
 \index{mathematics!proof-relevant}%
-translation of propositions, where the proofs of disjunctions and existential statements carry some information.
-For instance, if we have an inhabitant of $A+B$, regarded as a witness of ``$A$ or $B$'', then we know whether it came from $A$ or from $B$.
-Similarly, if we have an inhabitant of $\sm{x:A} P(x)$, regarded as a witness of ``there exists $x:A$ such that $P(x)$'', then we know what the element $x$ is (it is the first projection of the given inhabitant).
+命题翻译方式，其中析取与存在性陈述的证明会携带一些信息。
+例如，如果我们有 $A+B$ 的一个实例，并把它看作"$A$ 或 $B$"的一个见证，那么我们就能知道它究竟来自 $A$ 还是来自 $B$。
+类似地，如果我们有 $\sm{x:A} P(x)$ 的一个实例，并把它看作"存在 $x:A$ 使得 $P(x)$"的一个见证，那么我们就能知道这个元素 $x$ 具体是什么（它就是给定实例的第一投影）。
 
-As a consequence of the proof-relevant nature of this logic, we may have ``$A$ if and only if $B$'' (which, recall, means $(A\to B)\times (B\to A)$), and yet the types $A$ and $B$ exhibit different behavior.
-For instance, it is easy to verify that ``$\mathbb{N}$ if and only if $\unit$'', and yet clearly $\mathbb{N}$ and $\unit$ differ in important ways.
-The statement ``$\mathbb{N}$ if and only if $\unit$'' tells us only that \emph{when regarded as a mere proposition}, the type $\mathbb{N}$ represents the same proposition as $\unit$ (in this case, the true proposition).
-We sometimes express ``$A$ if and only if $B$'' by saying that $A$ and $B$ are \define{logically equivalent}.
+由于这种逻辑具有证明相关的本性，我们可能会遇到"$A$ 当且仅当 $B$"的情形（回想一下，这意指 $(A\to B)\times (B\to A)$），但类型 $A$ 和 $B$ 却展现出不同的行为。
+例如，很容易验证"$\mathbb{N}$ 当且仅当 $\unit$"，然而显然 $\mathbb{N}$ 和 $\unit$ 在重要方面有所不同。
+"$\mathbb{N}$ 当且仅当 $\unit$"这个陈述仅仅告诉我们：\emph{当被视为一个命题时}，类型 $\mathbb{N}$ 所代表的命题与 $\unit$ 相同（此时，这个命题是真命题）。
+我们有时会用 $A$ 与 $B$ 是\define{逻辑等价}这一说法来表达"$A$ 当且仅当 $B$"。
 \indexdef{logical equivalence}%
 \indexdef{equivalence!logical}%
-This is to be distinguished from the stronger notion of \emph{equivalence of types} to be introduced in \cref{sec:basics-equivalences,cha:equivalences}:
-although $\mathbb{N}$ and $\unit$ are logically equivalent, they are not equivalent types.
+这需要与 \cref{sec:basics-equivalences,cha:equivalences} 中将要引入的更强的\emph{类型等价}概念区分开：尽管 $\mathbb{N}$ 和 $\unit$ 是逻辑等价的，它们却不是等价的类型。
 
-In \cref{cha:logic} we will introduce a class of types called ``mere propositions'' for which equivalence and logical equivalence coincide.
-Using these types, we will introduce a modification to the above-described logic that is sometimes appropriate, in which the additional information contained in disjunctions and existentials is discarded.
+在 \cref{cha:logic} 中，我们将引入一类称为"命题"的类型，对于它们而言，等价与逻辑等价两个概念将重合。
+利用这些类型，我们将对上述逻辑做出一处修改，这种修改在某些情况下是恰当的：它将抛弃析取与存在性陈述中所包含的额外信息。
 
-Finally, we note that the propositions-as-types correspondence can be viewed in reverse, allowing us to regard any type $A$ as a proposition, which we prove by exhibiting an element of $A$.
-Sometimes we will state this proposition as ``$A$ is \define{inhabited}''.
+最后我们注意到，"命题即类型"的对应关系反过来也成立，我们可以将任意类型 $A$ 本身视为一个命题，而证明它的方式就是展示 $A$ 的一个元素。
+有时我们将这个命题表述为"$A$ 是\define{有实例的}"。
 \indexdef{inhabited type}%
 \indexsee{type!inhabited}{inhabited type}%
-That is, when we say that $A$ is inhabited, we mean that we have given a (particular) element of $A$, but that we are choosing not to give a name to that element.
-Similarly, to say that $A$ is \emph{not inhabited} is the same as to give an element of $\neg A$.
-In particular, the empty type $\emptyt$ is obviously not inhabited, since $\neg \emptyt \jdeq (\emptyt \to \emptyt)$ is inhabited by $\idfunc[\emptyt]$.\footnote{This should not be confused with the statement that type theory is consistent, which is the \emph{meta-theoretic} claim that it is not possible to obtain an element of $\emptyt$ by following the rules of type theory.\indexfoot{consistency}}
+也就是说，当我们说 $A$ 是有实例的时，我们的意思是我们已经给出了 $A$ 的一个（具体）元素，只是我们选择不去为这个元素命名。
+类似地，说 $A$ \emph{不是有实例的}，等同于给出 $\neg A$ 的一个元素。
+特别地，空类型 $\emptyt$ 显然不是有实例的，因为 $\neg \emptyt \jdeq (\emptyt \to \emptyt)$ 有 $\idfunc[\emptyt]$ 作为实例。\footnote{这不应与类型论的一致性混淆，后者是一个\emph{元理论}主张，即在遵循类型论规则的前提下，不可能构造出 $\emptyt$ 的一个元素。\indexfoot{consistency}}
 
 \index{proof|)}%
 \index{proposition!as types|)}%
 \index{logic!propositions as types|)}%
 
-\section{Identity types}
+\section{相等类型}
 \label{sec:identity-types}
 
 \index{type!identity|(defstyle}%
 \indexsee{identity!type}{type, identity}%
 \indexsee{type!equality}{type, identity}%
 \indexsee{equality!type}{type, identity}%
-While the previous constructions can be seen as generalizations of
-standard set theoretic constructions, our way of handling identity  seems to be
-specific to type theory.
-According to the propositions-as-types conception, the \emph{proposition} that two elements of the same type $a,b:A$ are equal must correspond to some \emph{type}.
-Since this proposition depends on what $a$ and $b$ are, these \define{equality types} or \define{identity types} must be type families dependent on two copies of $A$.
+虽然之前介绍的那些构造可以看作是对标准集合论构造的推广，但我们处理相等性的方式，似乎为类型论所特有。
+根据命题即类型的理念，两个相同类型的元素 $a,b:A$ 相等这一\emph{命题}，必须对应某个\emph{类型}。
+由于这个命题依赖于 $a$ 和 $b$ 具体是什么，这些\define{相等类型}或\define{恒等类型}必须是依赖于 $A$ 的两个副本的类型族。
 
-We may write the family as $\idtypevar{A}:A\to A\to\type$ (not to be mistaken for the identity function $\idfunc[A]$), so that $\idtype[A]ab$ is the type representing the proposition of equality between $a$ and $b$.
-Once we are familiar with propositions-as-types, however, it is convenient to also use the standard equality symbol for this; thus ``$\id{a}{b}$'' will also be a notation for the \emph{type} $\idtype[A]ab$ corresponding to the proposition that $a$ equals $b$.
-For clarity, we may also write ``$\id[A]{a}{b}$'' to specify the type $A$.
-If we have an element of $\id[A]{a}{b}$, we may say that $a$ and $b$ are \define{equal}, or sometimes \define{propositionally equal} if we want to emphasize that this is different from the judgmental equality $a\jdeq b$ discussed in \cref{sec:types-vs-sets}.
+我们可以将这个族写作 $\idtypevar{A}:A\to A\to\type$（注意不要与恒等映射 $\idfunc[A]$ 混淆），于是 $\idtype[A]ab$ 就是代表 $a$ 与 $b$ 相等这一命题的类型。
+不过，一旦我们熟悉了命题即类型的观点，使用标准的等号来表示这个类型也很方便；因此，"$\id{a}{b}$"也将是代表 $a$ 等于 $b$ 这一命题的\emph{类型} $\idtype[A]ab$ 的一种记法。
+为了清晰起见，我们也可以写作"$\id[A]{a}{b}$"来指明类型 $A$。
+如果我们有 $\id[A]{a}{b}$ 的一个元素，我们就可以说 $a$ 和 $b$ 是\define{相等}的，有时为了强调这不同于 \cref{sec:types-vs-sets} 中讨论的判断相等性 $a\jdeq b$，我们也说它们是\define{命题相等}的。
 \indexdef{equality!propositional}%
 \indexdef{propositional!equality}%
 
-Just as we remarked in \cref{sec:pat} that the propositions-as-types versions of ``or'' and ``there exists'' can include more information than just the fact that the proposition is true, nothing prevents  the type $\id{a}{b}$ from also including more information.
-Indeed, this is the cornerstone of the homotopical interpretation, where we regard witnesses of $\id{a}{b}$ as \emph{paths}\indexdef{path} or \emph{equivalences} between $a$ and $b$ in the space $A$.  Just as there can be more than one path between two points of a space, there can be more than one witness that two objects are equal.  Put differently, we may regard $\id{a}{b}$ as the type of \emph{identifications}\indexdef{identification} of $a$ and $b$, and there may be many different ways in which $a$ and $b$ can be identified.
-We will return to the interpretation in \cref{cha:basics}; for now we focus on the basic rules for the identity type.
-Just like all the other types considered in this chapter, it will have rules for formation, introduction, elimination, and computation, which behave formally in exactly the same way.
+正如我们在 \cref{sec:pat} 中所提到的，"或"和"存在"的"命题即类型"版本可以包含比命题为真这一事实更多的信息；同样地，类型 $\id{a}{b}$ 也完全可以包含更多信息。
+事实上，这正是同伦解释的基石：我们将 $\id{a}{b}$ 的见证视为空间 $A$ 中 $a$ 与 $b$ 之间的\emph{道路}\indexdef{path}或\emph{等价}。
+正如空间中两点之间可以有多条道路，两个对象相等的见证也可以不止一个。
+换一种说法，我们可以把 $\id{a}{b}$ 看作 $a$ 与 $b$ 的\emph{相等证明}\indexdef{identification}的类型，而将 $a$ 和 $b$ 确认为相等的方式也可以有多种。
+我们将在 \cref{cha:basics} 回到这一解释；现在我们先聚焦于相等类型的基本规则。
+和本章讨论的所有其他类型一样，它将有形成规则、引入规则、消去规则和计算规则，这些规则在形式上的行为完全相同。
 
-The formation rule says that given a type $A:\UU$ and two elements $a,b:A$, we can form the type $(\id[A]{a}{b}):\UU$ in the same universe.
-The basic way to construct an element of $\id{a}{b}$ is to know that $a$ and $b$ are the same.
-Thus, the introduction rule is a dependent function
+形成规则是说：给定一个类型 $A:\UU$ 和两个元素 $a,b:A$，我们可以在同一个宇宙中形成类型 $(\id[A]{a}{b}):\UU$。
+构造 $\id{a}{b}$ 的元素的基本方法是知道 $a$ 和 $b$ 相同。
+因此，引入规则是一个依值函数
 \[\refl{} : \prd{a:A} (\id[A]{a}{a})\]
-called \define{reflexivity},
+称为\define{自反性}（reflexivity），
 \indexdef{reflexivity!of equality}%
-which says that every element of $A$ is equal to itself (in a specified way).  We regard $\refl{a}$ as being the
-constant path\indexdef{path!constant}\indexsee{loop!constant}{path, constant}
-at the point $a$.
+它说 $A$ 的每个元素都以指定的方式等于自身。
+我们把 $\refl{a}$ 看作点 $a$ 处的
+常值道路\indexdef{path!constant}\indexsee{loop!constant}{path, constant}。
 
-In particular, this means that if $a$ and $b$ are \emph{judgmentally} equal, $a\jdeq b$, then we also have an element $\refl{a} : \id[A]{a}{b}$.
-This is well-typed because $a\jdeq b$ means that also the type $\id[A]{a}{b}$ is judgmentally equal to $\id[A]{a}{a}$, which is the type of $\refl{a}$.
+特别地，这意味着如果 $a$ 和 $b$ 是\emph{判断相等的}，即 $a\jdeq b$，那么我们也得到一个元素 $\refl{a} : \id[A]{a}{b}$。
+这是良类型的，因为 $a\jdeq b$ 意味着类型 $\id[A]{a}{b}$ 与 $\id[A]{a}{a}$ 也是判断相等的，而后者正是 $\refl{a}$ 的类型。
 
-The induction principle (i.e.\ the elimination rule) for the identity types is one of the most subtle parts of type theory, and crucial to the homotopy interpretation.
-We begin by considering an important consequence of it, the principle that ``equals may be substituted for equals'', as expressed by the following:
+相等类型的归纳原理（即消去规则）是类型论中最微妙的部分之一，对同伦解释至关重要。
+我们先考虑它的一个重要推论，即"相等者可以替换相等者"的原则，如下所示：
 \index{indiscernibility of identicals}%
 \index{equals may be substituted for equals}%
+
 \begin{description}
-\item[Indiscernibility of identicals:]
-For every family 
+\item[同一者的不可分辨性（Indiscernibility of identicals）：]
+对于每个类型族
 \[
 C : A \to \UU
 \]
-there is a function
+存在一个函数
 \[
 f : \prd{x,y:A}{p:\id[A] x y} C(x) \to C(y)
 \]
-such that
+使得
 \[
 f(x,x,\refl{x}) \defeq \idfunc[C(x)].
 \]
 \end{description}
-This says that every family of types $C$ respects equality, in the sense that applying $C$ to \emph{equal} elements of $A$ also results in a function between the resulting types. The displayed equality states that the function associated to reflexivity is the identity function (and we shall see that, in general, the function $f(x,y,p): C(x) \to C(y)$ is always an equivalence of types).
 
-Indiscernibility of identicals can be regarded as a recursion principle for the identity type, analogous to those given for booleans and natural numbers above.
-Just as $\rec{\nat}$ gives a specified map $\nat\to C$ for any other type $C$ of a certain sort, indiscernibility of identicals gives a specified map from $\id[A] x y$ to certain other reflexive, binary relations on $A$, namely those of the form $C(x) \to C(y)$ for some unary predicate $C(x)$.
-We could also formulate a more general recursion principle with respect to reflexive relations of the more general form $C(x,y)$.
-However, in order to fully characterize the identity type, we must generalize this recursion principle to an induction principle, which not only considers maps out of $\id[A] x y$ but also families over it.
-Put differently, we consider not only allowing equals to be substituted for equals, but also taking into account the evidence $p$ for the equality.
+这个原理说的是，每个类型族 $C$ 都尊重相等：将 $C$ 应用到 $A$ 中\emph{相等}的元素上，也会在所得类型之间给出一个函数。所列等式表明，与自反性相关联的函数是恒等函数（我们之后将会看到，一般地，函数 $f(x,y,p): C(x) \to C(y)$ 总是类型之间的等价）。
+
+同一者的不可分辨性可以被视为相等类型的一种递归原理，类似于前面为布尔值和自然数给出的递归原理。
+正如 $\rec{\nat}$ 为任何其他某种类型的 $C$ 给出一个指定的映射 $\nat\to C$ 那样，同一者的不可分辨性也给出一个从 $\id[A] x y$ 到 $A$ 上某些自反二元关系的指定映射，即由某个一元谓词 $C(x)$ 给出的形如 $C(x) \to C(y)$ 的关系。
+我们也可以针对更一般形式 $C(x, y)$ 的自反关系，表述一个更一般的递归原理。
+然而，为了完全刻画相等类型，我们必须将这个递归原理推广为一个归纳原理；它不仅考虑从 $\id[A] x y$ 出发的映射，还要考虑其上的类型族。
+换句话说，我们不仅考虑允许用相等者替换相等者，还要考虑等式的证据 $p$ 本身。
     
-\subsection{Path induction}
+\subsection{道路归纳}
 
 \index{generation!of a type, inductive|(}
-The induction principle for the identity type is called \define{path induction},
+相等类型的归纳原理被称为\define{道路归纳}（path induction），
 \index{path!induction|(}%
 \index{induction principle!for identity type|(}%
-in view of the homotopical interpretation to be explained in  the introduction to \cref{cha:basics}.  It can be seen as stating that the family of identity types is freely generated by the elements of the form $\refl{x}: \id{x}{x}$.
+这是考虑到将在 \cref{cha:basics} 的引言中解释的同伦解释。它可以理解为：相等类型族是由形如 $\refl{x}: \id{x}{x}$ 的元素自由生成的。
 
 \begin{description}
-\item[Path induction:] 
-  Given a family 
+\item[道路归纳（Path induction）：] 
+  给定一个类型族
   \[ C : \prd{x,y:A} (\id[A]{x}{y}) \to \UU \]
-  and a function
+  以及一个函数
   \[ c :  \prd{x:A} C(x,x,\refl{x}),\]
-  there is a function
+  则存在一个函数
   \[ f : \prd{x,y:A}{p:\id[A]{x}{y}} C(x,y,p) \]
-  such that 
+  使得
   \[ f(x,x,\refl{x}) \defeq c(x). \]
 \end{description}
 
-Note that just like the induction principles for products, coproducts, natural numbers, and so on, path induction allows us to define \emph{specified} functions which exhibit appropriate computational behavior.
-Just as we have \emph{the} function $f:\nat\to C$ defined by recursion from $c_0:C$ and $c_s:\nat \to C \to C$, which moreover satisfies $f(0)\jdeq c_0$ and $f(\suc(n))\jdeq c_s(n,f(n))$, we have \emph{the} function $f : \dprd{x,y:A}{p:\id[A]{x}{y}} C(x,y,p)$ defined by path induction from $c :  \prd{x:A} C(x,x,\refl{x})$, which moreover satisfies $f(x,x,\refl{x}) \jdeq c(x)$.
+需要注意的是，就像积、余积、自然数等的归纳原理一样，道路归纳允许我们定义\emph{特定的}函数，这些函数展现出适当的计算行为。
+正如我们有\emph{那个}由 $c_0:C$ 和 $c_s:\nat \to C \to C$ 经递归定义的函数 $f:\nat\to C$，而且它满足 $f(0)\jdeq c_0$ 和 $f(\suc(n))\jdeq c_s(n,f(n))$，我们也有\emph{那个}由 $c :  \prd{x:A} C(x,x,\refl{x})$ 经道路归纳定义的函数 $f : \dprd{x,y:A}{p:\id[A]{x}{y}} C(x,y,p)$，而且它满足 $f(x,x,\refl{x}) \jdeq c(x)$。
 
-To understand the meaning of this principle, consider first the simpler case when $C$
-does not depend on $p$.  Then we have $C:A\to A\to \UU$, which we may
-regard as a predicate depending on two elements of $A$.  We are
-interested in knowing when the proposition $C(x,y)$ holds for some pair
-of elements $x,y:A$.  In this case, the hypothesis of path induction
-says that we know $C(x,x)$ holds for all $x:A$, i.e.\ that if we
-evaluate $C$ at the pair $x, x$, we get a true proposition --- so $C$ is
-a reflexive relation.  The conclusion then tells us that $C(x,y)$ holds
-whenever $\id{x}{y}$.  This is exactly the more general recursion principle
-for reflexive relations mentioned above.
+为了理解这个原理的含义，我们先考虑 $C$ 不依赖于 $p$ 的更简单情形。此时我们有 $C:A\to A\to \UU$，可以将其视为一个依赖于 $A$ 中两个元素的谓词。我们关心的是命题 $C(x,y)$ 对某个元素对 $x,y:A$ 何时成立。在这种情况下，道路归纳的假设是说，我们知道对所有 $x:A$ 都有 $C(x,x)$ 成立，也就是说，如果我们在 $(x, x)$ 这对元素处计算 $C$，会得到一个真命题——所以 $C$ 是一个\emph{自反关系}（reflexive relation）。而结论则告诉我们，只要 $\id{x}{y}$ 成立，$C(x,y)$ 就成立。这正是前面提到的、适用于自反关系的更一般的递归原理。
 
-The general, inductive form of the rule allows $C$ to also depend on the witness $p:\id{x}{y}$ to the identity between $x$ and $y$.  In the premise, we not only replace $x, y$ by $x,x$, but also simultaneously replace $p$ by reflexivity: to prove a property for all elements $x,y$ and paths $p : \id{x}{y}$ between them, it suffices to consider all the cases where the elements are $x,x$ and the path is $\refl{x}: \id{x}{x}$.  If we were viewing types just as sets, it would be unclear what this buys us, but since there may be many different identifications $p : \id{x}{y}$ between $x$ and $y$, it makes sense to keep track of them in considering families over the type $\id[A]{x}{y}$.
-In \cref{cha:basics} we will see that this is very important to the homotopy interpretation.
+该规则的一般归纳形式则允许 $C$ 还依赖于见证 $x$ 与 $y$ 相等的 $p:\id{x}{y}$。在前提中，我们不仅将 $x, y$ 替换为 $x, x$，同时也将 $p$ 替换为自反性：要证明关于所有元素 $x, y$ 以及它们之间道路 $p : \id{x}{y}$ 的性质，只需考虑元素为 $x,x$ 且道路为 $\refl{x}: \id{x}{x}$ 的情形即可。如果我们仅仅把类型看作集合，这样做带来的好处不太明显；但由于在 $x$ 和 $y$ 之间可能存在许多不同的相等证明 $p : \id{x}{y}$，因此在考虑类型 $\id[A]{x}{y}$ 上的族时，对它们加以记录是有意义的。在 \cref{cha:basics} 中我们将会看到，这对于同伦解释至关重要。
 
-If we package up path induction into a single function, it takes the form:
+若将道路归纳打包为一个函数，其形式如下：
 \symlabel{defn:induction-ML-id}%
 \begin{narrowmultline*}
   \indid{A} :  \dprd{C : \prd{x,y:A} (\id[A]{x}{y}) \to \UU}
@@ -1654,136 +1546,131 @@ If we package up path induction into a single function, it takes the form:
   \narrowbreak
   \dprd{x,y:A}{p:\id[A]{x}{y}}   C(x,y,p)
 \end{narrowmultline*}
-with the equality\index{computation rule!for identity types}
+并满足等式\index{computation rule!for identity types}
 \[ \indid{A}(C,c,x,x,\refl{x}) \defeq c(x). \]
-The function $ \indid{A}$ is traditionally called $J$.
-\indexsee{J@$J$}{induction principle for identity type}%
-We will show in \cref{lem:transport} that indiscernibility of identicals is an instance of path induction, and also give it a new name and notation.
+函数 $ \indid{A}$ 传统上称为 $J$。
+\indexsee{J@$J$}{induction principle for identity type}我们将在 \cref{lem:transport} 中说明，同一者的不可分辨性是道路归纳的一个实例，并赋予它一个新的名称和记号。
 
 \mentalpause
 
-Given a proof $p : \id{a}{b}$,
-path induction requires us to replace \emph{both} $a$ and $b$ with the same unknown element $x$; thus in order to define an element of a family
-$C$, for all pairs of equal elements of $A$, it suffices to define it on the diagonal.
-In some proofs, however, it is simpler to make use of an equation $p : \id{a}{b}$ by replacing all occurrences of $b$ with $a$ (or vice versa), because it is sometimes easier to do the remainder of the proof for the specific element $a$ mentioned in the equality than for a general unknown~$x$.  This motivates a second induction principle for identity types, which says that the family of types $\id[A]{a}{x}$ is generated by the element $\refl{a} : \id{a}{a}$.  As we show below, this second principle is equivalent to the first; it is just sometimes a more convenient formulation.
+给定一个证明 $p : \id{a}{b}$，道路归纳要求我们将 $a$ 和 $b$ \emph{两者}都替换为同一个未知元素 $x$；因此，要为 $A$ 中所有相等的元素对定义族 $C$ 的元素，只需在"对角线"上定义它就足够了。然而，在一些证明中，利用等式 $p : \id{a}{b}$ 将所有出现的 $b$ 替换为 $a$（或者反之）会更简单，因为有时针对等式中提到的特定元素 $a$ 继续完成证明，要比为一个一般的未知元素 $x$ 完成证明更容易。这便引出了相等类型的第二种归纳原理，它指出类型族 $\id[A]{a}{x}$ 是由元素 $\refl{a} : \id{a}{a}$ 生成的。如下所示，这第二种原理与第一种是等价的；它只是有时提供了一个更方便的表述。
 
 \index{path!induction based}%
 \index{induction principle!for identity type!based}%
+
 \begin{description}
-\item[Based path induction:] 
-  Fix an element $a:A$, and suppose given a family
+\item[基于基点的道路归纳（Based path induction）：] 
+  固定一个元素 $a:A$，并假设给定一个族
   \[ C : \prd{x:A} (\id[A]{a}{x}) \to \UU \]
-  and an element
+  以及一个元素
   \[ c : C(a,\refl{a}). \]
-  Then we obtain a function
+  那么我们可以得到一个函数
   \[ f : \prd{x:A}{p:\id{a}{x}} C(x,p) \]
-  such that
+  使得
   \[ f(a,\refl{a}) \defeq c.\]
 \end{description}
 
-Here, $C(x,p)$ is a family of types, where $x$ is an element of $A$ and $p$ is an element of the identity type $\id[A]{a}{x}$, for fixed $a$ in $A$. The based path induction principle says that to define an element of this family for all $x$ and $p$, it suffices to consider
-just the case where $x$ is $a$ and $p$ is $\refl{a} : \id{a}{a}$.
+这里 $C(x,p)$ 是一个类型族，其中 $x$ 是 $A$ 的元素，而对于 $A$ 中固定的 $a$，$p$ 是相等类型 $\id[A]{a}{x}$ 的一个元素。基于基点的道路归纳原理是说，要为所有 $x$ 和 $p$ 定义这个族的一个元素，只需考虑 $x$ 是 $a$ 且 $p$ 是 $\refl{a} : \id{a}{a}$ 的情形。
 
-Packaged as a function, based path induction becomes:
+打包为函数后，基于基点的道路归纳变为：
 \symlabel{defn:induction-PM-id}%
 \begin{align*}
   \indidb{A} :  \dprd{a:A}{C : \prd{x:A} (\id[A]{a}{x}) \to \UU}
   C(a,\refl{a}) \to \dprd{x:A}{p : \id[A]{a}{x}} C(x,p) 
 \end{align*}
-with the equality
+并满足等式
 \[ \indidb{A}(a,C,c,a,\refl{a}) \defeq c. \]
 %\[ g(x)(x,\refl{x}) \defeq d(x) \]
 
-Below, we show that path induction and based path induction are equivalent.  Because of this, we will sometimes be sloppy and also refer to based path induction simply as ``path induction'', relying on the reader to infer which principle is meant from the form of the proof.
+下面我们将证明，道路归纳与基于基点的道路归纳是等价的。正因如此，我们有时会不严格地将基于基点的道路归纳也简称为"道路归纳"，而依靠读者从证明的形式来推断所指的原理。
 
 \begin{rmk}\label{rmk:the-only-path-is-refl}
-  Intuitively, the induction principle for the natural numbers expresses the fact that every natural number is either $0$ or of the form $\suc(n)$ for some natural number $n$, so that if we prove a property for these cases (with induction hypothesis in the second case), then we have proved it for all natural numbers.
-  Similarly, the induction principle for $A+B$ expresses the fact that every element of $A+B$ is either of the form $\inl(a)$ or $\inr(b)$, and so on.
-  Applying this same reading to path induction, we might say that path induction expresses the fact that every path is of the form \refl{a}, so that if we prove a property for reflexivity paths, then we have proved it for all paths.
+  直观上，自然数的归纳原理表达的是这样一个事实：每个自然数要么是 $0$，要么具有 $\suc(n)$ 的形式（其中 $n$ 是某个自然数）。
+  因此，如果我们能为这些情形（第二种情形带有归纳假设）证明某个性质，那么我们就为所有自然数证明了该性质。
+  类似地，$A+B$ 的归纳原理表达的是：$A+B$ 中的每个元素要么形如 $\inl(a)$，要么形如 $\inr(b)$，依此类推。
+  用同样的解读来理解道路归纳，我们可能会说，道路归纳表达的是这样一个事实：每条道路都具有 $\refl{a}$ 的形式，因此如果我们能为自反性道路证明某个性质，那么我们就为所有道路都证明了该性质。
 
-  However, this reading is quite confusing in the context of the homotopy interpretation of paths, where there may be many different ways in which two elements $a$ and $b$ can be identified, and therefore many different elements of the identity type!
-  How can there be many different paths, but at the same time we have an induction principle asserting that the only path is reflexivity?
+  然而，这种理解放在道路的同伦解释语境下会相当令人困惑，因为两个元素 $a$ 和 $b$ 之间可能有许多种不同的识别方式，从而相等类型中可能有许多不同的元素！
+  既然可能存在许多不同的道路，我们又怎么可能拥有一个断言"只有自反性才是道路"的归纳原理呢？
 
-The key observation is that it is not the identity \emph{type} that is inductively defined, but the identity \emph{family}.
-In particular, path induction says that the \emph{family} of types $(\id[A]{x}{y})$, as $x,y$ vary over all elements of $A$, is inductively defined by the elements of the form $\refl{x}$.
-This means that to give an element of any other family $C(x,y,p)$ dependent on a \emph{generic} element $(x,y,p)$ of the identity family, it suffices to consider the cases of the form $(x,x,\refl{x})$.
-In the homotopy interpretation, this says that the type of triples $(x,y,p)$, where $x$ and $y$ are the endpoints of the path $p$ (in other words, the $\Sigma$-type $\sm{x,y:A}(\id{x}{y})$), is inductively generated by the constant loops\index{path!constant} at each point $x$.
-As we will see in \cref{cha:basics}, in homotopy theory the space corresponding to $\sm{x,y:A}(\id{x}{y})$ is the \emph{free path space} --- the space of paths in $A$ whose endpoints may vary --- and it is in fact the case that any point of this space is homotopic to the constant loop at some point, since we can simply retract one of its endpoints along the given path.
-The analogous fact is also true in type theory: we can prove by path induction on $p:x=y$ that $\id[\sm{x,y:A}(\id{x}{y})]{(x,y,p)}{(x,x,\refl{x})}$.
+关键之处在于，归纳定义的不是相等\emph{类型}，而是相等\emph{族}。
+具体来说，道路归纳说的是：当 $x, y$ 遍历 $A$ 的所有元素时，类型族 $(\id[A]{x}{y})$ 是由形如 $\refl{x}$ 的元素归纳定义的。
+这意味着，对于任何依赖于相等族的一个\emph{一般}元素 $(x, y, p)$ 的族 $C(x, y, p)$，要给出它的一个元素，只需考虑形如 $(x, x, \refl{x})$ 的情形。
+在同伦解释下，这表示由所有三元组 $(x, y, p)$ 构成的空间（其中 $x$ 和 $y$ 是道路 $p$ 的端点，即 $\Sigma$-类型 $\sm{x,y:A}(\id{x}{y})$）是由每个点 $x$ 处的常值环路\index{path!constant}归纳生成的。
+我们将在 \cref{cha:basics} 中看到，在同伦论里，对应于 $\sm{x,y:A}(\id{x}{y})$ 的空间就是\emph{自由道路空间（free path space）}——即 $A$ 中端点可以自由变动的所有道路构成的空间——并且事实上，该空间中的任意一点都同伦于某个点处的常值环路，因为我们可以直接沿给定道路将其一个端点收回。
+类似地，相应的事实也在类型论中成立：我们可以通过对 $p:x=y$ 作道路归纳来证明 $\id[\sm{x,y:A}(\id{x}{y})]{(x,y,p)}{(x,x,\refl{x})}$。
 
-Similarly, based path induction says that for a fixed $a:A$, the \emph{family} of types $(\id[A]{a}{y})$, as $y$ varies over all elements of $A$, is inductively defined by the element $\refl{a}$.
-Thus, to give an element of any other family $C(y,p)$ dependent on a generic element $(y,p)$ of this family, it suffices to consider the case $(a,\refl{a})$.
-Homotopically, this expresses the fact that the space of paths starting at some chosen point (the \emph{based path space} at that point, which type-theoretically is $\sm{y:A} (\id{a}{y})$) is contractible to the constant loop on the chosen point.
-Again, the corresponding fact is also true in type theory: we can prove by based path induction on $p:a=y$ that $\id[\sm{y:A}(\id{a}{y})]{(y,p)}{(a,\refl{a})}$.
-Note also that according to the interpretation of $\Sigma$-types as subtypes mentioned in \cref{sec:pat}, the type $\sm{y:A}(\id{a}{y})$ can be regarded as ``the type of all elements of $A$ which are equal to $a$'', a type-theoretic version of the ``singleton\index{type!singleton} subset'' $\{a\}$.
+类似地，定基点道路归纳说的是，对于一个固定的 $a:A$，当 $y$ 遍历 $A$ 的所有元素时，类型族 $(\id[A]{a}{y})$ 是由元素 $\refl{a}$ 归纳定义的。
+因此，对于任何依赖于该族的一个一般元素 $(y, p)$ 的族 $C(y, p)$，要给出它的一个元素，只需考虑情形 $(a, \refl{a})$。
+从同伦角度看，这表达了以某个选定点为起点的所有道路构成的空间（即该点处的\emph{定基点道路空间（based path space）}，在类型论中即 $\sm{y:A} (\id{a}{y})$）可收缩为该选定点上的常值环路。
+同样地，对应的事实也在类型论中成立：我们可以通过对 $p:a=y$ 作定基点道路归纳来证明 $\id[\sm{y:A}(\id{a}{y})]{(y,p)}{(a,\refl{a})}$。
+另请注意，根据 \cref{sec:pat} 中所述将 $\Sigma$-类型视为子类型的解释，类型 $\sm{y:A}(\id{a}{y})$ 可以被看作"所有与 $a$ 相等的 $A$ 中元素构成的类型"，这是"单点\index{type!singleton}子集" $\{a\}$ 的类型论版本。
 
-Neither path induction nor based path induction provides a way to give an element of a family $C(p)$ where $p$ has \emph{two fixed endpoints} $a$ and $b$.
-In particular, for a family $C: (\id[A]{a}{a}) \to \UU$ dependent on a loop, we \emph{cannot} apply path induction and consider only the case for $C(\refl{a})$, and consequently, we cannot prove that all loops are reflexivity.
-Thus, inductively defining the identity family does not prohibit non-reflexivity paths in specific instances of the identity type.
-In other words, a path $p:\id{x}{x}$ may  be not equal to reflexivity as an element of $(\id{x}{x})$, but the pair $(x,p)$ will nevertheless be equal to the pair $(x,\refl{x})$ as elements of $\sm{y:A}(\id{x}{y})$.
+无论是道路归纳还是定基点道路归纳，都没有提供一种方法来给出依赖于一条具有\emph{两个固定端点} $a$ 和 $b$ 的道路 $p$ 的族 $C(p)$ 的元素。
+特别地，对于依赖于一条环路的族 $C: (\id[A]{a}{a}) \to \UU$，我们\emph{不能}应用道路归纳而只考虑 $C(\refl{a})$ 的情形，因此，我们不能证明所有环路都是自反性。
+所以，归纳定义相等族，并不禁止在相等类型的特定实例中出现非自反性的道路。
+换言之，一条道路 $p:\id{x}{x}$ 作为 $(\id{x}{x})$ 中的一个元素，可能不等于自反性，但序对 $(x,p)$ 作为 $\sm{y:A}(\id{x}{y})$ 中的元素，却仍然等于序对 $(x,\refl{x})$。
 
-As a topological example, consider a loop in the punctured disc \narrowequation{\setof{ (x,y) | 0 < x^2+y^2 < 2 }} which starts at $(1,0)$ and goes around the hole at $(0,0)$ once before returning back to $(1,0)$.
-If we hold both endpoints fixed at $(1,0)$, this loop cannot be deformed into a constant path while staying within the punctured disc, just as a rope looped around a pole cannot be pulled in if we keep hold of both ends.
-However, the loop can be contracted back to a constant if we allow one endpoint to vary, just as we can always gather in a rope if we only hold onto one end.
+举一个拓扑学的例子：考虑有孔圆盘 \narrowequation{\setof{ (x,y) | 0 < x^2+y^2 < 2 }} 中的一条环路，它从 $(1,0)$ 出发，绕过位于 $(0,0)$ 的孔洞一圈后，回到 $(1,0)$。
+如果我们把两个端点都固定在 $(1,0)$，那么这条环路无法在有孔圆盘内形变为常值道路，正如一根绕在杆子上的绳子，如果我们紧握两端，就无法把它拉回来一样。
+然而，如果我们允许其中一个端点变动，这条环路就可以收缩为常值道路，正如我们如果只握住绳子的一端，就总能把它收回来一样。
 \end{rmk}
 
 \index{path!induction|)}%
 \index{induction principle!for identity type|)}%
 \index{generation!of a type, inductive|)}
 
-\subsection{Equivalence of path induction and based path induction}
+\subsection{道路归纳与定基点道路归纳的等价性}
 
-The two induction principles for the identity type introduced above are equivalent.
-It is easy to see that path induction follows from the based path induction principle.
-Indeed, let us assume the premises of path induction:
+上面介绍的关于相等类型的两种归纳原理是等价的。
+我们很容易看到，道路归纳可以从定基点道路归纳原理推导出来。
+具体地，假设我们有道路归纳的前提：
 \begin{align*}
 C &: \prd{x,y:A}(\id[A]{x}{y}) \to \UU,\\
 c &: \prd{x:A} C(x,x,\refl{x}).
 \end{align*}
-Now, given an element $x:A$, we can instantiate both of the above, obtaining
+现在，给定一个元素 $x:A$，我们可以对以上两者进行实例化，得到
 \begin{align*}
 C' &: \prd{y:A} (\id[A]{x}{y}) \to \UU,  \\
 C' &\defeq C(x), \\
 c' &: C'(x,\refl{x}), \\
 c' &\defeq c(x).
 \end{align*}
-Clearly, $C'$ and $c'$ match the premises of based path induction and hence we can construct 
+显然，$C'$ 和 $c'$ 符合定基点道路归纳的前提，因此我们可以构造
 \begin{equation*}
   g : \prd{y:A}{p : \id{x}{y}} C'(y,p)
 \end{equation*}
-with the defining equality
+其定义等式为
 \[ g(x,\refl{x}) \defeq c'.\]
-Now we observe that $g$'s codomain is equal to $C(x,y,p)$.
-Thus, discharging our assumption $x:A$, we can derive a function 
+现在，我们注意到 $g$ 的余域就是 $C(x,y,p)$。
+于是，释放我们对 $x:A$ 的假设，便可以推导出一个函数
 \[ f : \prd{x,y:A}{p : \id[A]{x}{y}} C(x,y,p) \]
-with the required judgmental equality $f(x,x,\refl{x}) \judgeq g(x,\refl{x}) \defeq c' \defeq c(x)$.
+并满足所需的判断相等性 $f(x,x,\refl{x}) \judgeq g(x,\refl{x}) \defeq c' \defeq c(x)$。
 
-Another proof of this fact is to observe that any such $f$ can be obtained as an instance of $\indid{A}$,
-so it suffices to define $\indid{A}$ in terms of $\indidb{A}$ as
+这一事实的另一种证法是观察到：任何这样的 $f$ 都可以作为 $\indid{A}$ 的一个实例得到，所以只需用 $\indidb{A}$ 来定义 $\indid{A}$ 即可：
 \[ \indid{A}(C,c,x,y,p) \defeq \indidb{A}(x,C(x),c(x),y,p). \]
 
-The other direction is a bit trickier; it is not clear how we can use a particular instance of path induction to derive a particular instance of
-based path induction. What we can do instead is to construct one instance of path induction which shows 
-all possible instantiations of based path induction at once.
-Define
+另一个方向的证明则要棘手一些；我们并不清楚如何用道路归纳的某个特定实例来推导出定基点道路归纳的某个特定实例。
+我们能做的是转而构造道路归纳的一个实例，让它一次性涵盖定基点道路归纳所有可能的实例。
+定义
 \begin{align*}
 D &: \prd{x,y:A} (\id[A]{x}{y}) \to \UU, \\
 D(x,y,p) &\defeq \prd{C : \prd{z:A} (\id[A]{x}{z}) \to \UU} C(x,\refl{x}) \to C(y,p).
 \end{align*}
-Then we can construct the function
+那么我们可以构造函数
 \begin{align*}
 d &: \prd{x : A} D(x,x,\refl{x}), \\
 d &\defeq \lamu{x:A}\lamu{C:\prd{z:A}{p : \id[A]{x}{z}} \UU}\lam{c:C(x,\refl{x})} c
 \end{align*}
-and hence using path induction obtain
+从而利用道路归纳得到
 \[ f : \prd{x,y:A}{p:\id[A]{x}{y}} D(x,y,p) \]
-with $f(x,x,\refl{x}) \defeq d(x)$. Unfolding the definition of $D$, we can expand the type of $f$:
+并满足 $f(x,x,\refl{x}) \defeq d(x)$。展开 $D$ 的定义，我们可以展开 $f$ 的类型：
 \[ f : \prd{x,y:A}{p:\id[A]{x}{y}}{C : \prd{z:A} (\id[A]{x}{z}) \to \UU} C(x,\refl{x}) \to C(y,p). \]
-Now given $a:A$ along with $x:A$ and $p:\id[A]{a}{x}$, we can derive the conclusion of based path induction:
+现在，给定 $a:A$ 以及 $x:A$ 和 $p:\id[A]{a}{x}$，我们就能推导出定基点道路归纳的结论：
 \[ f(a,x,p,C,c) : C(x,p). \]
-Notice that we also obtain the correct definitional equality.
+注意，我们同时也得到了正确的定义相等。
 
-Another proof is to observe that any use of based path induction is an instance of $\indidb{A}$  and to define
+另一种证法是观察到：任何定基点道路归纳的使用都是 $\indidb{A}$ 的一个实例，并定义
 \begin{narrowmultline*}
 \indidb{A}(a,C,c,x,p) \defeq \narrowbreak
 \indid{A}
@@ -1795,213 +1682,191 @@ Another proof is to observe that any use of based path induction is an instance 
    \end{aligned}
 \end{narrowmultline*}
 
-
-Note that the construction given above uses universes. That is, if we want to
-model $\indidb{A}$ with $C : \prd{x:A} (\id[A]{a}{x}) \to \UU_i$, we need
-to use $\indid{A}$ with 
+需要注意的是，上面给出的构造用到了宇宙。
+也就是说，如果想用 $C : \prd{x:A} (\id[A]{a}{x}) \to \UU_i$ 来建模 $\indidb{A}$，我们就需要使用带有
 %
 \[ D:\prd{x,y:A} (\id[A]{x}{y}) \to \UU_{i+1} \]
 %
-since $D$ quantifies over all $C$ of the given type. While this is
-compatible with our definition of universes, it is also possible to
-derive $\indidb{A}$ without using universes: we can show that $\indid{A}$ entails \cref{lem:transport,thm:contr-paths}, and that these two principles imply $\indidb{A}$ directly.
-We leave the details to the reader as \cref{ex:pm-to-ml}.
+的 $\indid{A}$，因为 $D$ 对给定类型的所有 $C$ 进行了量化。
+虽然这与我们对宇宙的定义是兼容的，但也有可能在不使用宇宙的情况下推导出 $\indidb{A}$：
+我们可以证明 $\indid{A}$ 蕴涵 \cref{lem:transport,thm:contr-paths}，并且这两个原理联合起来可直接推出 $\indidb{A}$。
+我们将细节留给读者，作为 \cref{ex:pm-to-ml}。
 
-We can use either of the foregoing formulations of identity types
-to establish that equality is an equivalence relation, that every function preserves equality and that every family respects equality. We leave the details to the next chapter, where this will be derived  and explained in the context of homotopy type theory.
+我们可以利用上述任一关于相等类型的表述来建立以下事实：相等是一种等价关系，每个函数都保持相等，并且每个类型族都尊重相等。
+我们将这些细节留到下一章，在那里它们会在同伦类型论的语境下得到推导和解释。
 
 \begin{rmk}\label{rmk:propeq-vs-jdeq}
-  We emphasize that despite having some unfamiliar features, propositional equality is \emph{the} equality of mathematics in homotopy type theory.
-  This distinction does not belong to judgmental equality, which is rather a metatheoretic feature of the rules of type theory.
-  For instance, the associativity of addition for natural numbers proven in \cref{sec:inductive-types} is a \emph{propositional} equality, not a judgmental one.
-  The same is true of the commutative law (\cref{ex:add-nat-commutative}).
-  Even the very simple commutativity $n+1=1+n$ is not a judgmental equality for a generic $n$ (though it is judgmental for any specific $n$, e.g. $3+1\jdeq 1+3$, since both are judgmentally equal to $4$ by the computation rules defining $+$).
-  We can only prove such facts by using the identity type, since we can only apply the induction principle for \nat with a type as output (not a judgment).
+  我们要强调，尽管命题相等有一些不熟悉的特征，但它才是同伦类型论中数学上真正意义上的"相等"。
+  这一区分不属于判断相等性，后者更确切地说是类型论规则的一种元理论特征。
+  例如，在\cref{sec:inductive-types}中证明的自然数加法结合律，就是一种\emph{命题}相等，而非判断相等性。
+  交换律（\cref{ex:add-nat-commutative}）也是如此。
+  即便像 $n+1=1+n$ 这样简单的交换性，对于一般的 $n$ 来说也不是判断相等性（不过，对于任何具体的 $n$，例如 $3+1\jdeq 1+3$，它是判断相等的，因为根据定义 $+$ 的计算规则，两者都与 $4$ 判断相等）。
+  我们只能借助相等类型来证明这类事实，因为对 \nat 应用归纳原理时只能以类型（而非判断）作为输出。
 \end{rmk}
 
-\subsection{Disequality}
+\subsection{不等}
 \label{sec:disequality}
 
-Finally, let us also say something about \define{disequality},
+最后，让我们也谈一谈\define{不等}，
 \indexdef{disequality}%
-which is negation of equality:%
-\footnote{We use ``inequality''
-  to refer to $<$ and $\leq$. Also, note that this is negation of the \emph{propositional} identity type.
-Of course, it makes no sense to negate judgmental equality $\jdeq$, because judgments are not subject to logical operations.}
+它定义为相等的否定：%
+\footnote{我们用 ``inequality'' 一词指代 $<$ 和 $\leq$。另外请注意，这里否定的是\emph{命题}相等类型。
+当然，对判断相等性 $\jdeq$ 取否定是毫无意义的，因为判断本身不参与逻辑运算。}
 %
 \begin{equation*}
   (x \neq_A y) \ \defeq\ \lnot (\id[A]{x}{y}).
 \end{equation*}
-If $x\neq y$, we say that $x$ and $y$ are \define{unequal}
+若 $x\neq y$，则称 $x$ 和 $y$ 是\define{不相等的}，
 \indexdef{unequal}%
-or \define{not equal}.
+或\define{不相等的}。
 %
-Just like negation, disequality plays a less important role here than it does in classical\index{mathematics!classical}
-mathematics. For example, we cannot prove that two things are equal by proving that they
-are not unequal: that would be an application of the classical law of double negation, see \cref{sec:intuitionism}.
+就像否定一样，不等在此处的作用远不如它在经典\index{mathematics!classical}数学里那么重要。
+例如，我们无法通过证明两个对象并非不相等来证明它们相等：那样会用到经典的双重否定律，参见\cref{sec:intuitionism}。
 
-Sometimes it is useful to phrase disequality in a positive way. For example,
-in~\cref{RD-inverse-apart-0} we shall prove that a real number $x$ has an inverse if,
-and only if, its distance from~$0$ is positive, which is a stronger requirement than $x
-\neq 0$.
+有时，用正面的方式来陈述不等是有用的。
+例如，在~\cref{RD-inverse-apart-0}中我们将证明，一个实数 $x$ 有逆元当且仅当其与~$0$ 的距离是正的，这是一个比 $x \neq 0$ 更强的要求。
 
 \index{type!identity|)}%
 
 \sectionNotes
 
-The type theory presented here is a version of Martin-L\"{o}f's intuitionistic type 
-theory~\cite{Martin-Lof-1972,Martin-Lof-1973,Martin-Lof-1979,martin-lof:bibliopolis}, which itself is based on and influenced 
-by the foundational work of Brouwer \cite{beeson}, Heyting~\cite{heyting1966intuitionism}, Scott~\cite{scott70}, de 
-Bruijn~\cite{deBruijn-1973}, Howard~\cite{howard:pat}, Tait~\cite{Tait-1966,Tait-1968}, and Lawvere~\cite{lawvere:adjinfound}\index{Lawvere}.
+这里介绍的类型论是 Martin-L\"{o}f 直觉主义类型论~\cite{Martin-Lof-1972,Martin-Lof-1973,Martin-Lof-1979,martin-lof:bibliopolis} 的一个版本，后者本身又建立于 Brouwer \cite{beeson}、Heyting~\cite{heyting1966intuitionism}、Scott~\cite{scott70}、de Bruijn~\cite{deBruijn-1973}、Howard~\cite{howard:pat}、Tait~\cite{Tait-1966,Tait-1968} 以及 Lawvere~\cite{lawvere:adjinfound}\index{Lawvere} 的奠基性工作之上，并受其影响。
 \index{proof!assistant}%
-Three principal variants of Martin-L\"{o}f's type theory underlie the \NuPRL \cite{constable+86nuprl-book}, \Coq~\cite{Coq}, and 
-\Agda \cite{norell2007towards} computer implementations of type theory.  The theory given here differs from these formulations in a number 
-of respects, some of which are critical to the homotopy interpretation, while others are technical conveniences or involve concepts that 
-have not yet been studied in the homotopical setting.
+Martin-L\"{o}f 类型论的三种主要变体分别构成了 \NuPRL \cite{constable+86nuprl-book}、\Coq~\cite{Coq} 和 \Agda \cite{norell2007towards} 等类型论计算机实现的基础。本书给出的理论与这些表述在多个方面有所不同，其中有些差异对于同伦解释至关重要，另一些则是技术上的便利，或涉及尚未在同伦背景下研究的概念。
 
 \index{type theory!intensional}%
 \index{type theory!extensional}%
 \index{intensional type theory}%
 \index{extensional!type theory}%
-Most significantly, the type theory described here is derived from the \emph{intensional} version of Martin-L\"{o}f's type 
-theory~\cite{Martin-Lof-1973}, rather than the \emph{extensional} version~\cite{Martin-Lof-1979}.  Whereas the extensional theory makes no 
-distinction between judgmental and propositional equality, the intensional theory regards judgmental equality as purely definitional, and 
-admits a much broader, proof-relevant interpretation of the identity type that is central to the homotopy interpretation.  From the 
-homotopical perspective, extensional type theory confines itself to homotopically discrete sets (see \cref{sec:basics-sets}), whereas the 
-intensional theory admits types with higher-dimensional structure.  The \NuPRL system~\cite{constable+86nuprl-book} is extensional, whereas 
-both \Coq~\cite{Coq} and \Agda~\cite{norell2007towards} are intensional.  Among intensional type theories, there are a number of variants 
-that differ in the structure of identity proofs.  The most liberal interpretation, on which we rely here, admits a \emph{proof-relevant} 
-interpretation of equality, whereas more restricted variants impose restrictions such as \emph{uniqueness of identity proofs 
-  (UIP)}~\cite{Streicher93},
+最为显著的是，这里描述的类型论源自 Martin-L\"{o}f 类型论的\emph{内涵（intensional）}版本~\cite{Martin-Lof-1973}，而非其\emph{外延（extensional）}版本~\cite{Martin-Lof-1979}。外延理论不区分判断相等性和命题相等性，而内涵理论则将判断相等性视为纯粹定义性的，并允许对相等类型的一种更为宽泛的、\emph{证明相关的（proof-relevant）}解释——这对同伦解释至关重要。从同伦视角来看，外延类型论局限于同伦离散的集合（参见 \cref{sec:basics-sets}），而内涵理论则允许具有更高维结构的类型。\NuPRL 系统~\cite{constable+86nuprl-book} 是外延的，而 \Coq~\cite{Coq} 和 \Agda~\cite{norell2007towards} 都是内涵的。在内涵类型论中，还存在若干在相等证明的结构上有所不同的变体。我们在此依赖的是最宽松的解释，它承认对相等的\emph{证明相关}解释；而更受限的变体则会施加诸如\emph{相等证明唯一性（UIP）}~\cite{Streicher93}
 \indexsee{UIP}{uniqueness of identity proofs}%
-\index{uniqueness!of identity proofs}%
-stating that any two proofs of equality are judgmentally equal, and \emph{Axiom K}~\cite{Streicher93},
+\index{uniqueness!of identity proofs}%（即断言任何两个相等证明都是判断相等的），以及\emph{K 公理}~\cite{Streicher93}
 \index{axiom!Streicher's Axiom K}
-stating that 
-the only proof of equality is reflexivity (up to judgmental equality).  These additional requirements may be selectively imposed in the \Coq 
-and \Agda\ systems.
+（即断言相等的唯一证明是自反性，在判断相等的意义下）之类的限制。这些额外要求可以在 \Coq 和 \Agda 系统中选择性地施加。
 
 %(In the terminology of \cref{cha:hlevels} such a type theory is about $0$-truncated types.)
 
-Another point of variation among intensional theories is the strength of judgmental equality, particularly as regards objects of function type.  Here we include the uniqueness principle\index{uniqueness!principle} ($\eta$-conversion) $f \jdeq \lam{x} f(x)$, as a principle of judgmental equality.  This principle is used, for example, in \cref{sec:univalence-implies-funext}, to show that univalence implies propositional function extensionality.  Uniqueness principles are sometimes considered for other types.
-For instance, the uniqueness principle\index{uniqueness!principle!for product types} for the cartesian product $A\times B$ would be a judgmental version of the propositional equality $\uniq{A\times B}$ which we constructed in \cref{sec:finite-product-types}, saying that $u \jdeq (\proj1(u),\proj2(u))$.
-This and the corresponding version for dependent pairs would be reasonable choices (which we did not make), but we cannot include all such rules, because the corresponding uniqueness principle for identity types would trivialize all the higher homotopical structure.  So we are \emph{forced} to leave it out, and the question then becomes where to draw the line. With regards to inductive types, we discuss these points further in~\cref{sec:htpy-inductive}.
+内涵理论之间的另一个差异在于判断相等性的强度，尤其是关于函数类型的对象。在此，我们将唯一性原理\index{uniqueness!principle}（$\eta$-变换）$f \jdeq \lam{x} f(x)$ 作为一条判断相等原理纳入。例如，在 \cref{sec:univalence-implies-funext} 中用到这一原理来证明泛等性蕴含命题性的函数外延性。其他类型有时也会考虑唯一性原理。
+例如，Cartesian 积 $A\times B$ 的唯一性原理\index{uniqueness!principle!for product types}就是我们在 \cref{sec:finite-product-types} 中构造的命题相等 $\uniq{A\times B}$ 的判断版本，它表述为 $u \jdeq (\proj1(u),\proj2(u))$。
+这一原理以及依值对类型的相应版本都是合理的选择（尽管我们并未采纳），但我们不能将所有此类规则悉数纳入，因为相等类型所对应的唯一性原理会将所有高阶同伦结构抹平。
+因此，我们\emph{不得不}将其排除，于是问题就变成在哪里划定界限。关于归纳类型，我们将在~\cref{sec:htpy-inductive} 进一步讨论这些问题。
 
-It is important for our purposes that (propositional) equality of functions is taken to be \emph{extensional} (in a different sense than that used above!).
-This is not a consequence of the rules in this chapter; it will be expressed by \cref{axiom:funext}.
+对我们的目的而言，至关重要的一点是：函数的（命题）相等被取为\emph{外延的}（此处的``外延的''含义与上文不同！）。
+这不是本章所述规则的推论；它将由 \cref{axiom:funext} 表达。
 \index{function extensionality}%
-This decision is significant for our purposes, because it specifies that equality of functions is as expected in mathematics.  Although we include \cref{axiom:funext} as an axiom, it may be derived from the univalence axiom and the uniqueness principle for functions\index{uniqueness!principle!for function types} (see \cref{sec:univalence-implies-funext}), as well as from the existence of an interval type (see \cref{thm:interval-funext}).
+这一决定对我们的目的意义重大，因为它明确了函数的相等性符合数学中的惯常期望。尽管我们将 \cref{axiom:funext} 作为公理纳入，但它可以从泛等公理与函数类型的唯一性原理\index{uniqueness!principle!for function types}（参见 \cref{sec:univalence-implies-funext}）推导出来，也可以从区间类型的存在性（参见 \cref{thm:interval-funext}）推导出来。
 
-Regarding inductive types such as products, $\Sigma$-types, coproducts, natural numbers, and so on (see \cref{cha:induction}), there are additional choices regarding the formulation of induction and recursion.
+对于积、$\Sigma$ 类型、余积、自然数等归纳类型（参见 \cref{cha:induction}），归纳与递归的表述方式还有额外的选择。
 \index{pattern matching}%
-We have taken \emph{induction principles} as basic and \emph{pattern matching} as derived from them, but one may also do the other; see \cref{cha:rules}.
-Usually in the latter case one allows also \emph{deep} pattern matching; see~\cite{Coquand92Pattern}.
-There are several reasons for our choice.
-One reason is that induction principles are what we obtain naturally in categorical semantics.
-Another is that specifying the allowable kinds of (deep) pattern matching is quite tricky;
-for instance, \Agda's
+我们以\emph{归纳原理}为基础，将\emph{模式匹配（pattern matching）}视为由其派生；反过来，以模式匹配为基础、归纳原理为派生也是可以的，参见 \cref{cha:rules}。
+后一种做法通常还会允许\emph{深层（deep）}模式匹配；参见~\cite{Coquand92Pattern}。
+我们这样选择有几方面原因。
+其一，在范畴语义中自然获得的就是归纳原理。
+其二，界定允许哪些形式的（深层）模式匹配是相当棘手的；
+例如，\Agda 的
 \index{proof!assistant!Agda@\textsc{Agda}}%
-pattern matching can prove Axiom K by default,
+模式匹配默认就能证明 K 公理，
 \index{axiom!Streicher's Axiom K}%
-although a flag \texttt{--without-K} prevents this~\cite{CDP14}.
-Finally, deep pattern matching is not well-understood for \emph{higher} inductive types (see \cref{cha:hits}).
-Therefore, we will only use pattern matches such as those described in \cref{sec:pattern-matching}, which are directly equivalent to the application of an induction principle.
+尽管标志 \texttt{--without-K} 可以阻止这一点~\cite{CDP14}。
+最后，对于\emph{高阶}归纳类型（参见 \cref{cha:hits}），深层模式匹配尚未得到充分理解。
+因此，我们将只使用 \cref{sec:pattern-matching} 中所描述的那类模式匹配，它们直接等价于归纳原理的应用。
 
 \index{proof!assistant!Coq@\textsc{Coq}}%
-Unlike the type theory of \Coq, we do not include a primitive type of propositions.  Instead, as discussed in \cref{sec:pat}, we embrace 
-the \emph{propositions-as-types (PAT)} principle, identifying propositions with types.
-This was suggested originally by de Bruijn~\cite{deBruijn-1973}, Howard~\cite{howard:pat}, Tait~\cite{Tait-1968}, and Martin-L\"{o}f~\cite{Martin-Lof-1972}.
-(Our decision is explained more fully in \cref{subsec:pat?,subsec:hprops}.)
+与 \Coq 的类型论不同，我们不包含原始的命题类型，而是如 \cref{sec:pat} 所讨论的，采纳\emph{命题即类型（propositions-as-types, PAT）}原则，将命题与类型等同。
+这一原则最初由 de Bruijn~\cite{deBruijn-1973}、Howard~\cite{howard:pat}、Tait~\cite{Tait-1968} 和 Martin-L\"{o}f~\cite{Martin-Lof-1972} 提出。
+（关于我们这一决定的更详细解释，见 \cref{subsec:pat?,subsec:hprops}。）
 
-We do, however, include a full cumulative hierarchy of universes, so that the type formation and equality judgments become instances of the membership and equality judgments for a universe.
-As a convenience, we regard objects of a universe as types, rather than as codes for types; in the terminology of \cite{martin-lof:bibliopolis}, this means we use ``Russell-style universes'' rather than ``Tarski-style universes''.
+然而，我们的确包含了一个完整的累积宇宙层级，使得类型形成判断与相等判断成为宇宙的归属判断与相等判断的实例。
+为了方便，我们将宇宙的对象直接视为类型，而非类型的代码；用 \cite{martin-lof:bibliopolis} 的术语来说，这意味着我们使用的是``Russell 风格宇宙''，而非``Tarski 风格宇宙''。
 \index{type!universe!Tarski-style}%
 \index{type!universe!Russell-style}%
-An alternative would be to use Tarski-style universes, with an explicit coercion\index{coercion, universe-raising} function required to make an element $A:\UU$ of a universe into a type $\mathsf{El}(A)$, and just say that the coercion is omitted when working informally.
+另一种方案是使用 Tarski 风格宇宙，此时需要一个显式的强制转换函数\index{coercion, universe-raising}将宇宙的元素 $A:\UU$ 转化为类型 $\mathsf{El}(A)$，并约定在非形式化推理时省略此强制转换。
 
-We also treat the universe hierarchy as cumulative, in that every type in $\UU_i$ is also in $\UU_j$ for each $j\geq i$.
-There are different ways to implement cumulativity formally: the simplest is just to include a rule that if $A:\UU_i$ then $A:\UU_j$.
-However, this has the annoying consequence that for a type family $B:A\to \UU_i$ we cannot conclude $B:A\to\UU_j$, although we can conclude $\lam{a} B(a) : A\to\UU_j$.
-A more sophisticated approach that solves this problem is to introduce a judgmental subtyping relation $<:$ generated by $\UU_i<:\UU_j$, but this makes the type theory more complicated to study.
-Another alternative would be to include an explicit coercion function $\uparrow : \UU_i \to \UU_j$, which could be omitted when working informally.
+我们还将宇宙层级视为累积的：对于每个 $j\geq i$，$\UU_i$ 中的每个类型也属于 $\UU_j$。
+形式上实现累积性有几种不同方法。最简单的是直接加入一条规则：若 $A:\UU_i$，则 $A:\UU_j$。
+然而，这会带来一个恼人的后果：对于类型族 $B:A\to \UU_i$，我们无法推出 $B:A\to\UU_j$，尽管可以推出 $\lam{a} B(a) : A\to\UU_j$。
+一种更精细的方案是引入由 $\UU_i<:\UU_j$ 生成的判断子类型关系 $<:$ 来解决此问题，但这会使类型论的研究变得更为复杂。
+另一种方案是引入显式的强制转换函数 $\uparrow : \UU_i \to \UU_j$，同样可在非形式化推理时省略。
 
-It is also not necessary that the universes be indexed by natural numbers and linearly ordered.
-For some purposes, it is more appropriate to assume only that every universe is an element of some larger universe, together with a ``directedness'' property that any two universes are jointly contained in some larger one.
-There are many other possible variations, such as including a universe ``$\UU_{\omega}$'' that contains all $\UU_i$ (or even higher ``large cardinal'' type universes), or by internalizing the hierarchy into a type family $\lam{i} \UU_i$.
-The latter is in fact done in \Agda.
+宇宙也不必以自然数为指标并按线性序排列。
+在某些情况下，更合适的做法是仅假定每个宇宙都是某个更大宇宙的元素，同时满足一种``有向性''性质——即任意两个宇宙都共同被包含于某个更大的宇宙之中。
+此外还有许多其他可能的变体，例如引入一个包含所有 $\UU_i$ 的宇宙 $\UU_{\omega}$（甚或是更高阶的``大基数''类型宇宙），或将整个层级结构内化为一个类型族 $\lam{i} \UU_i$。
+后一种做法事实上已在 \Agda 中实现。
 
-The path induction principle for identity types was formulated by Martin-L\"{o}f~\cite{Martin-Lof-1973}.
-The based path induction rule in the setting of Martin-L\"of type theory is due to Paulin-Mohring \cite{Moh93}; it can be seen as an intensional generalization of the concept of ``pointwise functionality''\index{pointwise!functionality} for hypothetical judgments from \NuPRL~\cite[Section~8.1]{constable+86nuprl-book}.
-The fact that Martin-L\"of's rule implies Paulin-Mohring's was proved by Streicher using Axiom K (see~\cref{sec:hedberg}), by Altenkirch and Goguen as in \cref{sec:identity-types}, and finally by Hofmann without universes (as in \cref{ex:pm-to-ml}); see~\cite[\S1.3 and Addendum]{Streicher93}.
+相等类型的道路归纳原理由 Martin-L\"{o}f~\cite{Martin-Lof-1973} 提出。
+Martin-L\"of 类型论设定下的定基点道路归纳（based path induction）规则归功于 Paulin-Mohring~\cite{Moh93}；它可以看作是 \NuPRL~\cite[Section~8.1]{constable+86nuprl-book} 系统中关于假设判断的``逐点函数性（pointwise functionality）''
+\index{pointwise!functionality}%
+概念在内涵类型论中的推广。
+Martin-L\"of 的规则蕴含 Paulin-Mohring 的规则，这一事实由 Streicher（使用 K 公理，见~\cref{sec:hedberg}）、Altenkirch 与 Goguen（如~\cref{sec:identity-types}），以及最终由 Hofmann（在不使用宇宙的情况下，如~\cref{ex:pm-to-ml}）所证明；详情参见~\cite[\S1.3 and Addendum]{Streicher93}。
 
 \sectionExercises
 
 \begin{ex}\label{ex:composition}
-  Given functions $f:A\to B$ and $g:B\to C$, define their \define{composite}
+  给定函数 $f:A\to B$ 与 $g:B\to C$，定义它们的\define{复合（composite）}
   \indexdef{composition!of functions}%
   \indexdef{function!composition}%
- $g\circ f:A\to C$.
+  $g\circ f:A\to C$。
   \index{associativity!of function composition}%
-  Show that we have $h \circ (g\circ f) \jdeq (h\circ g)\circ f$.
+  证明我们有 $h \circ (g\circ f) \jdeq (h\circ g)\circ f$。
 \end{ex}
 
 \begin{ex}\label{ex:pr-to-rec}
-  Derive the recursion principle for products $\rec{A\times B} $ using only the projections, and verify that the definitional equalities are valid.
-  Do the same for $\Sigma$-types.
+  仅使用投影映射，推导积类型 $A \times B$ 的递归原理 $\rec{A\times B} $，并验证定义相等性成立。
+  对 $\Sigma$ 类型做同样的推导。
 \end{ex}
 
 \begin{ex}\label{ex:pr-to-ind}
-  Derive the induction principle for products $\ind{A\times B}$, using only the projections and the propositional uniqueness principle $\uniq{A\times B}$.
-  Verify that the definitional equalities are valid.
-  Generalize $\uniq{A\times B}$ to $\Sigma$-types, and do the same for $\Sigma$-types.
-  \emph{(This requires concepts from \cref{cha:basics}.)}
+  仅使用投影映射和命题唯一性原理 $\uniq{A\times B}$，推导积类型 $A \times B$ 的归纳原理 $\ind{A\times B}$。
+  验证定义相等性成立。
+  将 $\uniq{A\times B}$ 推广到 $\Sigma$ 类型，并对 $\Sigma$ 类型做同样的推导。
+  \emph{(这需要 \cref{cha:basics} 中的概念。)}
 \end{ex}
 
 \begin{ex}\label{ex:iterator}
 \index{iterator!for natural numbers}
-Assuming as given only the \emph{iterator} for natural numbers
+假设仅给定自然数的\emph{迭代器（iterator）}
 \[\ite : \prd{C:\UU} C \to (C \to C) \to \nat \to C \]
-with the defining equations
+及其定义方程
 \begin{align*}
 \ite(C,c_0,c_s,0)  &\defeq c_0, \\
 \ite(C,c_0,c_s,\suc(n)) &\defeq c_s(\ite(C,c_0,c_s,n)),
-\end{align*}
-derive a function having the type of the recursor $\rec{\nat}$.
-Show that the defining equations of the recursor hold propositionally for this function, using the induction principle for $\nat$.
+\end{align*}，
+推导出一个类型与递归子 $\rec{\nat}$ 相同的函数。
+利用 $\nat$ 的归纳原理证明，该函数在命题层面满足递归子的定义方程。
 \end{ex}
 
 \begin{ex}\label{ex:sum-via-bool}
 \index{type!coproduct}%
-Show that if we define $A + B \defeq \sm{x:\bool} \rec{\bool}(\UU,A,B,x)$, then we can give a definition of $\ind{A+B}$ for which the definitional equalities stated in \cref{sec:coproduct-types} hold.
+证明：若定义 $A + B \defeq \sm{x:\bool} \rec{\bool}(\UU,A,B,x)$，则可给出 $\ind{A+B}$ 的一个定义，使得 \cref{sec:coproduct-types} 中所述的定义相等性成立。
 \end{ex}
 
 \begin{ex}\label{ex:prod-via-bool}
 \index{type!product}%
-Show that if we define $A \times B \defeq \prd{x:\bool}\rec{\bool}(\UU,A,B,x)$, then we can give a definition of  $\ind{A\times B}$ for which the definitional equalities stated in \cref{sec:finite-product-types} hold propositionally (i.e.\ using equality types).
-\emph{(This requires the function extensionality axiom, which is introduced in \cref{sec:compute-pi}.)}
+证明：若定义 $A \times B \defeq \prd{x:\bool}\rec{\bool}(\UU,A,B,x)$，则可给出 $\ind{A\times B}$ 的一个定义，使得 \cref{sec:finite-product-types} 中所述的定义相等性在命题层面（即利用相等类型）成立。
+\emph{(这需要用到 \cref{sec:compute-pi} 中引入的函数外延性公理。)}
 \end{ex}
 
 \begin{ex}\label{ex:pm-to-ml}
-Give an alternative derivation of $\indidb{A}$ from $\indid{A}$ which avoids the use of universes.
-  \emph{(This is easiest using concepts from later chapters.)}
+给出一个不使用宇宙的替代推导，从 $\indid{A}$ 导出 $\indidb{A}$。
+  \emph{(使用后续章节的概念最为容易。)}
 \end{ex}
 
 \begin{ex}\label{ex:nat-semiring}
   \index{multiplication!of natural numbers}%
-  Define multiplication and exponentiation using $\rec{\nat}$.
-  Verify that $(\nat,+,0,\times,1)$ is a semiring\index{semiring} using only $\ind{\nat}$.
-  You will probably also need to use symmetry and transitivity of equality, \cref{lem:opp,lem:concat}.
+  使用 $\rec{\nat}$ 定义乘法和指数运算。
+  仅使用 $\ind{\nat}$ 验证 $(\nat,+,0,\times,1)$ 构成一个半环\index{semiring}。
+  你可能还需要用到相等的对称性与传递性，\cref{lem:opp,lem:concat}。
 \end{ex}
 
 \begin{ex}\label{ex:fin}
   \index{finite!sets, family of}%
-  Define the type family $\Fin : \nat \to \UU$ mentioned at the end of \cref{sec:universes}, and the dependent function $\fmax : \prd{n:\nat} \Fin(n+1)$ mentioned in \cref{sec:pi-types}.
+  定义 \cref{sec:universes} 末尾提到的类型族 $\Fin : \nat \to \UU$，以及 \cref{sec:pi-types} 中提到的依值函数 $\fmax : \prd{n:\nat} \Fin(n+1)$。
 \end{ex}
 
 \begin{ex}\label{ex:ackermann}
   \indexdef{function!Ackermann}%
   \indexdef{Ackermann function}%
-  Show that the Ackermann function $\ack : \nat \to \nat \to \nat$ is definable using only $\rec{\nat}$ satisfying the following equations:
+  证明 Ackermann 函数 $\ack : \nat \to \nat \to \nat$ 可以仅用 $\rec{\nat}$ 定义，且满足以下方程：
   \begin{align*}
     \ack(0,n) &\jdeq \suc(n), \\
     \ack(\suc(m),0) &\jdeq \ack(m,1), \\
@@ -2010,33 +1875,33 @@ Give an alternative derivation of $\indidb{A}$ from $\indid{A}$ which avoids the
 \end{ex}
 
 \begin{ex}\label{ex:neg-ldn}
-  Show that for any type $A$, we have $\neg\neg\neg A \to \neg A$.
+  证明对任意类型 $A$，有 $\neg\neg\neg A \to \neg A$。
 \end{ex}
 
 \begin{ex}\label{ex:tautologies}
-  Using the propositions as types interpretation, derive the following tautologies.
+  使用命题即类型解释，推导以下重言式。
   \begin{enumerate}
-  \item If $A$, then (if $B$ then $A$).
-  \item If $A$, then not (not $A$).
-  \item If (not $A$ or not $B$), then not ($A$ and $B$).
+  \item 若 $A$ 成立，则（若 $B$ 成立，则 $A$ 成立）。
+  \item 若 $A$ 成立，则非（非 $A$）。
+  \item 若（非 $A$ 或非 $B$）成立，则非（$A$ 且 $B$）。
   \end{enumerate}
 \end{ex}
 
 \begin{ex}\label{ex:not-not-lem}
-  Using propositions-as-types, derive the double negation of the principle of excluded middle, i.e.\ prove \emph{not (not ($P$ or not $P$))}.
+  使用命题即类型，推导排中律的双重否定，即证明\emph{非（非（$P$ 或非 $P$））}。
 \end{ex}
 
 \begin{ex}\label{ex:without-K}
-  Why do the induction principles for identity types not allow us to construct a function $f: \prd{x:A}{p:\id{x}{x}} (\id{p}{\refl{x}})$ with the defining equation
-  \[ f(x,\refl{x}) \defeq \refl{\refl{x}} \quad ?\]
+  为什么相等类型的归纳原理不允许我们构造一个函数 $f: \prd{x:A}{p:\id{x}{x}} (\id{p}{\refl{x}})$，使其满足定义方程
+  \[ f(x,\refl{x}) \defeq \refl{\refl{x}} \quad ?\]？
 \end{ex}
 
 \begin{ex}\label{ex:subtFromPathInd}
-  Show that indiscernibility of identicals follows from path induction.  
+  证明同一者的不可区分性可由道路归纳导出。  
 \end{ex}
 
 \begin{ex}\label{ex:add-nat-commutative}
-  Show that addition of natural numbers is commutative: $\prd{i,j:\nat} (i+j=j+i)$.
+  证明自然数的加法满足交换律：$\prd{i,j:\nat} (i+j=j+i)$。
 \end{ex}
 
 % Local Variables:

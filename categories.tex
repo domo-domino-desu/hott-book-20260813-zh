@@ -1,425 +1,436 @@
-\chapter{Category theory}
+\chapter{范畴论}
 \label{cha:category-theory}
 
-Of the branches of mathematics, category theory is one which perhaps fits the least comfortably in set theoretic foundations.
-One problem is that most of category theory is invariant under weaker notions of ``sameness'' than equality, such as isomorphism in a category or equivalence of categories, in a way which set theory fails to capture.
-But this is the same sort of problem that the univalence axiom solves for types, by identifying equality with equivalence.
-Thus, in univalent foundations it makes sense to consider a notion of ``category'' in which equality of objects is identified with isomorphism in a similar way.
+数学的各个分支中，范畴论或许是与集合论基础相处得最不融洽的一支。
+其原因之一是，范畴论中的大多数内容在一类比"相等"更弱的"相同性"概念（例如范畴中的同构，或者范畴的等价）下保持不变，而集合论却无法把握这一点。
+但泛等公理已经为类型解决了同一类问题，做法是将相等与等价等同起来。
+因此，在泛等基础下，考虑一种"范畴"的概念是有意义的，其中对象的相等以类似的方式与同构等同起来。
 
-Ignoring size issues, in set-based mathematics a category consists of a \emph{set} $A_0$ of objects and, for each $x,y\in A_0$, a \emph{set} $\hom_A(x,y)$ of morphisms.
-Under univalent foundations, a ``naive'' definition of category would simply mimic this with a \emph{type} of objects and \emph{types} of morphisms.
-If we allowed these types to contain arbitrary higher homotopy, then we ought to impose higher coherence conditions, leading to some notion of $(\infty,1)$-category,
+忽略大小问题，在基于集合的数学里，一个范畴由一个对象\emph{集合} $A_0$ 以及对每一对 $x,y\in A_0$ 的一个态射\emph{集合} $\hom_A(x,y)$ 组成。
+在泛等基础下，一个"朴素"的范畴定义只需将上述\emph{集合}替换为\emph{类型}即可。
+如果我们允许这些类型包含任意的高阶同伦，那么就应当加上更高阶的相容性条件，从而导向某种 $(\infty,1)$-范畴的概念。
 \index{.infinity1-category@$(\infty,1)$-category}%
-but at present our goal is more modest.
-We consider only 1-categories, and therefore we restrict the types $\hom_A(x,y)$ to be sets, i.e.\ 0-types.
-If we impose no further conditions, we will call this notion a \emph{precategory}.
+但在现阶段，我们的目标更为保守。
+我们只考虑 1-范畴，因此将类型 $\hom_A(x,y)$ 限制为集合，即 0-类型。
+如果不加任何进一步的条件，我们就称这个概念为\emph{预范畴（precategory）}。
 
-If we add the requirement that the type $A_0$ of objects is a set, then we end up with a definition that behaves much like the traditional set-theoretic one.
-Following Toby Bartels, we call this notion a \emph{strict category}.
+如果我们添加一个额外条件，要求对象类型 $A_0$ 本身也是一个集合，那么得到的概念其行为将与传统的集合论定义非常相似。
+依照 Toby Bartels 的说法，我们称这个概念为\emph{严格范畴（strict category）}。
 \index{strict!category}%
-Alternatively, we can require a generalized version of the univalence axiom, identifying $(x=_{A_0} y)$ with the type $\mathsf{iso}(x,y)$ of isomorphisms from $x$ to $y$.
-Since we regard the latter choice as usually the ``correct'' definition, we will call it simply a \emph{category}.
+或者，我们可以要求某种泛等公理的推广版本，将 $(x=_{A_0} y)$ 与从 $x$ 到 $y$ 的同构类型 $\mathsf{iso}(x,y)$ 等同起来。
+鉴于我们通常认为后一个选择才是"正确的"定义，我们将简单地称其为\emph{范畴（category）}。
 
-A good example of the difference between the three notions of category is provided by the statement ``every fully faithful and essentially surjective functor is an equivalence of categories'', which in classical set-based category theory is equivalent to the axiom of choice.
+一个能很好说明这三种范畴概念之间区别的例子是如下陈述："每一个全忠实且本质满的函子都是范畴的等价"。
+这一陈述在基于集合的经典范畴论中等价于选择公理。
 \index{mathematics!classical}%
 \index{axiom!of choice}%
 \index{classical!category theory}%
+
+
 \begin{enumerate}
-\item For strict categories, this is still equivalent to the axiom of choice.
-\item For precategories, there is no consistent axiom of choice which can make it true.
-\item For categories, it is provable \emph{without} any axiom of choice.
+\item 对于严格范畴而言，该陈述仍然等价于选择公理。
+\item 对于预范畴而言，不存在任何一致的选择公理能使其为真。
+\item 对于范畴而言，该陈述\emph{无需}任何选择公理即可证明。
 \end{enumerate}
-We will prove the latter statement in this chapter, as well as other pleasant properties of categories, e.g.\ that equivalent categories are equal (as elements of the type of categories).
-We will also describe a universal way of ``saturating'' a precategory $A$ into a category $\widehat A$, which we call its \emph{Rezk completion},
+
+
+我们将在本章证明最后一个论断，以及范畴的其他一些良好性质，例如，等价的范畴（作为范畴类型的元素）是相等的。
+我们还将描述一种将预范畴 $A$ "饱和"为范畴 $\widehat A$ 的通用方法，我们称其为 $A$ 的\emph{Rezk 完备化（Rezk completion）}。
 \index{completion!Rezk}%
-although it could also reasonably be called the \emph{stack completion} (see the Notes).
+不过，它也可以合理地被称为\emph{层栈完备化（stack completion）}（参见章末注记）。
 
-The Rezk completion also sheds further light on the notion of equivalence of categories.
-For instance, the functor $A \to \widehat{A}$ is always fully faithful and essentially surjective, hence a ``weak equivalence''.
-It follows that a precategory is a category exactly when it ``sees'' all fully faithful and essentially surjective functors as equivalences; thus our notion of ``category'' is already inherent in the notion of ``fully faithful and essentially surjective functor''.
+Rezk 完备化也能进一步阐明范畴的等价这一概念。
+例如，函子 $A \to \widehat{A}$ 总是全忠实且本质满的，因而是"弱等价（weak equivalence）"。
+由此可以推出，一个预范畴是范畴，当且仅当它能把所有全忠实且本质满的函子都视为等价；
+因此，我们的"范畴"概念其实已经蕴含在"全忠实且本质满函子"这一概念之中了。
 
-We assume the reader has some basic familiarity with classical category theory.\index{classical!category theory}
-Recall that whenever we write \type it denotes some universe of types, but perhaps a different one at different times; everything we say remains true for any consistent choice of universe levels\index{universe level}.
-We will use the basic notions of homotopy type theory from \cref{cha:typetheory,cha:basics} and the propositional truncation from \cref{cha:logic}, but not much else from \cref{part:foundations}, except that our second construction of the Rezk completion will use a higher inductive type.
-
+我们假设读者已具备经典范畴论的基本知识。\index{classical!category theory}
+请记住，每当我们书写 \type，它都表示某个类型宇宙，但在不同时候所指的可能不同；
+我们所说的一切对于任意一致的宇宙层级选择都成立\index{universe level}。
+我们将使用来自 \cref{cha:typetheory,cha:basics} 的同伦类型论基本概念，以及来自 \cref{cha:logic} 的命题截断，除此之外基本不涉及 \cref{part:foundations} 的其他内容——唯一的例外是构造 Rezk 完备化的第二种方法会用到高阶归纳类型。
 
 \section{Categories and precategories}
 \label{sec:cats}
 
-In classical mathematics, there are many equivalent definitions of a category.
-In our case, since we have dependent types, it is natural to choose the arrows to be a type family indexed by the objects.
-This matches the way hom-types are always used in category theory: we never even consider comparing two arrows unless we know their domains and codomains agree.
-Furthermore, it seems clear that for a theory of 1-categories, the hom-types should all be sets.
-This leads us to the following definition.
+在经典数学中，范畴有许多等价定义。
+在我们的情形中，由于我们拥有依值类型，最自然的选择是将箭头（态射）定义为一个以对象为指标的类型族。
+这与态射类型在范畴论中的使用方式完全吻合：除非我们知道两个箭头的定义域和陪域一致，否则我们根本不会去比较它们。
+此外，对于 1-范畴的理论来说，显然所有的态射类型都应该是集合。
+这就将我们引向如下的定义。
 
 \begin{defn}\label{ct:precategory}
-  A \define{precategory}
+  一个\define{预范畴}
   \indexdef{precategory}
-  $A$ consists of the following.
+  $A$ 由以下数据组成。
   \begin{enumerate}
-  \item A type $A_0$, whose elements are called \define{objects}.%
+  \item 一个类型 $A_0$，其元素称为\define{对象}。%
     \indexdef{object!in a (pre)category}
-    We write $a:A$ for $a:A_0$.
-  \item For each $a,b:A$, a set $\hom_A(a,b)$, whose elements are called \define{arrows} or \define{morphisms}.%
+    我们用 $a:A$ 表示 $a:A_0$。
+  \item 对于每一对 $a,b:A$，一个集合 $\hom_A(a,b)$，其元素称为\define{箭头}或\define{态射}。%
     \indexsee{arrow}{morphism}%
     \indexdef{morphism!in a (pre)category}%
     \indexdef{hom-set}%
-  \item For each $a:A$, a morphism $1_a:\hom_A(a,a)$, called the \define{identity morphism}.%
+  \item 对于每个 $a:A$，有一个态射 $1_a:\hom_A(a,a)$，称为\define{恒同态射}。%
     \indexdef{identity!morphism in a (pre)category}
-  \item For each $a,b,c:A$, a function%
+  \item 对于每组 $a,b,c:A$，有一个函数%
     \indexdef{composition!of morphisms in a (pre)category}
     \[  \hom_A(b,c) \to \hom_A(a,b) \to \hom_A(a,c) \]
-    called \define{composition}, and denoted infix by $g\mapsto f\mapsto g\circ f$, or sometimes simply by $gf$.
-  \item For each $a,b:A$ and $f:\hom_A(a,b)$, we have $\id f {1_b\circ f}$ and $\id f {f\circ 1_a}$.
-  \item For each $a,b,c,d:A$ and
+    称为\define{复合}，并以中缀形式记作 $g\mapsto f\mapsto g\circ f$，有时也简写为 $gf$。
+  \item 对于每一对 $a,b:A$ 以及 $f:\hom_A(a,b)$，有 $\id f {1_b\circ f}$ 和 $\id f {f\circ 1_a}$。
+  \item 对于每组 $a,b,c,d:A$ 以及
     \begin{equation*}
       f:\hom_A(a,b), \qquad
       g:\hom_A(b,c), \qquad
       h:\hom_A(c,d),
     \end{equation*}
-    we have $\id {h\circ (g\circ f)}{(h\circ g)\circ f}$.
+    有 $\id {h\circ (g\circ f)}{(h\circ g)\circ f}$。
   \end{enumerate}
 \end{defn}
 
-The problem with the notion of precategory is that for objects $a,b:A$, we have two possibly-different notions of ``sameness''.
-On the one hand, we have the type $(\id[A_0]{a}{b})$.
-But on the other hand, there is the standard categorical notion of \emph{isomorphism}.
+预范畴这个概念存在的问题是，对于对象 $a,b:A$，我们有两种可能不同的"相同性"概念。
+一方面，我们有类型 $(\id[A_0]{a}{b})$。
+但另一方面，还有范畴论中标准的\emph{同构（isomorphism）}概念。
 
 \begin{defn}\label{ct:isomorphism}
-  A morphism $f:\hom_A(a,b)$ is an \define{isomorphism}
+  一个态射 $f:\hom_A(a,b)$ 是一个\define{同构}
   \indexdef{isomorphism!in a (pre)category}%
-  if there is a morphism $g:\hom_A(b,a)$ such that $\id{g\circ f}{1_a}$ and $\id{f\circ g}{1_b}$.
-  We write $a\cong b$ for the type of such isomorphisms.
+  如果存在一个态射 $g:\hom_A(b,a)$，使得 $\id{g\circ f}{1_a}$ 且 $\id{f\circ g}{1_b}$。
+  我们将此类同构的类型记作 $a\cong b$。
 \end{defn}
 
 \begin{lem}\label{ct:isoprop}
-  For any $f:\hom_A(a,b)$, the type ``$f$ is an isomorphism'' is a mere proposition.
-  Therefore, for any $a,b:A$ the type $a\cong b$ is a set.
+  对于任意 $f:\hom_A(a,b)$，类型"$f$ 是一个同构"是一个命题。
+  因此，对于任意 $a,b:A$，类型 $a\cong b$ 是一个集合。
 \end{lem}
+
 \begin{proof}
-  Suppose given $g:\hom_A(b,a)$ and $\eta:(\id{1_a}{g\circ f})$ and $\epsilon:(\id{f\circ g}{1_b})$, and similarly $g'$, $\eta'$, and $\epsilon'$.
-We must show $\id{(g,\eta,\epsilon)}{(g',\eta',\epsilon')}$.
-  But since all hom-sets are sets, their identity types are mere propositions, so it suffices to show $\id g {g'}$.
-  For this we have
+  假设给定 $g:\hom_A(b,a)$ 以及 $\eta:(\id{1_a}{g\circ f})$ 和 $\epsilon:(\id{f\circ g}{1_b})$，同样地给定 $g'$、$\eta'$ 和 $\epsilon'$。
+  我们需要证明 $\id{(g,\eta,\epsilon)}{(g',\eta',\epsilon')}$。
+  但由于所有的 hom-集都是集合，它们的相等类型都是命题，因此只需证明 $\id g {g'}$。
+  为此，我们有
   \[g' = 1_a\circ g' = (g\circ f)\circ g' = g\circ (f\circ g') = g\circ 1_b = g\]
-  using $\eta$ and $\epsilon'$.
+  这里用到了 $\eta$ 和 $\epsilon'$。
 \end{proof}
 
 \symlabel{ct:inv}
 \index{inverse!in a (pre)category}%
-If $f:a\cong b$, then we write $\inv f$ for its inverse, which by \cref{ct:isoprop} is uniquely determined.
+如果 $f:a\cong b$，我们记 $\inv f$ 为其逆，根据 \cref{ct:isoprop}，这个逆是由 $f$ 唯一决定的。
 
-The only relationship between these two notions of sameness that we have in a precategory is the following.
+在预范畴中，关于这两种相同性概念，我们拥有的唯一关系如下。
 
 \begin{lem}[\textsf{idtoiso}]\label{ct:idtoiso}
-  If $A$ is a precategory and $a,b:A$, then
+  如果 $A$ 是一个预范畴且 $a,b:A$，那么
   \[(\id a b)\to (a \cong b).\]
 \end{lem}
+
 \begin{proof}
-  By induction on identity, we may assume $a$ and $b$ are the same.
-  But then we have $1_a:\hom_A(a,a)$, which is clearly an isomorphism.
+  通过对相等做归纳，我们可以假定 $a$ 和 $b$ 是相同的。
+  但此时我们有 $1_a:\hom_A(a,a)$，这显然是一个同构。
 \end{proof}
 
-Evidently, this situation is analogous to the issue that motivated us to introduce the univalence axiom.
-In fact, we have the following:
+显然，这种情况类似于促使我们引入泛等公理的问题。
+事实上，我们有如下例子：
 
 \begin{eg}\label{ct:precatset}
   \index{set}%
-  There is a precategory \uset, whose type of objects is \set, and with $\hom_{\uset}(A,B) \defeq (A\to B)$.
-  The identity morphisms are identity functions and the composition is function composition.
-  For this precategory, \cref{ct:idtoiso} is equal to (the restriction to sets of) the map $\idtoeqv$ from \cref{sec:compute-universe}.
+  存在一个预范畴 \uset，其对象类型是 \set，并且满足 $\hom_{\uset}(A,B) \defeq (A\to B)$。
+  其中的恒同态射是恒等函数，复合是函数复合。
+  对于这个预范畴，\cref{ct:idtoiso} 等于（限制在集合上的）来自 \cref{sec:compute-universe} 的映射 $\idtoeqv$。
 
-  Of course, to be more precise we should call this category $\uset_\UU$, since its objects are only the \emph{small sets}
+  当然，更精确地说，我们应该称这个范畴为 $\uset_\UU$，因为它的对象只是相对于某个宇宙 \UU 的\emph{小集合}。
   \index{small!set}%
-  relative to a universe \UU.
 \end{eg}
 
-Thus, it is natural to make the following definition.
+因此，很自然地给出如下定义。
 
 \begin{defn}\label{ct:category}
-  A \define{category}
+  一个\define{范畴}
   \indexdef{category}
-  is a precategory such that for all $a,b:A$, the function $\idtoiso_{a,b}$ from \cref{ct:idtoiso} is an equivalence.
+  是指一个预范畴，它满足以下条件：对所有 $a,b:A$，由 \cref{ct:idtoiso} 给出的函数 $\idtoiso_{a,b}$ 都是一个等价。
 \end{defn}
 
-In particular, in a category, if $a\cong b$, then $a=b$.
+特别地，在一个范畴中，如果 $a\cong b$，那么 $a=b$。
 
 \begin{eg}\label{ct:eg:set}
   \index{univalence axiom}%
-  The univalence axiom implies immediately that \uset is a category.
-  One can also show, using univalence, that any precategory of set-level structures such as groups, rings, topological spaces, etc.\ is a category; see \cref{sec:sip}.
+  泛等公理直接蕴含 \uset 是一个范畴。
+  利用泛等性还可以证明，任何由集合层面的结构（例如群、环、拓扑空间等等）构成的预范畴也都是范畴；详见 \cref{sec:sip}。
 \end{eg}
 
-We also note the following.
+我们还注意到下述事实。
 
 \begin{lem}\label{ct:obj-1type}
-  In a category, the type of objects is a 1-type.
+  在范畴中，对象的类型是一个 1-类型。
 \end{lem}
+
 \begin{proof}
-  It suffices to show that for any $a,b:A$, the type $\id a b$ is a set.
-  But $\id a b$ is equivalent to $a \cong b$, which is a set.
+  只需证明：对任意 $a,b:A$，类型 $\id a b$ 都是一个集合。
+  但 $\id a b$ 等价于 $a \cong b$，而后者是一个集合。
 \end{proof}
 
 \symlabel{isotoid}
-We write $\isotoid$ for the inverse $(a\cong b) \to (\id a b)$ of the map $\idtoiso$ from \cref{ct:idtoiso}.
-The following relationship between the two is important.
+我们记 $\isotoid$ 为由 \cref{ct:idtoiso} 给出的映射 $\idtoiso$ 的逆 $(a\cong b) \to (\id a b)$。
+二者之间存在如下重要关系。
 
 \begin{lem}\label{ct:idtoiso-trans}
-  For $p:\id a a'$ and $q:\id b b'$ and $f:\hom_A(a,b)$, we have
+  对于 $p:\id a a'$、$q:\id b b'$ 以及 $f:\hom_A(a,b)$，我们有
   \begin{equation}\label{ct:idtoisocompute}
     \id{\trans{(p,q)}{f}}
     {\idtoiso(q)\circ f \circ \inv{\idtoiso(p)}}.
   \end{equation}
 \end{lem}
+
 \begin{proof}
-  By induction, we may assume $p$ and $q$ are $\refl a$ and $\refl b$ respectively.
-Then the left-hand side of~\eqref{ct:idtoisocompute} is simply $f$.
-  But by definition, $\idtoiso(\refl a)$ is $1_a$, and $\idtoiso(\refl b)$ is $1_b$, so the right-hand side of~\eqref{ct:idtoisocompute} is $1_b\circ f\circ 1_a$, which is equal to $f$.
+  通过归纳，可以假设 $p$ 和 $q$ 分别是 $\refl a$ 和 $\refl b$。
+  此时，式~\eqref{ct:idtoisocompute} 的左边就是 $f$。
+  而根据定义，$\idtoiso(\refl a)$ 是 $1_a$，且 $\idtoiso(\refl b)$ 是 $1_b$，因此式~\eqref{ct:idtoisocompute} 的右边是 $1_b\circ f\circ 1_a$，它与 $f$ 相等。
 \end{proof}
 
-Similarly, we can show
+类似地，可以证明
 \begin{gather}
   \id{\idtoiso(\rev p)}{\inv {(\idtoiso(p))}}\\
   \id{\idtoiso(p\ct q)}{\idtoiso(q)\circ \idtoiso(p)}\\
   \id{\isotoid(f\circ e)}{\isotoid(e)\ct \isotoid(f)}
 \end{gather}
-and so on.
+等等。
 
 \begin{eg}\label{ct:orders}
-  A precategory in which each set $\hom_A(a,b)$ is a mere proposition is equivalently a type $A_0$ equipped with a mere relation ``$\le$'' that is reflexive ($a\le a$) and transitive (if $a\le b$ and $b\le c$, then $a\le c$).
-  We call this a \define{preorder}.
+  在一个预范畴中，如果每个集合 $\hom_A(a,b)$ 都是一个命题，则等价地说，它是一个配备了纯粹关系 ``$\le$'' 的类型 $A_0$，该关系是自反的（$a\le a$）且传递的（若 $a\le b$ 且 $b\le c$，则 $a\le c$）。
+  我们称其为\define{预序（preorder）}。
   \indexdef{preorder}
 
-  In a preorder, a witness $f: a\le b$ is an isomorphism just when there exists some witness $g: b\le a$.
-  Thus, $a\cong b$ is the mere proposition that $a\le b$ and $b\le a$.
-  Therefore, a preorder $A$ is a category just when (1) each type $a=b$ is a mere proposition, and (2) for any $a,b:A_0$ there exists a function $(a\cong b) \to (a=b)$.
-  In other words, $A_0$ must be a set, and $\le$ must be antisymmetric\index{relation!antisymmetric} (if $a\le b$ and $b\le a$, then $a=b$).
-  We call this a \define{(partial) order} or a \define{poset}.
+  在预序中，一个见证 $f: a\le b$ 是同构当且仅当存在某个见证 $g: b\le a$。
+  因此，$a\cong b$ 就是命题 ``$a\le b$ 且 $b\le a$''。
+  所以，一个预序 $A$ 是范畴当且仅当：(1) 每个类型 $a=b$ 是一个命题，并且 (2) 对于任意 $a,b:A_0$，存在一个函数 $(a\cong b) \to (a=b)$。
+  换言之，$A_0$ 必须是一个集合，并且 $\le$ 必须是反对称的\index{relation!antisymmetric}（若 $a\le b$ 且 $b\le a$，则 $a=b$）。
+  我们称其为\define{（偏）序（(partial) order）}或\define{偏序集（poset）}。
   \indexdef{partial order}%
   \indexdef{poset}%
 \end{eg}
 
 \begin{eg}\label{ct:gaunt}
-  If $A$ is a category, then $A_0$ is a set if and only if for any $a,b:A_0$, the type $a\cong b$ is a mere proposition.
-  Given that $A$ is a category, this is equivalent to saying that every automorphism in $A$ is an identity arrow. On the other hand, if $A$ is a precategory such that $A_0$ is a set, then $A$ is a category precisely if it is skeletal\index{mathematics!classical} (any two isomorphic objects are equal) \emph{and} every automorphism is an identity arrow.
-  Categories of this sort are sometimes called \define{gaunt}~\cite{bsp12infncats}.
+  若 $A$ 是范畴，则 $A_0$ 是集合当且仅当对于任意 $a,b:A_0$，类型 $a\cong b$ 是一个命题。
+  既然 $A$ 是范畴，这等价于说 $A$ 中的每个自同构都是恒同箭头。另一方面，若 $A$ 是一个 $A_0$ 为集合的预范畴，则 $A$ 恰在它是\emph{骨架的}\index{mathematics!classical}（任意两个同构的对象都相等）\emph{并且}每个自同构都是恒同箭头时，才是一个范畴。
+  这类范畴有时被称为 \define{gaunt 范畴（gaunt category）}~\cite{bsp12infncats}。
   \indexdef{category!gaunt}%
   \indexdef{gaunt category}%
   \index{skeletal category}%
   \index{category!skeletal}%
-  There is not really any notion of ``skeletality'' for our categories, unless one considers \cref{ct:category} itself to be such.
+  对我们的范畴而言，并没有真正的 ``骨架性'' 概念，除非把 \cref{ct:category} 本身视作这样一个概念。
 \end{eg}
 
 \begin{eg}\label{ct:discrete}
-  For any 1-type $X$, there is a category with $X$ as its type of objects and with $\hom(x,y) \defeq (x=y)$.
-  If $X$ is a set, we call this the \define{discrete}
+  对于任何 1-类型 $X$，存在一个范畴，以 $X$ 为其对象类型，并以 $\hom(x,y) \defeq (x=y)$ 为态射集。
+  如果 $X$ 是集合，我们称之为 $X$ 上的\define{离散（discrete）}
   \indexdef{category!discrete}%
   \indexdef{discrete!category}%
-  category on $X$.
-  In general, we call it a \define{groupoid}
+  范畴。
+  一般地，我们称之为\define{群胚（groupoid）}
   \indexdef{groupoid}
-  (see \cref{ct:groupoids}).
+  （参见 \cref{ct:groupoids}）。
 \end{eg}
 
 \begin{eg}\label{ct:fundgpd}
-  For \emph{any} type $X$, there is a precategory with $X$ as its type of objects and with $\hom(x,y) \defeq \pizero{x=y}$.
-  The composition operation
+  对于\emph{任何}类型 $X$，存在一个预范畴，以 $X$ 为其对象类型，并以 $\hom(x,y) \defeq \pizero{x=y}$ 为态射集。
+  其复合运算
   \[ \pizero{y=z} \to \pizero{x=y} \to \pizero{x=z} \]
-  is defined by induction on truncation from concatenation $(y=z)\to(x=y)\to(x=z)$.
-  We call this the \define{fundamental pregroupoid}
+  通过基于截断的归纳法，由拼接 $(y=z)\to(x=y)\to(x=z)$ 定义。
+  我们称其为 $X$ 的\define{基本预群胚（fundamental pregroupoid）}
   \indexdef{fundamental!pregroupoid}%
   \indexsee{pregroupoid, fundamental}{fundamental pregroupoid}%
-  of $X$.
-  (In fact, we have met it already in \cref{sec:van-kampen}; see also \cref{ex:rezk-vankampen}.)
+  。（事实上，我们已经在 \cref{sec:van-kampen} 中遇到过它；亦可参见 \cref{ex:rezk-vankampen}。）
 \end{eg}
 
 \begin{eg}\label{ct:hoprecat}
-  There is a precategory whose type of objects is \type and with $\hom(X,Y) \defeq \pizero{X\to Y}$, and composition defined by induction on truncation from ordinary composition $(Y\to Z) \to (X\to Y) \to (X\to Z)$.
-  We call this the \define{homotopy precategory of types}.
+  存在一个预范畴，其对象类型为 \type，且 $\hom(X,Y) \defeq \pizero{X\to Y}$，复合通过基于截断的归纳法由通常的复合 $(Y\to Z) \to (X\to Y) \to (X\to Z)$ 定义。
+  我们称之为\define{类型的同伦预范畴（homotopy precategory of types）}。
   \indexdef{precategory!of types}%
   \index{homotopy!category of types@(pre)category of types}%
 \end{eg}
 
 \begin{eg}\label{ct:rel}
-  Let \urel be the following precategory:
+  令 \urel 为如下预范畴：
   \begin{itemize}
-  \item Its objects are sets.
-  \item $\hom_{\urel}(X,Y) = X\to Y\to \prop$.
-  \item For a set $X$, we have $1_X(x,x') \defeq (x=x')$.
-  \item For $R:\hom_{\urel}(X,Y)$ and $S:\hom_{\urel}(Y,Z)$, their composite is defined by
+  \item 其对象是集合。
+  \item $\hom_{\urel}(X,Y) = X\to Y\to \prop$。
+  \item 对于一个集合 $X$，我们有 $1_X(x,x') \defeq (x=x')$。
+  \item 对于 $R:\hom_{\urel}(X,Y)$ 和 $S:\hom_{\urel}(Y,Z)$，它们的复合定义为
     \[ (S\circ R)(x,z) \defeq \Brck{\sm{y:Y} R(x,y) \times S(y,z)}.\]
   \end{itemize}
-  Suppose $R:\hom_{\urel}(X,Y)$ is an isomorphism, with inverse $S$.
-  We observe the following.
+  假设 $R:\hom_{\urel}(X,Y)$ 是一个同构，其逆为 $S$。
+  我们观察到如下事实。
   \begin{enumerate}
-  \item If $R(x,y)$ and $S(y',x)$, then $(R\circ S)(y',y)$, and hence $y'=y$.
-    Similarly, if $R(x,y)$ and $S(y,x')$, then $x=x'$.\label{item:rel1}
-  \item For any $x$, we have $x=x$, hence $(S\circ R)(x,x)$.
-    Thus, there merely exists a $y:Y$ such that $R(x,y)$ and $S(y,x)$.\label{item:rel2}
-  \item Suppose $R(x,y)$.
-    By~\ref{item:rel2}, there merely exists a $y'$ with $R(x,y')$ and $S(y',x)$.
-    But then by~\ref{item:rel1}, merely $y'=y$, and hence $y'=y$ since $Y$ is a set.
-    Therefore, by transporting $S(y',x)$ along this equality, we have $S(y,x)$.
-    In conclusion, $R(x,y)\to S(y,x)$.
-    Similarly, $S(y,x) \to R(x,y)$.\label{item:rel3}
-  \item If $R(x,y)$ and $R(x,y')$, then by~\ref{item:rel3}, $S(y',x)$, so that by~\ref{item:rel1}, $y=y'$.
-    Thus, for any $x$ there is at most one $y$ such that $R(x,y)$.
-    And by~\ref{item:rel2}, there merely exists such a $y$, hence there exists such a $y$.
+  \item 如果 $R(x,y)$ 且 $S(y',x)$，那么 $(R\circ S)(y',y)$，于是 $y'=y$。
+    类似地，如果 $R(x,y)$ 且 $S(y,x')$，那么 $x=x'$。\label{item:rel1}
+  \item 对于任意 $x$，我们有 $x=x$，因此 $(S\circ R)(x,x)$。
+    于是，仅只存在 $y:Y$ 使得 $R(x,y)$ 且 $S(y,x)$。\label{item:rel2}
+  \item 假设 $R(x,y)$。
+    由~\ref{item:rel2}，仅只存在 $y'$ 使得 $R(x,y')$ 且 $S(y',x)$。
+    但由~\ref{item:rel1}，仅有 $y'=y$，而由于 $Y$ 是集合，故 $y'=y$。
+    因此，沿此相等传输 $S(y',x)$，我们得到 $S(y,x)$。
+    总之，$R(x,y)\to S(y,x)$。
+    类似地，$S(y,x) \to R(x,y)$。\label{item:rel3}
+  \item 如果 $R(x,y)$ 且 $R(x,y')$，那么由~\ref{item:rel3}，$S(y',x)$，从而由~\ref{item:rel1}，$y=y'$。
+    因此，对于任意 $x$，至多存在一个 $y$ 使得 $R(x,y)$。
+    又由~\ref{item:rel2}，这样的 $y$ 仅只存在，故而这样的 $y$ 存在。
   \end{enumerate}
-  In conclusion, if $R:\hom_{\urel}(X,Y)$ is an isomorphism, then for each $x:X$ there is exactly one $y:Y$ such that $R(x,y)$, and dually.
-  Thus, there is a function $f:X\to Y$ sending each $x$ to this $y$, which is an equivalence; hence $X=Y$.
-  With a little more work, we conclude that \urel is a category.
+  综上所述，如果 $R:\hom_{\urel}(X,Y)$ 是一个同构，那么对每个 $x:X$ 恰好存在一个 $y:Y$ 使得 $R(x,y)$，对偶地亦然。
+  因此，存在一个函数 $f:X\to Y$ 将每个 $x$ 映到这个 $y$，并且这是一个等价；于是 $X=Y$。
+  再稍加论证，我们得出结论：\urel 是一个范畴。
 \end{eg}
 
-We might now restrict ourselves to considering categories rather than precategories.
-Instead, we will develop many concepts for precategories as well as categories, in order to emphasize how much better-behaved categories are, as compared both to precategories and to ordinary categories in classical\index{mathematics!classical} mathematics.
+现在我们本可以限制自己只考虑范畴而非预范畴。
+相反，我们将同时为预范畴和范畴发展许多概念，以强调范畴的性态远优于预范畴，也远优于经典\index{mathematics!classical}数学中的普通范畴。
 
-We will also see in \crefrange{sec:strict-categories}{sec:dagger-categories} that in slightly more exotic contexts, there are uses for certain kinds of precategories other than categories, each of which ``fixes'' the equality of objects in different ways.
-This emphasizes the ``pre''-ness of precategories: they are the raw material out of which multiple important categorical structures can be defined.
+在\crefrange{sec:strict-categories}{sec:dagger-categories}中我们还会看到，在一些不那么常规的语境下，除了范畴之外，某些特定种类的预范畴也有其用武之地，它们各自以不同的方式``修正''了对象的相等关系。
+这正凸显了预范畴的 ``预'' 之含义：它们是定义多种重要范畴结构的基本原料。
 
-
-\section{Functors and transformations}
+\section{函子与变换}
 \label{sec:transfors}
 
-The following definitions are fairly obvious, and need no modification.
+接下来的定义相当显然，无需修改。
 
 \begin{defn}\label{ct:functor}
-  Let $A$ and $B$ be precategories.
-  A \define{functor}
+  设 $A$ 和 $B$ 为预范畴。
+  一个从 $A$ 到 $B$ 的\define{函子（functor）}
   \indexdef{functor}%
-  $F:A\to B$ consists of
+  $F:A\to B$ 包含以下数据：
   \begin{enumerate}
-  \item A function $F_0:A_0\to B_0$, generally also denoted $F$.
-  \item For each $a,b:A$, a function $F_{a,b}:\hom_A(a,b) \to \hom_B(Fa,Fb)$, generally also denoted $F$.
-  \item For each $a:A$, we have $\id{F(1_a)}{1_{Fa}}$.
-  \item For each $a,b,c:A$ and $f:\hom_A(a,b)$ and $g:\hom_A(b,c)$, we have
+  \item 一个函数 $F_0:A_0\to B_0$，通常也记作 $F$。
+  \item 对任意 $a,b:A$，一个函数 $F_{a,b}:\hom_A(a,b) \to \hom_B(Fa,Fb)$，通常也记作 $F$。
+  \item 对任意 $a:A$，有 $\id{F(1_a)}{1_{Fa}}$。
+  \item 对任意 $a,b,c:A$ 以及 $f:\hom_A(a,b)$ 和 $g:\hom_A(b,c)$，有
     \[\id{F(g\circ f)}{Fg\circ Ff}.\]\label{ct:functor:comp}
   \end{enumerate}
 \end{defn}
 
-Note that by induction on identity, a functor also preserves \idtoiso.
+注意，通过对恒等进行归纳可知，函子也保持 \idtoiso。
 
 \begin{defn}\label{ct:nattrans}
-  For functors $F,G:A\to B$, a \define{natural transformation}
+  对于函子 $F,G:A\to B$，一个从 $F$ 到 $G$ 的\define{自然变换（natural transformation）}
   \indexdef{natural!transformation}%
   \indexsee{transformation!natural}{natural transformation}%
-  $\gamma:F\to G$ consists of
+  $\gamma:F\to G$ 包含以下数据：
   \begin{enumerate}
-  \item For each $a:A$, a morphism $\gamma_a:\hom_B(Fa,Ga)$ (the ``components'').
-  \item For each $a,b:A$ and $f:\hom_A(a,b)$, we have $\id{Gf\circ \gamma_a}{\gamma_b\circ Ff}$ (the ``naturality axiom'').
+  \item 对任意 $a:A$，一个态射 $\gamma_a:\hom_B(Fa,Ga)$（称为 ``分量''）。
+  \item 对任意 $a,b:A$ 和 $f:\hom_A(a,b)$，有 $\id{Gf\circ \gamma_a}{\gamma_b\circ Ff}$（称为 ``自然性公理''）。
   \end{enumerate}
 \end{defn}
 
-Since each type $\hom_B(Fa,Gb)$ is a set, its identity type is a mere proposition.
-Thus, the naturality axiom is a mere proposition, so identity of natural transformations is determined by identity of their components.
-In particular, for any $F$ and $G$, the type of natural transformations from $F$ to $G$ is again a set.
+由于每个类型 $\hom_B(Fa,Gb)$ 都是集合，其相等类型是命题。
+因此，自然性公理是命题，从而自然变换的相等由其分量的相等决定。
+特别地，对任意 $F$ 和 $G$，从 $F$ 到 $G$ 的自然变换类型也是集合。
 
-Similarly, identity of functors is determined by identity of the functions $A_0\to B_0$ and (transported along this) of the corresponding functions on hom-sets.
+类似地，函子的相等由其函数 $A_0\to B_0$ 以及（沿此传输的）相应 hom-集上的函数所决定。
 
 \begin{defn}\label{ct:functor-precat}
   \indexdef{precategory!of functors}%
-  For precategories $A,B$, there is a precategory $B^A$, called the \define{functor precategory}, defined by
+  对于预范畴 $A,B$，存在一个预范畴 $B^A$，称为\define{函子预范畴（functor precategory）}，其定义为：
   \begin{itemize}
-  \item $(B^A)_0$ is the type of functors from $A$ to $B$.
-  \item $\hom_{B^A}(F,G)$ is the type of natural transformations from $F$ to $G$.
+  \item $(B^A)_0$ 是从 $A$ 到 $B$ 的函子类型。
+  \item $\hom_{B^A}(F,G)$ 是从 $F$ 到 $G$ 的自然变换类型。
   \end{itemize}
 \end{defn}
+
 \begin{proof}
-  We define $(1_F)_a\defeq 1_{Fa}$.
-  Naturality follows by the unit axioms of a precategory.
-  For $\gamma:F\to G$ and $\delta:G\to H$, we define $(\delta\circ\gamma)_a\defeq \delta_a\circ \gamma_a$.
-  Naturality follows by associativity.
-  Similarly, the unit and associativity laws for $B^A$ follow from those for $B$.
+  我们定义 $(1_F)_a\defeq 1_{Fa}$。
+  其自然性由预范畴的单位公理保证。
+  对于 $\gamma:F\to G$ 和 $\delta:G\to H$，我们定义 $(\delta\circ\gamma)_a\defeq \delta_a\circ \gamma_a$。
+  其自然性由结合律保证。
+  类似地，$B^A$ 的单位律和结合律继承自 $B$ 的相应公理。
 \end{proof}
 
 \begin{lem}\label{ct:natiso}
   \index{natural!isomorphism}%
   \index{isomorphism!natural}%
-  A natural transformation $\gamma:F\to G$ is an isomorphism in $B^A$ if and only if each $\gamma_a$ is an isomorphism in $B$.
+  一个自然变换 $\gamma:F\to G$ 是 $B^A$ 中的同构，当且仅当每个 $\gamma_a$ 都是 $B$ 中的同构。
 \end{lem}
-\begin{proof}
-  If $\gamma$ is an isomorphism, then we have $\delta:G\to F$ that is its inverse.
-  By definition of composition in $B^A$, $(\delta\gamma)_a\jdeq \delta_a\gamma_a$ and similarly $(\gamma\delta)_a\jdeq \gamma_a\delta_a$.
-  Thus, $\id{\delta\gamma}{1_F}$ and $\id{\gamma\delta}{1_G}$ imply $\id{\delta_a\gamma_a}{1_{Fa}}$ and $\id{\gamma_a\delta_a}{1_{Ga}}$, so $\gamma_a$ is an isomorphism.
 
-  Conversely, suppose each $\gamma_a$ is an isomorphism, with inverse called $\delta_a$, say.
-We define a natural transformation $\delta:G\to F$ with components $\delta_a$; for the naturality axiom we have
+\begin{proof}
+  若 $\gamma$ 是同构，则存在其逆 $\delta:G\to F$。
+  根据 $B^A$ 中复合的定义，有 $(\delta\gamma)_a\jdeq \delta_a\gamma_a$，类似地有 $(\gamma\delta)_a\jdeq \gamma_a\delta_a$。
+  因此，由 $\id{\delta\gamma}{1_F}$ 和 $\id{\gamma\delta}{1_G}$ 可推出 $\id{\delta_a\gamma_a}{1_{Fa}}$ 与 $\id{\gamma_a\delta_a}{1_{Ga}}$，所以 $\gamma_a$ 是同构。
+
+  反之，假设每个 $\gamma_a$ 都是同构，其逆记作 $\delta_a$。
+  我们定义一个以 $\delta_a$ 为分量的自然变换 $\delta:G\to F$；对其自然性公理，我们有
   \[ Ff\circ \delta_a = \delta_b\circ \gamma_b\circ Ff \circ \delta_a = \delta_b\circ Gf\circ \gamma_a\circ \delta_a = \delta_b\circ Gf. \]
-  Now since composition and identity of natural transformations is determined on their components, we have $\id{\gamma\delta}{1_G}$ and $\id{\delta\gamma}{1_F}$.
+  由于自然变换的复合与恒同由其分量决定，我们有 $\id{\gamma\delta}{1_G}$ 和 $\id{\delta\gamma}{1_F}$。
 \end{proof}
 
-The following result is fundamental.
+下面的结果是基础性的。
 
 \begin{thm}\label{ct:functor-cat}
   \indexdef{category!of functors}%
   \indexdef{functor!category of}%
-  If $A$ is a precategory and $B$ is a category, then $B^A$ is a category.
+  若 $A$ 是预范畴而 $B$ 是范畴，则 $B^A$ 也是范畴。
 \end{thm}
+
 \begin{proof}
-  Let $F,G:A\to B$; we must show that $\idtoiso:(\id{F}{G}) \to (F\cong G)$ is an equivalence.
+  令 $F,G:A\to B$；我们必须证明 $\idtoiso:(\id{F}{G}) \to (F\cong G)$ 是一个等价。
 
-  To give an inverse to it, suppose $\gamma:F\cong G$ is a natural isomorphism.
-  Then for any $a:A$, we have an isomorphism $\gamma_a:Fa \cong Ga$, hence an identity $\isotoid(\gamma_a):\id{Fa}{Ga}$.
-  By function extensionality, we have an identity $\bar{\gamma}:\id[(A_0\to B_0)]{F_0}{G_0}$.
+  为了给出其逆，假设 $\gamma:F\cong G$ 是一个自然同构。
+  那么对于任意 $a:A$，我们有一个同构 $\gamma_a:Fa \cong Ga$，从而得到一个相等 $\isotoid(\gamma_a):\id{Fa}{Ga}$。
+  根据函数外延性，我们得到一个相等 $\bar{\gamma}:\id[(A_0\to B_0)]{F_0}{G_0}$。
 
-  Now since the last two axioms of a functor are mere propositions, to show that $\id{F}{G}$ it will suffice to show that for any $a,b:A$, the functions
+  由于函子的后两条公理仅仅是命题，为证明 $\id{F}{G}$，只需证明对于任意 $a,b:A$，函数
   \begin{align*}
     F_{a,b}&:\hom_A(a,b) \to \hom_B(Fa,Fb)\mathrlap{\qquad\text{and}}\\
     G_{a,b}&:\hom_A(a,b) \to \hom_B(Ga,Gb)
   \end{align*}
-  become equal when transported along $\bar\gamma$.
-  By computation for function extensionality, when applied to $a$, $\bar\gamma$ becomes equal to $\isotoid(\gamma_a)$.
-  But by \cref{ct:idtoiso-trans}, transporting $Ff:\hom_B(Fa,Fb)$ along $\isotoid(\gamma_a)$ and $\isotoid(\gamma_b)$ is equal to the composite $\gamma_b\circ Ff\circ \inv{(\gamma_a)}$, which by naturality of $\gamma$ is equal to $Gf$.
+  沿 $\bar\gamma$ 传输后变为相等。
+  根据函数外延性的计算规则，当作用于 $a$ 时，$\bar\gamma$ 等于 $\isotoid(\gamma_a)$。
+  而由 \cref{ct:idtoiso-trans} 可知，将 $Ff:\hom_B(Fa,Fb)$ 沿 $\isotoid(\gamma_a)$ 和 $\isotoid(\gamma_b)$ 传输，等于复合 $\gamma_b\circ Ff\circ \inv{(\gamma_a)}$；再根据 $\gamma$ 的自然性，此复合即等于 $Gf$。
 
-  This completes the definition of a function $(F\cong G) \to (\id F G)$.
-  Now consider the composite
+  这就完成了函数 $(F\cong G) \to (\id F G)$ 的定义。
+  现在考虑复合
   \[ (\id F G) \to (F\cong G) \to (\id F G). \]
-  Since hom-sets are sets, their identity types are mere propositions, so to show that two identities $p,q:\id F G$ are equal, it suffices to show that $\id[\id{F_0}{G_0}]{p}{q}$.
-  But in the definition of $\bar\gamma$, if $\gamma$ were of the form $\idtoiso(p)$, then $\gamma_a$ would be equal to $\idtoiso(p_a)$ (this can easily be proved by induction on $p$).
-  Thus, $\isotoid(\gamma_a)$ would be equal to $p_a$, and so by function extensionality we would have $\id{\bar\gamma}{p}$, which is what we need.
+  由于 hom 集都是集合，它们的相等类型是命题，因此要证明两个相等 $p,q:\id F G$ 相等，只需证明 $\id[\id{F_0}{G_0}]{p}{q}$。
+  但在 $\bar\gamma$ 的定义中，若 $\gamma$ 具有 $\idtoiso(p)$ 的形式，则 $\gamma_a$ 会等于 $\idtoiso(p_a)$（通过对 $p$ 归纳容易证明）。
+  于是，$\isotoid(\gamma_a)$ 将等于 $p_a$，从而根据函数外延性，我们会有 $\id{\bar\gamma}{p}$，这正是所需要的。
 
-  Finally, consider the composite
+  最后，考虑复合
   \[(F\cong G)\to  (\id F G) \to (F\cong G). \]
-  Since identity of natural transformations can be tested componentwise, it suffices to show that for each $a$ we have $\id{\idtoiso(\bar\gamma)_a}{\gamma_a}$.
-  But as observed above, we have $\id{\idtoiso(\bar\gamma)_a}{\idtoiso((\bar\gamma)_a)}$, while $\id{(\bar\gamma)_a}{\isotoid(\gamma_a)}$ by computation for function extensionality.
-  Since $\isotoid$ and $\idtoiso$ are inverses, we have $\id{\idtoiso(\bar\gamma)_a}{\gamma_a}$ as desired.
+  由于自然变换的相等性可以逐分量地检验，只需证明对每个 $a$ 有 $\id{\idtoiso(\bar\gamma)_a}{\gamma_a}$。
+  但如前所述，我们有 $\id{\idtoiso(\bar\gamma)_a}{\idtoiso((\bar\gamma)_a)}$，同时根据函数外延性的计算规则有 $\id{(\bar\gamma)_a}{\isotoid(\gamma_a)}$。
+  因为 $\isotoid$ 和 $\idtoiso$ 互逆，故得 $\id{\idtoiso(\bar\gamma)_a}{\gamma_a}$，如所需。
 \end{proof}
 
-In particular, naturally isomorphic functors between categories (as opposed to precategories) are equal.
+特别地，范畴（而非预范畴）之间自然同构的函子是相等的。
 
 \mentalpause
 
-We now define all the usual ways to compose functors and natural transformations.
+我们现在定义函子与自然变换所有常用的复合方式。
 
 \begin{defn}\label{ct:functor-composition}
-  For functors $F:A\to B$ and $G:B\to C$, their composite $G\circ F:A\to C$ is given by
+  对于函子 $F:A\to B$ 和 $G:B\to C$，它们的复合 $G\circ F:A\to C$ 定义为：
   \begin{itemize}
-  \item The composite $(G_0\circ F_0) : A_0 \to C_0$
-  \item For each $a,b:A$, the composite
-    \[(G_{Fa,Fb}\circ F_{a,b}):\hom_A(a,b) \to \hom_C(GFa,GFb).\]
+  \item 对象上的复合 $(G_0\circ F_0) : A_0 \to C_0$。
+  \item 对每个 $a,b:A$，态射上的复合
+    \[(G_{Fa,Fb}\circ F_{a,b}):\hom_A(a,b) \to \hom_C(GFa,GFb).\]。
   \end{itemize}
-  It is easy to check the axioms.
+  公理容易验证。
 \end{defn}
 
 \begin{defn}\label{ct:whisker}
-  For functors $F:A\to B$ and $G,H:B\to C$ and a natural transformation $\gamma:G\to H$, the composite $(\gamma F):GF\to HF$ is given by
+  对于函子 $F:A\to B$ 和 $G,H:B\to C$ 以及自然变换 $\gamma:G\to H$，其复合 $(\gamma F):GF\to HF$ 定义为：
   \begin{itemize}
-  \item For each $a:A$, the component $\gamma_{Fa}$.
+  \item 对每个 $a:A$，分量 $\gamma_{Fa}$。
   \end{itemize}
-  Naturality is easy to check.
-  Similarly, for $\gamma$ as above and $K:C\to D$, the composite $(K\gamma):KG\to KH$ is given by
+  自然性容易验证。
+  类似地，对于上述的 $\gamma$ 和函子 $K:C\to D$，其复合 $(K\gamma):KG\to KH$ 定义为：
   \begin{itemize}
-  \item For each $b:B$, the component $K(\gamma_b)$.
+  \item 对每个 $b:B$，分量 $K(\gamma_b)$。
   \end{itemize}
 \end{defn}
 
 \begin{lem}\label{ct:interchange}
   \index{interchange law}%
-  For functors $F,G:A\to B$ and $H,K:B\to C$ and natural transformations $\gamma:F\to G$ and $\delta:H\to K$, we have
+  对于函子 $F,G:A\to B$ 和 $H,K:B\to C$ 以及自然变换 $\gamma:F\to G$ 和 $\delta:H\to K$，我们有
   \[\id{(\delta G)(H\gamma)}{(K\gamma)(\delta F)}.\]
 \end{lem}
+
 \begin{proof}
-  It suffices to check componentwise: at $a:A$ we have
+  只需逐分量地验证：对 $a:A$，我们有
   \begin{align*}
     ((\delta G)(H\gamma))_a
     &\jdeq (\delta G)_{a}(H\gamma)_a\\
@@ -432,39 +443,41 @@ We now define all the usual ways to compose functors and natural transformations
 
 \index{horizontal composition!of natural transformations}%
 \index{classical!category theory}%
-Classically, one defines the ``horizontal composite'' of $\gamma:F\to G$ and $\delta:H\to K$ to be the common value of ${(\delta G)(H\gamma)}$ and ${(K\gamma)(\delta F)}$.
-We will refrain from doing this, because while equal, these two transformations are not \emph{definitionally} equal.
-This also has the consequence that we can use the symbol $\circ$ (or juxtaposition) for all kinds of composition unambiguously: there is only one way to compose two natural transformations (as opposed to composing a natural transformation with a functor on either side).
+在经典范畴论中，人们将 $\gamma:F\to G$ 和 $\delta:H\to K$ 的"水平复合"定义为 ${(\delta G)(H\gamma)}$ 和 ${(K\gamma)(\delta F)}$ 的共同值。
+我们将不这样做，因为尽管这两个变换相等，它们并非\emph{定义性}相等。
+这也意味着：我们可以无歧义地使用符号 $\circ$（或并置）来表示所有种类的复合——只有一种方式来复合两个自然变换（而非将自然变换与函子在某一侧复合）。
 
 \begin{lem}\label{ct:functor-assoc}
   \index{associativity!of functor composition}
-  Composition of functors is associative: $\id{H(GF)}{(HG)F}$.
+  函子的复合满足结合律：$\id{H(GF)}{(HG)F}$。
 \end{lem}
+
 \begin{proof}
-  Since composition of functions is associative, this follows immediately for the actions on objects and on homs.
-  And since hom-sets are sets, the rest of the data is automatic.
+  由于函数的复合是结合的，这对于对象和 hom 集上的作用立即成立。
+  又因为 hom 集是集合，其余数据自动满足。
 \end{proof}
 
-The equality in \cref{ct:functor-assoc} is likewise not definitional.
-(Composition of functions is definitionally associative, but the axioms that go into a functor must also be composed, and this breaks definitional associativity.)  For this reason, we need also to know about \emph{coherence}\index{coherence} for associativity.
+\cref{ct:functor-assoc} 中的等式同样不是定义性相等。
+（函数的复合是定义性结合的，但构成函子的公理也必须被复合，这破坏了定义性结合律。）因此，我们还需要知道结合律的\emph{一致性}\index{coherence}。
 
 \begin{lem}\label{ct:pentagon}
   \index{associativity!of functor composition!coherence of}%
-  \cref{ct:functor-assoc} is coherent, i.e.\ the following pentagon\index{pentagon, Mac Lane} of equalities commutes:
+  \cref{ct:functor-assoc} 是一致的，即下列五边形\index{pentagon, Mac Lane} 等式交换：
   \[ \xymatrix{ & K(H(GF)) \ar@{=}[dl] \ar@{=}[dr]\\
     (KH)(GF) \ar@{=}[d] && K((HG)F) \ar@{=}[d]\\
     ((KH)G)F && (K(HG))F \ar@{=}[ll].}
   \]
 \end{lem}
+
 \begin{proof}
-  As in \cref{ct:functor-assoc}, this is evident for the actions on objects, and the rest is automatic.
+  如 \cref{ct:functor-assoc} 中那样，这对于对象上的作用是显然的，其余部分自动成立。
 \end{proof}
 
-We will henceforth abuse notation by writing $H\circ G\circ F$ or $HGF$ for either $H(GF)$ or $(HG)F$, transporting along \cref{ct:functor-assoc} whenever necessary.
-We have a similar coherence result for units.
+此后，我们将滥用记号，用 $H\circ G\circ F$ 或 $HGF$ 兼指 $H(GF)$ 与 $(HG)F$，在需要时沿 \cref{ct:functor-assoc} 做传输。
+对于单位，我们也有类似的相干性结果。
 
 \begin{lem}\label{ct:units}
-  For a functor $F:A\to B$, we have equalities $\id{(1_B\circ F)}{F}$ and $\id{(F\circ 1_A)}{F}$, such that given also $G:B\to C$, the following triangle of equalities commutes:
+  对于函子 $F:A\to B$，有等式 $\id{(1_B\circ F)}{F}$ 和 $\id{(F\circ 1_A)}{F}$，使得当再给定函子 $G:B\to C$ 时，下面的等式三角形交换：
   \[ \xymatrix{
     G\circ (1_B \circ F) \ar@{=}[rr] \ar@{=}[dr] &&
     (G\circ 1_B)\circ F \ar@{=}[dl] \\
@@ -472,42 +485,42 @@ We have a similar coherence result for units.
   \]
 \end{lem}
 
-See \cref{ct:pre2cat,ct:2cat} for further development of these ideas.
+这些思路的进一步发展，可参见 \cref{ct:pre2cat,ct:2cat}。
 
-
-\section{Adjunctions}
+\section{伴随函子}
 \label{sec:adjunctions}
 
-The definition of adjoint functors is straightforward; the main interesting aspect arises from proof-relevance.
+伴随函子的定义是直截了当的；其真正有趣之处来自证明相关性。
 
 \begin{defn}\label{ct:adjoints}
-  A functor $F:A\to B$ is a \define{left adjoint}
+  一个函子 $F:A\to B$ 被称为\define{左伴随（left adjoint）}
   \indexdef{left!adjoint}%
   \indexdef{adjoint!functor}%
   \indexdef{right!adjoint}%
   \indexdef{adjoint!functor}%
   \index{functor!adjoint}%
-  if there exists
+  如果存在
   \begin{itemize}
-  \item A functor $G:B\to A$.
-  \item A natural transformation $\eta:1_A \to GF$ (the \define{unit}\indexdef{unit!of an adjunction}).
-  \item A natural transformation $\epsilon:FG\to 1_B$ (the \define{counit}\indexdef{counit of an adjunction}).
-  \item $\id{(\epsilon F)(F\eta)}{1_F}$.
-  \item $\id{(G\epsilon)(\eta G)}{1_G}$.
+  \item 一个函子 $G:B\to A$。
+  \item 一个自然变换 $\eta:1_A \to GF$（称为\define{单位（unit）}\indexdef{unit!of an adjunction}）。
+  \item 一个自然变换 $\epsilon:FG\to 1_B$（称为\define{余单位（counit）}\indexdef{counit of an adjunction}）。
+  \item $\id{(\epsilon F)(F\eta)}{1_F}$。
+  \item $\id{(G\epsilon)(\eta G)}{1_G}$。
   \end{itemize}
 \end{defn}
 
-The last two equations are called the \define{triangle identities}\indexdef{triangle!identity} or \define{zigzag identities}\indexdef{zigzag identity}.
+最后两个等式被称为\define{三角恒等式（triangle identities）}\indexdef{triangle!identity}或\define{之字形恒等式（zigzag identities）}\indexdef{zigzag identity}。
 \indexdef{identity!triangle}\indexdef{identity!zigzag}
-We leave it to the reader to define right adjoints analogously.
+我们请读者类似地定义右伴随。
 
 \begin{lem}\label{ct:adjprop}
-  If $A$ is a category (but $B$ may be only a precategory), then the type ``$F$ is a left adjoint'' is a mere proposition.
+  若 $A$ 是一个范畴（但 $B$ 可以只是预范畴），则类型"$F$ 是左伴随"是一个命题。
 \end{lem}
+
 \begin{proof}
-  Suppose we are given $(G,\eta,\epsilon)$ with the triangle identities and also $(G',\eta',\epsilon')$.
-  Define $\gamma:G\to G'$ to be $(G'\epsilon)(\eta' G)$, and $\delta:G'\to G$ to be $(G\epsilon')(\eta G')$.
-  Then
+  假设给定满足三角恒等式的 $(G,\eta,\epsilon)$ 以及另一组 $(G',\eta',\epsilon')$。
+  定义 $\gamma:G\to G'$ 为 $(G'\epsilon)(\eta' G)$，并定义 $\delta:G'\to G$ 为 $(G\epsilon')(\eta G')$。
+  那么，利用 \cref{ct:interchange} 与三角恒等式，有
   \begin{align*}
     \delta\gamma &=
     (G\epsilon')(\eta G')(G'\epsilon)(\eta'G)\\
@@ -516,95 +529,95 @@ We leave it to the reader to define right adjoints analogously.
     &= (G\epsilon)(\eta G)\\
     &= 1_G
   \end{align*}
-  using \cref{ct:interchange} and the triangle identities.
-  Similarly, we show $\id{\gamma\delta}{1_{G'}}$, so $\gamma$ is a natural isomorphism $G\cong G'$.
-  By \cref{ct:functor-cat}, we have an identity $\id G {G'}$.
+  类似地，可以证明 $\id{\gamma\delta}{1_{G'}}$，因此 $\gamma$ 是一个自然同构 $G\cong G'$。
+  根据 \cref{ct:functor-cat}，我们得到一个相等 $\id G {G'}$。
 
-  Now we need to know that when $\eta$ and $\epsilon$ are transported along this identity, they become equal to $\eta'$ and $\epsilon'$.
-  By \cref{ct:idtoiso-trans}, this transport is given by composing with $\gamma$ or $\delta$ as appropriate.
-  For $\eta$, this yields
+  现在我们需要知道，当 $\eta$ 和 $\epsilon$ 沿这个相等做传输后，它们分别等于 $\eta'$ 和 $\epsilon'$。
+  根据 \cref{ct:idtoiso-trans}，这一传输通过视情况与 $\gamma$ 或 $\delta$ 复合来给出。
+  对于 $\eta$，得到
   \begin{equation*}
     (G'\epsilon F)(\eta'GF)\eta
     = (G'\epsilon F)(G'F\eta)\eta'
     = \eta'
   \end{equation*}
-  using \cref{ct:interchange} and the triangle identity.
-  The case of $\epsilon$ is similar.
-  Finally, the triangle identities transport correctly automatically, since hom-sets are sets.
+  其中用到了 \cref{ct:interchange} 和三角恒等式。
+  $\epsilon$ 的情况类似。
+  最后，由于 hom-集合都是集合，三角恒等式在传输后自动保持正确。
 \end{proof}
 
-In \cref{sec:yoneda} we will give another proof of \cref{ct:adjprop}.
+在 \cref{sec:yoneda} 中，我们将给出 \cref{ct:adjprop} 的另一个证明。
 
-
-\section{Equivalences}
+\section{等价}
 \label{sec:equivalences}
 
-It is usual in category theory to define an \emph{equivalence of categories} to be a functor $F:A\to B$ such that there exists a functor $G:B\to A$ and natural isomorphisms $F G \cong 1_B$ and $G F \cong 1_A$.
-Unlike the property of being an adjunction, however, this would not be a mere proposition without truncating it, for the same reasons that the type of quasi-inverses is ill-behaved (see \cref{sec:quasi-inverses}).
-And as in \cref{sec:hae}, we can avoid this by using the usual notion of \emph{adjoint} equivalence.
+在范畴论中，通常将\emph{范畴的等价（equivalence of categories）}定义为一个函子 $F:A\to B$，使得存在一个函子 $G:B\to A$ 以及自然同构 $F G \cong 1_B$ 和 $G F \cong 1_A$。
+然而，与"是一个伴随"这一性质不同，若不进行截断，这样定义的"等价"将不是一个命题，其原因与拟逆的类型行为不佳相同（参见 \cref{sec:quasi-inverses}）。
+正如 \cref{sec:hae} 中那样，我们可以通过使用\emph{伴随等价（adjoint equivalence）}这一常用概念来避免此问题。
 \indexdef{adjoint!equivalence!of (pre)categories}
 
 \begin{defn}\label{ct:equiv}
-  A functor $F:A\to B$ is an \define{equivalence of (pre)categories}
+  一个函子 $F:A\to B$ 是一个\define{(预)范畴的等价（equivalence of (pre)categories）}
   \indexdef{equivalence!of (pre)categories}%
   \indexdef{category!equivalence of}%
   \indexdef{precategory!equivalence of}%
   \index{functor!equivalence}%
-  if it is a left adjoint for which $\eta$ and $\epsilon$ are isomorphisms.
-  We write $\cteqv A B$ for the type of equivalences of (pre)categories from $A$ to $B$.
+  如果它是一个左伴随，并且其单位 $\eta$ 和余单位 $\epsilon$ 都是同构。
+  我们记 $\cteqv A B$ 为从 $A$ 到 $B$ 的（预）范畴的等价的类型。
 \end{defn}
 
-By \cref{ct:adjprop,ct:isoprop}, if $A$ is a category, then the type ``$F$ is an equivalence of precategories'' is a mere proposition.
+根据 \cref{ct:adjprop,ct:isoprop}，若 $A$ 是一个范畴，则类型"$F$ 是一个预范畴的等价"是一个命题。
 
 \begin{lem}\label{ct:adjointification}
-  If for $F:A\to B$ there exists $G:B\to A$ and isomorphisms $GF\cong 1_A$ and $FG\cong 1_B$, then $F$ is an equivalence of precategories.
+  如果对于一个函子 $F:A\to B$，存在 $G:B\to A$ 以及同构 $GF\cong 1_A$ 和 $FG\cong 1_B$，那么 $F$ 是一个预范畴的等价。
 \end{lem}
+
 \begin{proof}
-  Just like the proof of \cref{thm:equiv-iso-adj} for equivalences of types.
+  其证明类似于 \cref{thm:equiv-iso-adj} 中关于类型的等价的证明。
 \end{proof}
 
 \begin{defn}\label{ct:full-faithful}
-  We say a functor $F:A\to B$ is \define{faithful}
+  我们称一个函子 $F:A\to B$ 是\define{忠实的（faithful）}
   \indexdef{functor!faithful}%
   \index{faithful functor}%a
-  if for all $a,b:A$, the function
+  如果对于所有 $a,b:A$，函数
   \[F_{a,b}:\hom_A(a,b) \to \hom_B(Fa,Fb)\]
-  is injective, and \define{full}
+  是单的；称它是\define{全的（full）}
   \indexdef{functor!full}%
   \indexdef{full functor}%
-  if for all $a,b:A$ this function is surjective.
-  If it is both (hence each $F_{a,b}$ is an equivalence) we say $F$ is \define{fully faithful}.
+  如果对于所有 $a,b:A$ 这个函数是满的。
+  如果它既是忠实的又是全的（从而每个 $F_{a,b}$ 都是一个等价），则称 $F$ 是\define{全忠实的（fully faithful）}。
   \indexdef{functor!fully faithful}%
   \indexdef{fully faithful functor}%
 \end{defn}
 
 \begin{defn}\label{ct:split-essentially-surjective}
-  We say a functor $F:A\to B$ is \define{split essentially surjective}
+  我们称一个函子 $F:A\to B$ 是\define{分裂本质满的（split essentially surjective）}
   \indexdef{functor!split essentially surjective}%
   \indexdef{split!essentially surjective functor}%
-  if for all $b:B$ there exists an $a:A$ such that $Fa\cong b$.
+  如果对于所有 $b:B$，都存在一个 $a:A$ 使得 $Fa\cong b$。
 \end{defn}
 
 \begin{lem}\label{ct:ffeso}
-  For any precategories $A$ and $B$ and functor $F:A\to B$, the following types are equivalent.
+  对于任意预范畴 $A$ 和 $B$ 以及函子 $F:A\to B$，下列两个类型等价。
   \begin{enumerate}
-  \item $F$ is an equivalence of precategories.\label{item:ct:ffeso1}
-  \item $F$ is fully faithful and split essentially surjective.\label{item:ct:ffeso2}
+  \item $F$ 是预范畴的等价。\label{item:ct:ffeso1}
+  \item $F$ 是全忠实的且分裂本质满的。\label{item:ct:ffeso2}
   \end{enumerate}
 \end{lem}
+
 \begin{proof}
-  Suppose $F$ is an equivalence of precategories, with $G,\eta,\epsilon$ specified.
-  Then we have the function
+  假设 $F$ 是预范畴的等价，并指定了 $G,\eta,\epsilon$。
+  那么我们有函数
   \begin{align*}
       \hom_B(Fa,Fb) &\to \hom_A(a,b),\\
       g &\mapsto \inv{\eta_b}\circ G(g)\circ \eta_a.
   \end{align*}
-  For $f:\hom_A(a,b)$, we have
+  对于 $f:\hom_A(a,b)$，我们有
   \[ \inv{\eta_{b}}\circ G(F(f))\circ \eta_{a}  =
   \inv{\eta_{b}} \circ \eta_{b} \circ f=
   f
   \]
-  while for $g:\hom_B(Fa,Fb)$ we have
+  而对于 $g:\hom_B(Fa,Fb)$，我们有
   \begin{align*}
     F(\inv{\eta_b} \circ G(g)\circ\eta_a)
     &= F(\inv{\eta_b})\circ F(G(g))\circ F(\eta_a)\\
@@ -612,156 +625,153 @@ By \cref{ct:adjprop,ct:isoprop}, if $A$ is a category, then the type ``$F$ is an
     &= g\circ\epsilon_{Fa}\circ F(\eta_a)\\
     &= g
   \end{align*}
-  using naturality of $\epsilon$, and the triangle identities twice.
-  Thus, $F_{a,b}$ is an equivalence, so $F$ is fully faithful.
-  Finally, for any $b:B$, we have $Gb:A$ and $\epsilon_b:FGb\cong b$.
+  其中用到了 $\epsilon$ 的自然性以及两次三角恒等式。
+  因此，$F_{a,b}$ 是一个等价，故 $F$ 是全忠实的。
+  最后，对于任意 $b:B$，我们有 $Gb:A$ 以及 $\epsilon_b:FGb\cong b$。
 
-  On the other hand, suppose $F$ is fully faithful and split essentially surjective.
-  Define $G_0:B_0\to A_0$ by sending $b:B$ to the $a:A$ given by the specified essential splitting, and write $\epsilon_b$ for the likewise specified isomorphism $FGb\cong b$.
+  反过来，假设 $F$ 是全忠实且分裂本质满的。
+  定义 $G_0:B_0\to A_0$，将 $b:B$ 映至由指定的本质分裂所给出的 $a:A$，并将同样以指定方式给出的同构 $FGb\cong b$ 记为 $\epsilon_b$。
 
-  Now for any $g:\hom_B(b,b')$, define $G(g):\hom_A(Gb,Gb')$ to be the unique morphism such that $\id{F(G(g))}{\inv{(\epsilon_{b'})}\circ g \circ \epsilon_b }$ (which exists since $F$ is fully faithful).
-  Finally, for $a:A$ define $\eta_a:\hom_A(a,GFa)$ to be the unique morphism such that $\id{F\eta_a}{\inv{\epsilon_{Fa}}}$.
-  It is easy to verify that $G$ is a functor and that $(G,\eta,\epsilon)$ exhibit $F$ as an equivalence of precategories.
+  现在对任意 $g:\hom_B(b,b')$，定义 $G(g):\hom_A(Gb,Gb')$ 为满足 $\id{F(G(g))}{\inv{(\epsilon_{b'})}\circ g \circ \epsilon_b }$ 的唯一态射（该态射存在，因为 $F$ 是全忠实的）。
+  最后，对 $a:A$，定义 $\eta_a:\hom_A(a,GFa)$ 为满足 $\id{F\eta_a}{\inv{\epsilon_{Fa}}}$ 的唯一态射。
+  容易验证 $G$ 是函子，且 $(G,\eta,\epsilon)$ 将 $F$ 展现为预范畴的等价。
 
-  Now consider the composite~\ref{item:ct:ffeso1}$\to$\ref{item:ct:ffeso2}$\to$\ref{item:ct:ffeso1}.
-  We clearly recover the same function $G_0:B_0 \to A_0$.
-  For the action of $G$ on hom-sets, we must show that for $g:\hom_B(b,b')$, $G(g)$ is the (necessarily unique) morphism such that $F(G(g)) = \inv{(\epsilon_{b'})}\circ g \circ \epsilon_b$.
-  But this equation holds by the assumed naturality of $\epsilon$.
-  We also clearly recover $\epsilon$, while $\eta$ is uniquely characterized by $\id{F\eta_a}{\inv{\epsilon_{Fa}}}$ (which is one of the triangle identities assumed to hold in the structure of an equivalence of precategories).
-  Thus, this composite is equal to the identity.
+  现考虑复合~\ref{item:ct:ffeso1}$\to$\ref{item:ct:ffeso2}$\to$\ref{item:ct:ffeso1}。
+  我们显然恢复了同一个函数 $G_0:B_0 \to A_0$。
+  关于 $G$ 在 hom 集上的作用，我们需要证明对 $g:\hom_B(b,b')$，$G(g)$ 是满足 $F(G(g)) = \inv{(\epsilon_{b'})}\circ g \circ \epsilon_b$ 的那个（必然唯一的）态射。
+  但此等式由 $\epsilon$ 的自然性（已假设其成立）可得。
+  我们也显然恢复了 $\epsilon$，而 $\eta$ 由 $\id{F\eta_a}{\inv{\epsilon_{Fa}}}$ 唯一刻画（这是预范畴的等价之结构中所假设成立的三角恒等式之一）。
+  因此，此复合等于恒等映射。
 
-  Finally, consider the other composite~\ref{item:ct:ffeso2}$\to$\ref{item:ct:ffeso1}$\to$\ref{item:ct:ffeso2}.
-  Since being fully faithful is a mere proposition, it suffices to observe that we recover, for each $b:B$, the same $a:A$ and isomorphism $F a \cong b$.
-  But this is clear, since we used this function and isomorphism to define $G_0$ and $\epsilon$ in~\ref{item:ct:ffeso1}, which in turn are precisely what we used to recover~\ref{item:ct:ffeso2} again.
-  Thus, the composites in both directions are equal to identities, hence we have an equivalence \eqv{\text{\ref{item:ct:ffeso1}}}{\text{\ref{item:ct:ffeso2}}}.
+  最后，考虑另一个方向的复合~\ref{item:ct:ffeso2}$\to$\ref{item:ct:ffeso1}$\to$\ref{item:ct:ffeso2}。
+  由于"是全忠实的"是一个命题，只需注意到对每个 $b:B$，我们恢复了相同的 $a:A$ 和同构 $Fa \cong b$。
+  这是清楚的，因为我们正是用这个函数和同构在~\ref{item:ct:ffeso1} 中定义了 $G_0$ 和 $\epsilon$，而它们又恰好是我们恢复~\ref{item:ct:ffeso2} 时所用的。
+  因此，两个方向的复合都等于恒等映射，于是我们得到等价 \eqv{\text{\ref{item:ct:ffeso1}}}{\text{\ref{item:ct:ffeso2}}}。
 \end{proof}
 
-However, if $A$ is not a category, then neither type in \cref{ct:ffeso} may necessarily be a mere proposition.
-This suggests considering as well the following notions.
+然而，如果 $A$ 不是范畴，那么 \cref{ct:ffeso} 中的两个类型都未必是命题。
+这提示我们也应考虑以下概念。
 
 \begin{defn}\label{ct:essentially-surjective}
-  A functor $F:A\to B$ is \define{essentially surjective}
+  一个函子 $F:A\to B$ 是\define{本质满的}
   \indexdef{functor!essentially surjective}%
   \indexdef{essentially surjective functor}%
-  if for all $b:B$, there \emph{merely} exists an $a:A$ such that $Fa\cong b$.
-  We say $F$ is a \define{weak equivalence}
+  若对所有 $b:B$，\emph{仅仅}存在 $a:A$ 使得 $Fa\cong b$。
+  我们称 $F$ 是\define{弱等价}
   \indexsee{equivalence!of (pre)categories!weak}{weak equivalence}%
   \indexdef{weak equivalence!of precategories}%
   \indexsee{functor!weak equivalence}{weak equivalence}%
-  if it is fully faithful and essentially surjective.
+  若它是全忠实的且本质满的。
 \end{defn}
 
-Being a weak equivalence is \emph{always} a mere proposition.
-For categories, however, there is no difference between equivalences and weak ones.
+是弱等价\emph{总是}一个命题。
+然而，对于范畴而言，弱等价与等价之间没有区别。
 
 \index{acceptance}
-\begin{lem}\label{ct:catweq}
-  If $F:A\to B$ is fully faithful and $A$ is a category, then for any $b:B$ the type $\sm{a:A} (Fa\cong b)$ is a mere proposition.
-  Hence a functor between categories is an equivalence if and only if it is a weak equivalence.
-\end{lem}
-\begin{proof}
-  Suppose given $(a,f)$ and $(a',f')$ in $\sm{a:A} (Fa\cong b)$.
-  Then $\inv{f'}\circ f$ is an isomorphism $Fa \cong Fa'$.
-  Since $F$ is fully faithful, we have $g:a\cong a'$ with $Fg = \inv{f'}\circ f$.
-  And since $A$ is a category, we have $p:a=a'$ with $\idtoiso(p)=g$.
-  Now $Fg = \inv{f'}\circ f$ implies $\trans{(\map{(F_0)}{p})}{f} = f'$, hence (by the characterization of equalities in dependent pair types) $(a,f)=(a',f')$.
 
-  Thus, for fully faithful functors whose domain is a category, essential surjectivity is equivalent to split essential surjectivity, and so being a weak equivalence is equivalent to being an equivalence.
+
+\begin{lem}\label{ct:catweq}
+  若 $F:A\to B$ 是全忠实的且 $A$ 是范畴，则对任意 $b:B$，类型 $\sm{a:A} (Fa\cong b)$ 是一个命题。
+  因此，范畴之间的函子为等价当且仅当它为弱等价。
+\end{lem}
+
+\begin{proof}
+  假设在 $\sm{a:A} (Fa\cong b)$ 中给定 $(a,f)$ 和 $(a',f')$。
+  那么 $\inv{f'}\circ f$ 是一个同构 $Fa \cong Fa'$。
+  由于 $F$ 是全忠实的，我们有 $g:a\cong a'$ 满足 $Fg = \inv{f'}\circ f$。
+  又因为 $A$ 是范畴，我们有 $p:a=a'$ 满足 $\idtoiso(p)=g$。
+  现在 $Fg = \inv{f'}\circ f$ 意味着 $\trans{(\map{(F_0)}{p})}{f} = f'$，从而（根据依值对类型中相等的刻画）得到 $(a,f)=(a',f')$。
+
+  因此，对于定义域为范畴的全忠实函子，本质满性与分裂本质满性等价，故弱等价性与等价性等价。
 \end{proof}
 
-This is an important advantage of our category theory over set-based approaches.
-With a purely set-based definition of category, the statement ``every fully faithful and essentially surjective functor is an equivalence of categories'' is equivalent to the axiom of choice \choice{}.
-Here we have it for free, as a category-theoretic version of the principle of unique choice (\cref{sec:unique-choice}).
-(In fact, this property characterizes categories among precategories; see \cref{sec:rezk}.)
+这是我们的范畴论相对于基于集合的方法的一个重要优势。
+若采用纯基于集合的范畴定义，陈述"每个全忠实且本质满的函子都是范畴的等价"等价于选择公理 \choice{}。
+而在这里，我们可以免费获得它，作为唯一选择原理的范畴论版本（\cref{sec:unique-choice}）。
+（事实上，这一性质在预范畴中刻画了范畴；见 \cref{sec:rezk}。）
 
-On the other hand, the following characterization of equivalences of categories is perhaps even more useful.
+另一方面，下列关于范畴的等价的刻画或许更为有用。
 
 \begin{defn}\label{ct:isocat}
-  A functor $F:A\to B$ is an \define{isomorphism of (pre)cat\-ego\-ries}
+  一个函子 $F:A\to B$ 是一个\define{（预）范畴的同构（isomorphism of (pre)categories）}
   \indexdef{isomorphism!of (pre)categories}%
   \indexdef{category!isomorphism of}%
   \indexdef{precategory!isomorphism of}%
-  if $F$ is fully faithful and $F_0:A_0\to B_0$ is an equivalence of types.
+  ，如果 $F$ 是全忠实的且 $F_0:A_0\to B_0$ 是类型之间的等价。
 \end{defn}
 
-This definition is an exception to our general rule (see \cref{sec:basics-equivalences}) of only using the word ``isomorphism'' for sets and set-like objects.
-However, it does carry an appropriate connotation here, because for general precategories, isomorphism is stronger than equivalence.
+这个定义是我们的一般规则（参见 \cref{sec:basics-equivalences}）的一个例外，该规则规定"同构"一词只用于集合和类似集合的对象。
+然而，它在这里确实传达了恰当的含义，因为对于一般的预范畴而言，同构强于等价。
 
-Note that being an isomorphism of precategories is always a mere property.
-Let $A\cong B$ denote the type of isomorphisms of (pre)categories from $A$ to $B$.
+注意，作为预范畴的同构总只是一个性质。
+记 $A\cong B$ 为从 $A$ 到 $B$ 的（预）范畴同构所构成的类型。
 
 \begin{lem}\label{ct:isoprecat}
-  For precategories $A$ and $B$ and $F:A\to B$, the following are equivalent.
+  对于预范畴 $A$ 和 $B$ 以及函子 $F:A\to B$，以下条件等价。
   \begin{enumerate}
-  \item $F$ is an isomorphism of precategories.\label{item:ct:ipc1}
-  \item There exist $G:B\to A$ and $\eta:1_A = GF$ and $\epsilon:FG=1_B$ such that\label{item:ct:ipc2}
+  \item $F$ 是预范畴的同构。\label{item:ct:ipc1}
+  \item 存在 $G:B\to A$, $\eta:1_A = GF$ 以及 $\epsilon:FG=1_B$，使得\label{item:ct:ipc2}
     \begin{equation}
       \apfunc{(\lam{H} F H)}({\eta}) = \apfunc{(\lam{K} K F)}({\opp\epsilon}).\label{eq:ct:isoprecattri}
     \end{equation}
-  \item There merely exist $G:B\to A$ and $\eta:1_A = GF$ and $\epsilon:FG=1_B$.\label{item:ct:ipc3}
+  \item 仅仅存在 $G:B\to A$, $\eta:1_A = GF$ 以及 $\epsilon:FG=1_B$。\label{item:ct:ipc3}
   \end{enumerate}
 \end{lem}
 
-Note that if $B_0$ is not a 1-type, then~\eqref{eq:ct:isoprecattri} may not be a mere proposition.
+注意，如果 $B_0$ 不是 1-类型，那么~\eqref{eq:ct:isoprecattri} 可能不是一个命题。
 
 \begin{proof}
-  First note that since hom-sets are sets, equalities between equalities of functors are uniquely determined by their object-parts.
-  Thus, by function extensionality,~\eqref{eq:ct:isoprecattri} is equivalent to
+  首先注意，由于同态集是集合，函子等式之间的等式由其对象部分唯一决定。
+  因此，由函数外延性，~\eqref{eq:ct:isoprecattri} 等价于
   \begin{equation}
     \map{(F_0)}{\eta_0}_a = \opp{(\epsilon_0)}_{F_0 a}.\label{eq:ct:ipctri}
   \end{equation}
-  for all $a:A_0$.
-  Note that this is precisely the triangle identity for $G_0$, $\eta_0$, and $\epsilon_0$ to be a proof that $F_0$ is a half adjoint equivalence of types.
+  对所有 $a:A_0$ 成立。注意，这恰好就是 $G_0$、$\eta_0$ 和 $\epsilon_0$ 用以证明 $F_0$ 是类型上的半伴随等价所需的三角恒等式。
 
-  Now suppose~\ref{item:ct:ipc1}.
-  Let $G_0:B_0 \to A_0$ be the inverse of $F_0$, with $\eta_0: \idfunc[A_0] = G_0 F_0$ and $\epsilon_0:F_0G_0 = \idfunc[B_0]$ satisfying the triangle identity, which is precisely~\eqref{eq:ct:ipctri}.
-  Now define $G_{b,b'}:\hom_B(b,b') \to \hom_A(G_0b,G_0b')$ by
+  现在假设~\ref{item:ct:ipc1}。
+  令 $G_0:B_0 \to A_0$ 为 $F_0$ 的逆，并令 $\eta_0: \idfunc[A_0] = G_0 F_0$ 和 $\epsilon_0:F_0G_0 = \idfunc[B_0]$ 满足三角恒等式，这恰好就是~\eqref{eq:ct:ipctri}。现在如下定义 $G_{b,b'}:\hom_B(b,b') \to \hom_A(G_0b,G_0b')$：
   \[ G_{b,b'}(g) \defeq
   \inv{(F_{G_0b,G_0b'})}\Big(\idtoiso(\opp{(\epsilon_0)}_{b'}) \circ g \circ \idtoiso((\epsilon_0)_b)\Big)
   \]
-  (using the assumption that $F$ is fully faithful).
-  Since \idtoiso takes inverses to inverses and concatenation to composition, and $F$ is a functor, it follows that $G$ is a functor.
+  （这里用到了 $F$ 全忠实的假设）。由于 \idtoiso 将逆映射为逆，将拼接映射为复合，且 $F$ 是函子，可知 $G$ 也是一个函子。
 
-  By definition, we have $(GF)_0 \jdeq G_0 F_0$, which is equal to $\idfunc[A_0]$ by $\eta_0$.
-  To obtain $1_A = GF$, we need to show that when transported along $\eta_0$, the identity function of $\hom_A(a,a')$ becomes equal to the composite $G_{Fa,Fa'} \circ F_{a,a'}$.
-  In other words, for any $f:\hom_A(a,a')$ we must have
+  根据定义，我们有 $(GF)_0 \jdeq G_0 F_0$，而根据 $\eta_0$，这等于 $\idfunc[A_0]$。
+  为了得到 $1_A = GF$，我们需要证明：当沿着 $\eta_0$ 迁移时，$\hom_A(a,a')$ 上的恒等函数变为等于复合 $G_{Fa,Fa'} \circ F_{a,a'}$。
+  换句话说，对于任意 $f:\hom_A(a,a')$ 我们必须有
   \begin{multline*}
     \idtoiso((\eta_0)_{a'}) \circ f \circ \idtoiso(\opp{(\eta_0)}_a)\\
     = \inv{(F_{GFa,GFa'})}\Big(\idtoiso(\opp{(\epsilon_0)}_{Fa'})
     \circ F_{a,a'}(f) \circ \idtoiso((\epsilon_0)_{Fa})\Big).
   \end{multline*}
-  But this is equivalent to
+  但这等价于
   \begin{multline*}
     (F_{GFa,GFa'})\Big(\idtoiso((\eta_0)_{a'}) \circ f \circ \idtoiso(\opp{(\eta_0)}_a)\Big)\\
     = \idtoiso(\opp{(\epsilon_0)}_{Fa'})
     \circ F_{a,a'}(f) \circ \idtoiso((\epsilon_0)_{Fa}).
   \end{multline*}
-  which follows from functoriality of $F$, the fact that $F$ preserves \idtoiso, and~\eqref{eq:ct:ipctri}.
-  Thus we have $\eta:1_A = GF$.
+  而这可以从 $F$ 的函子性、$F$ 保持 \idtoiso 的事实以及~\eqref{eq:ct:ipctri} 推出。因此我们得到 $\eta:1_A = GF$。
 
-  On the other side, we have $(FG)_0\jdeq F_0 G_0$, which is equal to $\idfunc[B_0]$ by $\epsilon_0$.
-  To obtain $FG=1_B$, we need to show that when transported along $\epsilon_0$, the identity function of $\hom_B(b,b')$ becomes equal to the composite $F_{Gb,Gb'} \circ G_{b,b'}$.
-  That is, for any $g:\hom_B(b,b')$ we must have
+  在另一边，我们有 $(FG)_0\jdeq F_0 G_0$，根据 $\epsilon_0$，这等于 $\idfunc[B_0]$。
+  为了得到 $FG=1_B$，我们需要证明：当沿着 $\epsilon_0$ 迁移时，$\hom_B(b,b')$ 上的恒等函数变为等于复合 $F_{Gb,Gb'} \circ G_{b,b'}$。
+  也就是说，对于任意 $g:\hom_B(b,b')$ 我们必须有
   \begin{multline*}
     F_{Gb,Gb'}\Big(\inv{(F_{Gb,Gb'})}\Big(\idtoiso(\opp{(\epsilon_0)}_{b'}) \circ g \circ \idtoiso((\epsilon_0)_b)\Big)\Big)\\
     = \idtoiso((\opp{\epsilon_0})_{b'}) \circ g \circ \idtoiso((\epsilon_0)_b).
   \end{multline*}
-  But this is just the fact that $\inv{(F_{Gb,Gb'})}$ is the inverse of $F_{Gb,Gb'}$.
-  And we have remarked that~\eqref{eq:ct:isoprecattri} is equivalent to~\eqref{eq:ct:ipctri}, so~\ref{item:ct:ipc2} holds.
+  但这正是 $\inv{(F_{Gb,Gb'})}$ 是 $F_{Gb,Gb'}$ 的逆这一事实。并且我们之前已指出~\eqref{eq:ct:isoprecattri} 等价于~\eqref{eq:ct:ipctri}，故而~\ref{item:ct:ipc2} 成立。
 
-  Conversely, suppose given~\ref{item:ct:ipc2}; then the object-parts of $G$, $\eta$, and $\epsilon$ together with~\eqref{eq:ct:ipctri} show that $F_0$ is an equivalence of types.
-  And for $a,a':A_0$, we define $\overline{G}_{a,a'}: \hom_B(Fa,Fa') \to \hom_A(a,a')$ by
+  反过来，假设给定~\ref{item:ct:ipc2}；那么 $G$, $\eta$ 和 $\epsilon$ 的对象部分连同~\eqref{eq:ct:ipctri} 表明 $F_0$ 是类型之间的等价。并且对于 $a,a':A_0$，我们通过下式定义 $\overline{G}_{a,a'}: \hom_B(Fa,Fa') \to \hom_A(a,a')$：
   \begin{equation}
     \overline{G}_{a,a'}(g) \defeq \idtoiso(\opp{\eta})_{a'} \circ G(g) \circ \idtoiso(\eta)_a.\label{eq:ct:gbar}
   \end{equation}
-  By naturality of $\idtoiso(\eta)$, for any $f:\hom_A(a,a')$ we have
+  根据 $\idtoiso(\eta)$ 的自然性，对于任意 $f:\hom_A(a,a')$ 我们有
   \begin{align*}
     \overline{G}_{a,a'}(F_{a,a'}(f))
     &= \idtoiso(\opp{\eta})_{a'} \circ G(F(f)) \circ \idtoiso(\eta)_a\\
     &= \idtoiso(\opp{\eta})_{a'} \circ \idtoiso(\eta)_{a'} \circ f \\
     &= f.
   \end{align*}
-  On the other hand, for $g:\hom_B(Fa,Fa')$ we have
+  另一方面，对于 $g:\hom_B(Fa,Fa')$ 我们有
   \begin{align*}
     F_{a,a'}(\overline{G}_{a,a'}(g))
     &= F(\idtoiso(\opp{\eta})_{a'}) \circ F(G(g)) \circ F(\idtoiso(\eta)_a)\\
@@ -773,191 +783,192 @@ Note that if $B_0$ is not a 1-type, then~\eqref{eq:ct:isoprecattri} may not be a
     \circ g\\
     &= g.
   \end{align*}
-  (There are lemmas needed here regarding the compatibility of \idtoiso and whiskering, which we leave it to the reader to state and prove.)
-  Thus, $F_{a,a'}$ is an equivalence, so $F$ is fully faithful; i.e.~\ref{item:ct:ipc1} holds.
+  （这里需要一些关于 \idtoiso 与须接兼容性的引理，我们留给读者陈述并证明。）
+  因此，$F_{a,a'}$ 是一个等价，所以 $F$ 是全忠实的；即~\ref{item:ct:ipc1} 成立。
 
-  Now the composite~\ref{item:ct:ipc1}$\to$\ref{item:ct:ipc2}$\to$\ref{item:ct:ipc1} is equal to the identity since~\ref{item:ct:ipc1} is a mere proposition.
-  On the other side, tracing through the above constructions we see that the composite~\ref{item:ct:ipc2}$\to$\ref{item:ct:ipc1}$\to$\ref{item:ct:ipc2} essentially preserves the object-parts $G_0$, $\eta_0$, $\epsilon_0$, and the object-part of~\eqref{eq:ct:isoprecattri}.
-  And in the latter three cases, the object-part is all there is, since hom-sets are sets.
+  现在，复合~\ref{item:ct:ipc1}$\to$\ref{item:ct:ipc2}$\to$\ref{item:ct:ipc1} 等于恒等映射，因为~\ref{item:ct:ipc1} 是一个命题。
+  在另一边，追踪上述构造，我们看到复合~\ref{item:ct:ipc2}$\to$\ref{item:ct:ipc1}$\to$\ref{item:ct:ipc2} 本质上保持了对象部分 $G_0$, $\eta_0$, $\epsilon_0$ 以及~\eqref{eq:ct:isoprecattri} 的对象部分。在后三种情形中，对象部分就是全部，因为同态集是集合。
 
-  Thus, it suffices to show that we recover the action of $G$ on hom-sets.
-  In other words, we must show that if $g:\hom_B(b,b')$, then
+  因此，只需证明我们能恢复 $G$ 在同态集上的作用。
+  换句话说，我们必须证明，如果 $g:\hom_B(b,b')$，那么
   \[ G_{b,b'}(g) =
   \overline{G}_{G_0b,G_0b'}\Big(\idtoiso(\opp{(\epsilon_0)}_{b'}) \circ g \circ \idtoiso((\epsilon_0)_b)\Big)
   \]
-  where $\overline{G}$ is defined by~\eqref{eq:ct:gbar}.
-  However, this follows from functoriality of $G$ and the \emph{other} triangle identity, which we have seen in \cref{cha:equivalences} is equivalent to~\eqref{eq:ct:ipctri}.
+  其中 $\overline{G}$ 由~\eqref{eq:ct:gbar} 定义。然而，这可以从 $G$ 的函子性以及\emph{另一个}三角恒等式推出，我们在 \cref{cha:equivalences} 中已看到该恒等式等价于~\eqref{eq:ct:ipctri}。
 
-  Now since~\ref{item:ct:ipc1} is a mere proposition, so is~\ref{item:ct:ipc2}, so it suffices to show they are logically equivalent to~\ref{item:ct:ipc3}.
-  Of course,~\ref{item:ct:ipc2}$\to$\ref{item:ct:ipc3}, so let us assume~\ref{item:ct:ipc3}.
-  Since~\ref{item:ct:ipc1} is a mere proposition, we may assume given $G$, $\eta$, and $\epsilon$.
-  Then $G_0$ along with $\eta$ and $\epsilon$ imply that $F_0$ is an equivalence.
-  Moreover, we also have natural isomorphisms $\idtoiso(\eta):1_A\cong GF$ and $\idtoiso(\epsilon):FG\cong 1_B$, so by \cref{ct:adjointification}, $F$ is an equivalence of precategories, and in particular fully faithful.
+  现在，由于~\ref{item:ct:ipc1} 是一个命题，~\ref{item:ct:ipc2} 亦然，因此只需证明它们与~\ref{item:ct:ipc3} 逻辑等价。
+  显然，~\ref{item:ct:ipc2}$\to$\ref{item:ct:ipc3}，故可假设~\ref{item:ct:ipc3}。
+  由于~\ref{item:ct:ipc1} 是一个命题，我们可以假设给定了 $G$, $\eta$ 和 $\epsilon$。
+  那么 $G_0$ 连同 $\eta$ 和 $\epsilon$ 意味着 $F_0$ 是等价。
+  此外，我们还有自然同构 $\idtoiso(\eta):1_A\cong GF$ 和 $\idtoiso(\epsilon):FG\cong 1_B$，因此由 \cref{ct:adjointification}，$F$ 是预范畴的等价，从而是全忠实的。
 \end{proof}
 
-From \cref{ct:isoprecat}\ref{item:ct:ipc2} and $\idtoiso$ in functor categories, we conclude immediately that any isomorphism of precategories is an equivalence.
-For precategories, the converse can fail.
+从 \cref{ct:isoprecat}\ref{item:ct:ipc2} 以及函子范畴中的 $\idtoiso$，我们立即得出：预范畴的任何同构都是等价。
+但对于预范畴而言，反过来不一定成立。
 
 \begin{eg}\label{ct:chaotic}
-  Let $X$ be a type and $x_0:X$ an element, and let $X_{\mathrm{ch}}$ denote the \emph{chaotic}\indexdef{chaotic precategory} or \emph{indiscrete}\indexdef{indiscrete precategory} precategory on $X$.
-  By definition, we have $(X_{\mathrm{ch}})_0\defeq X$, and $\hom_{X_{\mathrm{ch}}}(x,x') \defeq \unit$ for all $x,x'$.
-  Then the unique functor $X_{\mathrm{ch}}\to \unit$ is an equivalence of precategories, but not an isomorphism unless $X$ is contractible.
+  设 $X$ 为一个类型，$x_0:X$ 为其中一个元素，并令 $X_{\mathrm{ch}}$ 表示 $X$ 上的\emph{混沌预范畴（chaotic precategory）}\indexdef{chaotic precategory}或\emph{密着预范畴（indiscrete precategory）}\indexdef{indiscrete precategory}。
+  根据定义，我们有 $(X_{\mathrm{ch}})_0\defeq X$，并且 $\hom_{X_{\mathrm{ch}}}(x,x') \defeq \unit$ 对所有 $x,x'$ 成立。
+  那么唯一的函子 $X_{\mathrm{ch}}\to \unit$ 是预范畴的等价，但除非 $X$ 是可缩的，否则它不是同构。
 
-  This example also shows that a precategory can be equivalent to a category without itself being a category.
-  Of course, if a precategory is \emph{isomorphic} to a category, then it must itself be a category.
+  这个例子也表明，一个预范畴可以等价于一个范畴，而它本身却不必是范畴。
+  当然，如果一个预范畴\emph{同构}于一个范畴，那么它本身必须是一个范畴。
 \end{eg}
 
-However, for categories, the two notions coincide.
+然而，对于范畴而言，这两个概念是一致的。
 
 \begin{lem}\label{ct:eqv-levelwise}
-  For categories $A$ and $B$, a functor $F:A\to B$ is an equivalence of categories if and only if it is an isomorphism of categories.
+  对于范畴 $A$ 和 $B$，函子 $F:A\to B$ 是范畴的等价当且仅当它是范畴的同构。
 \end{lem}
-\begin{proof}
-  Since both are mere properties, it suffices to show they are logically equivalent.
-  So first suppose $F$ is an equivalence of categories, with $(G,\eta,\epsilon)$ given.
-  We have already seen that $F$ is fully faithful.
-  By \cref{ct:functor-cat}, the natural isomorphisms $\eta$ and $\epsilon$ yield identities $\id{1_A}{GF}$ and $\id{FG}{1_B}$, hence in particular identities $\id{\idfunc[A]}{G_0\circ F_0}$ and $\id{F_0\circ G_0}{\idfunc[B]}$.
-Thus, $F_0$ is an equivalence of types.
 
-  Conversely, suppose $F$ is fully faithful and $F_0$ is an equivalence of types, with inverse $G_0$, say.
-  Then for each $b:B$ we have $G_0 b:A$ and an identity $\id{FGb}{b}$, hence an isomorphism $FGb\cong b$.
-  Thus, by \cref{ct:ffeso}, $F$ is an equivalence of categories.
+\begin{proof}
+  由于两者都只是命题，只需证明它们逻辑等价即可。
+  首先假设 $F$ 是范畴的等价，其中 $(G,\eta,\epsilon)$ 已给定。
+  我们已经知道 $F$ 是全忠实的。
+  根据 \cref{ct:functor-cat}，自然同构 $\eta$ 和 $\epsilon$ 给出相等 $\id{1_A}{GF}$ 和 $\id{FG}{1_B}$，因而特别地有相等 $\id{\idfunc[A]}{G_0\circ F_0}$ 和 $\id{F_0\circ G_0}{\idfunc[B]}$。
+  因此，$F_0$ 是类型的等价。
+
+  反过来，假设 $F$ 是全忠实的，且 $F_0$ 是类型的等价，其逆记为 $G_0$。
+  那么对于每个 $b:B$，我们有 $G_0 b:A$ 和相等 $\id{FGb}{b}$，从而得到同构 $FGb\cong b$。
+  于是，根据 \cref{ct:ffeso}，$F$ 是范畴的等价。
 \end{proof}
 
-Of course, there is yet a third notion of sameness for (pre)categories: equality.
-However, the univalence axiom implies that it coincides with isomorphism.
+当然，（预）范畴之间还有第三种"相同"的概念：相等。
+然而，泛等公理意味着它与同构一致。
 
 \begin{lem}\label{ct:cat-eq-iso}
-  If $A$ and $B$ are precategories, then the function
+  如果 $A$ 和 $B$ 是预范畴，那么函数
   \[(\id A B) \to (A\cong B)\]
-  (defined by induction from the identity functor) is an equivalence of types.
+  （由恒同函子归纳定义）是类型的等价。
 \end{lem}
+
 \begin{proof}
-  As usual for dependent sum types, to give an element of $\id A B$ is equivalent to giving
+  与 $\Sigma$ 类型的情形一样，给出 $\id A B$ 的一个元素，等价于给出：
   \begin{itemize}
-  \item an identity $P_0:\id{A_0}{B_0}$,
-  \item for each $a,b:A_0$, an identity
-    \[P_{a,b}:\id{\hom_A(a,b)}{\hom_B(\trans {P_0} a,\trans {P_0} b)},\]
-  \item identities $\id{\trans {(P_{a,a})} {1_a}}{1_{\trans {P_0} a}}$ and
+  \item 一个相等 $P_0:\id{A_0}{B_0}$，
+  \item 对每个 $a,b:A_0$，一个相等
+    \[P_{a,b}:\id{\hom_A(a,b)}{\hom_B(\trans {P_0} a,\trans {P_0} b)},\]，
+  \item 以及相等 $\id{\trans {(P_{a,a})} {1_a}}{1_{\trans {P_0} a}}$ 和
     \narrowequation{\id{\trans {(P_{a,c})} {gf}}{\trans {(P_{b,c})} g \circ \trans {(P_{a,b})} f}.}
   \end{itemize}
-  (Again, we use the fact that the identity types of hom-sets are mere propositions.)
-  However, by univalence, this is equivalent to giving
+  （这里我们再次利用了 Hom 集的相等类型是命题这一事实。）
+  然而，根据泛等性，这等价于给出：
   \begin{itemize}
-  \item an equivalence of types $F_0:\eqv{A_0}{B_0}$,
-  \item for each $a,b:A_0$, an equivalence of types
-    \[F_{a,b}:\eqv{\hom_A(a,b)}{\hom_B(F_0 (a),F_0 (b))},\]
-  \item and identities $\id{F_{a,a}(1_a)}{1_{F_0 (a)}}$ and $\id{F_{a,c}(gf)}{F_{b,c} (g)\circ F_{a,b} (f)}$.
+  \item 一个类型的等价 $F_0:\eqv{A_0}{B_0}$，
+  \item 对每个 $a,b:A_0$，一个类型的等价
+    \[F_{a,b}:\eqv{\hom_A(a,b)}{\hom_B(F_0 (a),F_0 (b))},\]，
+  \item 以及相等 $\id{F_{a,a}(1_a)}{1_{F_0 (a)}}$ 和 $\id{F_{a,c}(gf)}{F_{b,c} (g)\circ F_{a,b} (f)}$。
   \end{itemize}
-  But this consists exactly of a functor $F:A\to B$ that is an isomorphism of categories.
-  And by induction on identity, this equivalence $\eqv{(\id A B)}{(A\cong B)}$ is equal to the one obtained by induction.
+  但这恰好构成一个函子 $F:A\to B$，且它是范畴的同构。
+  并且通过对相等的归纳，这一等价 $\eqv{(\id A B)}{(A\cong B)}$ 等于由归纳得到的那个。
 \end{proof}
 
-Thus, for categories, equality also coincides with equivalence.
-We can interpret this as saying that categories, functors, and natural transformations form, not just a pre-2-category, but a 2-category (see \cref{ct:pre2cat}).
+因此，对于范畴，相等也与等价一致。
+我们可以这样理解：范畴、函子和自然变换不仅构成一个前2-范畴，还构成一个2-范畴（参见 \cref{ct:pre2cat}）。
 
 \begin{thm}\label{ct:cat-2cat}
-  If $A$ and $B$ are categories, then the function
+  如果 $A$ 和 $B$ 是范畴，那么函数
   \[(\id A B) \to (\cteqv A B)\]
-  (defined by induction from the identity functor) is an equivalence of types.
+  （由恒同函子归纳定义）是类型的等价。
 \end{thm}
+
 \begin{proof}
-  By \cref{ct:cat-eq-iso,ct:eqv-levelwise}.
+  根据 \cref{ct:cat-eq-iso,ct:eqv-levelwise}。
 \end{proof}
 
-As a consequence, the type of categories is a 2-type.
-For since $\cteqv A B$ is a subtype of the type of functors from $A$ to $B$, which are the objects of a category, it is a 1-type; hence the identity types $\id A B$ are also 1-types.
+作为推论，范畴的类型是一个 $2$-类型。
+因为 $\cteqv A B$ 是从 $A$ 到 $B$ 的函子类型的子类型（这些函子构成一个范畴的对象），所以它是 $1$-类型；因此，相等类型 $\id A B$ 也是 $1$-类型。
 
-
-\section{The Yoneda lemma}
+\section{米田引理}
 \label{sec:yoneda}
 \index{Yoneda!lemma|(}
 
-Recall that we have a category \uset whose objects are sets and whose morphisms are functions.
-We now show that every precategory has a \uset-valued hom-functor.
-First we need to define opposites and products of (pre)categories.
+回顾我们有一个范畴 \uset，其对象是集合，态射是函数。
+我们现在证明，每个预范畴都有一个取值于 \uset 的 Hom 函子。
+首先我们需要定义（预）范畴的反范畴和积。
 
 \begin{defn}\label{ct:opposite-category}
-  For a precategory $A$, its \define{opposite}
+  对于预范畴 $A$，其\define{反范畴（opposite）}
   \indexdef{opposite of a (pre)category}%
   \indexdef{precategory!opposite}%
   \indexdef{category!opposite}%
-  $A\op$ is a precategory with the same type of objects, with $\hom_{A\op}(a,b) \defeq \hom_A(b,a)$, and with identities and composition inherited from $A$.
+  $A\op$ 是一个预范畴，其对象类型与 $A$ 相同，其中 $\hom_{A\op}(a,b) \defeq \hom_A(b,a)$，恒同态射和复合运算继承自 $A$。
 \end{defn}
 
 \begin{defn}\label{ct:prod-cat}
-  For precategories $A$ and $B$, their \define{product}
+  对于预范畴 $A$ 和 $B$，其\define{积（product）}
   \index{precategory!product of}%
   \index{category!product of}%
   \index{product!of (pre)categories}%
-  $A\times B$ is a precategory with $(A\times B)_0 \defeq A_0 \times B_0$ and
+  $A\times B$ 是一个预范畴，其中 $(A\times B)_0 \defeq A_0 \times B_0$ 且
   \[\hom_{A\times B}((a,b),(a',b')) \defeq \hom_A(a,a') \times \hom_B(b,b').\]
-  Identities are defined by $1_{(a,b)}\defeq (1_a,1_b)$ and composition by
+  恒同态射定义为 $1_{(a,b)}\defeq (1_a,1_b)$，复合运算定义为
   \narrowequation{(g,g')(f,f') \defeq ((gf),(g'f')).}
 \end{defn}
 
 \begin{lem}\label{ct:functorexpadj}
-  For precategories $A,B,C$, the following types are equivalent.
+  对于预范畴 $A,B,C$，以下类型是等价的。
   \begin{enumerate}
-  \item Functors $A\times B\to C$.
-  \item Functors $A\to C^B$.
+  \item 从 $A\times B$ 到 $C$ 的函子。
+  \item 从 $A$ 到 $C^B$ 的函子。
   \end{enumerate}
 \end{lem}
-\begin{proof}
-  Given $F:A\times B\to C$, for any $a:A$ we obviously have a functor $F_a : B\to C$.
-  This gives a function $A_0 \to (C^B)_0$.
-  Next, for any $f:\hom_A(a,a')$, we have for any $b:B$ the morphism $F_{(a,b),(a',b)}(f,1_b):F_a(b) \to F_{a'}(b)$.
-  These are the components of a natural transformation $F_a \to F_{a'}$.
-  Functoriality in $a$ is easy to check, so we have a functor $\hat{F}:A\to C^B$.
 
-  Conversely, suppose given $G:A\to C^B$.
-  Then for any $a:A$ and $b:B$ we have the object $G(a)(b):C$, giving a function $A_0 \times B_0 \to C_0$.
-  And for $f:\hom_A(a,a')$ and $g:\hom_B(b,b')$, we have the morphism
+\begin{proof}
+  给定 $F:A\times B\to C$，对任意 $a:A$，我们显然有一个函子 $F_a : B\to C$。
+  这就给出了一个函数 $A_0 \to (C^B)_0$。
+  其次，对任意 $f:\hom_A(a,a')$，对任意 $b:B$，我们有态射 $F_{(a,b),(a',b)}(f,1_b):F_a(b) \to F_{a'}(b)$。
+  这些是自然变换 $F_a \to F_{a'}$ 的分量。
+  关于 $a$ 的函子性容易验证，因此我们得到一个函子 $\hat{F}:A\to C^B$。
+
+  反过来，假设给定 $G:A\to C^B$。
+  那么对任意 $a:A$ 和 $b:B$，我们有对象 $G(a)(b):C$，从而给出一个函数 $A_0 \times B_0 \to C_0$。
+  并且对于 $f:\hom_A(a,a')$ 和 $g:\hom_B(b,b')$，我们有 $\hom_C(G(a)(b), G(a')(b'))$ 中的态射
   \begin{equation*}
      G(a')_{b,b'}(g)\circ G_{a,a'}(f)_b = G_{a,a'}(f)_{b'} \circ  G(a)_{b,b'}(g)
-  \end{equation*}
-  in $\hom_C(G(a)(b), G(a')(b'))$.
-  Functoriality is again easy to check, so we have a functor $\check{G}:A\times B \to C$.
+  \end{equation*}。
+  其函子性也容易验证，因此我们得到一个函子 $\check{G}:A\times B \to C$。
 
-  Finally, it is also clear that these operations are inverses.
+  最后，显然这两个操作互逆。
 \end{proof}
 
-Now for any precategory $A$, we have a hom-functor
+现在，对任意预范畴 $A$，我们有一个 Hom 函子
 \indexdef{hom-functor}%
 \[\hom_A : A\op \times A \to \uset.\]
-It takes a pair $(a,b): (A\op)_0 \times A_0 \jdeq A_0 \times A_0$ to the set $\hom_A(a,b)$.
-For a morphism $(f,f') : \hom_{A\op\times A}((a,b),(a',b'))$, by definition we have $f:\hom_A(a',a)$ and $f':\hom_A(b,b')$, so we can define
+它将一对 $(a,b): (A\op)_0 \times A_0 \jdeq A_0 \times A_0$ 送到集合 $\hom_A(a,b)$。
+对于态射 $(f,f') : \hom_{A\op\times A}((a,b),(a',b'))$，根据定义我们有 $f:\hom_A(a',a)$ 和 $f':\hom_A(b,b')$，因此可以定义
 \begin{align*}
   (\hom_A)_{(a,b),(a',b')}(f,f')
   &\defeq (g \mapsto (f'gf))\\
   &: \hom_A(a,b) \to \hom_A(a',b').
 \end{align*}
-Functoriality is easy to check.
+其函子性容易验证。
 
-By \cref{ct:functorexpadj}, therefore, we have an induced functor $\y:A\to \uset^{A\op}$, which we call the \define{Yoneda embedding}.
+于是，由 \cref{ct:functorexpadj}，我们得到一个诱导函子 $\y:A\to \uset^{A\op}$，称之为 \define{米田嵌入（Yoneda embedding）}。
 \indexdef{Yoneda!embedding}%
 \indexdef{embedding!Yoneda}%
 
-\begin{thm}[The Yoneda lemma]\label{ct:yoneda}
+\begin{thm}[米田引理]\label{ct:yoneda}
   \indexdef{Yoneda!lemma}
-  For any precategory $A$, any $a:A$, and any functor $F:\uset^{A\op}$, we have an isomorphism
+  对任意预范畴 $A$，任意 $a:A$，以及任意函子 $F:\uset^{A\op}$，我们有一个同构
   \begin{equation}\label{eq:yoneda}
     \hom_{\uset^{A\op}}(\y a, F) \cong Fa.
   \end{equation}
-  Moreover, this is natural in both $a$ and $F$.
+  此外，该同构关于 $a$ 和 $F$ 均是自然的。
 \end{thm}
+
 \begin{proof}
-  Given a natural transformation $\alpha:\y a \to F$, we can consider the component $\alpha_a : \y a(a) \to F a$.
-  Since $\y a(a)\jdeq \hom_A(a,a)$, we have $1_a : \y a(a)$, so that $\alpha_a(1_a) : F a$.
-  This gives a function $(\alpha \mapsto \alpha_a(1_a))$ from left to right in~\eqref{eq:yoneda}.
+  给定一个自然变换 $\alpha:\y a \to F$，我们可以考虑分量 $\alpha_a : \y a(a) \to F a$。
+  由于 $\y a(a)\jdeq \hom_A(a,a)$，我们有 $1_a : \y a(a)$，因此 $\alpha_a(1_a) : F a$。
+  这就给出了从 \eqref{eq:yoneda} 的左边到右边的函数 $(\alpha \mapsto \alpha_a(1_a))$。
 
-  In the other direction, given $x:F a$, we define $\alpha:\y a \to F$ by
+  在另一个方向上，给定 $x:F a$，我们通过下式定义 $\alpha:\y a \to F$：
   \[\alpha_{a'}(f) \defeq F_{a,a'}(f)(x). \]
-  Naturality is easy to check, so this gives a function from right to left in~\eqref{eq:yoneda}.
+  其自然性容易验证，因此这给出了从 \eqref{eq:yoneda} 的右边到左边的函数。
 
-  To show that these are inverses, first suppose given $x:F a$.
-  Then with $\alpha$ defined as above, we have $\alpha_a(1_a) = F_{a,a}(1_a)(x) = 1_{F a}(x) = x$.
-  On the other hand, if we suppose given $\alpha:\y a \to F$ and define $x$ as above, then for any $f:\hom_A(a',a)$ we have
+  为了证明它们互逆，首先假设给定 $x:F a$。
+  那么按上述方式定义 $\alpha$ 后，我们有 $\alpha_a(1_a) = F_{a,a}(1_a)(x) = 1_{F a}(x) = x$。
+  另一方面，如果我们假设给定 $\alpha:\y a \to F$ 并按上述方式定义 $x$，那么对任意 $f:\hom_A(a',a)$，我们有
   \begin{align*}
     \alpha_{a'}(f)
     &= \alpha_{a'} (\y a_{a,a'}(f)(1_a))\\
@@ -966,389 +977,393 @@ By \cref{ct:functorexpadj}, therefore, we have an induced functor $\y:A\to \uset
     &= F_{a,a'}(f)(\alpha_a(1_a))\\
     &= F_{a,a'}(f)(x).
   \end{align*}
-  Thus, both composites are equal to identities.
-  We leave the proof of naturality to the reader.
+  因此，两个复合都等于恒等映射。
+  我们将自然性的证明留给读者。
 \end{proof}
 
 \begin{cor}\label{ct:yoneda-embedding}
-  The Yoneda embedding $\y :A\to \uset^{A\op}$ is fully faithful.
+  米田嵌入 $\y :A\to \uset^{A\op}$ 是全忠实的。
 \end{cor}
+
 \begin{proof}
-  By \cref{ct:yoneda}, we have
+  根据 \cref{ct:yoneda}，我们有
   \[ \hom_{\uset^{A\op}}(\y a, \y b) \cong \y b(a) \jdeq \hom_A(a,b). \]
-  It is easy to check that this isomorphism is in fact the action of \y on hom-sets.
+  容易验证，这个同构实际上就是 \y 在态射集上的作用。
 \end{proof}
 
 \begin{cor}\label{ct:yoneda-mono}
-  If $A$ is a category, then $\y_0 : A_0 \to (\uset^{A\op})_0$ is an embedding.
-  In particular, if $\y a = \y b$, then $a=b$.
+  如果 $A$ 是一个范畴，那么 $\y_0 : A_0 \to (\uset^{A\op})_0$ 是一个嵌入。
+  特别地，如果 $\y a = \y b$，那么 $a=b$。
 \end{cor}
+
 \begin{proof}
-  By \cref{ct:yoneda-embedding}, \y induces an isomorphism on sets of isomorphisms.
-  But as $A$ and $\uset^{A\op}$ are categories and \y is a functor, this is equivalently an isomorphism on identity types, which is the definition of being an embedding.
+  根据 \cref{ct:yoneda-embedding}，\y 在同构集上诱导出同构。
+  但由于 $A$ 和 $\uset^{A\op}$ 是范畴且 \y 是函子，这等价于在相等类型上诱导出同构，而后者正是嵌入的定义。
 \end{proof}
 
 \begin{defn}\label{ct:representable}
-  A functor $F:\uset^{A\op}$ is said to be \define{representable}
+  一个函子 $F:\uset^{A\op}$ 被称为 \define{可表的（representable）}
   \indexdef{functor!representable}%
   \indexdef{representable functor}%
-  if there exists $a:A$ and an isomorphism $\y a \cong F$.
+  如果存在 $a:A$ 以及一个同构 $\y a \cong F$。
 \end{defn}
 
 \begin{thm}\label{ct:representable-prop}
-  If $A$ is a category, then the type ``$F$ is representable'' is a mere proposition.
+  如果 $A$ 是一个范畴，那么"$F$ 是可表的"这一类型是一个命题。
 \end{thm}
+
 \begin{proof}
-  By definition ``$F$ is representable'' is just the fiber of $\y_0$ over $F$.
-  Since $\y_0$ is an embedding by \cref{ct:yoneda-mono}, this fiber is a mere proposition.
+  根据定义，"$F$ 是可表的"恰好是 $\y_0$ 在 $F$ 上的纤维。
+  由于 $\y_0$ 根据 \cref{ct:yoneda-mono} 是一个嵌入，这个纤维是一个命题。
 \end{proof}
 
-In particular, in a category, any two representations of the same functor are equal.
-We can use this to give a different proof of \cref{ct:adjprop}.
-First we give a characterization of adjunctions in terms of representability.
+特别地，在一个范畴中，同一函子的任意两个表示是相等的。
+我们可以用这一点来给出 \cref{ct:adjprop} 的另一个证明。
+首先，我们用可表性来刻画伴随。
 
 \begin{lem}\label{ct:adj-repr}
-  For any precategories $A$ and $B$ and a functor $F:A\to B$, the following types are equivalent.
+  对任意预范畴 $A$ 和 $B$ 以及一个函子 $F:A\to B$，以下类型是等价的。
   \begin{enumerate}
-  \item $F$ is a left adjoint\index{adjoint!functor}.\label{item:ct:ar1}
-  \item For each $b:B$, the functor $(a \mapsto \hom_B(Fa,b))$ from $A\op$ to \uset is representable\index{representable functor}.\label{item:ct:ar2}
+  \item $F$ 是一个左伴随\index{adjoint!functor}。\label{item:ct:ar1}
+  \item 对每个 $b:B$，从 $A\op$ 到 \uset 的函子 $(a \mapsto \hom_B(Fa,b))$ 是可表的\index{representable functor}。\label{item:ct:ar2}
   \end{enumerate}
 \end{lem}
+
 \begin{proof}
-  An element of the type~\ref{item:ct:ar2} consists of a function $G_0:B_0 \to A_0$ together with, for every $a:A$ and $b:B$ an isomorphism
+  类型~\ref{item:ct:ar2} 的一个元素由一个函数 $G_0:B_0 \to A_0$ 以及一族同构
   \[ \gamma_{a,b}:\hom_B(Fa,b) \cong \hom_A(a,G_0 b) \]
-  such that $\gamma_{a,b}(g \circ Ff) = \gamma_{a',b}(g)\circ f$ for $f:\hom_{A}(a,a')$.
+  组成，使得对于 $f:\hom_{A}(a,a')$ 有 $\gamma_{a,b}(g \circ Ff) = \gamma_{a',b}(g)\circ f$。
 
-  Given this, for $a:A$ we define $\eta_a \defeq \gamma_{a,Fa}(1_{Fa})$, and for $b:B$ we define $\epsilon_b \defeq \inv{(\gamma_{Gb,b})}(1_{Gb})$.
-  Now for $g:\hom_B(b,b')$ we define
+  在此基础上，对 $a:A$ 我们定义 $\eta_a \defeq \gamma_{a,Fa}(1_{Fa})$，对 $b:B$ 定义 $\epsilon_b \defeq \inv{(\gamma_{Gb,b})}(1_{Gb})$。
+  现在对于 $g:\hom_B(b,b')$，我们定义
   \[ G_{b,b'}(g) \defeq \gamma_{G b, b'}(g \circ \epsilon_b) \]
-  The verifications that $G$ is a functor and $\eta$ and $\epsilon$ are natural transformations satisfying the triangle identities are exactly as in the classical case, and as they are all mere propositions we will not care about their values.
-  Thus, we have a function~\ref{item:ct:ar2}$\to$\ref{item:ct:ar1}.
+  验证 $G$ 是函子、$\eta$ 和 $\epsilon$ 是满足三角恒等式的自然变换，与经典情形完全相同；又因为它们都是命题，我们并不关心它们的具体值。
+  于是我们得到一个函数~\ref{item:ct:ar2}$\to$\ref{item:ct:ar1}。
 
-  In the other direction, if $F$ is a left adjoint, we of course have $G_0$ specified, and we can take $\gamma_{a,b}$ to be the composite
+  反之，若 $F$ 是一个左伴随，我们当然已经指定了 $G_0$，且可将 $\gamma_{a,b}$ 取为复合
   \[ \hom_B(Fa,b)
   \xrightarrow{G_{Fa,b}} \hom_A(GFa,Gb)
   \xrightarrow{(\blank\circ \eta_a)} \hom_A(a,Gb).
   \]
-  This is clearly natural since $\eta$ is, and it has an inverse given by
+  由于 $\eta$ 是自然的，这显然也是自然的；并且它有一个逆，由
   \[ \hom_A(a,Gb)
   \xrightarrow{F_{a,Gb}} \hom_B(Fa,FGb)
   \xrightarrow{(\epsilon_b \circ \blank )} \hom_A(Fa,b)
   \]
-  (by the triangle identities).
-  Thus we also have~\ref{item:ct:ar1}$\to$~\ref{item:ct:ar2}.
+  给出（利用三角恒等式）。
+  因此我们又有~\ref{item:ct:ar1}$\to$~\ref{item:ct:ar2}。
 
-  For the composite~\ref{item:ct:ar2}$\to$\ref{item:ct:ar1}$\to$~\ref{item:ct:ar2}, clearly the function $G_0$ is preserved, so it suffices to check that we get back $\gamma$.
-  But the new $\gamma$ is defined to take $f:\hom_B(Fa,b)$ to
+  对于复合~\ref{item:ct:ar2}$\to$\ref{item:ct:ar1}$\to$~\ref{item:ct:ar2}，函数 $G_0$ 显然保持不变，故只需验证 $\gamma$ 得以恢复。
+  但新的 $\gamma$ 将 $f:\hom_B(Fa,b)$ 映到
   \begin{align*}
     G(f) \circ \eta_a
     &\jdeq \gamma_{G Fa, b}(f \circ \epsilon_{Fa}) \circ \eta_a\\
     &= \gamma_{G Fa, b}(f \circ \epsilon_{Fa} \circ F\eta_a)\\
     &= \gamma_{G Fa, b}(f)
   \end{align*}
-  so it agrees with the old one.
+  所以它与旧的 $\gamma$ 一致。
 
-  Finally, for~\ref{item:ct:ar1}$\to$\ref{item:ct:ar2}$\to$~\ref{item:ct:ar1}, we certainly get back the functor $G$ on objects.
-  The new $G_{b,b'}:\hom_B(b,b') \to \hom_A(Gb,Gb')$ is defined to take $g$ to
+  最后，对于~\ref{item:ct:ar1}$\to$\ref{item:ct:ar2}$\to$~\ref{item:ct:ar1}，在对象层面我们确实恢复了函子 $G$。
+  新的 $G_{b,b'}:\hom_B(b,b') \to \hom_A(Gb,Gb')$ 将 $g$ 映到
   \begin{align*}
     \gamma_{G b, b'}(g \circ \epsilon_b)
     &\jdeq G(g \circ \epsilon_b) \circ \eta_{Gb}\\
     &= G(g) \circ G\epsilon_b \circ \eta_{Gb}\\
     &= G(g)
   \end{align*}
-  so it agrees with the old one.
-  The new $\eta_a$ is defined to be $\gamma_{a,Fa}(1_{Fa}) \jdeq G(1_{Fa}) \circ \eta_a$, so it equals the old $\eta_a$.
-  And finally, the new $\epsilon_b$ is defined to be $\inv{(\gamma_{Gb,b})}(1_{Gb}) \jdeq \epsilon_b \circ F(1_{Gb})$, which also equals the old $\epsilon_b$.
+  故与旧的一致。
+  新的 $\eta_a$ 定义为 $\gamma_{a,Fa}(1_{Fa}) \jdeq G(1_{Fa}) \circ \eta_a$，因此等于旧的 $\eta_a$。
+  而新的 $\epsilon_b$ 定义为 $\inv{(\gamma_{Gb,b})}(1_{Gb}) \jdeq \epsilon_b \circ F(1_{Gb})$，同样等于旧的 $\epsilon_b$。
 \end{proof}
 
 \begin{cor}\label{ct:adjprop2}[\cref{ct:adjprop}]
-  If $A$ is a category and $F:A\to B$, then the type ``$F$ is a left adjoint'' is a mere proposition.
+  若 $A$ 是一个范畴且 $F:A\to B$，则"$F$ 是左伴随"这一类型是一个命题。
 \end{cor}
+
 \begin{proof}
-  By \cref{ct:representable-prop}, if $A$ is a category then the type in \cref{ct:adj-repr}\ref{item:ct:ar2} is a mere proposition.
+  由 \cref{ct:representable-prop}，若 $A$ 是范畴，则 \cref{ct:adj-repr}\ref{item:ct:ar2} 中的类型是一个命题。
 \end{proof}
+
+
 \index{Yoneda!lemma|)}
 
-
-\section{Strict categories}
+\section{严格范畴}
 \label{sec:strict-categories}
 
 \index{bargaining|(}%
 
 \begin{defn}\label{ct:strict-category}
-  A \define{strict category}
+  一个\define{严格范畴}
   \indexdef{category!strict}%
   \indexdef{strict!category}%
-  is a precategory whose type of objects is a set.
+  是其对象类型为集合的预范畴。
 \end{defn}
 
-In accordance with the mathematical red herring principle,\index{red herring principle} a strict category is not necessarily a category.
-In fact, a category is a strict category precisely when it is gaunt (\cref{ct:gaunt}).
+按照数学红鲱鱼原则\index{red herring principle}，严格范畴未必是范畴。
+实际上，一个范畴是严格范畴当且仅当它是 gaunt 范畴（\cref{ct:gaunt}）。
 \index{gaunt category}%
 \index{category!gaunt}%
-Most of the time, category theory is about categories, not strict ones, but sometimes one wants to consider strict categories.
-The main advantage of this is that strict categories have a stricter notion of ``sameness'' than equivalence, namely isomorphism (or equivalently, by \cref{ct:cat-eq-iso}, equality).
+大多数时候，范畴论讨论的是范畴而非严格范畴，但有时人们也需要考虑严格范畴。
+其主要优势在于，严格范畴具有比等价更严格的"相同"概念，即同构（或由 \cref{ct:cat-eq-iso} 等价地，为相等）。
 
-Here is one origin of strict categories.
+以下是严格范畴的一个来源。
 
 \begin{eg}\label{ct:mono-cat}
-  Let $A$ be a precategory and $x:A$ an object.
-  Then there is a precategory $\mathsf{mono}(A,x)$ as follows:
+  设 $A$ 是一个预范畴，$x:A$ 是一个对象。
+  我们如下定义一个预范畴 $\mathsf{mono}(A,x)$：
   \index{monomorphism}
   \indexsee{mono}{monomorphism}
   \indexsee{monic}{monomorphism}
   \begin{itemize}
-  \item Its objects consist of an object $y:A$ and a monomorphism $m:\hom_A(y,x)$.
-    (As usual, $m:\hom_A(y,x)$ is a \define{monomorphism} (or is \define{monic}) if $(m\circ f = m\circ g) \Rightarrow (f=g)$.)
-  \item Its morphisms from $(y,m)$ to $(z,n)$ are arbitrary morphisms from $y$ to $z$ in $A$ (not necessarily respecting $m$ and $n$).
+  \item 它的对象由 $A$ 中的一个对象 $y$ 以及一个单态射 $m:\hom_A(y,x)$ 组成。
+    （照例，若 $(m\circ f = m\circ g) \Rightarrow (f=g)$，则称 $m:\hom_A(y,x)$ 是一个\define{单态射}（或说它是\define{单的}）。）
+  \item 从 $(y,m)$ 到 $(z,n)$ 的态射是 $A$ 中从 $y$ 到 $z$ 的任意态射（不必保持 $m$ 和 $n$）。
   \end{itemize}
-  An equality $(y,m)=(z,n)$ of objects in $\mathsf{mono}(A,x)$ consists of an equality $p:y=z$ and an equality $\trans{p}{m}=n$, which by \cref{ct:idtoiso-trans} is equivalently an equality $m=n\circ \idtoiso(p)$.
-  Since hom-sets are sets, the type of such equalities is a mere proposition.
-  But since $m$ and $n$ are monomorphisms, the type of morphisms $f$ such that $m = n\circ f$ is also a mere proposition.
-  Thus, if $A$ is a category, then $(y,m)=(z,n)$ is a mere proposition, and hence $\mathsf{mono}(A,x)$ is a strict category.
+  $\mathsf{mono}(A,x)$ 中对象的一个相等 $(y,m)=(z,n)$ 由一个等式 $p:y=z$ 和一个等式 $\trans{p}{m}=n$ 组成，而根据 \cref{ct:idtoiso-trans}，这等价于一个等式 $m=n\circ \idtoiso(p)$。
+  由于 hom-集是集合，这类等式的类型是一个命题。
+  但由于 $m$ 和 $n$ 是单态射，满足 $m = n\circ f$ 的态射 $f$ 的类型也是一个命题。
+  因此，如果 $A$ 是一个范畴，那么 $(y,m)=(z,n)$ 是一个命题，从而 $\mathsf{mono}(A,x)$ 是一个严格范畴。
 \end{eg}
 
-This example can be dualized, and generalized in various ways.
-Here is an interesting application of strict categories.
+这个例子可以对偶化，并以各种方式推广。以下是严格范畴的一个有趣应用。
 
 \begin{eg}\label{ct:galois}
-  Let $E/F$ be a finite Galois extension
+  设 $E/F$ 是域的有限Galois 扩张
   \index{Galois!extension}%
-  of fields, and $G$ its Galois group.
+  $G$ 是其Galois 群。
   \index{Galois!group}%
-  Then there is a strict category whose objects are intermediate fields $F\subseteq K\subseteq E$, and whose morphisms are field homomorphisms\index{homomorphism!field} which fix $F$ pointwise (but need not commute with the inclusions into $E$).
-  There is another strict category whose objects are subgroups $H\subseteq G$, and whose morphisms are morphisms of $G$-sets $G/H \to G/K$.
-  The fundamental theorem of Galois theory
+  则存在一个严格范畴，其对象是中间域 $F\subseteq K\subseteq E$，态射是逐点固定 $F$ 的域同态\index{homomorphism!field}（但不必与到 $E$ 的包含映射交换）。
+  还有一个严格范畴，其对象是子群 $H\subseteq G$，态射是 $G$-集合的态射 $G/H \to G/K$。
+  Galois 理论基本定理
   \index{fundamental!theorem of Galois theory}%
-  says that these two precategories are isomorphic (not merely equivalent).
+  指出这两个预范畴是同构的（而不仅仅是等价）。
 \end{eg}
 
 \index{bargaining|)}%
 
-\section{\texorpdfstring{$\dagger$}{†}-categories}
+\section{\texorpdfstring{$\dagger$}{†}-范畴}
 \label{sec:dagger-categories}
 
-It is also worth mentioning a useful kind of precategory whose type of objects is not a set, but which is not a category either.
+此外，还有一类有用的预范畴值得一提：其对象的类型不是集合，但也不是范畴。
 
 \begin{defn}\label{ct:dagger-precategory}
-  A \define{$\dagger$-precategory}
+  一个\define{$\dagger$-预范畴（$\dagger$-precategory）}
   \indexdef{.dagger-precategory@$\dagger$-precategory}%
   \indexdef{precategory!.dagger-@$\dagger$-}%
-  is a precategory $A$ together with the following.
+  是一个预范畴 $A$ 连同以下结构。
   \begin{enumerate}
-  \item For each $x,y:A$, a function $\dgr{(-)}:\hom_A(x,y) \to \hom_A(y,x)$.
-  \item For all $x:A$, we have $\dgr{(1_x)} = 1_x$.
-  \item For all $f,g$ we have $\dgr{(g\circ f)} = \dgr f \circ \dgr g$.
-  \item For all $f$ we have $\dgr{(\dgr f)} = f$.
+  \item 对于每对 $x,y:A$，有一个函数 $\dgr{(-)}:\hom_A(x,y) \to \hom_A(y,x)$。
+  \item 对所有 $x:A$，有 $\dgr{(1_x)} = 1_x$。
+  \item 对所有 $f,g$，有 $\dgr{(g\circ f)} = \dgr f \circ \dgr g$。
+  \item 对所有 $f$，有 $\dgr{(\dgr f)} = f$。
   \end{enumerate}
 \end{defn}
 
 \begin{defn}\label{ct:unitary}
-  A morphism $f:\hom_A(x,y)$ in a $\dagger$-precategory is \define{unitary}
+  $\dagger$-预范畴中的态射 $f:\hom_A(x,y)$ 如果满足 $\dgr f \circ f = 1_x$ 且 $f\circ \dgr f = 1_y$，则称为\define{酉的（unitary）}
   \indexdef{.dagger-precategory@$\dagger$-precategory!unitary morphism in}%
   \indexdef{unitary morphism}%
   \indexdef{morphism!unitary}%
   \indexdef{isomorphism!unitary}%
-  if $\dgr f \circ f = 1_x$ and $f\circ \dgr f = 1_y$.
+  。
 \end{defn}
 
-Of course, every unitary morphism is an isomorphism, and being unitary is a mere proposition.
-Thus for each $x,y:A$ we have a set of unitary isomorphisms from $x$ to $y$, which we denote $(x\unitaryiso y)$.
+显然，每个酉态射都是同构，而且"是酉的"这一性质是一个命题。
+因此，对于每对 $x,y:A$，从 $x$ 到 $y$ 的所有酉同构构成一个集合，记为 $(x\unitaryiso y)$。
 
 \begin{lem}\label{ct:idtounitary}
-  If $p:(x=y)$, then $\idtoiso(p)$ is unitary.
+  如果 $p:(x=y)$，那么 $\idtoiso(p)$ 是酉的。
 \end{lem}
+
 \begin{proof}
-  By induction, we may assume $p$ is $\refl x$.
-  But then $\dgr{(1_x)} \circ 1_x = 1_x\circ 1_x = 1_x$ and similarly.
+  由归纳法，可假设 $p$ 是 $\refl x$。
+  但此时 $\dgr{(1_x)} \circ 1_x = 1_x\circ 1_x = 1_x$ 成立，另一式同理。
 \end{proof}
 
 \begin{defn}\label{ct:dagger-category}
-  A \define{$\dagger$-category}
+  一个\define{$\dagger$-范畴（$\dagger$-category）}
   \indexdef{.dagger-category@$\dagger$-category}%
-  is a $\dagger$-precategory such that for all $x,y:A$, the function
+  是一个 $\dagger$-预范畴，且满足对于所有 $x,y:A$，从 \cref{ct:idtounitary} 出发的函数
   \[ (x=y) \to (x \unitaryiso y) \]
-  from \cref{ct:idtounitary} is an equivalence.
+  是一个等价。
 \end{defn}
 
 \begin{eg}\label{ct:rel-dagger-cat}
-  The category \urel from \cref{ct:rel} becomes a $\dagger$-pre\-cat\-e\-go\-ry if we define $(\dgr R)(y,x) \defeq R(x,y)$.
-  The proof that \urel is a category actually shows that every isomorphism is unitary; hence \urel is also a $\dagger$-category.
+  \cref{ct:rel} 中的范畴 \urel 若定义 $(\dgr R)(y,x) \defeq R(x,y)$，则成为一个 $\dagger$-预范畴。
+  证明 \urel 是范畴的过程实际上已表明每个同构都是酉的；因此 \urel 也是 $\dagger$-范畴。
 \end{eg}
 
 \begin{eg}\label{ct:groupoid-dagger-cat}
-  Any groupoid becomes a $\dagger$-category if we define $\dgr f \defeq \inv{f}$.
+  任何群胚若定义 $\dgr f \defeq \inv{f}$，则成为一个 $\dagger$-范畴。
 \end{eg}
 
 \begin{eg}\label{ct:hilb}
-  Let \uhilb be the following precategory.
+  令 \uhilb 为如下预范畴。
   \begin{itemize}
-  \item Its objects are finite-dimensional \index{finite!-dimensional vector space} vector spaces\index{vector!space} equipped with an inner product $\langle \blank,\blank\rangle$.
-  \item Its morphisms are arbitrary linear maps.
+  \item 其对象是带有内积 $\langle \blank,\blank\rangle$ 的\index{finite!-dimensional vector space}有限维\index{vector!space}向量空间。
+  \item 其态射是任意的线性映射。
     \index{function!linear}%
     \indexsee{linear map}{function, linear}%
   \end{itemize}
-  By standard linear algebra, any linear map $f:V\to W$ between finite
-  dimensional inner product spaces has a uniquely defined adjoint\index{adjoint!linear map} $\dgr f:W\to V$, characterized by $\langle f v,w\rangle = \langle v,\dgr f w\rangle$.
-  In this way, \uhilb becomes a $\dagger$-precategory.
-  Moreover, a linear isomorphism is unitary precisely when it is an \define{isometry},
+  由标准线性代数，有限维内积空间之间的任意线性映射 $f:V\to W$ 都有唯一确定的\index{adjoint!linear map}伴随 $\dgr f:W\to V$，由条件 $\langle f v,w\rangle = \langle v,\dgr f w\rangle$ 刻画。
+  通过这种方式，\uhilb 成为一个 $\dagger$-预范畴。
+  此外，一个线性同构是酉的当且仅当它是一个\define{等距映射（isometry）}，
   \indexdef{isometry}%
-  i.e.\ $\langle fv,fw\rangle = \langle v,w\rangle$.
-  It follows from this that \uhilb is a $\dagger$-category, though it is not a category (not every linear isomorphism is unitary).
+  即满足 $\langle fv,fw\rangle = \langle v,w\rangle$。
+  由此可知，\uhilb 是一个 $\dagger$-范畴，尽管它不是一个范畴（并非每个线性同构都是酉的）。
 \end{eg}
 
-There has been a good deal of general theory developed for $\dagger$-cat\-e\-gor\-ies under classical\index{mathematics!classical}\index{classical!category theory} foundations.
-It was observed early on that the unitary isomorphisms, not arbitrary isomorphisms, are the correct notion of ``sameness'' for objects of a $\dagger$-category, which has caused some consternation among category theorists.
-Homotopy type theory resolves this issue by identifying $\dagger$-categories, like strict categories, as simply a different kind of precategory.
+在\index{mathematics!classical}\index{classical!category theory}经典数学基础下，$\dagger$-范畴已经发展出了相当多的一般理论。
+人们很早就注意到，对于 $\dagger$-范畴的对象而言，正确的"相同性"概念是酉同构而非任意同构；这在范畴学家中曾引起一些困惑。
+同伦类型论通过将 $\dagger$-范畴（如同严格范畴一样）视为预范畴的一种不同种类，解决了这个问题。
 
-
-\section{The structure identity principle}
+\section{结构同一性原理}
 \label{sec:sip}
  \index{structure!identity principle|(}
 
-The \emph{structure identity principle} is an informal principle
-that expresses that isomorphic structures are identical.  We aim to
-prove a general abstract result which can be applied to a wide family
-of notions of structure, where structures may be many-sorted or even
-dependently-sorted, infinitary, or even higher order.
+\emph{结构同一性原理}是一个非正式的原理，它表达同构的结构是同一的。
+我们的目标是证明一个一般的抽象结果，可应用于一大类结构概念；这些结构可以是多类的，甚至是依值类的，可以是无穷元的，甚至是高阶的。
 
-The simplest kind of single-sorted structure consists of a type with
-no additional structure.  The univalence axiom expresses the structure identity principle for that
-notion of structure in a strong form: for types $A,B$, the
-canonical function $(A=B)\to (\eqv A B)$ is an equivalence.
+最简单的一类单类结构仅由一个类型构成，没有任何附加结构。
+泛等公理以强形式表达了针对这种结构概念的结构同一性原理：对于类型 $A,B$，典范函数 $(A=B)\to (\eqv A B)$ 是一个等价。
 
-We start with a precategory $X$.  In our application to
-single-sorted first order structures, $X$ will be the category %\uset%
-of $\bbU$-small sets, where $\bbU$ is a univalent type universe.
+我们从一个预范畴 $X$ 出发。
+在应用于单类一阶结构时，$X$ 将是 $\bbU$-小\index{set}集合的范畴 %\uset%，其中 $\bbU$ 是一个泛等类型宇宙。
 
 \begin{defn}\label{ct:sig}
-  A \define{notion of structure}
+  在 $X$ 上的一个\define{结构概念（notion of structure）}
   \indexdef{structure!notion of}%
-  $(P,H)$ over $X$ consists of the following.
+  $(P,H)$ 由以下数据构成。
   \begin{enumerate}
-  \item A type family $P:X_0 \to \type$.
-    For each $x:X_0$ the elements of $Px$ are called \define{$(P,H)$-structures}
+  \item 一个类型族 $P:X_0 \to \type$。
+    对于每个 $x:X_0$，$Px$ 中的元素称为 $x$ 上的\define{$(P,H)$-结构（$(P,H)$-structure）}
     \indexsee{PH-structure@$(P,H)$-structure}{structure}%
     \indexdef{structure!PH@$(P,H)$-}%
-    on $x$.
-  \item For $x,y:X_0$, $f:\hom_X(x,y)$ and $\alpha:Px$, $\;\beta:Py$, a mere proposition
+    。
+  \item 对于 $x,y:X_0$，$f:\hom_X(x,y)$ 以及 $\alpha:Px$ 和 $\beta:Py$，给定一个命题
   \[ H_{\alpha\beta}(f).\]
-    If $H_{\alpha\beta}(f)$ is true, we say that $f$ is a \define{$(P,H)$-homomorphism}
+    若 $H_{\alpha\beta}(f)$ 为真，则称 $f$ 是从 $\alpha$ 到 $\beta$ 的\define{$(P,H)$-同态（$(P,H)$-homomorphism）}
     \indexdef{homomorphism!of structures}%
     \indexdef{structure!homomorphism of}%
-    from $\alpha$ to $\beta$.
-  \item For $x:X_0$ and $\alpha:Px$, we have $H_{\alpha\alpha}(1_x)$.\label{item:sigid}
-  \item For $x,y,z:X_0$ and $\alpha:Px$, $\;\beta:Py$, $\;\gamma:Pz$,
-if $f:\hom_X(x,y)$ and $g:\hom_X(y,z)$, we have\label{item:sigcmp}
+    。
+  \item 对于 $x:X_0$ 和 $\alpha:Px$，我们有 $H_{\alpha\alpha}(1_x)$。\label{item:sigid}
+  \item 对于 $x,y,z:X_0$ 和 $\alpha:Px$、$\beta:Py$、$\gamma:Pz$，
+如果 $f:\hom_X(x,y)$ 且 $g:\hom_X(y,z)$，我们有\label{item:sigcmp}
   \[ H_{\alpha\beta}(f)\to H_{\beta\gamma}(g)\to H_{\alpha\gamma}(g\circ   f).\]
    \end{enumerate}
-  When $(P,H)$ is a notion of structure, for $\alpha,\beta:Px$ we define
+  当 $(P,H)$ 是一个结构概念时，对于 $\alpha,\beta:Px$，我们定义
   \[ (\alpha\leq_x\beta) \defeq H_{\alpha\beta}(1_x).\]
-  By~\ref{item:sigid} and~\ref{item:sigcmp}, this is a preorder (\cref{ct:orders}) with $Px$ its type of objects.
-  We say that $(P,H)$ is a \define{standard notion of structure}
+  根据条件~\ref{item:sigid} 和~\ref{item:sigcmp}，这是一个以 $Px$ 为对象类型的预序（\cref{ct:orders}）。
+  如果对于所有 $x:X$，这个预序事实上是一个偏序，则称 $(P,H)$ 是一个\define{标准结构概念（standard notion of structure）}
   \indexdef{structure!standard notion of}%
-  if this preorder is in fact a partial order, for all $x:X$.
+  。
 \end{defn}
 
-Note that for a standard notion of structure, each type $Px$ must actually be a set.
-We now define, for any notion of structure $(P,H)$, a \define{precategory of $(P,H)$-structures},
+注意，对于一个标准结构概念，每个类型 $Px$ 实际上必须是一个集合。
+现在，对于任意结构概念 $(P,H)$，我们定义\define{$(P,H)$-结构的预范畴（precategory of $(P,H)$-structures）}，
 \indexdef{precategory!of PH-structures@of $(P,H)$-structures}%
 \indexdef{structure!precategory of PH@precategory of $(P,H)$-}%
-$A = \mathsf{Str}_{(P,H)}(X)$.
+$A = \mathsf{Str}_{(P,H)}(X)$
+。
+
 \begin{itemize}
-\item The type of objects of $A$ is the type $A_0 \defeq \sm{x:X_0} Px$.
-  If $a\jdeq (x,\alpha):A_0$, we may write $|a| \defeq x$.
-\item For $(x,\alpha):A_0$ and $(y,\beta):A_0$, we define
+\item $A$ 的对象类型是 $A_0 \defeq \sm{x:X_0} Px$。
+  若 $a\jdeq (x,\alpha):A_0$，我们可记 $|a| \defeq x$。
+\item 对于 $(x,\alpha):A_0$ 和 $(y,\beta):A_0$，我们定义
   \[\hom_A((x,\alpha),(y,\beta)) \defeq \setof{ f:x \to y | H_{\alpha\beta}(f)}.\]
 \end{itemize}
-The composition and identities are inherited from $X$; conditions~\ref{item:sigid} and \ref{item:sigcmp} ensure that these lift to $A$.
 
-\begin{thm}[Structure identity principle]\label{thm:sip}
+其中的复合与恒同态射继承自 $X$；条件~\ref{item:sigid} 与~\ref{item:sigcmp} 保证了这些运算可以提升到 $A$ 中。
+
+\begin{thm}[结构同一性原理]\label{thm:sip}
   \indexdef{structure!identity principle}%
-  If $X$ is a category and $(P,H)$ is a standard notion of structure over $X$, then the precategory $\mathsf{Str}_{(P,H)}(X)$ is a category.
+  若 $X$ 是一个范畴，且 $(P,H)$ 是 $X$ 上的一个标准结构概念，则预范畴 $\mathsf{Str}_{(P,H)}(X)$ 也是一个范畴。
 \end{thm}
-\begin{proof}
-  By the definition of equality in dependent pair types, to give an equality $(x,\alpha)=(y,\beta)$ consists of
-  \begin{itemize}
-  \item An equality $p:x=y$, and
-  \item An equality $\trans{p}{\alpha}=\beta$.
-  \end{itemize}
-  Since $P$ is set-valued, the latter is a mere proposition.
-  On the other hand, it is easy to see that an isomorphism $(x,\alpha)\cong (y,\beta)$ in $\mathsf{Str}_{(P,H)}(X)$ consists of
-  \begin{itemize}
-  \item An isomorphism $f:x\cong y$ in $X$, such that
-  \item $H_{\alpha\beta}(f)$ and $H_{\beta\alpha}(\inv f)$.
-  \end{itemize}
-  Of course, the second of these is also a mere proposition.
-  And since $X$ is a category, the function $(x=y) \to (x\cong y)$ is an equivalence.
-  Thus, it will suffice to show that for any $p:x=y$ and for any $(\alpha:Px)$, $(\beta:Py)$, we have $\trans{p}{\alpha}=\beta$ if and only if both  $H_{\alpha\beta}(\idtoiso (p))$ and $H_{\beta\alpha}(\inv{\idtoiso(p)})$.
 
-  The ``only if'' direction is just the existence of the function $\idtoiso$ for the category $\mathsf{Str}_{(P,H)}(X)$.
-  For the ``if'' direction, by induction on $p$ we may assume that $y\jdeq x$ and $p\jdeq\refl x$.
-  However, in this case $\idtoiso (p)\jdeq 1_x$ and therefore $\inv{\idtoiso(p)}=1_x$.
-  Thus, $\alpha\leq_x \beta$ and $\beta\leq_x \alpha$, which implies $\alpha=\beta$ since $(P,H)$ is a standard notion of structure.
+\begin{proof}
+  根据依值对类型中相等的定义，给出一个相等 $(x,\alpha)=(y,\beta)$ 相当于给出以下数据：
+  \begin{itemize}
+  \item 一个相等 $p:x=y$，以及
+  \item 一个相等 $\trans{p}{\alpha}=\beta$。
+  \end{itemize}
+  由于 $P$ 取集合值，后者是一个命题。
+另一方面，容易看出，$\mathsf{Str}_{(P,H)}(X)$ 中的一个同构 $(x,\alpha)\cong (y,\beta)$ 由以下数据构成：
+  \begin{itemize}
+  \item $X$ 中的一个同构 $f:x\cong y$，使得
+  \item $H_{\alpha\beta}(f)$ 与 $H_{\beta\alpha}(\inv f)$ 成立。
+  \end{itemize}
+  当然，后者也是一个命题。
+由于 $X$ 是一个范畴，函数 $(x=y) \to (x\cong y)$ 是一个等价。
+因此，只需证明对于任意 $p:x=y$ 以及任意 $(\alpha:Px)$ 和 $(\beta:Py)$，$\trans{p}{\alpha}=\beta$ 当且仅当 $H_{\alpha\beta}(\idtoiso (p))$ 与 $H_{\beta\alpha}(\inv{\idtoiso(p)})$ 同时成立。
+
+  “仅当”方向只需用到范畴 $\mathsf{Str}_{(P,H)}(X)$ 的 $\idtoiso$ 函数的存在性。
+对于“当”方向，通过对 $p$ 进行归纳，可以假设 $y\jdeq x$ 且 $p\jdeq\refl x$。
+不过此时 $\idtoiso (p)\jdeq 1_x$，因此 $\inv{\idtoiso(p)}=1_x$。
+于是 $\alpha\leq_x \beta$ 且 $\beta\leq_x \alpha$，又因 $(P,H)$ 是标准结构概念，故 $\alpha=\beta$。
 \end{proof}
 
-As an example, this methodology gives an alternative way to express the proof of \cref{ct:functor-cat}.
+作为一个例子，这套方法为 \cref{ct:functor-cat} 的证明提供了另一种表述方式。
 
 \begin{eg}\label{ct:sip-functor-cat}
-  Let $A$ be a precategory and $B$ a category.
-  There is a precategory $B^{A_0}$ whose objects are functions $A_0 \to B_0$, and whose set of morphisms from $F_0:A_0 \to B_0$ to $G_0:A_0 \to B_0$ is $\prd{a:A_0} \hom_B(F_0 a, G_0 a)$.
-  Composition and identities are inherited directly from those in $B$.
-  It is easy to show that $\gamma:\hom_{B^{A_0}}(F_0, G_0)$ is an isomorphism exactly when each component $\gamma_a$ is an isomorphism, so that we have $\eqv{(F_0 \cong G_0)}{\prd{a:A_0} (F_0 a \cong G_0 a)}$.
-  Moreover, the map $\idtoiso : (F_0 = G_0) \to (F_0 \cong G_0)$ of $B^{A_0}$ is equal to the composite
+  设 $A$ 为预范畴，$B$ 为范畴。
+  存在一个预范畴 $B^{A_0}$，其对象是函数 $A_0 \to B_0$，而从 $F_0:A_0 \to B_0$ 到 $G_0:A_0 \to B_0$ 的态射集是 $\prd{a:A_0} \hom_B(F_0 a, G_0 a)$。
+  复合与恒同态射直接继承自 $B$。
+  不难证明，$\gamma:\hom_{B^{A_0}}(F_0, G_0)$ 是同构当且仅当每个分量 $\gamma_a$ 都是同构，因此我们有 $\eqv{(F_0 \cong G_0)}{\prd{a:A_0} (F_0 a \cong G_0 a)}$。
+  进而，$B^{A_0}$ 中的映射 $\idtoiso : (F_0 = G_0) \to (F_0 \cong G_0)$ 等于复合
   \[ (F_0 = G_0) \longrightarrow \prd{a:A_0} (F_0 a  = G_0 a) \longrightarrow \prd{a:A_0} (F_0 a \cong G_0 a) \longrightarrow (F_0 \cong G_0) \]
-  in which the first map is an equivalence by function extensionality, the second because it is a dependent product of equivalences (since $B$ is a category), and the third as remarked above.
-  Thus, $B^{A_0}$ is a category.
+  其中第一个映射由函数外延性可知是等价，第二个由于是等价的依值积（因为 $B$ 是范畴）故亦为等价，第三个如前所述。
+  因此，$B^{A_0}$ 是一个范畴。
 
-  Now we define a notion of structure on $B^{A_0}$ for which $P(F_0)$ is the type of operations $F:\prd{a,a':A_0} \hom_A(a,a') \to \hom_B(F_0 a,F_0 a')$ which extend $F_0$ to a functor (i.e.\ preserve composition and identities).
-  This is a set since each $\hom_B(\blank,\blank)$ is so.
-  Given such $F$ and $G$, we define $\gamma:\hom_{B^{A_0}}(F_0, G_0)$ to be a homomorphism if it forms a natural transformation.\index{natural!transformation}
-  In \cref{ct:functor-precat} we essentially verified that this is a notion of structure.
-  Moreover, if $F$ and $F'$ are both structures on $F_0$ and the identity is a natural transformation from $F$ to $F'$, then for any $f:\hom_A(a,a')$ we have $F'f = F'f \circ 1_{F_0 a} = 1_{F_0 a}\circ F f = F f$.
-  Applying function extensionality, we conclude $F = F'$.
-  Thus, we have a \emph{standard} notion of structure, and so by \cref{thm:sip}, the precategory $B^A$ is a category.
+  现在我们在 $B^{A_0}$ 上定义一个结构概念，使得 $P(F_0)$ 是将 $F_0$ 拓展为函子（即保持复合与恒同态射）的运算 $F:\prd{a,a':A_0} \hom_A(a,a') \to \hom_B(F_0 a,F_0 a')$ 的类型。
+  由于每个 $\hom_B(\blank,\blank)$ 都是集合，故 $P(F_0)$ 也是一个集合。
+  给定这样的 $F$ 和 $G$，我们定义 $\gamma:\hom_{B^{A_0}}(F_0, G_0)$ 为同态，如果它构成一个自然变换。\index{natural!transformation}
+  在 \cref{ct:functor-precat} 中，我们本质上已经验证了这是一个结构概念。
+  此外，如果 $F$ 和 $F'$ 都是 $F_0$ 上的结构，且恒同态射是从 $F$ 到 $F'$ 的自然变换，那么对于任何 $f:\hom_A(a,a')$，我们有 $F'f = F'f \circ 1_{F_0 a} = 1_{F_0 a}\circ F f = F f$。
+  应用函数外延性，可得 $F = F'$。
+  因此，我们得到了一个\emph{标准}的结构概念，从而由 \cref{thm:sip} 可知预范畴 $B^A$ 是一个范畴。
 \end{eg}
 
-As another example, we consider categories of structures for a first-order signature.
-We define a \define{first-order signature},
+作为另一个例子，我们考虑一阶签名结构的范畴。
+我们定义\define{一阶签名（first-order signature）}，
 \indexdef{first-order!signature}%
 \indexdef{signature!first-order}%
-$\Omega$, to consist of sets $\Omega_0$ and $\Omega_1$ of function symbols, $\omega:\Omega_0$, and relation symbols, $\omega:\Omega_1$, each having an arity\index{arity} $|\omega|$ that is a set.
-An \define{$\Omega$-structure}
+$\Omega$，它由函数符号的集合 $\Omega_0$ 和关系符号的集合 $\Omega_1$ 组成，其中每个符号 $\omega$ 的元\index{arity} $|\omega|$ 是一个集合。
+一个\define{$\Omega$-结构（$\Omega$-structure）}
 \indexdef{structure!Omega@$\Omega$-}%
 \indexsee{omega-structure@$\Omega$-structure}{structure}%
-$a$ consists of a set $|a|$ together with an assignment of an $|\omega|$-ary function $\omega^a:|a|^{|\omega|}\to |a|$ on $|a|$ to each function symbol, $\omega$, and an assignment of an $|\omega|$-ary relation $\omega^a$ on $|a|$, assigning a mere proposition $\omega^ax$ to each $x:|a|^{|\omega|}$, to each relation symbol.
-And given $\Omega$-structures $a,b$, a function $f:|a|\to |b|$ is a \define{homomorphism $a\to b$}
+$a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\omega$，指派一个 $|a|$ 上的 $|\omega|$ 元函数 $\omega^a:|a|^{|\omega|}\to |a|$；对每个关系符号 $\omega$，指派一个 $|a|$ 上的 $|\omega|$ 元关系 $\omega^a$，该关系对每个 $x:|a|^{|\omega|}$ 赋予一个命题。
+给定 $\Omega$-结构 $a, b$，一个函数 $f: |a| \to |b|$ 称为\define{同态 $a\to b$（homomorphism $a\to b$）}
 \indexdef{homomorphism!of Omega-structures@of $\Omega$-structures}%
 \indexdef{structure!homomorphism of Omega@homomorphism of $\Omega$-}%
-if it preserves the structure; i.e.\ if for each symbol $\omega$ of the signature and each $x:|a|^{|\omega|}$,
+，如果它保持结构；即对于签名中的每个符号 $\omega$ 和每个 $x:|a|^{|\omega|}$，满足：
+
 \begin{enumerate}
-\item $f(\omega^ax) = \omega^b(f\circ x)$ if $\omega:\Omega_0$, and
-\item $\omega^ax\to\omega^b(f\circ x)$ if $\omega:\Omega_1$.
+\item $f(\omega^ax) = \omega^b(f\circ x)$ 若 $\omega:\Omega_0$，且
+\item $\omega^ax\to\omega^b(f\circ x)$ 若 $\omega:\Omega_1$。
 \end{enumerate}
-Note that each $x:|a|^{|\omega|}$ is a function $x:|\omega|\to |a|$ so that $f\circ x : b^\omega$.
 
-Now we assume given a (univalent) universe $\bbU$ and a $\bbU$-small signature $\Omega$; i.e. $|\Omega|$ is a $\bbU$-small set and, for each $\omega:|\Omega|$, the set $|\omega|$ is $\bbU$-small.
-Then we have the category $\uset_\bbU$ of $\bbU$-small sets.  We want to define the precategory of $\bbU$-small $\Omega$-structures over $\uset_\bbU$ and use \cref{thm:sip} to show that it is a category.
+注意，每个 $x:|a|^{|\omega|}$ 是一个函数 $x:|\omega|\to |a|$，因此 $f\circ x : b^\omega$。
 
-We use the first order signature $\Omega$ to give us a standard notion of structure $(P,H)$ over $\uset_\bbU$.
+现在假设给定一个（泛等的）宇宙 $\bbU$ 和一个 $\bbU$-小签名 $\Omega$；即 $|\Omega|$ 是一个 $\bbU$-小集合，且对每个 $\omega:|\Omega|$，集合 $|\omega|$ 是 $\bbU$-小的。
+于是我们有 $\bbU$-小集合的范畴 $\uset_\bbU$。我们想要定义 $\uset_\bbU$ 上的 $\bbU$-小 $\Omega$-结构的预范畴，并利用 \cref{thm:sip} 证明它是一个范畴。
+
+我们用一阶签名 $\Omega$ 来给出一个 $\uset_\bbU$ 上的标准结构概念 $(P,H)$。
 
 \begin{defn}\label{defn:fo-notion-of-structure}
 \mbox{}
 \begin{enumerate}
-\item For each $\bbU$-small set $x$ define
+\item 对每个 $\bbU$-小集合 $x$，定义
   \[ Px \defeq P_0x\times P_1x.\]
-  Here
+  这里
   %
   \begin{align*}
     P_0x &\defeq \prd{\omega:\Omega_0} x^{|\omega|}\to x, \mbox{ and } \\
     P_1x &\defeq \prd{\omega:\Omega_1} x^{|\omega|}\to \propU,
   \end{align*}
-\item For $\bbU$-small sets $x,y$ and
-  $\alpha:P^\omega x,\;\beta:P^\omega y,\; f:x\to y$, define
+\item 对 $\bbU$-小集合 $x,y$ 以及
+  $\alpha:P^\omega x,\;\beta:P^\omega y,\; f:x\to y$，定义
   \[ H_{\alpha\beta}(f) \defeq H_{0,\alpha\beta}(f)\wedge H_{1,\alpha\beta}(f).\]
-  Here
+  这里
   \begin{align*}
     H_{0,\alpha\beta}(f) &\defeq
     \fall{\omega:\Omega_0}{u:x^{|\omega|}} f(\alpha u)=\;\beta(f\circ u),
@@ -1359,28 +1374,29 @@ We use the first order signature $\Omega$ to give us a standard notion of struct
 \end{enumerate}
 \end{defn}
 
-It is now routine to check that $(P,H)$ is a standard notion of structure over $\uset_\bbU$ and hence we may use \cref{thm:sip} to get that the precategory $Str_{(P,H)}(\uset_\bbU)$ is a category.  It only remains to observe that this is essentially the same as the precategory of $\bbU$-small $\Omega$-structures over $\uset_\bbU$.
+现在例行验证 $(P,H)$ 是 $\uset_\bbU$ 上的标准结构概念，从而可由 \cref{thm:sip} 得出预范畴 $Str_{(P,H)}(\uset_\bbU)$ 是一个范畴。
+最后只需注意，这本质上与 $\uset_\bbU$ 上的 $\bbU$-小 $\Omega$-结构的预范畴相同。
  \index{structure!identity principle|)}
 
-
-\section{The Rezk completion}
+\section{Rezk 完备化}
 \label{sec:rezk}
 
-In this section we will give a universal way to replace a precategory by a category.
-In fact, we will give two.
-Both rely on the fact that ``categories see weak equivalences as equivalences''.
+在本节中，我们将给出一种将预范畴替换为范畴的通用方法。
+事实上，我们将给出两种。
+二者都依赖于以下事实："范畴将弱等价视为等价"。
 
-To prove this, we begin with a couple of lemmas which are completely standard category theory, phrased carefully so as to make sure we are using the eliminator for $\truncf{-1}$ correctly.
-One would have to be similarly careful in classical\index{mathematics!classical}\index{classical!category theory} category theory if one wanted to avoid the axiom of choice: any time we want to define a function, we need to characterize its values uniquely somehow.
+为了证明这一点，我们先证明几个引理，它们属于完全标准的范畴论内容，但表述时格外谨慎，以确保正确使用了 $\truncf{-1}$ 的消去子。
+在经典\index{mathematics!classical}\index{classical!category theory}范畴论中，如果想避免选择公理，也同样需要这样的谨慎：每当我们想定义一个函数时，都需要以某种方式唯一地刻画其值。
 
 \begin{lem}\label{ct:esosurj-postcomp-faithful}
-  If $A,B,C$ are precategories and $H:A\to B$ is an essentially surjective functor, then $(\blank\circ H):C^B \to C^A$ is faithful.
+  若 $A,B,C$ 是预范畴，且 $H:A\to B$ 是本质满的函子，则 $(\blank\circ H):C^B \to C^A$ 是忠实的。
 \end{lem}
+
 \begin{proof}
-  Let $F,G:B\to C$, and $\gamma,\delta:F\to G$ be such that $\gamma H = \delta H$; we must show $\gamma=\delta$.
-  Thus let $b:B$; we want to show $\gamma_b=\delta_b$.
-  This is a mere proposition, so since $H$ is essentially surjective, we may assume given an $a:A$ and an isomorphism $f:Ha\cong b$.
-  But now we have
+  设 $F,G:B\to C$，$\gamma,\delta:F\to G$ 满足 $\gamma H = \delta H$；我们需要证明 $\gamma=\delta$。
+  为此，取 $b:B$；我们要证明 $\gamma_b=\delta_b$。
+  这是一个命题，而 $H$ 是本质满的，因此我们可以假设给定 $a:A$ 和同构 $f:Ha\cong b$。
+  但现在我们有
   \[ \gamma_b = G(f) \circ \gamma_{Ha} \circ F(\inv{f})
   = G(f) \circ \delta_{Ha} \circ F(\inv{f})
   = \delta_b.\qedhere
@@ -1388,43 +1404,44 @@ One would have to be similarly careful in classical\index{mathematics!classical}
 \end{proof}
 
 \begin{lem}\label{ct:esofull-precomp-ff}
-  If $A,B,C$ are precategories and $H:A\to B$ is essentially surjective and full, then $(\blank\circ H):C^B \to C^A$ is fully faithful.
+  若 $A,B,C$ 是预范畴，且 $H:A\to B$ 本质满且全，则 $(\blank\circ H):C^B \to C^A$ 是全忠实的。
 \end{lem}
+
 \begin{proof}
-  It remains to show fullness.
-  Thus, let $F,G:B\to C$ and $\gamma:FH \to GH$.
-  We claim that for any $b:B$, the type
+  只需再证它是全的。
+  为此，取 $F,G:B\to C$ 和 $\gamma:FH \to GH$。
+  我们断言，对任意 $b:B$，类型
   \begin{equation}\label{eq:fullprop}
     \sm{g:\hom_C(Fb,Gb)} \prd{a:A}{f:Ha\cong b} (\gamma_a =  \inv{Gf}\circ g\circ Ff)
   \end{equation}
-  is contractible.
-  Since contractibility is a mere property, and $H$ is essentially surjective, we may assume given $a_0:A$ and $h:Ha_0\cong b$.
+  是可缩的。
+  可缩性是命题，而 $H$ 是本质满的，故可以假设给定 $a_0:A$ 和 $h:Ha_0\cong b$。
 
-  Now take $g\defeq Gh \circ \gamma_{a_0} \circ \inv{Fh}$.
-  Then given any other $a:A$ and $f:Ha\cong b$, we must show $\gamma_a =  \inv{Gf}\circ g\circ Ff$.
-  Since $H$ is full, there merely exists a morphism $k:\hom_A(a,a_0)$ such that $Hk = \inv{h}\circ f$.
-  And since our goal is a mere proposition, we may assume given some such $k$.
-  Then we have
+  现取 $g\defeq Gh \circ \gamma_{a_0} \circ \inv{Fh}$。
+  给定任意其他的 $a:A$ 和 $f:Ha\cong b$，我们需要证明 $\gamma_a =  \inv{Gf}\circ g\circ Ff$。
+  由于 $H$ 是全的， merely 存在一个态射 $k:\hom_A(a,a_0)$ 使得 $Hk = \inv{h}\circ f$。
+  又因我们的目标是命题，可以假设给定这样的 $k$。
+  于是有
   \begin{align*}
     \gamma_a &= \inv{GHk}\circ \gamma_{a_0} \circ FHk\\
     &= \inv{Gf} \circ Gh \circ \gamma_{a_0} \circ \inv{Fh} \circ Ff\\
     &= \inv{Gf}\circ g\circ Ff.
   \end{align*}
-  Thus,~\eqref{eq:fullprop} is inhabited.
-  It remains to show it is a mere proposition.
-  Let $g,g':\hom_C(Fb, Gb)$ be such that for all $a:A$ and $f:Ha\cong b$, we have both $(\gamma_a =  \inv{Gf}\circ g\circ Ff)$ and $(\gamma_a =  \inv{Gf}\circ g'\circ Ff)$.
-  The dependent product types are mere propositions, so all we have to prove is $g=g'$.
-  But this is a mere proposition, so we may assume $a_0:A$ and $h:Ha_0\cong b$, in which case we have
+  因此，~\eqref{eq:fullprop} 是有实例的。
+  还需证明它是命题。
+  取 $g,g':\hom_C(Fb, Gb)$ 满足：对所有 $a:A$ 和 $f:Ha\cong b$，同时有 $(\gamma_a =  \inv{Gf}\circ g\circ Ff)$ 和 $(\gamma_a =  \inv{Gf}\circ g'\circ Ff)$。
+  依值积类型是命题，故只需证明 $g=g'$。
+  而这是命题，因此可以假设 $a_0:A$ 和 $h:Ha_0\cong b$，此时有
   \[ g = Gh \circ \gamma_{a_0} \circ \inv{Fh} = g'.\]
   %
-  This proves that~\eqref{eq:fullprop} is contractible for all $b:B$.
-  Now we define $\delta:F\to G$ by taking $\delta_b$ to be the unique $g$ in~\eqref{eq:fullprop} for that $b$.
-  To see that this is natural, suppose given $f:\hom_B(b,b')$; we must show $Gf \circ \delta_b = \delta_{b'}\circ Ff$.
-  As before, we may assume $a:A$ and $h:Ha\cong b$, and likewise $a':A$ and $h':Ha'\cong b'$.
-  Since $H$ is full as well as essentially surjective, we may also assume $k:\hom_A(a,a')$ with $Hk = \inv{h'}\circ f\circ h$.
+  这证明了~\eqref{eq:fullprop} 对所有 $b:B$ 可缩。
+  现在定义 $\delta:F\to G$：对每个 $b$，取 $\delta_b$ 为~\eqref{eq:fullprop} 中那个唯一的 $g$。
+  为验证其自然性，假设给定 $f:\hom_B(b,b')$；我们需要证明 $Gf \circ \delta_b = \delta_{b'}\circ Ff$。
+  如前，可以假设 $a:A$ 和 $h:Ha\cong b$，同样假设 $a':A$ 和 $h':Ha'\cong b'$。
+  由于 $H$ 既本质满又全，还可假设 $k:\hom_A(a,a')$ 满足 $Hk = \inv{h'}\circ f\circ h$。
 
-  Since $\gamma$ is natural, $GHk\circ \gamma_a = \gamma_{a'} \circ FHk$.
-  Using the definition of $\delta$, we have
+  由 $\gamma$ 的自然性，$GHk\circ \gamma_a = \gamma_{a'} \circ FHk$。
+  利用 $\delta$ 的定义，得
   \begin{align*}
     Gf \circ \delta_b
     &= Gf \circ Gh \circ \gamma_a \circ \inv{Fh}\\
@@ -1433,69 +1450,70 @@ One would have to be similarly careful in classical\index{mathematics!classical}
     &= Gh' \circ \gamma_{a'} \circ \inv{Fh'} \circ Ff\\
     &= \delta_{b'} \circ Ff.
   \end{align*}
-  Thus, $\delta$ is natural.
-  Finally, for any $a:A$, applying the definition of $\delta_{Ha}$ to $a$ and $1_a$, we obtain $\gamma_a = \delta_{Ha}$.
-  Hence, $\delta \circ H = \gamma$.
+  故 $\delta$ 是自然的。
+  最后，对任意 $a:A$，将 $\delta_{Ha}$ 的定义应用于 $a$ 和 $1_a$，即得 $\gamma_a = \delta_{Ha}$。
+  因此 $\delta \circ H = \gamma$。
 \end{proof}
 
-The rest of the theorem follows almost exactly the same lines, with the category-ness of $C$ inserted in one crucial step, which we have italicized below for emphasis.
-This is the point at which we are trying to define a function into \emph{objects} without using choice, and so we must be careful about what it means for an object to be ``uniquely specified''.
-In classical\index{mathematics!classical}\index{classical!category theory} category theory, all one can say is that this object is specified up to unique isomorphism, but in set-theoretic foundations this is not a sufficient amount of uniqueness to give us a function without invoking \choice{}.
-In univalent foundations, however, if $C$ is a category, then isomorphism is equality, and we have the appropriate sort of uniqueness (namely, living in a contractible space).
+定理余下部分的证明思路几乎完全相同，只在关键一步插入 $C$ 作为\emph{范畴}的条件，我们在下文用斜体标出以示强调。
+正是在这一步，我们试图在不使用选择公理的情况下定义一个以\emph{对象}为值的函数，因此必须谨慎对待"唯一指定"一个对象意味着什么。
+在经典\index{mathematics!classical}\index{classical!category theory}范畴论中，我们只能说这个对象在相差一个唯一同构的意义下被指定，但在集合论基础中，这种程度的唯一性不足以在不援引 \choice{} 的情况下给出一个函数。
+然而在泛等基础中，如果 $C$ 是范畴，则同构即相等，我们便有了所需的那种唯一性（即处于可缩空间之中）。
 
 \index{weak equivalence!of precategories|(}%
 
 \begin{thm}\label{ct:cat-weq-eq}
-  If $A,B$ are precategories, $C$ is a category, and $H:A\to B$ is a weak equivalence, then $(\blank\circ H):C^B \to C^A$ is an isomorphism.
+  若 $A,B$ 是预范畴，$C$ 是范畴，且 $H:A\to B$ 是弱等价，则 $(\blank\circ H):C^B \to C^A$ 是同构。
 \end{thm}
+
 \begin{proof}
-  By \cref{ct:functor-cat}, $C^B$ and $C^A$ are categories.
-  Thus, by \cref{ct:eqv-levelwise} it will suffice to show that $(\blank\circ H)$ is an equivalence.
-  But since we know from the preceding two lemmas that it is fully faithful, by \cref{ct:catweq} it will suffice to show that it is essentially surjective.
-  Thus, suppose $F:A\to C$; we want there to merely exist a $G:B\to C$ such that $GH\cong F$.
+  由 \cref{ct:functor-cat}，$C^B$ 和 $C^A$ 都是范畴。
+  故由 \cref{ct:eqv-levelwise}，只需证明 $(\blank\circ H)$ 是等价。
+  而由前两个引理已知它是全忠实的，故根据 \cref{ct:catweq}，只需证明它是本质满的。
+  为此，假设给定 $F:A\to C$；我们要 merely 存在一个 $G:B\to C$ 使得 $GH\cong F$。
 
-  For each $b:B$, let $X_b$ be the type whose elements consist of:
+  对每个 $b:B$，令 $X_b$ 为由以下数据组成的类型：
   \begin{enumerate}
-  \item An element $c:C$; and
-  \item For each $a:A$ and $h:Ha\cong b$, an isomorphism $k_{a,h}:Fa\cong c$; such that\label{item:eqvprop2}
-  \item For each $(a,h)$ and $(a',h')$ as in~\ref{item:eqvprop2} and each $f:\hom_A(a,a')$ such that $h'\circ Hf = h$, we have $k_{a',h'}\circ Ff = k_{a,h}$.\label{item:eqvprop3}
+  \item 一个元素 $c:C$；以及
+  \item 对每个 $a:A$ 和 $h:Ha\cong b$，一个同构 $k_{a,h}:Fa\cong c$；使得\label{item:eqvprop2}
+  \item 对~\ref{item:eqvprop2} 中那样的每对 $(a,h)$ 和 $(a',h')$，以及每个满足 $h'\circ Hf = h$ 的 $f:\hom_A(a,a')$，有 $k_{a',h'}\circ Ff = k_{a,h}$。\label{item:eqvprop3}
   \end{enumerate}
-  We claim that for any $b:B$, the type $X_b$ is contractible.
-  As this is a mere proposition, we may assume given $a_0:A$ and $h_0:Ha_0 \cong b$.
-  Let $c^0\defeq Fa_0$.
-  Next, given $a:A$ and $h:Ha\cong b$, since $H$ is fully faithful there is a unique isomorphism $g_{a,h}:a\to a_0$ with $Hg_{a,h} = \inv{h_0}\circ h$; define $k^0_{a,h} \defeq Fg_{a,h}$.
-  Finally, if $h'\circ Hf = h$, then $\inv{h_0}\circ h'\circ Hf = \inv{h_0}\circ h$, hence $g_{a',h'} \circ f = g_{a,h}$ and thus $k^0_{a',h'}\circ Ff = k^0_{a,h}$.
-  Therefore, $X_b$ is inhabited.
+  我们断言：对任意 $b:B$，类型 $X_b$ 是可缩的。
+  由于这是命题，可以假设给定 $a_0:A$ 和 $h_0:Ha_0 \cong b$。
+  令 $c^0\defeq Fa_0$。
+  接下来，给定 $a:A$ 和 $h:Ha\cong b$，由于 $H$ 是全忠实的，存在唯一的同构 $g_{a,h}:a\to a_0$ 满足 $Hg_{a,h} = \inv{h_0}\circ h$；定义 $k^0_{a,h} \defeq Fg_{a,h}$。
+  最后，若 $h'\circ Hf = h$，则 $\inv{h_0}\circ h'\circ Hf = \inv{h_0}\circ h$，从而 $g_{a',h'} \circ f = g_{a,h}$，故 $k^0_{a',h'}\circ Ff = k^0_{a,h}$。
+  因此 $X_b$ 是有实例的。
 
-  Now suppose given another $(c^1,k^1): X_b$.
-  Then $k^1_{a_0,h_0}:c^0 \jdeq Fa_0 \cong c^1$.
-  \emph{Since $C$ is a category, we have $p:c^0=c^1$ with $\idtoiso(p) = k^1_{a_0,h_0}$.}
-  And for any $a:A$ and $h:Ha\cong b$, by~\ref{item:eqvprop3} for $(c^1,k^1)$ with $f\defeq g_{a,h}$, we have
+  现假设给定另一个 $(c^1,k^1): X_b$。
+  则 $k^1_{a_0,h_0}:c^0 \jdeq Fa_0 \cong c^1$。
+  \emph{由于 $C$ 是范畴，我们有 $p:c^0=c^1$ 及 $\idtoiso(p) = k^1_{a_0,h_0}$。}
+  而对任意 $a:A$ 和 $h:Ha\cong b$，对 $(c^1,k^1)$ 取 $f\defeq g_{a,h}$ 应用~\ref{item:eqvprop3}，得
   \[k^1_{a,h} = k^1_{a_0,h_0} \circ k^0_{a,h} = \trans{p}{k^0_{a,h}}\]
-  This gives the requisite data for an equality $(c^0,k^0)=(c^1,k^1)$, completing the proof that $X_b$ is contractible.
+  这就给出了构造等式 $(c^0,k^0)=(c^1,k^1)$ 所需的数据，从而完成了 $X_b$ 可缩性的证明。
 
-  Now since $X_b$ is contractible for each $b$, the type $\prd{b:B} X_b$ is also contractible.
-  In particular, it is inhabited, so we have a function assigning to each $b:B$ a $c$ and a $k$.
-  Define $G_0(b)$ to be this $c$; this gives a function $G_0 :B_0 \to C_0$.
+  由于每个 $X_b$ 都可缩，类型 $\prd{b:B} X_b$ 也可缩。
+  特别地，它是有实例的，故我们有一个函数，将一个 $c$ 和一个 $k$ 分配给每个 $b:B$。
+  定义 $G_0(b)$ 为此 $c$；这便给出函数 $G_0 :B_0 \to C_0$。
 
-  Next we need to define the action of $G$ on morphisms.
-  For each $b,b':B$ and $f:\hom_B(b,b')$, let $Y_f$ be the type whose elements consist of:
+  接下来需要定义 $G$ 在态射上的作用。
+  对每个 $b,b':B$ 和 $f:\hom_B(b,b')$，令 $Y_f$ 为由以下数据组成的类型：
   \begin{enumerate}[resume]
-  \item A morphism $g:\hom_C(Gb,Gb')$, such that
-  \item For each $a:A$ and $h:Ha\cong b$, and each $a':A$ and $h':Ha'\cong b'$, and any $\ell:\hom_A(a,a')$, we have\label{item:eqvprop5}
+  \item 一个态射 $g:\hom_C(Gb,Gb')$，使得
+  \item 对每个 $a:A$ 和 $h:Ha\cong b$、每个 $a':A$ 和 $h':Ha'\cong b'$，以及任意 $\ell:\hom_A(a,a')$，有\label{item:eqvprop5}
     \[ (h' \circ H\ell = f \circ h)
     \to
     (k_{a',h'} \circ F\ell = g\circ k_{a,h}). \]
   \end{enumerate}
-  We claim that for any $b,b'$ and $f$, the type $Y_f$ is contractible.
-  As this is a mere proposition, we may assume given $a_0:A$ and $h_0:Ha_0\cong b$, and each $a'_0:A$ and $h'_0:Ha'_0\cong b'$.
-  Then since $H$ is fully faithful, there is a unique $\ell_0:\hom_A(a_0,a_0')$ such that $h'_0 \circ H\ell_0 = f \circ h_0$.
-  Define $g_0 \defeq k_{a_0',h_0'} \circ F \ell_0 \circ \inv{(k_{a_0,h_0})}$.
+  我们断言：对任意 $b,b'$ 和 $f$，类型 $Y_f$ 是可缩的。
+  由于这是命题，可以假设给定 $a_0:A$ 和 $h_0:Ha_0\cong b$，以及 $a'_0:A$ 和 $h'_0:Ha'_0\cong b'$。
+  由于 $H$ 是全忠实的，存在唯一的 $\ell_0:\hom_A(a_0,a_0')$ 满足 $h'_0 \circ H\ell_0 = f \circ h_0$。
+  定义 $g_0 \defeq k_{a_0',h_0'} \circ F \ell_0 \circ \inv{(k_{a_0,h_0})}$。
 
-  Now for any $a,h,a',h'$, and $\ell$ such that $(h' \circ H\ell = f \circ h)$, we have $\inv{h}\circ h_0:Ha_0\cong Ha$, hence there is a unique $m:a_0\cong a$ with $Hm = \inv{h}\circ h_0$ and hence $h\circ Hm = h_0$.
-  Similarly, we have a unique $m':a_0'\cong a'$ with $h'\circ Hm' = h_0'$.
-  Now by~\ref{item:eqvprop3}, we have $k_{a,h}\circ Fm = k_{a_0,h_0}$ and $k_{a',h'}\circ Fm' = k_{a_0',h_0'}$.
-  We also have
+  现对任意满足 $(h' \circ H\ell = f \circ h)$ 的 $a,h,a',h',\ell$，有 $\inv{h}\circ h_0:Ha_0\cong Ha$，故存在唯一的 $m:a_0\cong a$ 满足 $Hm = \inv{h}\circ h_0$，从而 $h\circ Hm = h_0$。
+  类似地，存在唯一的 $m':a_0'\cong a'$ 满足 $h'\circ Hm' = h_0'$。
+  现由~\ref{item:eqvprop3}，得 $k_{a,h}\circ Fm = k_{a_0,h_0}$ 和 $k_{a',h'}\circ Fm' = k_{a_0',h_0'}$。
+  又有
   \begin{align*}
     Hm' \circ H\ell_0
     &= \inv{(h')} \circ h_0' \circ H\ell_0\\
@@ -1503,8 +1521,8 @@ In univalent foundations, however, if $C$ is a category, then isomorphism is equ
     &= \inv{(h')} \circ f \circ h \circ \inv{h} \circ h_0\\
     &= H\ell \circ Hm
   \end{align*}
-  and hence $m'\circ \ell_0 = \ell\circ m$ since $H$ is fully faithful.
-  Finally, we can compute
+  由于 $H$ 全忠实，故 $m'\circ \ell_0 = \ell\circ m$。
+  最后，计算得
   \begin{align*}
     g_0 \circ k_{a,h}
     &= k_{a_0',h_0'} \circ F \ell_0 \circ \inv{(k_{a_0,h_0})} \circ k_{a,h}\\
@@ -1512,315 +1530,307 @@ In univalent foundations, however, if $C$ is a category, then isomorphism is equ
     &= k_{a_0',h_0'} \circ \inv{(Fm')} \circ F\ell\\
     &= k_{a',h'}\circ F\ell.
   \end{align*}
-  This completes the proof that $Y_f$ is inhabited.
-  To show it is contractible, since hom-sets are sets, it suffices to take another $g_1:\hom_C(Gb,Gb')$ satisfying~\ref{item:eqvprop5} and show $g_0=g_1$.
-  However, we still have our specified $a_0,h_0,a_0',h_0',\ell_0$ around, and~\ref{item:eqvprop5} implies both $g_0$ and $g_1$ must be equal to $k_{a_0',h_0'} \circ F \ell_0 \circ \inv{(k_{a_0,h_0})}$.
+  至此证明了 $Y_f$ 是有实例的。
+  为证其可缩，由于态射集是集合，只需取另一个满足~\ref{item:eqvprop5} 的 $g_1:\hom_C(Gb,Gb')$ 并证明 $g_0=g_1$。
+  但我们手中仍有先前指定的 $a_0,h_0,a_0',h_0',\ell_0$，而~\ref{item:eqvprop5} 蕴含 $g_0$ 和 $g_1$ 都必须等于 $k_{a_0',h_0'} \circ F \ell_0 \circ \inv{(k_{a_0,h_0})}$。
 
-  This completes the proof that $Y_f$ is contractible for each $b,b':B$ and $f:\hom_B(b,b')$.
-  Therefore, there is a function assigning to each such $f$ its unique inhabitant; denote this function $G_{b,b'}:\hom_B(b,b') \to \hom_C(Gb,Gb')$.
-  The proof that $G$ is a functor is straightforward; in each case we can choose $a,h$ and apply~\ref{item:eqvprop5}.
+  这就完成了对每个 $b,b':B$ 和 $f:\hom_B(b,b')$ 证明 $Y_f$ 可缩的工作。
+  因此，存在一个函数，将唯一的实例分配给每个这样的 $f$；记此函数为 $G_{b,b'}:\hom_B(b,b') \to \hom_C(Gb,Gb')$。
+  验证 $G$ 是函子的过程是直接的；在每种情况下，选择 $a,h$ 并应用~\ref{item:eqvprop5} 即可。
 
-  Finally, for any $a_0:A$, defining $c\defeq Fa_0$ and $k_{a,h}\defeq F g$, where $g:\hom_A(a,a_0)$ is the unique isomorphism with $Hg = h$, gives an element of $X_{Ha_0}$.
-  Thus, it is equal to the specified one; hence $GHa=Fa$.
-  Similarly, for $f:\hom_A(a_0,a_0')$ we can define an element of $Y_{Hf}$ by transporting along these equalities, which must therefore be equal to the specified one.
-  Hence, we have $GH=F$, and thus $GH\cong F$ as desired.
+  最后，对任意 $a_0:A$，定义 $c\defeq Fa_0$ 和 $k_{a,h}\defeq F g$（其中 $g:\hom_A(a,a_0)$ 是满足 $Hg = h$ 的唯一同构），即给出 $X_{Ha_0}$ 的一个元素。
+  因此，它等于先前指定的元素；故 $GHa=Fa$。
+  类似地，对 $f:\hom_A(a_0,a_0')$，我们可以沿这些等式做传输来定义 $Y_{Hf}$ 的一个元素，它因此必须等于先前指定的元素。
+  故 $GH=F$，进而 $GH\cong F$，如所需。
 \end{proof}
 
 \index{universal!property!of Rezk completion}%
-Therefore, if a precategory $A$ admits a weak equivalence functor $A\to \widehat{A}$ into a category, then that is its ``reflection'' into categories: any functor from $A$ into a category will factor essentially uniquely through $\widehat{A}$.
-We now give two constructions of such a weak equivalence.
+因此，若预范畴 $A$ 有一个到范畴的弱等价函子 $A\to \widehat{A}$，则后者就是 $A$ 在范畴中的"反射"：任何从 $A$ 到范畴的函子，都将本质上唯一地通过 $\widehat{A}$ 分解。
+现在我们给出两种这样的弱等价的构造。
 
-\indexsee{Rezk completion}{completion, Rezk}%
-\index{completion!Rezk|(defstyle}%
+\indexsee{Rezk 完备化}{completion, Rezk}%
+\index{完备化!Rezk|(defstyle}%
 
 \begin{thm}\label{thm:rezk-completion}
-  For any precategory $A$, there is a category $\widehat A$ and a weak equivalence $A\to\widehat{A}$.
+  对任何预范畴 $A$，存在一个范畴 $\widehat A$ 和一个弱等价 $A\to\widehat{A}$。
 \end{thm}
 
-\begin{proof}[First proof]
-  Let $\widehat{A}_0 \defeq \setof{ F:\uset^{A\op} | \exis{a:A} (\y a \cong F)}$, with hom-sets inherited from $\uset^{A\op}$.
-  Then the inclusion $\widehat{A} \to \uset^{A\op}$ is fully faithful and an embedding on objects.
-  Since $\uset^{A\op}$ is a category (by \cref{ct:functor-cat}, since \uset is so by univalence), $\widehat A$ is also a category.
+\begin{proof}[证明一]
+  令 $\widehat{A}_0 \defeq \setof{ F:\uset^{A\op} | \exis{a:A} (\y a \cong F)}$，其态射集继承自 $\uset^{A\op}$。
+  则包含映射 $\widehat{A} \to \uset^{A\op}$ 是全忠实的，且在对象上是一个嵌入。
+  由于 $\uset^{A\op}$ 是一个范畴（根据 \cref{ct:functor-cat}，且由泛等性可知 \uset 也是范畴），$\widehat A$ 也是一个范畴。
 
-  Let $A\to\widehat A$ be the Yoneda embedding.
-  This is fully faithful by \cref{ct:yoneda-embedding}, and essentially surjective by definition of $\widehat{A}_0$.
-  Thus it is a weak equivalence.
+  令 $A\to\widehat A$ 为米田嵌入。
+  由 \cref{ct:yoneda-embedding} 知它是全忠实的，而由 $\widehat{A}_0$ 的定义知它是本质满的。
+  因此它是一个弱等价。
 \end{proof}
 
-This proof is very slick, but it has the drawback that it increases universe level.
-If $A$ is a category in a universe \bbU, then in this proof \uset must be at least as large as $\uset_\bbU$.
-Then $\uset_\bbU$ and $(\uset_\bbU)^{A\op}$ are not themselves categories in \bbU, but only in a higher universe, and \emph{a priori} the same is true of $\widehat A$.
-One could imagine a resizing axiom that could deal with this, but it is also possible to give a direct construction using higher inductive types.
+这个证明十分巧妙，但存在一个缺点：它会提升宇宙层级。
+如果 $A$ 是宇宙 \bbU 中的范畴，则在此证明中 \uset 必须至少与 $\uset_\bbU$ 一样大。
+于是 $\uset_\bbU$ 和 $(\uset_\bbU)^{A\op}$ 本身不再是 \bbU 中的范畴，而只存在于更高的宇宙中；并且 \emph{先验地}，$\widehat A$ 亦是如此。
+可以设想用一条重置公理来处理这个问题，但同样可以用高阶归纳类型给出一个直接构造。
 
-\begin{proof}[Second proof]
-  We define a higher inductive type $\widehat A_0$ with the following constructors:
+\begin{proof}[第二种证明]
+  我们定义一个高阶归纳类型 $\widehat A_0$，其构造子如下：
   \begin{itemize}
-  \item A function $i:A_0 \to \widehat A_0$.
-  \item For each $a,b:A$ and $e:a\cong b$, an equality $je:\id{ia}{ib}$.
-  \item For each $a:A$, an equality $\id{j(1_a)}{\refl{ia}}$.
-  \item For each $(a,b,c:A)$, $(f:a\cong b)$, and $(g:b\cong c)$, an equality $\id{j(g \circ f)}{j(f)\ct j(g)}$.
-  \item 1-truncation: for all $x,y:\widehat A_0$ and $p,q:\id x y$ and $r,s:\id p q$, an equality $\id r s$.
+  \item 一个函数 $i:A_0 \to \widehat A_0$。
+  \item 对每个 $a,b:A$ 和 $e:a\cong b$，一个相等 $je:\id{ia}{ib}$。
+  \item 对每个 $a:A$，一个相等 $\id{j(1_a)}{\refl{ia}}$。
+  \item 对每个 $(a,b,c:A)$、$(f:a\cong b)$ 和 $(g:b\cong c)$，一个相等 $\id{j(g \circ f)}{j(f)\ct j(g)}$。
+  \item 1-截断：对所有 $x,y:\widehat A_0$ 和 $p,q:\id x y$ 以及 $r,s:\id p q$，一个相等 $\id r s$。
   \end{itemize}
-  Note that for any $a,b:A$ and $p:\id a b$, we have $\id{j(\idtoiso(p))}{\map i p}$.
-  This follows by path induction on $p$ and the third constructor.
+  注意，对任意 $a,b:A$ 和 $p:\id a b$，我们有 $\id{j(\idtoiso(p))}{\map i p}$。
+  这可以通过对 $p$ 作道路归纳并利用第三个构造子得出。
 
-  The type $\widehat A_0$ will be the type of objects of $\widehat A$; we now build all the rest of the structure.
-  (The following proof is of the sort that can benefit a lot from the help of a computer proof assistant:\index{proof!assistant} it is wide and shallow with many short cases to consider, and a large part of the work consists of writing down what needs to be checked.)
+  类型 $\widehat A_0$ 将作为 $\widehat A$ 的对象类型；现在我们来构建其余的所有结构。
+  （下面的证明属于那种能极大受益于计算机证明助手的一类证明：\index{proof!assistant}它广而浅，涉及许多短小的情形需要考虑，而很大一部分工作只是写下需要验证的内容。）
 
   \mentalpause
 
-  \emph{Step 1:} We define a family $\hom_{\widehat A}:\widehat A_0\to \widehat A_0 \to \set$ by double induction on $\widehat A_0$.
-  Since \set is a 1-type, we can ignore the 1-truncation constructor.
-  When $x$ and $y$ are of the form $ia$ and $ib$, we take $\hom_{\widehat A}(ia,ib) \defeq \hom_A(a,b)$.
-  It remains to consider all the other possible pairs of constructors.
+  \emph{第一步：}我们通过对 $\widehat A_0$ 的双重归纳来定义一个类型族 $\hom_{\widehat A}:\widehat A_0\to \widehat A_0 \to \set$。
+  由于 \set 是一个 1-类型，我们可以忽略 1-截断构造子。
+  当 $x$ 和 $y$ 形如 $ia$ 和 $ib$ 时，我们取 $\hom_{\widehat A}(ia,ib) \defeq \hom_A(a,b)$。
+  接下来需要考虑所有其他可能的构造子组合。
 
-  Let us keep $x=ia$ fixed at first.
-  If $y$ varies along the identity $je:\id{ib}{ib'}$, for some $e:b\cong b'$, we require an identity $\id{\hom_A(a,b)}{\hom_A(a,b')}$.
-  By univalence, it suffices to give an equivalence $\eqv{\hom_A(a,b)}{\hom_A(a,b')}$.
-  We take this to be the function $(e\circ \blank ):\hom_A(a,b)\to \hom_A(a,b')$.
-  To see that this is an equivalence, we give its inverse as $(\inv e\circ \blank )$, with witnesses to inversion coming from the fact that $\inv e$ is the inverse of $e$ in $A$.
+  首先固定 $x=ia$。
+  如果 $y$ 沿相等 $je:\id{ib}{ib'}$ 变化，其中 $e:b\cong b'$，我们需要一个相等 $\id{\hom_A(a,b)}{\hom_A(a,b')}$。
+  由泛等性，只需给出一个等价 $\eqv{\hom_A(a,b)}{\hom_A(a,b')}$。
+  我们取这个等价为函数 $(e\circ \blank ):\hom_A(a,b)\to \hom_A(a,b')$。
+  为说明这是一个等价，我们给出其逆为 $(\inv e\circ \blank )$，而它确为逆的证明来自 $\inv e$ 是 $e$ 在 $A$ 中的逆这一事实。
 
-  As $y$ varies along the identity $\id{j(1_b)}{\refl{ib}}$, we require an identity $\id{(1_b\circ \blank )}{\refl{\hom_A(a,b)}}$; this follows from the identity axiom $\id{1_b\circ g}{g}$ of a precategory.
-  Similarly, as $y$ varies along the identity $\id{j(g\circ f)}{j(f)\ct j(g)}$, we require an identity $\id{((g\circ f)\circ \blank )}{(g\circ (f\circ \blank ))}$, which follows from associativity.
+  当 $y$ 沿相等 $\id{j(1_b)}{\refl{ib}}$ 变化时，我们需要一个相等 $\id{(1_b\circ \blank )}{\refl{\hom_A(a,b)}}$；这由预范畴的单位律 $\id{1_b\circ g}{g}$ 可得。
+  类似地，当 $y$ 沿相等 $\id{j(g\circ f)}{j(f)\ct j(g)}$ 变化时，我们需要一个相等 $\id{((g\circ f)\circ \blank )}{(g\circ (f\circ \blank ))}$，这由结合律可得。
   % Finally, as $y$ varies along the 1-truncation constructor, we need only to observe that \set is 1-truncated.
 
-  Now we consider the other constructors for $x$.
-  Say that $x$ varies along the identity $j(e):\id{ia}{ia'}$, for some $e:a \cong a'$; we again must deal with all the constructors for $y$.
-  If $y$ is $ib$, then we require an identity $\id{\hom_A(a,b)}{\hom_A(a',b)}$.
-  By univalence, this may come from an equivalence, and for this we can use $(\blank\circ \inv e)$, with inverse $(\blank\circ e)$.
+  现在考虑 $x$ 的其他构造子。
+  假设 $x$ 沿相等 $j(e):\id{ia}{ia'}$ 变化，其中 $e:a \cong a'$；我们再次需要处理 $y$ 的所有构造子。
+  如果 $y$ 是 $ib$，那么我们需要一个相等 $\id{\hom_A(a,b)}{\hom_A(a',b)}$。
+  由泛等性，这可由一个等价得出，对此我们可以使用 $(\blank\circ \inv e)$，其逆为 $(\blank\circ e)$。
 
-  Still with $x$ varying along $j(e)$, suppose now that $y$ also varies along $j(f)$ for some $f:b\cong b'$.
-  Then we need to know that the two concatenated identities
+  仍在 $x$ 沿 $j(e)$ 变化的假设下，现在假设 $y$ 也沿 $j(f)$ 变化，其中 $f:b\cong b'$。
+  那么我们需要知道两个拼接的相等
   \begin{gather*}
     \hom_A(a,b) = \hom_A(a',b) = \hom_A(a',b') \mathrlap{\qquad\text{and}}\\
     \hom_A(a,b) = \hom_A(a,b') = \hom_A(a',b')
   \end{gather*}
-  are identical.
-  This follows from associativity: $(f\circ \blank)\circ \inv e = f\circ (\blank\circ \inv e)$.
-  The other two constructors for $y$ are trivial, since they are 2-fold equalities in sets.
+  是相等的。
+  这由结合律可得：$(f\circ \blank)\circ \inv e = f\circ (\blank\circ \inv e)$。
+  $y$ 的其他两个构造子是平凡的，因为它们是集合中的二阶相等。
 
-  For the next two constructors of $x$, all but the first constructor for $y$ is likewise trivial.
-  When $x$ varies along $j(1_a)=\refl{ia}$ and $y$ is $ib$, we use the identity axiom again.
-  Similarly, when $x$ varies along $\id{j(g\circ f)}{j(f)\ct j(g)}$, we use associativity again.
-  This completes the construction of $\hom_{\widehat A}:\widehat A_0 \to \widehat A_0 \to \set$.
+  对于 $x$ 的下两个构造子，除了 $y$ 的第一个构造子外，其余同样是平凡的。
+  当 $x$ 沿 $j(1_a)=\refl{ia}$ 变化且 $y$ 是 $ib$ 时，我们再次使用单位律。
+  类似地，当 $x$ 沿 $\id{j(g\circ f)}{j(f)\ct j(g)}$ 变化时，我们再次使用结合律。
+  这就完成了 $\hom_{\widehat A}:\widehat A_0 \to \widehat A_0 \to \set$ 的构造。
 
   \mentalpause
 
-  \emph{Step 2:} We give the precategory structure on $\widehat A$, always by induction on $\widehat A_0$.
+  \emph{第二步：}我们通过对 $\widehat A_0$ 的归纳来赋予 $\widehat A$ 预范畴结构。
   % The reader is probably getting bored at this point, so we skip the details.
-  We are now eliminating into sets (the hom-sets of $\widehat A$), so all but the first two constructors are trivial to deal with.
+  我们现在是向集合（即 $\widehat A$ 的 Hom 集）做消去，因此除了前两个构造子外，处理起来都是平凡的。
 
-  For identities, if $x$ is $ia$ then we have $\hom_{\widehat A}(x,x) \jdeq \hom_A(a,a)$ and we define $1_x \defeq 1_{ia}$.
-  If $x$ varies along $je$ for $e:a\cong a'$, we must show that $\transfib{x\mapsto \hom_{\widehat A}(x,x)}{je}{1_{ia}} = 1_{ia'}$.
-  But by definition of $\hom_{\widehat A}$, transporting along $je$ is given by composing with $e$ and $\inv e$, and we have $e\circ 1_{ia} \circ \inv{e} = 1_{ia'}$.
+  对于恒同态射，如果 $x$ 是 $ia$，那么我们有 $\hom_{\widehat A}(x,x) \jdeq \hom_A(a,a)$，我们定义 $1_x \defeq 1_{ia}$。
+  如果 $x$ 沿 $je$ 变化，其中 $e:a\cong a'$，我们必须证明 $\transfib{x\mapsto \hom_{\widehat A}(x,x)}{je}{1_{ia}} = 1_{ia'}$。
+  但根据 $\hom_{\widehat A}$ 的定义，沿 $je$ 的传输是由与 $e$ 和 $\inv e$ 复合给出的，而我们有 $e\circ 1_{ia} \circ \inv{e} = 1_{ia'}$。
 
-  For composition, if $x,y,z$ are $ia,ib,ic$ respectively, then $\hom_{\widehat A}$ reduces to $\hom_A$ and we can define composition in $\widehat A$ to be composition in $A$.
-  And when $x$, $y$, or $z$ varies along $je$, then we verify the following equalities:
+  对于复合，如果 $x,y,z$ 分别是 $ia,ib,ic$，那么 $\hom_{\widehat A}$ 归约为 $\hom_A$，我们可以定义 $\widehat A$ 中的复合为 $A$ 中的复合。
+  而当 $x$、$y$ 或 $z$ 沿 $je$ 变化时，我们验证以下等式：
   \begin{align*}
     e \circ (g\circ f) &= (e\circ g) \circ f,\\
     g\circ f &= (g\circ \inv e) \circ (e\circ f),\\
     (g\circ f) \circ \inv e &= g \circ (f\circ \inv e).
   \end{align*}
-  Finally, the associativity and unitality axioms are mere propositions, so all constructors except the first are trivial.
-  But in that case, we have the corresponding axioms in $A$.
+  最后，结合律和单位律都是命题，因此除了第一个构造子外，所有构造子都是平凡的。
+  但在那种情况下，我们有 $A$ 中对应的公理。
 
   \mentalpause
 
-  \emph{Step 3}: We show that $\widehat A$ is a category.
-  That is, we must show that for all $x,y:\widehat A$, the function $\idtoiso:(x=y) \to (x\cong y)$ is an equivalence.
-  First we define, for all $x,y:\widehat A$, a function $k_{x,y}:(x\cong y) \to (x=y)$ by induction.
-  As before, since our goal is a set, it suffices to deal with the first two constructors.
+  \emph{第三步：}我们证明 $\widehat A$ 是一个范畴。
+  也就是说，我们必须证明对所有 $x,y:\widehat A$，函数 $\idtoiso:(x=y) \to (x\cong y)$ 是一个等价。
+  首先，我们对所有 $x,y:\widehat A$，通过归纳定义一个函数 $k_{x,y}:(x\cong y) \to (x=y)$。
+  如前所述，由于我们的目标是一个集合，只需处理前两个构造子即可。
 
-  When $x$ and $y$ are $ia$ and $ib$ respectively, we have $\hom_{\widehat A}(ia,ib)\jdeq \hom_A(a,b)$, with composition and identities inherited as well, so that $(ia\cong ib)$ is equivalent to $(a\cong b)$.
-  But now we have the constructor $j:(a\cong b) \to (ia=ib)$.
+  当 $x$ 和 $y$ 分别是 $ia$ 和 $ib$ 时，我们有 $\hom_{\widehat A}(ia,ib)\jdeq \hom_A(a,b)$，其复合与恒同态射也一并继承，因此 $(ia\cong ib)$ 等价于 $(a\cong b)$。
+  但现在我们有了构造子 $j:(a\cong b) \to (ia=ib)$。
 
-  Next, if $y$ varies along $j(e)$ for some $e:b\cong b'$, we must show that for $f:a\cong b$ we have $j(\trans{j(e)}{f}) = j(f) \ct j(e)$.
-  But by definition of $\hom_{\widehat A}$ on equalities, transporting along $j(e)$ is equivalent to post-composing with $e$, so this equality follows from the last constructor of $\widehat A_0$.
-  The remaining case when $x$ varies along $j(e)$ for $e:a\cong a'$ is similar.
-  This completes the definition of $k:\prd{x,y:\widehat A_0} (x\cong y) \to (x=y)$.
+  接着，如果 $y$ 沿 $j(e)$ 变化，其中 $e:b\cong b'$，我们必须证明对 $f:a\cong b$ 有 $j(\trans{j(e)}{f}) = j(f) \ct j(e)$。
+  但根据 $\hom_{\widehat A}$ 在相等上的定义，沿 $j(e)$ 的传输等价于与 $e$ 后复合，因此这个相等来自 $\widehat A_0$ 的最后一个构造子。
+  当 $x$ 沿 $j(e)$ 变化，其中 $e:a\cong a'$ 时，剩余情况类似。
+  这就完成了 $k:\prd{x,y:\widehat A_0} (x\cong y) \to (x=y)$ 的定义。
 
-  Now one thing we must show is that if $p:x=y$, then $k(\idtoiso(p))=p$.
-  By induction on $p$, we may assume it is $\refl x$, and hence $\idtoiso(p)\jdeq 1_x$.
-  Now we argue by induction on $x:\widehat A_0$, and since our goal is a mere proposition (since $\widehat A_0$ is a 1-type), all constructors except the first are trivial.
-  But if $x$ is $ia$, then $k(1_{ia}) \jdeq j(1_a)$, which is equal to $\refl{ia}$ by the third constructor of $\widehat A_0$.
+  现在我们需要证明的一点是：如果 $p:x=y$，那么 $k(\idtoiso(p))=p$。
+  通过对 $p$ 作归纳，我们可以假定它是 $\refl x$，从而 $\idtoiso(p)\jdeq 1_x$。
+  现在我们对 $x:\widehat A_0$ 作归纳，由于我们的目标是一个命题（因为 $\widehat A_0$ 是一个 1-类型），除了第一个构造子外，所有构造子都是平凡的。
+  但如果 $x$ 是 $ia$，那么 $k(1_{ia}) \jdeq j(1_a)$，根据 $\widehat A_0$ 的第三个构造子，它等于 $\refl{ia}$。
 
-  To complete the proof that $\widehat A$ is a category, we must show that if $f:x\cong y$, then $\idtoiso(k(f))=f$.
-  By induction we may assume that $x$ and $y$ are $ia$ and $ib$ respectively, in which case $f$ must arise from an isomorphism $g:a\cong b$ and we have $k(f)\jdeq j(g)$.
-  However, for any $p$ we have $\idtoiso(p) = \trans{p}{1}$, so in particular $\idtoiso (j(g)) = \trans{j(g)}{1_{ia}}$.
-  And by definition of $\hom_{\widehat A}$ on equalities, this is given by composing $1_{ia}$ with the equivalence $g$, hence is equal to $g$.
+  为了完成 $\widehat A$ 是范畴的证明，我们必须证明：如果 $f:x\cong y$，那么 $\idtoiso(k(f))=f$。
+  通过归纳，我们可以假定 $x$ 和 $y$ 分别是 $ia$ 和 $ib$，在这种情况下 $f$ 必然源自一个同构 $g:a\cong b$，且我们有 $k(f)\jdeq j(g)$。
+  然而，对任意 $p$，我们有 $\idtoiso(p) = \trans{p}{1}$，所以特别地 $\idtoiso (j(g)) = \trans{j(g)}{1_{ia}}$。
+  而根据 $\hom_{\widehat A}$ 在相等上的定义，这是由 $1_{ia}$ 与等价 $g$ 复合给出的，因此等于 $g$。
 
   \index{encode-decode method}%
-  Note the similarity of this step to the encode-decode method\index{encode-decode method} used in \cref{sec:compute-coprod,sec:compute-nat,cha:homotopy}.
-  Once again we are characterizing the identity types of a higher inductive type (here, $\widehat A_0$) by defining recursively a family of codes (here, $(x,y)\mapsto (x\cong y)$) and encoding and decoding functions by induction on $\widehat A_0$ and on paths.
+  注意这一步与编码-解码方法\index{encode-decode method}的相似性，后者曾在 \cref{sec:compute-coprod,sec:compute-nat,cha:homotopy} 中使用。
+  我们再次通过递归定义一个代码族（这里是 $(x,y)\mapsto (x\cong y)$）并通过对 $\widehat A_0$ 和道路的归纳来定义编码和解码函数，以刻画高阶归纳类型（这里是 $\widehat A_0$）的相等类型。
 
   \mentalpause
 
-  \emph{Step 4}: We define a weak equivalence $I:A \to \widehat A$.
-  We take $I_0 \defeq i : A_0 \to \widehat A_0$, and by construction of $\hom_{\widehat A}$ we have functions $I_{a,b}:\hom_A(a,b) \to \hom_{\widehat A}(Ia,Ib)$ forming a functor $I:A \to \widehat A$.
-  This functor is fully faithful by construction, so it remains to show it is essentially surjective.
-  That is, for all $x:\widehat A$ we want there to merely exist an $a:A$ such that $Ia\cong x$.
-  As always, we argue by induction on $x$, and since the goal is a mere proposition, all but the first constructor are trivial.
-  But if $x$ is $ia$, then of course we have $a:A$ and $Ia\jdeq ia$, hence $Ia \cong ia$.
-  (Note that if we were trying to prove $I$ to be \emph{split} essentially surjective, we would be stuck, because we know nothing about equalities in $A_0$ and thus have no way to deal with any further constructors.)
+  \emph{第四步：}我们定义一个弱等价 $I:A \to \widehat A$。
+  我们取 $I_0 \defeq i : A_0 \to \widehat A_0$，并且根据 $\hom_{\widehat A}$ 的构造，我们有函数 $I_{a,b}:\hom_A(a,b) \to \hom_{\widehat A}(Ia,Ib)$，它们构成了一个函子 $I:A \to \widehat A$。
+  由构造可知，这个函子是全忠实的，所以还需证明它是本质满的。
+  也就是说，对所有 $x:\widehat A$，我们希望纯存在一个 $a:A$ 使得 $Ia\cong x$。
+  一如既往，我们通过对 $x$ 的归纳来论证，并且由于目标是一个命题，除了第一个构造子外，所有构造子都是平凡的。
+  但如果 $x$ 是 $ia$，那么我们显然有 $a:A$ 且 $Ia\jdeq ia$，因此 $Ia \cong ia$。
+  （注意，如果我们试图证明 $I$ 是\emph{分裂}本质满的，我们会陷入困境，因为我们对 $A_0$ 中的相等毫无所知，从而无法处理任何进一步的构造子。）
 \end{proof}
 
-We call the construction $A\mapsto \widehat A$ the \define{Rezk completion},
-although there is also an argument (coming from higher topos semantics)
+我们将这一构造 $A\mapsto \widehat A$ 称为 \define{Rezk 完备化}，尽管高阶意象语义也提供了将其称为 \define{层栈完备化} 的理由。
 \index{.infinity1-topos@$(\infty,1)$-topos}%
-for calling it the \define{stack completion}.
 \index{stack}%
 \index{completion!Rezk|)}%
 
-We have seen that most precategories arising in practice are categories, since they are constructed from \uset, which is a category by the univalence axiom.
-However, there are a few cases in which the Rezk completion is necessary to obtain a category.
+我们已经看到，实践中出现的大多数预范畴本身就是范畴，因为它们是从 \uset 构造而来的，而根据泛等公理，\uset 本身就是一个范畴。
+然而，确实存在少数情况，必须借助 Rezk 完备化才能得到一个范畴。
 
 \begin{eg}\label{ct:rezk-fundgpd-trunc1}
-  Recall from \cref{ct:fundgpd} that for any type $X$ there is a pregroupoid with $X$ as its type of objects and $\hom(x,y) \defeq \pizero{x=y}$.
+  回忆 \cref{ct:fundgpd}，对任意类型 $X$，都存在一个预群胚，以 $X$ 为对象类型，态射为 $\hom(x,y) \defeq \pizero{x=y}$。
   \indexdef{fundamental!groupoid}%
   \index{fundamental!pregroupoid}%
   \indexsee{groupoid!fundamental}{fundamental group\-oid}%
-  Its Rezk completion is the \emph{fundamental groupoid} of $X$.
-  Recalling that group\-oids are equivalent to 1-types, it is not hard to identify this groupoid with $\trunc1X$.
+  它的 Rezk 完备化就是 $X$ 的\emph{基本群胚}。
+  回想群胚等价于 1-类型这一事实，不难将此群胚等同于 $\trunc1X$。
 \end{eg}
 
 \begin{eg}\label{ct:hocat}
-  Recall from \cref{ct:hoprecat} that there is a precategory whose type of objects is \type and with $\hom(X,Y) \defeq \pizero{X\to Y}$.
-  Its Rezk completion may be called the \define{homotopy category of types}.
+  回忆 \cref{ct:hoprecat}，存在一个预范畴，其对象类型为 \type，态射为 $\hom(X,Y) \defeq \pizero{X\to Y}$。
+  它的 Rezk 完备化可以称为\define{类型的同伦范畴}。
   \index{category!of types}%
   \index{homotopy!category of types@(pre)category of types}%
-  Its type of objects can be identified with $\trunc1\type$ (see \cref{ct:ex:hocat}).
+  它的对象类型可以等同于 $\trunc1\type$（参见 \cref{ct:ex:hocat}）。
 \end{eg}
 
-The Rezk completion also allows us to show that the notion of ``category'' is determined by the notion of ``weak equivalence of precategories''.
-Thus, insofar as the latter is inevitable, so is the former.
+Rezk 完备化还使我们能够表明，"范畴"这一概念由"预范畴的弱等价"这一概念所决定。
+因此，既然后者（弱等价）是不可避免的，前者（范畴）亦是如此。
 
 \begin{thm}\label{ct:weq-iso-precat-cat}
-  A precategory $C$ is a category if and only if for every weak equivalence of precategories $H:A\to B$, the induced functor $(\blank\circ H):C^B \to C^A$ is an isomorphism of precategories.
+  一个预范畴 $C$ 是范畴，当且仅当对于每个预范畴的弱等价 $H:A\to B$，诱导出的函子 $(\blank\circ H):C^B \to C^A$ 是预范畴的同构。
 \end{thm}
+
 \begin{proof}
-  ``Only if'' is \cref{ct:cat-weq-eq}.
-  In the other direction, let $H$ be $I:A\to\widehat A$.
-  Then since $(\blank\circ I)_0$ is an equivalence, there exists $R:\widehat A\to A$ such that $RI=1_A$.
-  Hence $IRI=I$, but again since $(\blank\circ I)_0$ is an equivalence, this implies $IR =1_{\widehat A}$.
-  By \cref{ct:isoprecat}\ref{item:ct:ipc3}, $I$ is an isomorphism of precategories.
-  But then since $\widehat A$ is a category, so is $A$.
+  "仅当"方向是 \cref{ct:cat-weq-eq}。
+  反之，令 $H$ 为 $I:A\to\widehat A$。
+  由于 $(\blank\circ I)_0$ 是等价，存在 $R:\widehat A\to A$ 使得 $RI=1_A$。
+  于是 $IRI=I$，但同样由于 $(\blank\circ I)_0$ 是等价，这蕴涵 $IR =1_{\widehat A}$。
+  根据 \cref{ct:isoprecat}\ref{item:ct:ipc3}，$I$ 是预范畴的同构。
+  而 $\widehat A$ 是范畴，故 $A$ 也是范畴。
 \end{proof}
 
 \index{weak equivalence!of precategories|)}%
-
 
 \newpage
 
 \sectionNotes
 
-The original definition of categories, of course, was in set-theoretic foundations, so that the collection of objects of a category formed a set (or, for large categories, a class).
-Over time, it became clear that all ``category-theoretic'' properties of objects were invariant under isomorphism, and that equality of objects in a category was not usually a very useful notion.
-Numerous authors~\cite{blanc:eqv-log,freyd:invar-eqv,makkai:folds,makkai:comparing} discovered that a dependently typed logic enabled formulating the definition of category without invoking any notion of equality for objects, and that the statements provable in this logic are precisely the ``category-theoretic'' ones that are invariant under isomorphism.
+范畴的原始定义当然是在集合论基础上给出的，因此一个范畴的对象构成一个集合（或者，对于大范畴而言，构成一个类）。
+随着时间的推移，人们逐渐认识到对象的所有"范畴论"性质在同构下都是不变的，并且范畴中对象的相等通常不是一个很有用的概念。
+多位作者~\cite{blanc:eqv-log,freyd:invar-eqv,makkai:folds,makkai:comparing}发现，依值类型逻辑使得我们能够在不涉及任何对象相等概念的情况下表述范畴的定义，并且在这种逻辑中可证明的命题恰恰是那些在同构下不变的"范畴论"命题。
 \index{evil}%
 
-Although most of category theory appears to be invariant under isomorphism of objects and under equivalence of categories, there are some interesting exceptions, which have led to philosophical discussions about what it means to be ``category-theoretic''.
-For instance, \cref{ct:galois} was brought up by Peter May on the categories mailing list in May 2010, as a case where it matters that two categories (defined as usual in set theory) are isomorphic rather than only equivalent.
-The case of $\dagger$-categories was also somewhat confounding to those advocating an isomorphism-invariant version of category theory, since the ``correct'' notion of sameness between objects of a $\dagger$-category is not ordinary isomorphism but \emph{unitary} isomorphism.
+尽管大部分范畴论内容似乎在对象的同构以及范畴的等价下都是不变的，但也存在一些有趣的例外，这些例外引发了关于何谓"范畴论的"的哲学讨论。
+例如，Peter May 在 2010 年 5 月的范畴论邮件列表中提出了 \cref{ct:galois}，作为一个案例，其中两个（按集合论通常方式定义的）范畴是同构而非仅仅等价，这一区别至关重要。
+对于倡导范畴论的同构不变版本的人来说，$\dagger$-范畴的情况也多少有些令人困惑，因为 $\dagger$-范畴中对象之间"正确的"相同性概念并非通常的同构，而是\emph{酉的}同构。
 \index{isomorphism!invariance under}%
 
-Categories satisfying the ``saturation'' or ``univalence'' principle as in \cref{ct:category} were first considered by Hofmann and Streicher~\cite{hs:gpd-typethy}.
-The condition then occurred independently to Voevodsky, Shulman, and perhaps others around the same time several years later, and was formalized by Ahrens and Kapulkin~\cite{aks:rezk}.
-This framework puts all the above examples in a unified context: some precategories are categories, others are strict categories, and so on.
-A general theorem that ``isomorphism implies equality'' for a large class of algebraic structures (assuming the univalence axiom) was proven by Coquand and Danielsson; the formulation of the structure identity principle in \cref{sec:sip} is due to Aczel.
+满足 \cref{ct:category} 中"饱和性"或"泛等性"原则的范畴，最初由 Hofmann 和 Streicher~\cite{hs:gpd-typethy} 研究。
+几年后，Voevodsky（沃沃茨基）、Shulman 以及可能还有其他研究者大致同时、各自独立地想到了这个条件，并由 Ahrens 和 Kapulkin~\cite{aks:rezk} 加以形式化。
+这一框架将上述所有例子统一了起来：有些预范畴是范畴，有些是严格范畴，等等。
+一个关于一大类代数结构"同构蕴含相等"（假设泛等公理）的一般性定理由 Coquand（科康）和 Danielsson 证明；而 \cref{sec:sip} 中结构同一性原理的阐述则归功于 Aczel。
 
-Independently of philosophical considerations about category theory, Rezk~\cite{rezk01css} discovered that when defining a notion of $(\infty,1)$-cat\-e\-go\-ry,
+撇开关于范畴论的哲学考量不论，Rezk~\cite{rezk01css} 在定义 $(\infty,1)$-范畴的概念时发现，
 \index{.infinity1-category@$(\infty,1)$-category}%
-it was very convenient to use not merely a \emph{set} of objects with spaces of morphisms between them, but a \emph{space} of objects incorporating all the equivalences and homotopies between them.
-This yields a very well-behaved sort of model for $(\infty,1)$-categories as particular simplicial spaces, which Rezk called \emph{complete Segal spaces}.
+有一种做法非常方便：不局限于一个对象\emph{集合}配以对象间的态射空间，而是采用一个对象\emph{空间}，将对象间的所有等价与同伦都囊括其中。
+由此得到了一类表现非常良好的 $(\infty,1)$-范畴模型，以特定的单纯空间呈现，Rezk 称之为\emph{完备 Segal 空间（complete Segal spaces）}。
 \index{complete!Segal space}%
 \index{Segal!space}%
-One especially good aspect of this model is the analogue of \cref{ct:eqv-levelwise}: a map of complete Segal spaces is an equivalence just when it is a levelwise equivalence of simplicial spaces.
+该模型一个特别好的方面在于 \cref{ct:eqv-levelwise} 的类比：完备 Segal 空间之间的映射是等价的，当且仅当它是单纯空间之间的逐层等价。
 
-When interpreted in Voevodsky's simplicial\index{simplicial!sets} set model of univalent foundations, our precategories are similar to a truncated analogue of Rezk's ``Segal spaces'', while our categories correspond to his ``complete Segal spaces''.
+在 Voevodsky 的泛等基础单纯\index{simplicial!sets}集合模型中加以解释时，我们的预范畴类似于 Rezk 的"Segal 空间"的一个截断类比，而我们的范畴则对应于他的"完备 Segal 空间"。
 \index{Segal!category}%
-Strict categories correspond instead to (a weakened and truncated version of) what are called ``Segal categories''.
-It is known that Segal categories and complete Segal spaces are equivalent models for $(\infty,1)$-categories (see e.g.~\cite{bergner:infty-one}), so that in the simplicial set model, categories and strict categories yield ``equivalent'' category theories --- although as we have seen, the former still have many advantages.
-However, in the more general categorical semantics of a higher topos,
-\index{.infinity1-topos@$(\infty,1)$-topos}%
-a strict category corresponds to an internal category (in the traditional sense) in the corresponding 1-topos\index{topos} of sheaves, while a category corresponds to a \emph{stack}.
+严格范畴则对应于（经过弱化与截断的）所谓的"Segal 范畴"。
+已知 Segal 范畴与完备 Segal 空间是 $(\infty,1)$-范畴的等价模型（例如参见~\cite{bergner:infty-one}），因此在单纯集合模型中，范畴与严格范畴所给出的范畴论是"等价"的——尽管如前所述，前者仍然具有许多优点。
+然而，在高阶意象\index{.infinity1-topos@$(\infty,1)$-topos}的更一般的范畴语义下，严格范畴对应于相应层 1-意象\index{topos}中的（传统意义上的）内部范畴，而范畴对应于一个\emph{层栈（stack）}。
 \index{stack}%
-The latter are generally a more appropriate sort of ``category'' relative to a topos.
+一般来说，相对于一个意象而言，后者是更合适的一类"范畴"。
 
-In Rezk's context, what we have called the ``Rezk completion'' corresponds to fibrant replacement
-\index{fibrant replacement}
-in the model category for complete Segal spaces.
-Since this is built using a transfinite induction argument, it most closely matches our second construction as a higher inductive type.
-However, in higher topos models of homotopy type theory, the Rezk completion corresponds to \emph{stack completion},\index{completion!stack}\index{stack!completion} which can be constructed either with a transfinite induction~\cite{jt:strong-stacks} or using a Yoneda embedding \cite{bunge:stacks-morita-internal}.
-
+在 Rezk 的语境中，我们所谓的"Rezk 完备化"对应于完备 Segal 空间的模型范畴中的纤维化替换\index{fibrant replacement}。
+由于这是利用超限归纳论证构造的，它与我们的第二种构造——即作为高阶归纳类型给出的那个——最为接近。
+然而，在同伦类型论的高阶意象模型中，Rezk 完备化对应于\emph{层栈完备化（stack completion）}，
+\index{completion!stack}\index{stack!completion}
+后者既可以用超限归纳~\cite{jt:strong-stacks} 来构造，也可以利用米田嵌入 \cite{bunge:stacks-morita-internal} 来构造。
 
 \sectionExercises
 
 \begin{ex}\label{ex:slice-precategory}
-  For a precategory $A$ and $a:A$, define the \define{slice precategory} $A/a$.
+  对于一个预范畴 $A$ 和 $a:A$，定义\define{切片预范畴} $A/a$。
   \indexsee{precategory!slice}{category, slice}%
   \indexsee{slice (pre)category}{category, slice}%
-  Show that if $A$ is a category, so is $A/a$.
+  证明若 $A$ 是范畴，则 $A/a$ 也是范畴。
   \indexdef{category!slice}%
 \end{ex}
 
 \begin{ex}\label{ex:set-slice-over-equiv-functor-category}
-  For any set $X$, prove that the slice category $\uset/X$ is equivalent to the functor category $\uset^X$, where in the latter case we regard $X$ as a discrete category.
+  对任意集合 $X$，证明切片范畴 $\uset/X$ 等价于函子范畴 $\uset^X$，其中在后一种情形中将 $X$ 视为离散范畴。
 \end{ex}
 
 \begin{ex}\label{ex:functor-equiv-right-adjoint}
   \index{adjoint!functor}%
   \index{adjoint!equivalence}%
-  Prove that a functor is an equivalence of categories if and only if it is a \emph{right} adjoint whose unit and counit are isomorphisms.
+  证明一个函子是范畴的等价，当且仅当它是一个\emph{右}伴随，且其单位与余单位皆为同构。
 \end{ex}
 
 \begin{ex}\label{ct:pre2cat}
-  Define the notion of \define{pre-2-category}.
+  定义\define{前2-范畴}的概念。
   \indexdef{pre-2-category}%
-  Show that precategories, functors, and natural transformations as defined in \cref{sec:transfors} form a pre-2-category.
-  Similarly, define a \define{pre-bicategory}
+  证明在 \cref{sec:transfors} 中定义的预范畴、函子和自然变换构成一个前2-范畴。
+  类似地，通过将等式（例如 \cref{ct:functor-assoc,ct:units} 中的那些）替换为满足类似相容条件的自然同构，来定义\define{前双范畴}。
   \indexdef{pre-bicategory}%
-  by replacing the equalities (such as those in \cref{ct:functor-assoc,ct:units}) with natural isomorphisms satisfying analogous coherence conditions.
-  Define a function from pre-2-categories to pre-bicategories, and show that it becomes an equivalence when restricted and corestricted to those whose hom-pre\-cat\-egories are categories.
+  定义一个从前2-范畴到前双范畴的函数，并证明当将其定义域与陪域都限制到那些 Hom 预范畴是范畴的前2-范畴上时，它成为一个等价。
 \end{ex}
 
 \begin{ex}\label{ct:2cat}
-  Define a \define{2-category}
+  定义\define{2-范畴}为满足类似于 \cref{ct:category} 中条件的前2-范畴。
   \indexdef{2-category}%
-  to be a pre-2-category satisfying a condition analogous to that of \cref{ct:category}.
-  Verify that the pre-2-category of categories \ucat is a 2-category.
-  How much of this chapter can be done internally to an arbitrary 2-category?
+  验证范畴的前2-范畴 \ucat 是一个2-范畴。本章有多少内容可以在任意2-范畴内部完成？
 \end{ex}
 
 \begin{ex}\label{ct:groupoids}
-  Define a 2-category whose objects are 1-types, whose morphisms are functions, and whose 2-morphisms are homotopies.
-  Prove that it is equivalent, in an appropriate sense, to the full sub-2-category of \ucat spanned by the \emph{groupoids} (categories in which every arrow is an isomorphism).
+  定义一个2-范畴，其对象是1-类型，态射是函数，2-态射是同伦。
+  证明它在适当的意义上等价于 \ucat 中由\emph{群胚}（即其中每个箭头都是同构的范畴）张成的全子2-范畴。
 \end{ex}
 
 \begin{ex}\label{ex:2strict-cat}
   \index{strict!category}%
-  Recall that a \emph{strict category} is a precategory whose type of objects is a set.
-  Prove that the pre-2-category of strict categories is equivalent to the following pre-2-category.
+  回顾\emph{严格类别}，它是对象类型为集合的预范畴。
+  证明严格范畴的前2-范畴等价于下述前2-范畴。
   \begin{itemize}
-  \item Its objects are categories $A$ equipped with a surjection
+  \item 其对象是范畴 $A$，配备一个满射
     % \footnote{Recall that a function $f:X\to Y$ is a \emph{surjection} if for every $y:Y$, there \emph{merely exists} an $x:X$ such that $f(x)=y$.  This is to be distinguished from a \emph{split surjection}, which has the property that for every $y:Y$ there \emph{exists} an $x:X$ such that $f(x)=y$.}
-    $p_A:A_0'\to A_0$, where $A_0'$ is a set.
-  \item Its morphisms are functors $F:A\to B$ equipped with a function $F_0':A_0' \to B_0'$ such that $p_B \circ F_0' = F_0 \circ p_A$.
-  \item Its 2-morphisms are simply natural transformations.
+    $p_A:A_0'\to A_0$，其中 $A_0'$ 是一个集合。
+  \item 其态射是函子 $F:A\to B$，配备一个函数 $F_0':A_0' \to B_0'$ 使得 $p_B \circ F_0' = F_0 \circ p_A$。
+  \item 其 2-态射即为自然变换。
   \end{itemize}
 \end{ex}
 
 \begin{ex}\label{ex:pre2dagger-cat}
-  Define the pre-2-category of $\dagger$-categories, which has $\dagger$-struc\-tures on its hom-pre\-cat\-egories.
-  Show that two $\dagger$-categories are equal precisely when they are ``unitarily equivalent'' in a suitable sense.
+  定义 $\dagger$-范畴的前2-范畴，其上的态射预范畴具有 $\dagger$-结构。
+  证明两个 $\dagger$-范畴相等，当且仅当它们在适当的意义下是“酉等价”的。
 \end{ex}
 
 \begin{ex}\label{ct:ex:hocat}
-  Prove that a function $X\to Y$ is an equivalence if and only if its image in the homotopy category of \cref{ct:hocat} is an isomorphism.
-  Show that the type of objects of this category is $\trunc1\type$.
+  证明一个函数 $X\to Y$ 是一个等价，当且仅当它在 \cref{ct:hocat} 的同伦范畴中的像是一个同构。
+  证明这个范畴的对象类型是 $\trunc1\type$。
 \end{ex}
 
 \begin{ex}\label{ex:dagger-rezk}
-  Construct the $\dagger$-Rezk completion of a $\dagger$-precategory into a $\dagger$-category, and give it an appropriate universal property.
+  构造从 $\dagger$-预范畴到 $\dagger$-范畴的 \define{$\dagger$-Rezk 完备化（$\dagger$-Rezk completion）}，并赋予其适当的泛性质。
 \end{ex}
 
 \begin{ex}\label{ex:rezk-vankampen}
@@ -1828,22 +1838,19 @@ However, in higher topos models of homotopy type theory, the Rezk completion cor
   \index{theorem!van Kampen}%
   \index{fundamental!groupoid}%
   \index{fundamental!pregroupoid}%
-  Using fundamental (pre)groupoids from \cref{ct:fundgpd,ct:rezk-fundgpd-trunc1} and the Rezk completion from \cref{sec:rezk}, give a different proof of van Kampen's theorem (\cref{sec:van-kampen}).
+  利用 \cref{ct:fundgpd,ct:rezk-fundgpd-trunc1} 中的基本（预）群胚和 \cref{sec:rezk} 中的 Rezk 完备化，给出 van Kampen 定理（\cref{sec:van-kampen}）的另一个证明。
 \end{ex}
 
 \begin{ex}\label{ex:stack}
-  Let $X$ and $Y$ be sets and $p:Y\to X$ a surjection.
+  设 $X$ 与 $Y$ 为集合，$p:Y\to X$ 为满射。
   \begin{enumerate}
-  \item Define, for any precategory $A$, the category $\mathrm{Desc}(A,p)$ of \define{descent data}
+  \item 对任意预范畴 $A$，定义 $A$ 中相对于 $p$ 的\define{下降数据}范畴 $\mathrm{Desc}(A,p)$。
     \indexdef{descent data}%
-    in $A$ relative to $p$.
-  \item Show that any precategory $A$ is a \define{prestack}
+  \item 证明任意预范畴 $A$ 都是关于 $p$ 的\define{预层栈}，即典范函子 $A^X \to \mathrm{Desc}(A,p)$ 是全忠实的。
     \indexdef{prestack}%
-    for $p$, i.e.\ the canonical functor $A^X \to \mathrm{Desc}(A,p)$ is fully faithful.
-  \item Show that if $A$ is a category, then it is a \define{stack}
+  \item 证明若 $A$ 是一个范畴，则它是关于 $p$ 的\define{层栈}，即 $A^X \to \mathrm{Desc}(A,p)$ 是一个等价。
     \indexdef{stack}%
-    for $p$, i.e.\ $A^X \to \mathrm{Desc}(A,p)$ is an equivalence.
-  \item Show that the statement ``every strict category is a stack for every surjection of sets'' is equivalent to the axiom of choice.
+  \item 证明命题“每个严格范畴都是关于任意集合满射的层栈”等价于选择公理。
     \index{axiom!of choice}%
     \index{strict!category}%
   \end{enumerate}

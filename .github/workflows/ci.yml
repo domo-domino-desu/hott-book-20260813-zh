@@ -1,15 +1,17 @@
-name: Build
+name: Build and Release
 
 on:
   workflow_dispatch:
   push:
     branches:
       - master
-  pull_request:
+
+permissions:
+  contents: write
 
 jobs:
   build:
-    name: Build and update nightlies
+    name: Build PDFs and publish release
     runs-on: ubuntu-latest
     container: danteev/texlive:2025-07-15
     steps:
@@ -20,55 +22,42 @@ jobs:
         run: git config --global --add safe.directory '*'
 
       - name: Fetch all tags for `git describe`
-        run: git fetch --force --prune --unshallow --tags
+        run: git fetch --force --prune --unshallow --tags || true
 
-      - name: Check em dash style
-        run: "! grep -r '[^ ]---[^ ]' --include='*.tex' || { echo 'Please space the em dashes'; exit 1; }"
+      - name: Compute release version (timestamp)
+        id: version
+        run: echo "version=$(date -u +%Y%m%d-%H%M%S)" >> "$GITHUB_OUTPUT"
 
-      - name: Update ./errata.tex
-        # ./mark-errata should only run on the master branch of the main repo.
-        # This job is thus disabled for pull requests and forked repos.
-        if: ${{ github.repository_owner == 'HoTT' && github.ref == 'refs/heads/master' }}
+      - name: Build PDFs
         run: |
-          ./mark-errata
-          if ! git diff --quiet -- ./errata.tex; then
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@github.com"
-            git add errata.tex
-            git commit -m "Mark Errata (auto)"
-            git push
-          fi
+          make hott-online.pdf
+          make hott-ebook.pdf
+          make hott-ebook-wide.pdf
+          make hott-ebook-narrow.pdf
+          make hott-a4.pdf
+          make hott-letter.pdf
 
-      - name: Generate nightlies
-        run: ./generate-nightlies "./_www_dir/" "./_wiki_dir/"
-
-      - name: Check if errata.tex is clean
-        # Interrupt the uploading if errata.tex somehow is not clean.
-        # This should not happen, but it does not hurt to check.
-        if: ${{ github.repository_owner == 'HoTT' && github.ref == 'refs/heads/master' }}
-        run: ./check-errata
-
-      - name: Push GitHub pages
-        # This step is disabled for all forked repos. The idea is that the nightlies will
-        # not be useful for most usage of forked repos. However, there are no technical
-        # reasons not to enable it, if one wishes to do so.
-        if: ${{ github.repository_owner == 'HoTT' && github.ref == 'refs/heads/master' }}
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          force_orphan: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: "./_www_dir/"
-
-      - name: Install gh
-        # Needed for using Andrew-Chen-Wang/github-wiki-action@v5
+      - name: Rename PDFs with version
         run: |
-          apt-get update
-          apt-get install -y gh
+          mkdir -p dist
+          VERSION="${{ steps.version.outputs.version }}"
+          cp hott-online.pdf        "dist/hott-book-zh-online-${VERSION}.pdf"
+          cp hott-ebook.pdf         "dist/hott-book-zh-ebook-${VERSION}.pdf"
+          cp hott-ebook-wide.pdf    "dist/hott-book-zh-ebook-wide-${VERSION}.pdf"
+          cp hott-ebook-narrow.pdf  "dist/hott-book-zh-ebook-narrow-${VERSION}.pdf"
+          cp hott-a4.pdf            "dist/hott-book-zh-a4-${VERSION}.pdf"
+          cp hott-letter.pdf        "dist/hott-book-zh-letter-${VERSION}.pdf"
 
-      - name: Push GitHub wiki pages
-        # This step would err if the forked repo does not already have wiki pages.
-        # As a workaround, it is disabled for all forked repos.
-        if: ${{ github.repository_owner == 'HoTT' && github.ref == 'refs/heads/master' }}
-        uses: Andrew-Chen-Wang/github-wiki-action@v5
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
         with:
-          path: _wiki_dir
+          name: hott-book-zh-pdfs-${{ steps.version.outputs.version }}
+          path: dist/*.pdf
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
+          files: dist/*.pdf
+          generate_release_notes: true
