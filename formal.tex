@@ -295,13 +295,11 @@ $A\rightarrow B$，并导出以下规则：
 
 \subsection{依值对类型（\texorpdfstring{$\Sigma$}{Σ}-类型）}
 
-我们引入原始常量 $c_\Sigma$ 和 $c_{\mathsf{pair}}$。An
-expression of the form $c_\Sigma(A,\lam{a} B)$ is written as $\sm{a:A}B$,
-and an expression of the form $c_{\mathsf{pair}}(a,b)$ is written as $\tup
-a b$. We write $A\times B$ instead of $\sm{x:A} B$ if $x$ is not free in $B$.
+我们引入原始常量 $c_\Sigma$ 和 $c_{\mathsf{pair}}$。
+形如 $c_\Sigma(A,\lam{a} B)$ 的表达式记作 $\sm{a:A}B$，形如 $c_{\mathsf{pair}}(a,b)$ 的表达式记作 $\tup a b$。
+若 $x$ 不在 $B$ 中自由出现，我们就把 $\sm{x:A} B$ 写作 $A\times B$。
 
-Judgments concerning such expressions are introduced by the following
-rules:
+关于此类表达式的判断，由以下规则引入：
 %
 
 
@@ -312,7 +310,7 @@ rules:
 
 
 %
-If we have $A$ and $B$ as above, $C : (\sm{x:A}B(x)) \rightarrow \UU_m$, and
+设 $A$ 与 $B$ 如上，$C : (\sm{x:A}B(x)) \rightarrow \UU_m$，且
 \[
   d:\tprd{x:A}{y:B(x)} C(\tup x y)
 \]
@@ -325,7 +323,7 @@ with the defining equation
   f(\tup x y)\defeq d(x,y).
 \]
 %
-Note that $C$, $d$, $x$, and $y$ may contain extra implicit parameters $x_1,\ldots,x_n$ if they were obtained in some non-empty context; therefore, the fully explicit recursion schema is
+注意，若 $C$、$d$、$x$、$y$ 是在某个非空上下文中得到的，它们可能带有额外的隐式参数 $x_1,\ldots,x_n$；因此，完全显式的递归模式为
 %
 \begin{narrowmultline*}
  f(x_1,\dots,x_n,\tup{x(x_1,\dots,x_n)}{y(x_1,\dots,x_n)}) \defeq
@@ -448,7 +446,7 @@ $f:\tprd{z:\wtype{x:A}B(x)} C(z)$，
   f(a,\refl{a})\defeq d.
 \]
 
-\section{第二套表示法}
+\section{第二种表述}
 \label{sec:syntax-more-formally}
 
 本节中有三种判断

@@ -39,8 +39,8 @@
 
 \index{mathematics!formalized}%
 \indexsee{formalization of mathematics}{mathematics, formalized}%
-第三，我们的综合方法非常适合利用 \Coq 和 \Agda 等\index{proof!assistant}证明辅助工具进行计算机验证。
-本章所描述的证明，几乎全部都已通过计算机验证；其中许多证明最初是在证明辅助工具中给出的，而后才为本书``去形式化''。
+第三，我们的综合方法非常适合利用 \Coq 和 \Agda 等\index{proof!assistant}证明助理进行计算机验证。
+本章所描述的证明，几乎全部都已通过计算机验证；其中许多证明最初是在证明助理中给出的，而后才为本书``去形式化''。
 计算机验证证明的篇幅和工作量与这里展示的非形式证明不相上下，有时甚至更短、更容易完成。
 
 \mentalpause
@@ -1484,7 +1484,7 @@ $A\vee B$ 定义为由 $A\xleftarrow{a_0}
 我们的最终目标是证明对所有 $y:\susp X$ 和 $p:\north=y$，$\code(y,p)$ 都是可缩的。
 取 $y\defeq \north$，这将表明 $\sigma$ 的所有纤维都是 $2n$-连通的，从而 $\sigma$ 是 $2n$-连通的。
 
-\begin{proof}[Proof of \cref{thm:freudcode}]
+\begin{proof}[\cref{thm:freudcode} 的证明]
   我们通过对 $y:\susp X$ 进行归纳来定义 $\code(y,p)$，其中前两种情形是~\eqref{eq:freudcodeN} 与~\eqref{eq:freudcodeS}。
   接下来需要对每个 $x_1:X$ 构造一个依值道路
   \[ \dpath{\lam{y}(\north=y)\to\type}{\merid(x_1)}{\code(\north)}{\code(\south)}. \]
@@ -1556,7 +1556,7 @@ $A\vee B$ 定义为由 $A\xleftarrow{a_0}
 \end{equation}
 其中 $r:\merid(x_0) \ct \opp{\merid(x_0)} = \transfib{B}{\opp{\merid(x_1)}}{q}$，而 $r'':\merid(x_1)=q$ 是通过将其终点等同起来并重新排列道路而得到的。
 
-\begin{proof}[Proof of \cref{thm:freudenthal}]
+\begin{proof}[\cref{thm:freudenthal} 的证明]
   接下来要证明，对于每个 $y:\susp X$ 和 $p:\north=y$， $\code(y,p)$ 都是可缩的。
   首先，我们必须选定一个收缩中心，记作 $c(y,p):\code(y,p)$。
   这对应于我们先前证明中 $\encode$ 函数的定义，因此我们用传输来定义它。
@@ -1604,7 +1604,7 @@ $A\vee B$ 定义为由 $A\xleftarrow{a_0}
 
 % As a corollary, we have the following equivalence.
 
-\begin{cor}[Freudenthal Equivalence] \label{cor:freudenthal-equiv}
+\begin{cor}[Freudenthal 等价性] \label{cor:freudenthal-equiv}
   设 $X$ 是 $n$-连通且带点的类型，其中 $n\geq 0$。
   那么 $\eqv{\trunc{2n}{X}}{\trunc{2n}{\Omega\susp(X)}}$。
 \end{cor}
@@ -1624,7 +1624,7 @@ $A\vee B$ 定义为由 $A\xleftarrow{a_0}
 \index{type!n-sphere@$n$-sphere}%
 Freudenthal 纬悬定理的一个重要推论是，球面的同伦群在某个范围内是稳定的（这些范围对应于 \cref{tab:homotopy-groups-of-spheres} 中从东北到西南方向的对角线）：
 
-\begin{cor}[Stability for Spheres] \label{cor:stability-spheres}
+\begin{cor}[球面的稳定性] \label{cor:stability-spheres}
   若 $k \le 2n-2$，则 $\pi_{k+1}(S^{n+1}) = \pi_{k}(S^{n})$。
 \end{cor}
 
@@ -2450,7 +2450,7 @@ $\decode \circ \encode$ 为恒等映射，这由 \ref{item:decode-encode-loop-ii
 为证明此类型，我们进行道路归纳，并在归约 \encode 之后，使用假设~\ref{item:decode-encode-loop-iv}。
 \end{proof}
 
-\section{附加结果}
+\section{更多结果}
 \label{sec:moreresults}
 
 尽管本章没有给出证明，但下列结果也已在同伦类型论中建立。
@@ -2548,12 +2548,12 @@ van Kampen 定理                & \computercheck \\
 }
 
 本章所描述的定理都是经典同伦论中的标准结果；其中许多在 \cite{hatcher02topology} 中有所记述。
-在这部分注记里，我们回顾这些定理在同伦类型论中新的综合证明是如何发展起来的。
+在这部分附注里，我们回顾这些定理在同伦类型论中新的综合证明是如何发展起来的。
 \cref{tab:theorems} 列出了已在同伦类型论中得到证明的同伦论定理，以及它们是否经过了计算机验证。
 这些成果几乎全部诞生于 2013 年高等研究院（IAS）的春季学期，是一次重要协作努力的结晶。
 许多人为此作出了贡献，例如担任某个证明的主要作者、提出值得研究的问题、参与大量相关问题的讨论与研讨班，或对已有成果提供反馈。
 以下人员是上述定理的首批同伦类型论证明的主要作者。
-除非另有说明，对于已经过计算机验证的定理，其主要作者也是率先使用计算机证明辅助工具将证明\index{mathematics!formalized}形式化的人。
+除非另有说明，对于已经过计算机验证的定理，其主要作者也是率先使用计算机证明助理将证明\index{mathematics!formalized}形式化的人。
 
 \begin{itemize}
 \item

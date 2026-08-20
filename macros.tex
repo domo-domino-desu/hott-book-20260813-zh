@@ -3,8 +3,8 @@
 
 %%% Notes and exercise sections
 \makeatletter
-\newcommand{\sectionNotes}{\phantomsection\section*{Notes}\addcontentsline{toc}{section}{Notes}\markright{\textsc{\@chapapp{} \thechapter{} Notes}}}
-\newcommand{\sectionExercises}[1]{\ifdef{\OPTexerciseperpage}{\newpage}{}\phantomsection\section*{Exercises}\addcontentsline{toc}{section}{Exercises}\markright{\textsc{\@chapapp{} \thechapter{} Exercises}}}
+\newcommand{\sectionNotes}{\phantomsection\section*{附注}\addcontentsline{toc}{section}{附注}\markright{\textsc{\@chapapp{} \thechapter{} 附注}}}
+\newcommand{\sectionExercises}[1]{\ifdef{\OPTexerciseperpage}{\newpage}{}\phantomsection\section*{习题}\addcontentsline{toc}{section}{习题}\markright{\textsc{\@chapapp{} \thechapter{} 习题}}}
 \makeatother
 
 %%% Definitional equality (used infix) %%%
@@ -709,6 +709,12 @@
 % 中译本改动：环境标题（\newtheorem 第二个参数）和 cleveref 的 \cref 输出
 % （\crefname 后两个参数）都改成中文，让"定理 3.2.1"这类自动生成的标题和
 % 交叉引用文字跟已经译成中文的正文保持一致，不再是中英夹杂。
+% 中译本改动：amsthm 环境标题（``引理 3.1''这类）默认用 \bfseries 加粗，
+% 但正文强调已经统一改用 zhemph family（黑体）而非宋体假粗体（见上面
+% \renewcommand{\textbf}）；这里让 thm/cor/lem/axiom/defn 这些加粗标题的
+% 环境也走同一套字体，保持全书粗体观感一致。remark 样式（注记/例/习题等）
+% 用的是斜体而非加粗，不受影响，故不改。
+\thm@headfont{\CJKfamily{zhemph}\bfseries}
 \newtheorem{thm}{定理}[section]
 \crefname{thm}{定理}{定理}
 %\defthm{prop}{Proposition}   % Probably we shouldn't use "Proposition" in this way
@@ -718,6 +724,7 @@
 % Since definitions and theorems in type theory are synonymous, should
 % we actually use the same theoremstyle for them?
 \theoremstyle{definition}
+\thm@headfont{\CJKfamily{zhemph}\bfseries}
 \defthm{defn}{定义}{定义}
 \theoremstyle{remark}
 \defthm{rmk}{注记}{注记}

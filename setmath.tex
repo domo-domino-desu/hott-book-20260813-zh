@@ -31,13 +31,13 @@
 而在\cref{sec:cumulative-hierarchy}中，则会使用一个更复杂的高阶归纳类型来呈现累积层次。
 
 %\section{\texorpdfstring{$\set$}{Set} is a \texorpdfstring{$\Pi$}{Π}W-pretopos}
-\section{The category of sets}
+\section{集合的范畴}
 \label{sec:piw-pretopos}
 
 回顾在\cref{cha:category-theory}中，我们将范畴 \uset 定义为由所有 $0$-类型（位于某个宇宙 \UU 中）及其间的映射构成，并指出它是一个范畴（而不仅仅是预范畴）。
 下面我们依次考察 \uset 所具备的各级结构。
 
-\subsection{Limits and colimits}
+\subsection{极限与余极限}
 \label{subsec:limits-sets}
 
 \index{limit!of sets}%
@@ -57,7 +57,7 @@
 \index{category!cocomplete}%
 \index{cocomplete category}%
 
-\subsection{Images}
+\subsection{像}
 \label{sec:image}
 
 %We will show that $\uset$ is a $\Pi$W-pretopos.
@@ -1234,7 +1234,7 @@ P(a,\acc_<(a,h)),
 这条引理揭示了使用``类型歧义''\index{typical ambiguity}风格——即用 \UU 表示一个任意且未指定的宇宙——可能带来的隐患。
 考虑如下另一种证明。
 
-\begin{proof}[\cref{thm:ordsucc} 的另一种拟议证明]
+\begin{proof}[假设的 \cref{thm:ordsucc} 的另一种证明]
   注意到 $C<A$ 当且仅当存在某个 $a:A$ 使得 $C=\ordsl A a$。
   这给出了一个同构 $A \cong \ordsl \ord A$，从而 $A<\ord$。
   于是我们可以取 $B\defeq\ord$。

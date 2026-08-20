@@ -136,7 +136,7 @@
 但对于高阶归纳类型，这一点就不那么清晰了。%, and it is likewise less clear to what extent these equalities can be made judgmental in the known set-theoretic models.
 此外，由于操作 $\apfunc f$ 并非类型论真正的基本组成部分，而是我们利用相等类型的归纳原理\emph{定义}出来的（而且我们本可选择其他等价的方式来定义），在一条\emph{判断}相等性中显式地引用它似乎并不合适。
 判断相等性是演绎系统的一部分，而演绎系统不应该依赖于我们可能在该系统\emph{内部}做出的特定定义选择。
-同时还需要考虑语义和实现方面的问题；详见注记。
+同时还需要考虑语义和实现方面的问题；详见附注。
 
 不过，将高阶归纳类型的\emph{点}构造子的计算规则设为判断相等性，似乎是没有问题的。
 在上面的例子中，这就意味着我们有 $f(\base)\jdeq b$。
@@ -822,7 +822,7 @@ $\susp A$ 的递归原理是说，给定一个类型 $B$ 以及以下数据：
 不过，写出归纳原理确实会变得越来越困难，这需要我们定义依值 $n$-道路的概念，以及 $\apdfunc{}$ 作用于 $n$-道路的方式。
 幸运的是，一旦我们掌握了球面，就有办法绕过这个问题。
 
-\section{Hubs and spokes}
+\section{轮毂和辐条}
 \label{sec:hubs-spokes}
 
 \indexsee{spoke}{hub and spoke}%
@@ -2137,7 +2137,7 @@ $H*K$，即群范畴中的余积。
 
 现在我们终于可以证明展平引理了。
 
-\begin{proof}[Proof of \cref{thm:flattening}]
+\begin{proof}[\cref{thm:flattening} 的证明]
   我们利用 \Wtil 的递归原理，以 $\cct'$ 和 $\ppt'$ 作为输入数据来定义 $h:\Wtil \to \sm{w:W}P(w)$。
   类似地，我们利用 \cref{thm:flattening-rectnd} 的递归原理，以 $\cct$ 和 $\ppt$ 作为输入数据来定义 $k:(\sm{w:W}P(w)) \to \Wtil$。
 
@@ -2215,18 +2215,16 @@ $H*K$，即群范畴中的余积。
 \sectionNotes
 
 高阶归纳类型的一般概念诞生于 2011 年 Oberwolfach 会议上 Andrej Bauer、Peter Lumsdaine、Mike Shulman 和 Michael Warren 之间的讨论，尽管早期工作中已有一些特殊情形的线索。
-随后，Guillaume Brunerie 和 Dan Licata 对一般理论作出了重要贡献，尤其是找到了在计算机证明助手中表示它们并用其开展同伦论的便捷方法（参见 \cref{cha:homotopy}）。
+随后，Guillaume Brunerie 和 Dan Licata 对一般理论作出了重要贡献，尤其是找到了在计算机证明助理中表示它们并用其开展同伦论的便捷方法（参见 \cref{cha:homotopy}）。
 
 关于高阶归纳类型的语法及其在高阶范畴模型中的语义的一般讨论，可见于 \cite{ls:hits}。
 与普通的归纳类型类似，高阶归纳类型的模型可以通过超限迭代过程来构造；一个通俗的说法是：普通归纳类型描述的是\emph{自由}单子，而高阶归纳类型描述的是单子的\emph{展示}。\index{monad}
 引入道路构造子也涉及模型范畴论中``右同伦''（用道路空间定义）与``左同伦''（用柱体定义）之间的等价——这一等价通常只在同伦意义下成立，这为更倾向于对道路构造子采用命题计算规则提供了语义上的理由。
 
 另一个（暂时的）理由来自现有计算机实现的局限。
-像 \Coq 和 \Agda 这样的证明助手\index{proof!assistant}内置了普通的归纳类型，但尚未内置高阶归纳类型。
+像 \Coq 和 \Agda 这样的证明助理\index{proof!assistant}内置了普通的归纳类型，但尚未内置高阶归纳类型。
 我们当然可以通过假设大量公理来引入它们，但这只能得到命题层面的计算规则。
 然而，Dan Licata 有一个技巧，可以利用私有数据类型来实现高阶归纳类型；这样可以获得点构造子的判断规则，但对道路构造子则不行。
-
-\sectionNotes
 
 在 \cref{sec:circle,sec:suspension} 中利用环路空间和纬悬对高维球面所作的类型论描述，主要归功于 Brunerie 和 Licata；Hou 则给出了使用 $n$ 维道路\index{path!n-@$n$-}进行替代描述的类型论版本。
 将高阶道路化约为带枢纽和辐条的 1 维道路（\cref{sec:hubs-spokes}）的方法，归功于 Lumsdaine 和 Shulman。

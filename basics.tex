@@ -241,7 +241,7 @@ d & :\prd{a:A} D(a,a,\refl{a})
 
 请注意，我们选择的道路拼接记法与函数复合的顺序相反：由 $p:x=y$ 和 $q:y=z$ 得到 $p\ct q : x=z$，而由 $f:A\to B$ 和 $g:B\to C$ 得到 $g\circ f : A\to C$（参见 \cref{ex:composition}）。
 
-\begin{proof}[第一种证法]
+\begin{proof}[第一种证明]
   所需函数的类型为 $\prd{x,y,z:A} (x= y) \to   (y= z)\to (x=  z)$。
   不过，我们将改为定义一个具有等价类型 $\prd{x,y:A} (x= y) \to \prd{z:A} (y= z)\to (x=  z)$ 的函数，这使得我们可以应用两次道路归纳。
   令 $D:\prd{x,y:A} (x=y) \to \type$ 为类型族
@@ -275,7 +275,7 @@ d & :\prd{a:A} D(a,a,\refl{a})
   两次归纳原理的计算规则给出：对任意 $x:A$，有 $\refl{x}\ct \refl{x}\jdeq \refl{x}$。
 \end{proof}
 
-\begin{proof}[第二种证法]
+\begin{proof}[第二种证明]
   我们要对每个 $x,y,z:A$ 以及每个 $p:x=y$ 和 $q:y=z$，构造 $x=z$ 的一个元素。
   对 $p$ 作归纳，只需假设 $y$ 是 $x$ 且 $p$ 是 $\refl{x}$。
   此时，$q$ 的类型 $y=z$ 即为 $x=z$。
@@ -668,7 +668,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 
 记号 $\apfunc f$ 既可以理解为 $f$ 对一条道路的\underline{应}用（\underline{ap}plication），也可以理解为 $f$ 在道路上的\underline{作}用（\underline{a}ction on \underline{p}aths）。
 
-\begin{proof}[第一种证法]
+\begin{proof}[第一种证明]
   令 $D:\prd{x,y:A} (x=y) \to \type$ 为由下式定义的类型族：
   \[D(x,y,p)\defeq (f(x)= f(y)).\]
   于是我们有
@@ -679,7 +679,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
   计算规则蕴含对每个 $x:A$ 有 $\apfunc f({\refl{x}})\jdeq\refl{f(x)}$。
 \end{proof}
 
-\begin{proof}[第二种证法]
+\begin{proof}[第二种证明]
   为对所有 $p:x=y$ 定义 $\apfunc{f}(p)$，由归纳法，只需假设 $p$ 是 $\refl{x}$。
   在此情形下，可以定义 $\apfunc f(p) \defeq \refl{f(x)}:f(x)= f(x)$。
 \end{proof}
@@ -727,7 +727,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
   那么存在一个函数 $\transf{p}:P(x)\to P(y)$。
 \end{lem}
 
-\begin{proof}[第一种证法]
+\begin{proof}[第一种证明]
   令 $D:\prd{x,y:A} (\id{x}{y}) \to \type$ 为由下式定义的类型族：
   \[D(x,y,p)\defeq P(x)\to P(y).\]
   那么我们有函数
@@ -737,7 +737,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
   因此，归纳原理给出 $\indid{A}(D,d,x,y,p):P(x)\to P(y)$，我们将其定义为 $\transf p$。
 \end{proof}
 
-\begin{proof}[第二种证法]
+\begin{proof}[第二种证明]
   由归纳法，只需假设 $p$ 是 $\refl x$。
   但在此情形下，我们可以取 $\transf{(\refl x)}:P(x)\to P(x)$ 为恒等函数。
 \end{proof}
@@ -1204,7 +1204,7 @@ $\alpha:f\circ g\htpy \idfunc[B]$ 和 $\beta:g\circ f\htpy \idfunc[A]$。
 然而，关于宇宙（\cref{sec:compute-universe}）的公理，则是同伦类型论中由 Voevodsky 提出的新贡献：它被称为\emph{泛等公理}，其内容（粗略地说）是：如果两个类型在\cref{sec:basics-equivalences}的意义下是等价的，那么它们相等。
 我们已在导论中提到过这条公理；它将在本书中发挥重要作用。%
 \footnote{我们选择将这些原理作为公理引入，但也存在其他可能的方式来构造一套使之成立的类型论。
-  详见本章注记。}
+  详见本章附注。}
 
 需要特别注意的是，并非\emph{所有}的相等类型都能通过对类型构造进行归纳来``确定''。
 反例包括大多数非平凡的高阶归纳类型（参见\cref{cha:hits,cha:homotopy}）。
@@ -2397,8 +2397,8 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 \index{type theory!intensional}%
 \index{type theory!extensional}%
 \index{reflection rule}%
-正如在 \cref{cha:typetheory} 的注记中提到的，我们这里使用的相等类型属于\emph{内涵}类型论（intensional type theory），而非\emph{外延}类型论（extensional type theory）。
-一般来说，若一种相等性概念会根据对象的具体定义方式来区分对象，则称其为``内涵的（intensional）''；若它对具有相同``外延''或``可观察行为''的对象不加区分，则称其为``外延的（extensional）''。
+正如在 \cref{cha:typetheory} 的附注中提到的，我们这里使用的相等类型属于\emph{内涵}类型论（intensional type theory），而非\emph{外延}类型论（extensional type theory）。
+一般来说，如果某种相等性概念根据对象的具体定义方式来区分对象，我们就称其为“内涵的（intensional）”；如果它不区分具有相同“外延”或“可观察行为”的对象，则称其为``外延的（extensional）''。
 用 Frege（弗雷格）的术语来说，内涵相等性比较的是\emph{涵义（sense）}，而外延相等性仅比较\emph{指称（reference）}。
 我们也可以说一种相等性比另一种``更外延''或``更不外延''，分别意味着它考虑的对象内涵方面更少或更多。
 
@@ -2414,8 +2414,6 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 然而，反射规则同时也意味着所有高阶群胚结构都会坍缩（参见 \cref{ex:equality-reflection}），因此与泛等公理不相容（参见 \cref{thm:type-is-not-a-set}）。
 因此，若将泛等性视为一种外延性质，则可以说内涵类型论所允许的相等类型比外延类型论所允许的更加外延。
 
-\sectionNotes
-
 相等性的对称性（求逆）与传递性（拼接）在类型论中的证明已广为人知。
 这些性质使得每个类型（在同伦意义下）成为一个 1-群胚，\cite{hs:gpd-typethy} 利用这一事实给出了类型论的首个``同伦式''语义。
 
@@ -2424,7 +2422,7 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 关于在类型论中构造 $\infty$-群胚的\emph{所有}高阶运算及连贯性，可参见~\cite{pll:wkom-type} 和~\cite{bg:type-wkom}。
 
 \index{proof!assistant!Coq@\textsc{Coq}}%
-诸如 $\transfib{P}{p}{\blank}$ 与 $\apfunc{f}$ 等操作，以及一种恰当的等价概念，最初由 Voevodsky 使用证明辅助工具 \Coq 在类型论中加以深入研究。
+诸如 $\transfib{P}{p}{\blank}$ 与 $\apfunc{f}$ 等操作，以及一种恰当的等价概念，最初由 Voevodsky 使用证明助理 \Coq 在类型论中加以深入研究。
 此后，人们又发现了``等价''的其他多种等价定义，在 \cref{cha:equivalences} 中作了比较。
 
 \cref{sec:computational} 中描述的关于相等类型、迁移（transport）等的``计算性''解释，受到了~\cite{lh:canonicity} 的强调。

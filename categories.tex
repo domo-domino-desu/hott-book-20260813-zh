@@ -37,7 +37,7 @@
 我们将在本章证明最后一个论断，以及范畴的其他一些良好性质，例如，等价的范畴（作为范畴类型的元素）是相等的。
 我们还将描述一种将预范畴 $A$ ``饱和''为范畴 $\widehat A$ 的通用方法，我们称其为 $A$ 的\emph{Rezk 完备化（Rezk completion）}。
 \index{completion!Rezk}%
-不过，它也可以合理地被称为\emph{层栈完备化（stack completion）}（参见章末注记）。
+不过，它也可以合理地被称为\emph{层栈完备化（stack completion）}（参见章末附注）。
 
 Rezk 完备化也能进一步阐明范畴的等价这一概念。
 例如，函子 $A \to \widehat{A}$ 总是全忠实且本质满的，因而是``弱等价（weak equivalence）''。
@@ -49,7 +49,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 我们所说的一切对于任意一致的宇宙层级选择都成立\index{universe level}。
 我们将使用来自 \cref{cha:typetheory,cha:basics} 的同伦类型论基本概念，以及来自 \cref{cha:logic} 的命题截断，除此之外基本不涉及 \cref{part:foundations} 的其他内容——唯一的例外是构造 Rezk 完备化的第二种方法会用到高阶归纳类型。
 
-\section{Categories and precategories}
+\section{范畴和预范畴}
 \label{sec:cats}
 
 在经典数学中，范畴有许多等价定义。
@@ -1555,7 +1555,7 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
   对任何预范畴 $A$，存在一个范畴 $\widehat A$ 和一个弱等价 $A\to\widehat{A}$。
 \end{thm}
 
-\begin{proof}[证明一]
+\begin{proof}[第一种证明]
   令 $\widehat{A}_0 \defeq \setof{ F:\uset^{A\op} | \exis{a:A} (\y a \cong F)}$，其态射集继承自 $\uset^{A\op}$。
   则包含映射 $\widehat{A} \to \uset^{A\op}$ 是全忠实的，且在对象上是一个嵌入。
   由于 $\uset^{A\op}$ 是一个范畴（根据 \cref{ct:functor-cat}，且由泛等性可知 \uset 也是范畴），$\widehat A$ 也是一个范畴。
@@ -1583,7 +1583,7 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
   这可以通过对 $p$ 作道路归纳并利用第三个构造子得出。
 
   类型 $\widehat A_0$ 将作为 $\widehat A$ 的对象类型；现在我们来构建其余的所有结构。
-  （下面的证明属于那种能极大受益于计算机证明助手的一类证明：\index{proof!assistant}它广而浅，涉及许多短小的情形需要考虑，而很大一部分工作只是写下需要验证的内容。）
+  （下面的证明属于那种能极大受益于计算机证明助理的一类证明：\index{proof!assistant}它广而浅，涉及许多短小的情形需要考虑，而很大一部分工作只是写下需要验证的内容。）
 
   \mentalpause
 

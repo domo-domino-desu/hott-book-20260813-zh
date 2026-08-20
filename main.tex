@@ -76,6 +76,50 @@ pdfkeywords={type theory, homotopy theory, univalence axiom}]{hyperref}
 % 改回 newcm：用 fontsetup 包（要求 Xe/LuaLaTeX，走 fontspec+unicode-math）
 \usepackage[default]{fontsetup}
 
+% 中译本改动：fontsetup[default] 正文本身默认已经是等高的现代体（lining）数字，
+% 问题只出在 \textsc/\scshape（页眉里 \chaptermark/\sectionmark 就是拿 \textsc
+% 包住章节号）：fspdefault.tex 给小型大写字母专门配了
+% SmallCapsFeatures={Numbers=OldStyle}，数字进了 \textsc 就会变成会下沉出基线
+% 的老式体。\addfontfeatures 只能改当前字形，改不动 sc 形状在 \setmainfont 时就
+% 定死的 SmallCapsFeatures（实测验证过，追加特性无效）；必须重新整个
+% \setmainfont 一次才会生效。下面这段就是 fspdefault.tex 里那条 \setmainfont
+% 命令的原样复制，唯一改动是把 SmallCapsFeatures 里的 Numbers=OldStyle
+% 换成 Numbers=Lining；SizeFeatures 分段保留，避免小字号（脚注等用到的
+% NewCM08）跟着受影响。
+\setmainfont[%
+  SizeFeatures={%
+{Size=-8, Font=NewCM08-Book.otf,
+      ItalicFont=NewCM08-BookItalic.otf,%
+      BoldFont=NewCM10-Bold.otf,%
+      BoldItalicFont=NewCM10-BoldItalic.otf,%
+      SlantedFont=NewCM08-Book.otf,%
+      BoldSlantedFont=NewCM10-Bold.otf,%
+      SmallCapsFeatures={Numbers=Lining}},
+{Size=8, Font=NewCM08-Book.otf,
+      ItalicFont=NewCM08-BookItalic.otf,%
+      BoldFont=NewCM10-Bold.otf,%
+      BoldItalicFont=NewCM10-BoldItalic.otf,%
+      SlantedFont=NewCM08-Book.otf,%
+      BoldSlantedFont=NewCM10-Bold.otf,%
+      SmallCapsFeatures={Numbers=Lining}},
+{Size= 9-, Font = NewCM10-Book.otf,
+      ItalicFont=NewCM10-BookItalic.otf,%
+      BoldFont=NewCM10-Bold.otf,%
+      BoldItalicFont=NewCM10-BoldItalic.otf,%
+      SlantedFont=NewCM10-Book.otf,%
+      BoldSlantedFont=NewCM10-Bold.otf,%
+      SmallCapsFeatures={Numbers=Lining}}%
+  },%
+  SmallCapsFeatures={Numbers=Lining},%
+  BoldSlantedFont=NewCM10-Bold.otf,%
+  SlantedFont=NewCM10-Book.otf,%
+  BoldItalicFont=NewCM10-BoldItalic.otf,%
+  BoldFont=NewCM10-Bold.otf,%
+  ItalicFont=NewCM10-BookItalic.otf,%
+  SlantedFeatures={FakeSlant=0.25},%
+  BoldSlantedFeatures={FakeSlant=0.25},%
+]{NewCM10-Book.otf}
+
 % \Box（模态逻辑的"必然"算子）
 \renewcommand{\Box}{□}
 
@@ -123,6 +167,17 @@ pdfkeywords={type theory, homotopy theory, univalence axiom}]{hyperref}
 \definecolor{linkcolor}{rgb}{\OPTlinkcolor}
 \usepackage{aliascnt}
 \usepackage[capitalize]{cleveref}
+% 中译本改动：交换图箭头被画成实心黑块，根源定位到 xy-pic 的 pdf 画线驱动
+% （xypdf.tex）里，线宽 \xP@lw 是直接拿 \fontdimen8\textfont3（数学字体族 3，
+% 即扩展/定界符字体的``默认规则粗细''）当线宽用的。经典 TFM 数学字体（cmex10）
+% 这个值是 0.4pt 左右；但 unicode-math（fontsetup 内部）接管数学字体族后，
+% 从 OpenType MATH 表折算出的这个兼容量变成了 ~7.2pt，于是所有直线/斜线都
+% 被画成十几倍粗的实心色块（复现：categories.tex 里的交换图）。这里手动把
+% \fontdimen8\textfont3 改回经典值，只影响 xy 内部这一处线宽计算，不影响
+% 正文数学排版本身用到的字体度量。必须放在 \setmathfont（fontsetup 内部）
+% 之后、\usepackage{xy} 之前，且不依赖 pdf/cmtip 具体选哪个纸面驱动
+% ——两者都读同一个 \fontdimen，同样受影响，同样被这一行修好。
+\fontdimen8\textfont3=0.4pt\relax
 \usepackage[all,2cell,cmtip]{xy}
 \UseAllTwocells
 \usepackage{braket} % used for \setof{ ... } macro
@@ -354,8 +409,8 @@ pdfkeywords={type theory, homotopy theory, univalence axiom}]{hyperref}
 
 % tell the index to get itself into the table of contents
 \phantomsection % black magic to get TOC to point to correct page
-\addcontentsline{toc}{part}{Index}
-\markboth{}{\textsc{Index}}
+\addcontentsline{toc}{part}{索引}
+\markboth{}{\textsc{索引}}
 \renewcommand{\markboth}[2]{}
 {\OPTindexfont
   \setlength{\columnsep}{\OPTindexcolumnsep}
