@@ -230,7 +230,7 @@ P(t) & \defeq \unit\\
 P(\iota(b)) & \defeq \brck{\hfiber{f}b}.
 \end{align*}
 为了完成 $P$ 的构造，还需要给出一条道路
-\narrowequation{\brck{\hfiber{f}{f(a)}} =_\prop \unit}
+\narrowequation{\brck{\hfiber{f}{f(a)}} =_{\prop} \unit}
 对所有 $a:A$。
 然而，$\brck{\hfiber{f}{f(a)}}$ 有实例 $(f(a),\refl{f(a)})$。
 由于它是一个命题，这意味着它是可缩的——从而等价，因此相等，于 \unit。
@@ -491,18 +491,18 @@ $\ker(f,x,y)\defeq (f(x)= f(y))$
 即一个带点对象，分类单态射（的等价类）。\index{monomorphism}（事实上，有了子对象分类子后，事情会变得更简单一些：只需笛卡尔闭性就能得到余极限。）
 
 在同伦类型论中，泛等性意味着类型$\prop \defeq \sm{X:\UU}\isprop(X)$确实分类单态射（论证类似于\cref{sec:object-classification}），但一般来说，它和背景宇宙 $\UU$ 一样大。
-因此，在"是 $0$-类型"的意义上它是一个"集合"，但在"是 $\UU$ 中对象"的意义上它并非"小的"，故而也不属于范畴 \uset。
+因此，在``是 $0$-类型''的意义上它是一个``集合''，但在``是 $\UU$ 中对象''的意义上它并非``小的''，故而也不属于范畴 \uset。
 然而，如果我们假定一种恰当的命题大小重整形式（参见\cref{subsec:prop-subsets}），那么我们就能找到一个 $\prop$ 的小版本，使得 $\uset$ 成为一个初等意象。
 
 \begin{thm}\label{thm:settopos}
   \index{propositional!resizing}%
-  如果存在一个包含所有命题的类型 $\Omega:\UU$，那么范畴 $\uset_\UU$ 是一个初等意象。
+  如果存在一个包含所有命题的类型 $\Omega:\UU$，那么范畴 $\uset_{\UU}$ 是一个初等意象。
 \end{thm}
 
 
 \index{topos|)}
 
-为此的一个充分条件是排中律，即我们称之为 \LEM{} 的"命题"形式；因为此时有 $\prop = \bool$，而 $\bool$ \emph{是}小的，并且它也分类所有命题。
+为此的一个充分条件是排中律，即我们称之为 \LEM{} 的``命题''形式；因为此时有 $\prop = \bool$，而 $\bool$ \emph{是}小的，并且它也分类所有命题。
 此外，在意象理论中，\LEM{} 的一个众所周知的充分条件是选择公理，而选择公理在经典\index{mathematics!classical}集合论中当然通常被假定为公理。
 在下一节中，我们将简要探讨在我们的框架下这些条件之间的关系。
 
@@ -544,7 +544,7 @@ P(\south,\south) & \defeq \unit.
   P(\north, \north) \eqvsym P(\north, \south) \eqvsym P(\south, \north) \eqvsym P(\south, \south).
 \end{equation*}
 %
-泛等公理将这些转化为所需的相等性。同时，$P(x,y)$ 对于所有 $x, y : \susp(A)$ 都是一个命题，这可以通过对 $x$ 和 $y$ 进行归纳，并利用"是命题"本身是一个命题这一事实来证明。
+泛等公理将这些转化为所需的相等性。同时，$P(x,y)$ 对于所有 $x, y : \susp(A)$ 都是一个命题，这可以通过对 $x$ 和 $y$ 进行归纳，并利用``是命题''本身是一个命题这一事实来证明。
 
 注意 $P$ 是一个自反关系。
 因此我们可以应用 \cref{thm:h-set-refrel-in-paths-sets}，于是只需构造 $\tau : \prd{x,y:\susp(A)}P(x,y)\to(x=y)$。我们通过双归纳来完成这一构造。
@@ -659,7 +659,7 @@ $\pairr{\bfalse,\refl{\north}} : \hfiber{f}{\north}$
   \indexsee{number!cardinal}{cardinal number}%
   是集合类型 \set 的 0-截断：
   \[ \card \defeq \pizero{\set} \]
-  因此，一个\define{基数（cardinal number）}，或简称\define{基数（cardinal）}，是 $\card\jdeq \pizero\set$ 的一个实例。当然，从技术上讲，每个宇宙 \type 都关联有一个独立的类型 $\card_\UU$。
+  因此，一个\define{基数（cardinal number）}，或简称\define{基数（cardinal）}，是 $\card\jdeq \pizero\set$ 的一个实例。当然，从技术上讲，每个宇宙 \type 都关联有一个独立的类型 $\card_{\UU}$。
 \end{defn}
 
 %\begin{rmk}
@@ -812,7 +812,7 @@ $\pairr{\bfalse,\refl{\north}} : \hfiber{f}{\north}$
 \end{thm}
 
 \begin{proof}
-  通常的"来回"论证可直接适用，无需显著改动。
+  通常的``来回''论证可直接适用，无需显著改动。
   注意，它实际上构造了一个同构 $A\cong B$（这里假设了排中律，以便判定一个给定元素是属于一个循环、一条无限链、一条始于 $A$ 的链，还是一条始于 $B$ 的链）。
 \end{proof}
 
@@ -955,7 +955,7 @@ P(a,\acc_<(a,h)),
   或许最常见的良基关系是 $\nat$ 上通常的严格序关系。
   为了证明它是良基的，需要对每个 $n:\nat$ 证明 $n$ 是可达的。
   \index{strong!induction}%
-  这正是用 $\nat$ 上的普通归纳法证明"强归纳法"的常见证法。
+  这正是用 $\nat$ 上的普通归纳法证明``强归纳法''的常见证法。
 
   具体而言，我们对 $n:\nat$ 作归纳，证明对所有 $k\le n$，$k$ 都是可达的。
   基本情形是 $0$ 可达，这空虚成立，因为没有任何东西严格小于 $0$。
@@ -1047,9 +1047,9 @@ P(a,\acc_<(a,h)),
 \end{defn}
 
 注意，由于 $A$ 是集合，外延性是命题。
-这里的"外延性"与函数外延性无关，也与相等类型的外延性无关。
+这里的``外延性''与函数外延性无关，也与相等类型的外延性无关。
 \index{axiom!of extensionality}%
-更确切地说，它是经典集合论中外延公理的"局部"对应物。
+更确切地说，它是经典集合论中外延公理的``局部''对应物。
 
 \begin{thm}
   外延良基关系所构成的类型是一个集合。
@@ -1097,7 +1097,7 @@ P(a,\acc_<(a,h)),
   对偶的论证同理可证。
 \end{proof}
 
-特别地，这表明在 \cref{def:simulation}\ref{item:sim2} 中，"仅仅"一词可以省略而不改变意思。
+特别地，这表明在 \cref{def:simulation}\ref{item:sim2} 中，``仅仅''一词可以省略而不改变意思。
 
 \begin{cor}
   如果 $f:A\to B$ 是模拟，那么对所有 $a:A$ 和 $b:B$，若 $b<f(a)$，则\emph{纯粹存在} $a'<a$ 使得 $f(a')=b$。
@@ -1116,7 +1116,7 @@ P(a,\acc_<(a,h)),
 
 \begin{thm}
   对一个集合 $A$，令 $P(A)$ 为 $A$ 上外延良基关系的类型。
-  若 $\mathord{<_A} : P(A)$ 与 $\mathord{<_B} : P(B)$ 且 $f:A\to B$，令 $H_{\mathord{<_A}\mathord{<_B}}(f)$ 为命题"$f$ 是模拟"。
+  若 $\mathord{<_A} : P(A)$ 与 $\mathord{<_B} : P(B)$ 且 $f:A\to B$，令 $H_{\mathord{<_A}\mathord{<_B}}(f)$ 为命题``$f$ 是模拟''。
   则 $(P,H)$ 是 \cref{sec:sip} 意义下 \uset 上的标准结构概念。
 \end{thm}
 
@@ -1140,7 +1140,7 @@ P(a,\acc_<(a,h)),
 
 \begin{proof}
   假设 $f,g:A\to B$ 都是模拟。
-  由于"是模拟"是一个命题，只需证明 $\fall{a:A}(f(a)=g(a))$。
+  由于``是模拟''是一个命题，只需证明 $\fall{a:A}(f(a)=g(a))$。
   对 $<$ 作归纳，可假设对所有 $a'<a$ 均有 $f(a')=g(a')$。
   而由 $B$ 的外延性，要证 $f(a)=g(a)$，只需 $\fall{b:B}(b<f(a)) \Leftrightarrow (b<g(a))$ 成立。
 
@@ -1221,7 +1221,7 @@ P(a,\acc_<(a,h)),
 
 \begin{lem}\label{thm:ordsucc}
   设 \bbU 为一个宇宙。
-  对于任意 $A:\ord_\bbU$，存在 $B:\ord_\bbU$ 使得 $A<B$。
+  对于任意 $A:\ord_{\bbU}$，存在 $B:\ord_{\bbU}$ 使得 $A<B$。
 \end{lem}
 
 \begin{proof}
@@ -1231,7 +1231,7 @@ P(a,\acc_<(a,h)),
 
 在 \cref{thm:ordsucc} 证明中所构造的序数 $B$ 称为 $A$ 的\define{后继}\indexdef{successor!of an ordinal}。
 
-这条引理揭示了使用"类型歧义"\index{typical ambiguity}风格——即用 \UU 表示一个任意且未指定的宇宙——可能带来的隐患。
+这条引理揭示了使用``类型歧义''\index{typical ambiguity}风格——即用 \UU 表示一个任意且未指定的宇宙——可能带来的隐患。
 考虑如下另一种证明。
 
 \begin{proof}[\cref{thm:ordsucc} 的另一种拟议证明]
@@ -1241,14 +1241,14 @@ P(a,\acc_<(a,h)),
 \end{proof}
 
 如果我们用类型歧义的风格陈述 \cref{thm:ordsucc}，则第二种证明是有效的。
-但这样得到的引理用处较小，因为第二种证明会强制引理陈述中第二个"\ord"所指的宇宙层级高于第一个"\ord"。
+但这样得到的引理用处较小，因为第二种证明会强制引理陈述中第二个``\ord''所指的宇宙层级高于第一个``\ord''。
 而第一种证明则允许两个宇宙是同一个。
 
-类似的讨论也适用于下一条引理：该引理也可通过观察"对任意 $A:\ord$ 皆有 $A\le \ord$"来证明，但那样得到的结论用处较小。
+类似的讨论也适用于下一条引理：该引理也可通过观察``对任意 $A:\ord$ 皆有 $A\le \ord$''来证明，但那样得到的结论用处较小。
 
 \begin{lem}\label{thm:ordunion}
   设 \bbU 为一个宇宙。
-  对于任意 $X:\type$ 与 $F:X\to \ord_\bbU$，存在 $B:\ord_\bbU$ 使得对所有 $x:X$ 均有 $Fx\le B$。
+  对于任意 $X:\type$ 与 $F:X\to \ord_{\bbU}$，存在 $B:\ord_{\bbU}$ 使得对所有 $x:X$ 均有 $Fx\le B$。
 \end{lem}
 
 \begin{proof}
@@ -1370,19 +1370,19 @@ P(a,\acc_<(a,h)),
   因此，$A'$ 本身也是一个序数。
 
   最后，由于 \ord 是一个序数，我们可以取 $A \defeq \ord$。
-  令 $X'$ 为 $g_\ord' : \ord' \to X$ 的像；则 $g_\ord'$ 的逆给出一个单射 $H : X' \to \ord$。
+  令 $X'$ 为 $g_{\ord}' : \ord' \to X$ 的像；则 $g_{\ord}'$ 的逆给出一个单射 $H : X' \to \ord$。
   由 \cref{thm:ordunion}，存在一个序数 $C$，使得对所有 $x : X'$ 都有 $Hx \le C$。
   再由 \cref{thm:ordsucc}，存在另一个序数 $D$ 使得 $C < D$，从而对所有 $x : X'$ 都有 $Hx < D$。
   现在我们有
   \begin{align*}
-    g_{\ord}(D) &= \bar f\Big( X \setminus \setof{ g_\ord(B) | \rule{0pt}{1em} B<D \wedge (g_\ord(B) \in X)} \Big)\\
-    &=\bar f\Big( X \setminus \setof{ g_\ord(B) | \rule{0pt}{1em} g_\ord(B) \in X} \Big)
+    g_{\ord}(D) &= \bar f\Big( X \setminus \setof{ g_{\ord}(B) | \rule{0pt}{1em} B<D \wedge (g_{\ord}(B) \in X)} \Big)\\
+    &=\bar f\Big( X \setminus \setof{ g_{\ord}(B) | \rule{0pt}{1em} g_{\ord}(B) \in X} \Big)
   \end{align*}
-  因为若 $B : \ord$ 且 $g_\ord(B) \in X$，则存在某个 $x : X'$ 使得 $B = Hx$，从而 $B < D$。
+  因为若 $B : \ord$ 且 $g_{\ord}(B) \in X$，则存在某个 $x : X'$ 使得 $B = Hx$，从而 $B < D$。
   现在，如果
-  \[\setof{ g_\ord(B) | \rule{0pt}{1em} g_\ord(B) \in X}\]
-  不等于整个 $X$，则 $g_\ord(D)$ 将属于 $X$ 却不在此子集中，而由于 $D$ 本身也是 $B$ 的一个可能取值，这将导致矛盾。
-  因此这个子集必须是整个 $X$，从而 $g_\ord'$ 不仅是单射，还是满射。
+  \[\setof{ g_{\ord}(B) | \rule{0pt}{1em} g_{\ord}(B) \in X}\]
+  不等于整个 $X$，则 $g_{\ord}(D)$ 将属于 $X$ 却不在此子集中，而由于 $D$ 本身也是 $B$ 的一个可能取值，这将导致矛盾。
+  因此这个子集必须是整个 $X$，从而 $g_{\ord}'$ 不仅是单射，还是满射。
   于是，我们就可以将 $\ord'$ 上的序数结构迁移到 $X$ 上。
 \end{proof}
 
@@ -1711,7 +1711,7 @@ $x\subseteq y$ 按通常方式定义为：
 由于 $[a]$ 和 $P(x)$ 都在 $\UU$ 中，右端确实仍在 $\UU$ 中。$\prd{x:V}(x\bin a \to P(x))$ 的情形类似，利用 $\prd{x:V}(x\bin a \to P(x)) = \prd{x:[a]}P(x)$ 即可。
 \end{proof}
 
-我们已经证明，在带有一个宇宙 $\UU$ 的类型论中，累积层次 $V$ 是一个包含许多标准公理的"构造性集合论"
+我们已经证明，在带有一个宇宙 $\UU$ 的类型论中，累积层次 $V$ 是一个包含许多标准公理的``构造性集合论''
 \index{constructive!set theory}%
 的模型。
 然而，据我们所知，它缺少 \emph{强收集}
@@ -1923,7 +1923,7 @@ Wilander~\cite{Wilander2010} 给出了关于集囿（setoids）的一个直谓�
 \end{ex}
 
 \begin{ex}\label{ex:not-plump}
-  证明 \LEM{} 等价于"所有序数都是丰满的"这一陈述。
+  证明 \LEM{} 等价于``所有序数都是丰满的''这一陈述。
 \end{ex}
 
 \begin{ex}\label{ex:plump-successor}
@@ -1938,11 +1938,11 @@ Wilander~\cite{Wilander2010} 给出了关于集囿（setoids）的一个直谓�
 \begin{ex}\label{ex:ZF-algebras}
   相对于宇宙 $\UU_i$ 的一个\define{ZF-代数}~\cite{JoyalMoerdijk1995}
   \index{ZF-algebra}%
-  是一个偏序集（见 \cref{ct:orders}）$V:\UU_{i+1}$，它具有所有以 $\UU_i$ 中类型为指标的上确界，并且配备了一个"后继"函数 $s:V\to V$（不一定在任何意义上保持 $\le$）。
+  是一个偏序集（见 \cref{ct:orders}）$V:\UU_{i+1}$，它具有所有以 $\UU_i$ 中类型为指标的上确界，并且配备了一个``后继''函数 $s:V\to V$（不一定在任何意义上保持 $\le$）。
   \begin{enumerate}
   \item 证明累积层次 $(V_{\UU_i},\subseteq,s)$ 是初始 ZF-代数，其中 $s(x)$ 是单点集 $\setof{x}$。
-  \item 证明 $(\ord_{\UU_i},\le,s)$ 是满足"对所有 $x$ 有 $x\le s(x)$"这一性质的初始 ZF-代数，其中 $s(A)=A+\unit$ 是来自 \cref{thm:ordsucc} 的后继\index{successor!of an ordinal}。
-  \item 假定命题大小重整，证明 $\Parens{\setof{A:\ord_{\UU_i} | \mathsf{isPlump}(A) },\le,t}$ 是满足"对所有 $x,y$ 有 $(x\le y) \Rightarrow (t(x)\le t(y))$"这一性质的初始 ZF-代数，其中 $t$ 是来自 \cref{ex:plump-successor} 的丰满后继。
+  \item 证明 $(\ord_{\UU_i},\le,s)$ 是满足``对所有 $x$ 有 $x\le s(x)$''这一性质的初始 ZF-代数，其中 $s(A)=A+\unit$ 是来自 \cref{thm:ordsucc} 的后继\index{successor!of an ordinal}。
+  \item 假定命题大小重整，证明 $\Parens{\setof{A:\ord_{\UU_i} | \mathsf{isPlump}(A) },\le,t}$ 是满足``对所有 $x,y$ 有 $(x\le y) \Rightarrow (t(x)\le t(y))$''这一性质的初始 ZF-代数，其中 $t$ 是来自 \cref{ex:plump-successor} 的丰满后继。
   \end{enumerate}
 \end{ex}
 

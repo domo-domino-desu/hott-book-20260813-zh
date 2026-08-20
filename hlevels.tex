@@ -10,7 +10,7 @@
 我们已经在 \cref{sec:basics-sets} 中提到过这个概念；本章的第一个目标就是在同伦类型论中给出它的精确定义。
 
 与截断性对偶的概念是连通性：如果一个空间在维度 $n$ 及\emph{以下}不含任何有趣的同伦，则称其为\emph{$n$-连通的（$n$-connected）}。
-例如，一个空间是 $0$-连通的（也简称为"连通的"），当且仅当它只有一个连通分支；是 $1$-连通的（也称为"单连通的"），当且仅当它也没有非平凡环路（尽管它可能有环路之间的非平凡高阶环路\index{loop!n-@$n$-}）。
+例如，一个空间是 $0$-连通的（也简称为``连通的''），当且仅当它只有一个连通分支；是 $1$-连通的（也称为``单连通的''），当且仅当它也没有非平凡环路（尽管它可能有环路之间的非平凡高阶环路\index{loop!n-@$n$-}）。
 
 将这两个概念都扩展到映射上，便能最清楚地看到截断性与连通性之间的对偶关系。
 如果映射的所有纤维都是 $n$-截断的（或 $n$-连通的），我们就称该映射是\emph{$n$-截断的}或\emph{$n$-连通的}。
@@ -275,7 +275,7 @@
   第一种直接证明 $X$ 是集合；第二种直接证明 $R(x,y)\eqvsym (x=y)$。
 
   \emph{第一种证明：}我们证明 $X$ 是集合。
-  思路与 \cref{thm:prop-set} 相同：函数 $f$ 对其参数 $x$ 和 $y$ 必须是"连续的"。
+  思路与 \cref{thm:prop-set} 相同：函数 $f$ 对其参数 $x$ 和 $y$ 必须是``连续的''。
   不过，由于我们需要处理类型为 $R(x,y)$ 的额外参数，符号上会稍微复杂一些。
 
   首先，对任意 $x:X$ 和 $p:\id[X]xx$，考虑 $\apdfunc{f(x)}(p)$。
@@ -315,7 +315,7 @@
 \[(x =_X y) + \neg (x =_X y).\]
 \index{continuity of functions in type theory@``continuity'' of functions in type theory}%
 \index{functoriality of functions in type theory@``functoriality'' of functions in type theory}%
-这是一个非常强的条件：它意味着，当道路 $x=y$ 存在时，可以关于 $x$ 和 $y$ "连续地"（或"可计算地"或"函子性地"）选取该道路。
+这是一个非常强的条件：它意味着，当道路 $x=y$ 存在时，可以关于 $x$ 和 $y$ ``连续地''（或``可计算地''或``函子性地''）选取该道路。
 结合 \cref{thm:h-set-refrel-in-paths-sets} 与下面的引理，这蕴含 $X$ 是一个集合。
 
 \begin{lem}\label{lem:hedberg-helper}
@@ -759,7 +759,7 @@ $K(\tproj n{\pairr{x,\tproj nu}})\defeq \refl{\tproj n{\pairr{x,\tproj nu}}}$。
 
 \index{truncation!n-truncation@$n$-truncation|)}%
 
-\section{$n$-类型的余极限}
+\section{\texorpdfstring{$n$}{n}-类型的余极限}
 \label{sec:pushouts}
 
 回想一下，在 \cref{sec:colimits} 中，我们曾用高阶归纳类型定义了类型的推出，并证明了其泛性质。
@@ -1474,7 +1474,7 @@ $\pairr{g_1(a),\refl{h_1(g_1(a))}}$ 在 $E$ 的各组成等价作用下变化的
 \end{align*}}
 第一个等式成立是因为：对于一般的 $b$，映射
 \narrowequation{ \hfib{h_1}b \to \sm{w:\hfib{h_1}b} \trunc n{ \hfib{g_1}{\proj1 w}} }
-会插入$\trunc n{ \hfib{g_1}{\proj1 w}}$的收缩中心（由"$g_1$ 是 $n$-截断的"这一假设提供）；而在当前讨论的情形中，该类型有明显的元素$\tproj n{ \pairr{a,\refl{g_1(a)}}}$，由可缩性可知它必须等于那个收缩中心。
+会插入$\trunc n{ \hfib{g_1}{\proj1 w}}$的收缩中心（由``$g_1$ 是 $n$-截断的''这一假设提供）；而在当前讨论的情形中，该类型有明显的元素$\tproj n{ \pairr{a,\refl{g_1(a)}}}$，由可缩性可知它必须等于那个收缩中心。
 第二个命题性等式成立是因为等价$\hfib{h_1\circ g_1}b\eqvsym\hfib{h_2\circ g_2}b$将第二个分量与 $\opp{H(a)}$ 拼接，并且我们有$\opp{H(a)} \ct \refl{} = \opp{H(a)}$。
 其余等式均为定义性的，读者可以自行验证（假定\cref{ex:unstable-octahedron}有一个合理的解决方案）。
 \end{proof}
@@ -1494,7 +1494,7 @@ $\pairr{g_1(a),\refl{h_1(g_1(a))}}$ 在 $E$ 的各组成等价作用下变化的
 \pairr{\im_n(f),\tilde{f},\proj1,\theta,\varphi,\psi}:\fact_n(f)
 \end{equation*}
 其中$\theta:\proj1\circ\tilde{f}\htpy f$是典范同伦，$\varphi$ 是
-\cref{prop:to_image_is_connected}的证明，而 $\psi$ 是"$\proj1:\im_n(f)\to B$具有 $n$-截断的纤维"这一事实的显然证明。
+\cref{prop:to_image_is_connected}的证明，而 $\psi$ 是``$\proj1:\im_n(f)\to B$具有 $n$-截断的纤维''这一事实的显然证明。
 \end{thm}
 
 \begin{proof}
@@ -1672,7 +1672,7 @@ B\times_D\im_n(g) & \jdeq \sm{b:B}{w:\im_n(g)} h(b)=\proj1 w\\
 \item $\P$ 中的余极限可以通过将 $\reflect$ 作用于类型的普通余极限来构造。
 \end{itemize}
 
-重要的是，对积的封闭性也推广到"无穷积"，即依值函数类型。
+重要的是，对积的封闭性也推广到``无穷积''，即依值函数类型。
 
 \begin{thm}\label{thm:reflsubunv-forall}
   如果 $B:A\to\P$ 是反射子宇宙 \P 中任意一族类型，那么 $\prd{x:A} B(x)$ 也属于 \P。
@@ -1841,12 +1841,12 @@ $n$-类型的两个基本性质不被一般的反射子宇宙所具有：\cref{t
 \end{cor}
 
 因此，模态可以等同于对 $\Sigma$ 类型封闭的反射子宇宙。
-名称 \emph{模态（modality）} 当然来源于 \emph{模态逻辑（modal logic）}\index{modal!logic}，后者研究的是一种逻辑，在其中我们可以形成诸如"可能 $A$"（通常写作 $\diamond A$）或"必然 $A$"（通常写作 $\Box A$）这类陈述。
+名称 \emph{模态（modality）} 当然来源于 \emph{模态逻辑（modal logic）}\index{modal!logic}，后者研究的是一种逻辑，在其中我们可以形成诸如``可能 $A$''（通常写作 $\diamond A$）或``必然 $A$''（通常写作 $\Box A$）这类陈述。
 符号 $\modal$ 通常用于表示任意的模态算子\index{modal!operator}。% (rather than a specific one such as $\diamond$ or $\Box$).
 在命题即类型的原则下，模态逻辑意义上的模态对应着对\emph{类型}的一种操作，而 \cref{defn:modality} 似乎是定义此类操作的一种合理候选方案。
 （更准确地说，我们或许应该称这些模态为\emph{幂等的、单子的（idempotent, monadic）}模态；见注记。）
 \index{idempotent!modality}%
-如 \cref{subsec:when-trunc} 所述，我们通常可以使用副词\index{adverb}来非正式地谈论这些模态，例如用"仅仅"\index{merely}表示命题截断，用"纯粹"\index{purely}表示恒等模态
+如 \cref{subsec:when-trunc} 所述，我们通常可以使用副词\index{adverb}来非正式地谈论这些模态，例如用``仅仅''\index{merely}表示命题截断，用``纯粹''\index{purely}表示恒等模态
 \index{identity!modality}%
 \index{modality!identity}%
 （即由 $\modal A \defeq A$ 定义的那个模态）。
@@ -1865,7 +1865,7 @@ $n$-类型的两个基本性质不被一般的反射子宇宙所具有：\cref{t
 
 一类不包含 $n$-截断的重要模态是\emph{左正合（left exact）}模态：即那些其函子 $\modal$ 既保持拉回又保持有限积的模态。
 \index{topology!Lawvere-Tierney}%
-它们是初等意象\index{topos}论中"Lawvere–Tierney\index{Lawvere}\index{Tierney} 拓扑"的范畴化，并在高阶范畴语义中对应于子 $(\infty,1)$-意象。
+它们是初等意象\index{topos}论中``Lawvere–Tierney\index{Lawvere}\index{Tierney} 拓扑''的范畴化，并在高阶范畴语义中对应于子 $(\infty,1)$-意象。
 \index{.infinity1-topos@$(\infty,1)$-topos}%
 然而，这已超出了本书的范围。
 
@@ -1879,7 +1879,7 @@ $n$-类型的两个基本性质不被一般的反射子宇宙所具有：\cref{t
 是 Voevodsky 认识到，这个概念可以在同伦类型论中递归地定义，从可缩性出发即可。
 
 \index{axiom!Streicher's Axiom K}%
-"Axiom K"这一性质由 Thomas Streicher 如此命名，是因为它是继 J 之后相等类型的一个性质——后者是相等类型消去子的传统名称。
+``Axiom K''这一性质由 Thomas Streicher 如此命名，是因为它是继 J 之后相等类型的一个性质——后者是相等类型消去子的传统名称。
 \cref{thm:hedberg} 归功于 Hedberg~\cite{hedberg1998coherence}；\cite{krausgeneralizations} 则包含了更多信息与推广。
 
 $n$-连通空间与函数的概念在同伦论中同样经典，不过如前所述，我们对函数连通性的编号与经典编号相差 1。

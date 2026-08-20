@@ -12,7 +12,7 @@
 而点 $x$ 与 $y$ 之间的一条道路则用一个连续映射 $p : [0,1] \to X$ 表示，其中 $p(0) = x$ 且 $p(1) = y$。
 \index{path!topological}
 \index{topological!path}
-可以把这个函数理解为在每个"时刻"给出 $X$ 中的一个点。
+可以把这个函数理解为在每个``时刻''给出 $X$ 中的一个点。
 对于许多目的而言，道路的严格相等（即逐点相等的函数）是一个过分精细的概念。
 例如，我们可以定义道路的拼接运算（若 $p$ 是从 $x$ 到 $y$ 的道路，$q$ 是从 $y$ 到 $z$ 的道路，则拼接 $p \ct q$ 是从 $x$ 到 $z$ 的道路）和取逆运算（$\opp p$ 是从 $y$ 到 $x$ 的道路）。
 然而，这些运算之间有一些自然的等式，对于严格相等而言并不成立：
@@ -28,12 +28,12 @@ g(x)$。
 在这种情况下，我们还要求对所有 $t\in [0,1]$，有 $H(0,t) = x$ 且 $H(1,t)=y$，
 从而对每个 $t$，函数 $H(\blank,t)$ 仍然是一条从 $x$ 到 $y$ 的道路；
 这类同伦被称为\emph{保端点的}或\emph{相对于端点的}。
-在简单的情形中，我们可以把正方形 $[0,1]\times [0,1]$ 在 $H$ 下的像看作"填满"了 $p$ 与 $q$ 之间的"空间"，
+在简单的情形中，我们可以把正方形 $[0,1]\times [0,1]$ 在 $H$ 下的像看作``填满''了 $p$ 与 $q$ 之间的``空间''，
 尽管对于一般的 $X$ 来说这并不真正有意义；
 更好的理解方式是把 $H$ 看作将 $p$ 连续形变为 $q$ 且不移动端点的过程。
 由于 $[0,1]\times [0,1]$ 是 2 维的，我们也将 $H$ 称为\emph{道路之间的 2 维道路}。\index{path!2-}
 
-例如，因为 $p \ct \opp p$ 沿同一条路线走出去又走回来，所以你可以将 $p \ct \opp p$ 连续地缩为恒等道路——例如，它不会被空间中的空洞"钩住"。
+例如，因为 $p \ct \opp p$ 沿同一条路线走出去又走回来，所以你可以将 $p \ct \opp p$ 连续地缩为恒等道路——例如，它不会被空间中的空洞``钩住''。
 同伦是一种等价关系，且拼接、取逆等运算都与它相容。
 此外，在某点 $x_0$ 处环路\index{loop}的同伦等价类（两条环路 $p$ 和 $q$ 在存在它们之间的\emph{保基点的}同伦时被视为相等，即如上所述的同伦 $H$ 并额外满足对所有 $t$ 有 $H(0,t) =
 H(1,t) = x_0$）构成一个群，称为\emph{基本群}。\index{fundamental!group}
@@ -47,7 +47,7 @@ H(1,t) = x_0$）构成一个群，称为\emph{基本群}。\index{fundamental!gr
 然后是对象之间的一组\emph{态射}\indexdef{morphism!in an .infinity-groupoid@in an $\infty$-groupoid}，
 接着是\emph{态射之间的态射}，依此类推，并配有某种复杂的代数结构；
 第 $k$ 层的态射称为\define{$k$-态射 ($k$-morphism)}\indexdef{k-morphism@$k$-morphism}。
-每一层的态射都有单位、复合和逆运算，但这些运算具有所谓的"弱性"：
+每一层的态射都有单位、复合和逆运算，但这些运算具有所谓的``弱性''：
 具体来说，它们满足群胚定律（复合的结合律、单位元是复合的单位、逆元可消去）仅在相差一个下一层态射的意义下成立，而这种弱性会引发进一步的结构。
 例如，由于态射复合 $p \ct (q \ct r) = (p \ct q) \ct r$ 的结合律本身就是一个更高维的态射，我们需要额外的运算来关联各种结合性证明：
 将 $p \ct
@@ -100,7 +100,7 @@ $\infty$-群胚的弱性直接对应于这样一个事实：道路仅在同伦�
 类似地，$\id[{(\id[{(\id[A]{x}{y})}]{p}{q})}]{r}{s}$是两个平行2-维道路之间的\define{3-维道路（3-dimensional path）}
 \indexdef{path!3-}\indexsee{3-path}{path, 3-}\indexsee{3-dimensional path}{path, 3-}\indexsee{path!3-dimensional}{path, 3-}%
 的类型，依此类推。
-如果类型 $A$ 是"集合式的"，例如 \nat，那么这些迭代的相等类型将平淡无奇（参见\cref{sec:basics-sets}）；但在一般情况下，它们可以模拟非平凡的同伦类型。
+如果类型 $A$ 是``集合式的''，例如 \nat，那么这些迭代的相等类型将平淡无奇（参见\cref{sec:basics-sets}）；但在一般情况下，它们可以模拟非平凡的同伦类型。
 
 %% (Obviously, the
 %% notation ``$\id[A]{x}{y}$'' has its limitations here.  The style
@@ -145,10 +145,10 @@ d & :\prd{a:A} D(a,a,\refl{a})
 通常，每次应用这个归纳规则时，我们要么不关心所定义的具体函数，要么立即给它另一个名字。
 
 非正式地说，相等类型的归纳原理是说：如果我们想构造一个依赖于相等类型元素 $p:\id[A]xy$ 的对象（或证明一个陈述），那么只需在 $x$ 和 $y$ 判断相等且 $p$ 是自反元素 $\refl{x}:x=x$（判断相等）的特殊情况下进行构造（或证明）即可。
-在非正式表述中，我们可以用"由归纳，只需假设……"这样的短语来表达。
-这种"归约到自反性情形"的做法，类似于在自然数上作普通归纳证明时归约到"基础情况"和"归纳步骤"，也类似于在对不相交并或析取作分情形讨论时归约到"左情况"和"右情况"。\index{induction principle!for identity type}%
+在非正式表述中，我们可以用``由归纳，只需假设……''这样的短语来表达。
+这种``归约到自反性情形''的做法，类似于在自然数上作普通归纳证明时归约到``基础情况''和``归纳步骤''，也类似于在对不相交并或析取作分情形讨论时归约到``左情况''和``右情况''。\index{induction principle!for identity type}%
 
-在关于自然数的归纳证明的语境中，"转换规则"~\eqref{eq:Jconv}可能不那么熟悉，但在与之相关的递归定义概念中，却有一个类似的想法。
+在关于自然数的归纳证明的语境中，``转换规则''~\eqref{eq:Jconv}可能不那么熟悉，但在与之相关的递归定义概念中，却有一个类似的想法。
 如果序列\index{sequence} $(a_n)_{n\in \mathbb{N}}$是通过给定 $a_0$ 并用 $a_n$ 表示 $a_{n+1}$ 来定义的，那么结果序列的第 $0$ 项\emph{确实}就是给定的 $a_0$，并且给定的联系 $a_{n+1}$ 与 $a_n$ 的递推关系对结果序列成立。
 这一点可能看起来过于显然，不值一提；但倘若我们将递归定义视为计算序列值的算法\index{algorithm}，那么它恰恰就是执行该算法的过程。
 规则~\eqref{eq:Jconv} 与此类似：如果我们通过指定 $p$ 为 $\refl{x}:x=x$ 时的值来为所有 $p:x=y$ 定义对象 $f(p)$，那么我们指定的值事实上就是 $f(\refl{x})$ 的值。
@@ -165,7 +165,7 @@ d & :\prd{a:A} D(a,a,\refl{a})
 \index{path|(}%
 \index{.infinity-groupoid@$\infty$-groupoid!structure of a type|(}%
 我们现在从归纳原理出发，推导高阶群胚结构的初步内容。
-我们从相等性的对称性开始，用拓扑学的语言来说，这意味着"道路可以反转"。
+我们从相等性的对称性开始，用拓扑学的语言来说，这意味着``道路可以反转''。
 
 \begin{lem}\label{lem:opp}
   对每个类型 $A$ 以及任意 $x,y:A$，存在一个函数
@@ -180,14 +180,14 @@ d & :\prd{a:A} D(a,a,\refl{a})
   \index{symmetry!of equality}%
 \end{lem}
 
-鉴于这是我们第一次将某个陈述表述为"引理"或"定理"，不妨稍作停顿，思考一下这意味着什么。
+鉴于这是我们第一次将某个陈述表述为``引理''或``定理''，不妨稍作停顿，思考一下这意味着什么。
 回想一下，命题（可被证明的陈述）等同于类型，而引理和定理（已被证明的陈述）则等同于\emph{有实例的}类型。
 因此，引理或定理的陈述应被转译为一个类型，如 \cref{sec:pat} 所示，而其证明则被转译为该类型的一个实例。
-根据全称量词"对每个"的解释，与 \cref{lem:opp} 对应的类型是
+根据全称量词``对每个''的解释，与 \cref{lem:opp} 对应的类型是
 \[ \prd{A:\UU}{x,y:A} (x= y)\to(y= x). \]
 \cref{lem:opp} 的证明将在于构造该类型的一个元素，即对某个 $f$ 推导出判断 $f:\prd{A:\UU}{x,y:A} (x= y)\to(y= x)$。
 然后，我们引入符号 $\opp{(\blank)}$ 来表示这个元素 $f$，其中参数 $A$、$x$ 和 $y$ 被省略并由上下文推断。
-（如 \cref{sec:types-vs-sets} 所述，次要陈述"对每个 $x:A$，有 $\opp{\refl{x}}\jdeq\refl{x}$"应被视为一个独立的判断。）
+（如 \cref{sec:types-vs-sets} 所述，次要陈述``对每个 $x:A$，有 $\opp{\refl{x}}\jdeq\refl{x}$''应被视为一个独立的判断。）
 
 \begin{proof}[第一次证明]
   假设给定 $A:\UU$，
@@ -217,12 +217,12 @@ d & :\prd{a:A} D(a,a,\refl{a})
   我们想为每对 $x,y:A$ 和每个 $p:x=y$ 构造一个元素 $\opp{p}:y=x$。
   由归纳，只需处理 $y$ 为 $x$ 且 $p$ 为 $\refl{x}$ 的情形。
   但在这种情形下，$p$ 的类型 $x=y$ 和我们要在其中构造 $\opp{p}$ 的类型 $y=x$ 都仅仅是 $x=x$。
-  因此，在"自反性情形"下，我们可以直接定义 $\opp{\refl{x}}$ 为 $\refl{x}$。
+  因此，在``自反性情形''下，我们可以直接定义 $\opp{\refl{x}}$ 为 $\refl{x}$。
   一般情形则由归纳原理得出，而转换规则 $\opp{\refl{x}}\jdeq\refl{x}$ 恰好就是我们在自反性情形中给出的证明。
 \end{proof}
 
 在接下来的几个证明中，我们将同时采用两种风格书写，以帮助读者适应后一种。
-接下来，我们证明相等的传递性，换言之，也就是道路的"拼接"。
+接下来，我们证明相等的传递性，换言之，也就是道路的``拼接''。
 
 \begin{lem}\label{lem:concat}
   对每个类型 $A$ 以及每个 $x,y,z:A$，存在一个函数
@@ -300,11 +300,11 @@ d & :\prd{a:A} D(a,a,\refl{a})
 
 \index{mathematics!formalized}%
 在进行形式化数学时，不对称的计算规则有时会带来便利，因为它们能让计算机自动简化更多内容。
-然而，在非形式化的数学中，甚至可以说在形式化的情形中，拥有一个行为不对称的拼接操作、并且需要记住哪一边是"特殊"的，可能会令人困惑。
+然而，在非形式化的数学中，甚至可以说在形式化的情形中，拥有一个行为不对称的拼接操作、并且需要记住哪一边是``特殊''的，可能会令人困惑。
 对称地处理两边能使证明更加稳健；这就是我们如此证明的原因。
 （诚然，这是一种风格上的选择。）
 
-下表从"相等"、"同伦"和"高阶群胚"三个视角总结了迄今为止的工作。
+下表从``相等''、``同伦''和``高阶群胚''三个视角总结了迄今为止的工作。
 
 
 \begin{center}
@@ -334,15 +334,15 @@ d & :\prd{a:A} D(a,a,\refl{a})
   a &= b & \text{(by $p$)}\\ &\jdeq c \\ &= d &\text{(by $r$)}
 \end{align*}
 以表示 $p\ct r : (a=d)$ 的构造。
-我们也遵循数学写作中的常见做法：不要求这种记法中的依据（"由 $p$"和"由 $r$"）给出所需的精确见证；
+我们也遵循数学写作中的常见做法：不要求这种记法中的依据（``由 $p$''和``由 $r$''）给出所需的精确见证；
 而是允许它们仅提及构造该见证时最关键（或最不显然）的要素。
-例如，若"引理 A"陈述了对所有 $x$ 和 $y$ 有 $f(x)=g(y)$，则我们可以用"由引理 A"作为步骤 $f(a)=g(b)$ 的依据，相信读者能推断出我们是在将引理 A 应用于 $x\defeq a$ 和 $y\defeq b$。
+例如，若``引理 A''陈述了对所有 $x$ 和 $y$ 有 $f(x)=g(y)$，则我们可以用``由引理 A''作为步骤 $f(a)=g(b)$ 的依据，相信读者能推断出我们是在将引理 A 应用于 $x\defeq a$ 和 $y\defeq b$。
 若相信读者能够自行补出依据，也可将其完全省略。
 
-现在，由于证明相关性，我们不能在证明了相等的"对称性"和"传递性"后就止步：
+现在，由于证明相关性，我们不能在证明了相等的``对称性''和``传递性''后就止步：
 我们还需要知道这些作用于相等的\emph{操作}是行为良好的。
 （这一问题在集合论中是不可见的，因为在那里对称性和传递性仅仅是相等的\emph{性质}，而非道路上的结构。）
-从同伦论的观点来看，拼接和求逆只是高阶群胚结构的"第一层"——我们还需要关于这些操作的\index{coherence}相干律，以及高维的类似操作。
+从同伦论的观点来看，拼接和求逆只是高阶群胚结构的``第一层''——我们还需要关于这些操作的\index{coherence}相干律，以及高维的类似操作。
 例如，我们需要知道拼接是\emph{结合的}，且求逆关于拼接给出\emph{逆}。
 
 \begin{lem}\label{thm:omg}%[The $\omega$-groupoid structure of types]
@@ -482,11 +482,11 @@ d & :\prd{a:A} D(a,a,\refl{a})
 \index{globular operad}%
 \index{operad}%
 \index{groupoid!higher}%
-如此"一直推到无穷"（这一点可以通过例如球状算畴（globular operad）的概念来严格表述）。
+如此``一直推到无穷''（这一点可以通过例如球状算畴（globular operad）的概念来严格表述）。
 不过，对于大多数目的而言，并不需要将整个无穷维结构显式地写出。
 同伦类型论的一个美妙之处在于，所有这些结构都可以仅仅从相等类型的归纳性质出发予以\emph{证明}，因此我们可以根据需要，将其中的任意多或任意少的部分显式写出。
 
-具体来说，在本书中，我们并不需要那些用于精确描述诸如"所有高阶层面的相干结构"等概念时所涉及的复杂组合学。
+具体来说，在本书中，我们并不需要那些用于精确描述诸如``所有高阶层面的相干结构''等概念时所涉及的复杂组合学。
 除了普通的道路，我们还会用到道路的道路（即类型 $p =_{x=_A y} q$ 中的元素），如前所述，我们称之为\emph{2-道路}\index{path!2-}或\emph{2-维道路}；偶尔可能还会用到道路的道路的道路（即类型 $r = _{p =_{x=_A y} q} s$ 中的元素），我们称之为\emph{3-道路}\index{path!3-}或\emph{3-维道路}。
 虽然可以定义一般的\emph{$n$-维道路}
 \indexdef{path!n-@$n$-}%
@@ -504,11 +504,11 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 
 由于 $\Omega A$ 中的任意两个元素都是具有相同起点和终点的道路，它们可以相互拼接；
 因此我们有一个运算 $\Omega A\times \Omega A\to \Omega A$。
-更一般地，$A$ 的高阶群胚结构赋予了 $\Omega A$ 类似的"高阶群"结构。
+更一般地，$A$ 的高阶群胚结构赋予了 $\Omega A$ 类似的``高阶群''结构。
 
 考虑 $A$ 的环路空间\emph{的}环路空间\index{loop space!iterated}\index{iterated loop space}也是有用的，它是在 $a$ 处的恒等环路上的2维环路空间。
 这记作 $\Omega^2(A,a)$，在类型论中用类型 $\id[({\id[A]{a}{a}})]{\refl{a}}{\refl{a}}$ 表示。
-虽然 $\Omega^2(A,a)$ 作为一个环路空间，又是一个"高阶群"，但由于它的元素是1维环路之间的2维环路，它现在还具有一些额外的结构。
+虽然 $\Omega^2(A,a)$ 作为一个环路空间，又是一个``高阶群''，但由于它的元素是1维环路之间的2维环路，它现在还具有一些额外的结构。
 
 \begin{thm}[Eckmann--Hilton]\label{thm:EckmannHilton}
   第二环路空间上的复合运算
@@ -546,7 +546,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
    {c}
  }
 \]
-分别复合上方和下方的1-道路，我们得到两条道路 $p\ct r,\ q\ct s : a = c$，然后它们之间存在一个"水平复合"
+分别复合上方和下方的1-道路，我们得到两条道路 $p\ct r,\ q\ct s : a = c$，然后它们之间存在一个``水平复合''
 %
 \begin{equation*}
   \alpha\hct\beta : p\ct r = q\ct s
@@ -651,7 +651,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 现在，我们希望论证函数 $f:A\to B$ 在道路上具有函子性。
 在传统的类型论中，这等价于说函数保持相等。
 \index{continuity of functions in type theory@``continuity'' of functions in type theory}%
-从拓扑的角度看，这对应于说每个函数都是"连续"的，即保持道路。
+从拓扑的角度看，这对应于说每个函数都是``连续''的，即保持道路。
 
 \begin{lem}\label{lem:map}
   设 $f:A\to B$ 是一个函数。
@@ -718,7 +718,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 然而，这一点陈述起来并不那么简单，因为如果 $f:\prd{x:A} B(x)$ 且 $p:x=y$，那么 $f(x):B(x)$ 和 $f(y):B(y)$ 是属于不同类型的元素，因此，先验地说，我们甚至无法问它们是否相等。
 缺少的关键是，$p$ 本身为我们提供了一种联系类型 $B(x)$ 和 $B(y)$ 的方式。
 
-我们已经在 \autoref{sec:identity-types} 中见过这一点，当时我们称之为"等同物的不可分辨性（indiscernibility of identicals）"。
+我们已经在 \autoref{sec:identity-types} 中见过这一点，当时我们称之为``等同物的不可分辨性（indiscernibility of identicals）''。
 \index{indiscernibility of identicals}%
 现在，我们为它引入一个新的名称和记号，此后将一直使用。
 
@@ -750,7 +750,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 那么传输引理就表明 $P$ 保持相等，其含义是：如果 $x$ 等于 $y$，那么 $P(x)$ 成立当且仅当 $P(y)$ 成立。
 事实上，我们后面会看到，如果 $x=y$，那么 $P(x)$ 和 $P(y)$ 实际上是\emph{等价}的。
 
-从拓扑的角度看，传输引理可以视为纤维化中的一种"道路提升（path lifting）"操作。
+从拓扑的角度看，传输引理可以视为纤维化中的一种``道路提升（path lifting）''操作。
 \index{fibration}%
 \indexdef{total!space}%
 我们可以把一个类型族 $P:A\to \type$ 看作一个以 $A$ 为\emph{底空间}的\emph{纤维化（fibration）}，其中 $P(x)$ 是 $x$ 上的纤维，而 $\sm{x:A}P(x)$ 是这个纤维化的\define{全空间（total space）}，其第一投影为 $\sm{x:A}(P(x))\to A$。
@@ -774,13 +774,13 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
   我们将在 \cref{sec:compute-sigma} 中证明一个更一般的定理。
 \end{proof}
 
-在经典同伦论中，纤维化被定义为其道路的提升\emph{存在}的映射；而与之相对，我们刚刚说明了，在类型论中，每一个类型族都自带一个\emph{指定的}"道路提升函数"。
+在经典同伦论中，纤维化被定义为其道路的提升\emph{存在}的映射；而与之相对，我们刚刚说明了，在类型论中，每一个类型族都自带一个\emph{指定的}``道路提升函数''。
 这符合构造性数学的哲学：除非将某物展示出来，否则不能证明它存在。
 \index{continuity of functions in type theory@``continuity'' of functions in type theory}%
-这也自动保证了道路提升是被"连续地"选择的，因为正如我们所见，类型论中的所有函数都是"连续"的。
+这也自动保证了道路提升是被``连续地''选择的，因为正如我们所见，类型论中的所有函数都是``连续''的。
 
 \begin{rmk}
-  尽管我们可以将类型族 $P:A\to \type$ 看作纤维化，但一般而言最好不要说"纤维化 $P:A\to\type$"这样的话，因为这种说法听起来像是我们在讨论一个以 $\type$ 为底、以 $A$ 为全空间的纤维化。
+  尽管我们可以将类型族 $P:A\to \type$ 看作纤维化，但一般而言最好不要说``纤维化 $P:A\to\type$''这样的话，因为这种说法听起来像是我们在讨论一个以 $\type$ 为底、以 $A$ 为全空间的纤维化。
   再次强调，当将类型族 $P:A\to \type$ 视为纤维化时，它的底是 $A$，全空间是 $\sm{x:A} P(x)$。
 
   在谈论类型族时，我们偶尔也会用到其他拓扑学术语。
@@ -789,12 +789,12 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
   我们也可能说某事\define{逐纤维地}
   \indexdef{fiberwise}%
   成立，意思是它对每个 $P(x)$ 都成立。
-  例如，一个截面 $f:\prd{x:A} P(x)$ 就表明 $P$ 是"逐纤维地有实例的"。
+  例如，一个截面 $f:\prd{x:A} P(x)$ 就表明 $P$ 是``逐纤维地有实例的''。
 \end{rmk}
 
 \index{function!dependent|(}
 现在我们可以证明 \cref{lem:map} 的依值版本了。
-拓扑直觉是：给定 $f:\prd{x:A} P(x)$ 和一条道路 $p:\id[A]xy$，我们应该能够将 $f$ 应用于 $p$，从而在 $P$ 的全空间中得到一条"位于 $p$ 上方"的道路，如下图所示。
+拓扑直觉是：给定 $f:\prd{x:A} P(x)$ 和一条道路 $p:\id[A]xy$，我们应该能够将 $f$ 应用于 $p$，从而在 $P$ 的全空间中得到一条``位于 $p$ 上方''的道路，如下图所示。
 
 \begin{center}
   \begin{tikzpicture}[yscale=.5,xscale=2]
@@ -812,13 +812,13 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 
 我们\emph{确实可以}从\cref{lem:map}得到这样的对象。
 给定$f:\prd{x:A} P(x)$，我们可以令$f'(x)\defeq (x,f(x))$来定义一个非依值函数$f':A\to \sm{x:A} P(x)$，进而考虑$\ap{f'}{p} : f'(x) = f'(y)$。
-由于 $\proj1 \circ f' \jdeq \idfunc[A]$，由\cref{lem:ap-functor}可得$\ap{\proj1}{\ap{f'}{p}} = p$；因此 $\ap{f'}{p}$ 确实在此意义上"位于" $p$ 的上方。
+由于 $\proj1 \circ f' \jdeq \idfunc[A]$，由\cref{lem:ap-functor}可得$\ap{\proj1}{\ap{f'}{p}} = p$；因此 $\ap{f'}{p}$ 确实在此意义上``位于'' $p$ 的上方。
 然而，仅凭 $\ap{f'}{p}$ 的\emph{类型}，并不容易看出它究竟位于 $A$ 中哪条具体道路（本例中即 $p$）的上方，而这一点有时很重要。
 
 解决方法是使用迁移引理。
 根据\cref{thm:path-lifting}，我们有一条从 $(x,u)$ 到 $(y,\trans p u)$ 的典范道路 $\mathsf{lift}(u,p)$，它位于 $p$ 的上方。
 因此，任何从 $u:P(x)$ 到 $v:P(y)$ 且位于 $p$ 上方的道路，都应本质唯一地通过 $\mathsf{lift}(u,p)$ 进行分解，其分解因子是一条完全位于纤维 $P(y)$ 中、从 $\trans p u$ 到 $v$ 的道路。
-因此，在相差等价的意义下，将"从 $u$ 到 $v$ 且位于 $p:x=y$ 上方的道路"定义为 $P(y)$ 中的道路 $\trans p u = v$ 是合理的。
+因此，在相差等价的意义下，将``从 $u$ 到 $v$ 且位于 $p:x=y$ 上方的道路''定义为 $P(y)$ 中的道路 $\trans p u = v$ 是合理的。
 而且，我们确实可以证明依值函数会产生这样的道路。
 
 \begin{lem}[依值映射]\label{lem:mapdep}
@@ -849,7 +849,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
   但此时所求等式为$\trans{(\refl{x})}{f(x)}= f(x)$，判断成立。
 \end{proof}
 
-我们将把这种意义上"位于其他道路上方的道路"统称为\emph{依值道路（dependent paths）}。
+我们将把这种意义上``位于其他道路上方的道路''统称为\emph{依值道路（dependent paths）}。
 \indexsee{dependent!path}{path, dependent}%
 \index{path!dependent}%
 从\cref{cha:hits}开始，它们将扮演越来越重要的角色。
@@ -941,11 +941,11 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 \index{homotopy|(defstyle}%
 
 至此，我们已经了解了如何将相等类型 $\id[A]xy$ 视为类型 $A$ 中两个元素 $x$ 与 $y$ 之间的\emph{相等证明}、\emph{道路}或\emph{等价}。
-现在，我们来探究\emph{函数}之间以及\emph{类型}之间合适的"等同"或"相同"概念。
+现在，我们来探究\emph{函数}之间以及\emph{类型}之间合适的``等同''或``相同''概念。
 在\cref{sec:compute-pi,sec:compute-universe}中，我们将看到同伦类型论允许我们将这些概念与相等类型的实例等同起来，但在此之前，我们需要先理解它们本身。
 
 传统上，我们认为两个函数相同，如果它们在所有输入上取相等的值。
-在"命题即类型"的解释下，这提示我们，两个（可能是依值的）函数 $f$ 和 $g$ 相同，当类型 $\prd{x:A} (f(x)=g(x))$ 是有实例的。
+在``命题即类型''的解释下，这提示我们，两个（可能是依值的）函数 $f$ 和 $g$ 相同，当类型 $\prd{x:A} (f(x)=g(x))$ 是有实例的。
 在同伦解释下，这个依值函数类型由\emph{连续}的道路或\emph{函子性}的等价构成，因此可视为\emph{同伦}或\emph{自然同构}的类型。\index{isomorphism!natural}
 我们将采用拓扑学的术语。
 
@@ -960,7 +960,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 \end{defn}
 
 注意，一个同伦并不等同于 $(f=g)$ 的一个相等证明。
-不过，在\cref{sec:compute-pi}中，我们将引入一条公理，使得同伦与相等证明变得"等价"。
+不过，在\cref{sec:compute-pi}中，我们将引入一条公理，使得同伦与相等证明变得``等价''。
 
 以下证明留给读者。
 
@@ -986,7 +986,7 @@ $\Omega(A,a)$ 为类型 $\id[A]{a}{a}$。
 
 \index{functoriality of functions in type theory@``functoriality'' of functions in type theory}%
 \index{continuity of functions in type theory@``continuity'' of functions in type theory}%
-正如类型论中的函数自动是"函子"一样，同伦也自动是\index{naturality of homotopies@``naturality'' of homotopies}%"自然变换"。
+正如类型论中的函数自动是``函子''一样，同伦也自动是\index{naturality of homotopies@``naturality'' of homotopies}%``自然变换''。
 我们仅对非依值函数 $f,g:A\to B$ 陈述并证明这一点；在\cref{ex:dep-htpy-natural}中，请读者将其推广到依值函数的情形。
 
 回忆一下，对于 $f:A\to B$ 和 $p:\id[A]xy$，我们可以记 $\ap f p$ 来表示 $\apfunc{f} (p)$。
@@ -1092,7 +1092,7 @@ $\alpha:f\circ g\htpy \idfunc[B]$ 和 $\beta:g\circ f\htpy \idfunc[A]$。
 \end{eg}
 
 \symlabel{basics-isequiv}\symlabel{basics:iso}
-一般来说，我们仅在类型 $A$ 和 $B$ "表现得像集合"时（参见\cref{sec:basics-sets}），才使用\emph{同构（isomorphism）}一词
+一般来说，我们仅在类型 $A$ 和 $B$ ``表现得像集合''时（参见\cref{sec:basics-sets}），才使用\emph{同构（isomorphism）}一词
 \index{isomorphism!of sets}
 （以及类似词语，如\emph{双射（bijection）}，及相关记号 $A\cong B$）
 \index{bijection}
@@ -1125,7 +1125,7 @@ $\alpha:f\circ g\htpy \idfunc[B]$ 和 $\beta:g\circ f\htpy \idfunc[A]$。
 
 对此定义证明性质~\ref{item:be3} 也不难，但需要先确定 Cartesian 积和依值对类型的相等类型，我们将在\cref{sec:compute-cartprod,sec:compute-sigma}中讨论这一点。
 因此，我们也将其推迟；详见\cref{sec:biinv}。
-此刻，主要应理解的是：存在一个表现良好的类型，我们可以将其读作"$f$ 是一个等价"；并且，我们可以通过给出 $f$ 的一个拟逆来证明 $f$ 是一个等价。
+此刻，主要应理解的是：存在一个表现良好的类型，我们可以将其读作``$f$ 是一个等价''；并且，我们可以通过给出 $f$ 的一个拟逆来证明 $f$ 是一个等价。
 在实践中，这是证明一个函数是等价的最常用方法。
 
 依照证明相关的理念，
@@ -1184,17 +1184,17 @@ $\alpha:f\circ g\htpy \idfunc[B]$ 和 $\beta:g\circ f\htpy \idfunc[A]$。
 \[\transfib{P}{p}{(b,c)} = \big(\transfib{B}{p}{b},\transfib{C}{p}{c}\big).\]
 
 最后，类型形成规则也具有函子性，并且如果一个函数 $f$ 是基于这种函子性构建的，那么 $\apfunc f$ 和 $\apdfunc f$ 这两个操作，可以根据构造 $f$ 所用数据的相应操作来计算。
-例如，如果 $g:B\to B'$ 且 $h:C\to C'$，并且我们通过 $f(b,c)\defeq (g(b),h(c))$ 来定义 $f:B\times C \to B'\times C'$，那么模掉等价~\eqref{eq:prodeqv}，我们可以将 $\apfunc f$ 与 "$(\apfunc g,\apfunc h)$" 等同。
+例如，如果 $g:B\to B'$ 且 $h:C\to C'$，并且我们通过 $f(b,c)\defeq (g(b),h(c))$ 来定义 $f:B\times C \to B'\times C'$，那么模掉等价~\eqref{eq:prodeqv}，我们可以将 $\apfunc f$ 与 ``$(\apfunc g,\apfunc h)$'' 等同。
 
 接下来的几节（\crefrange{sec:compute-cartprod}{sec:compute-nat}）将致力于为所有基本的类型形成规则陈述并证明这类定理，每个基本类型形成子对应一节。
 在这里，我们遇到了当前可用的类型理论中一个表面上的不足之处；
 正如在后续章节中将会明确的那样，如果这些关于相等类型、传输等等的刻画是\emph{判断相等性}\index{judgmental equality}，似乎会更方便且更直观。
-然而，在 \cref{cha:typetheory} 所介绍的理论中，相等类型由其归纳原理为所有类型统一地定义，因此我们不能对不同的类型将它们"重新定义"为不同的东西。
+然而，在 \cref{cha:typetheory} 所介绍的理论中，相等类型由其归纳原理为所有类型统一地定义，因此我们不能对不同的类型将它们``重新定义''为不同的东西。
 因此，本章将要讨论的针对特定类型的刻画，大多是\emph{定理}，需要我们去发现和证明——如果可能的话。
 
 实际上，\cref{cha:typetheory} 所描述的类型论不足以证明两类类型形成子——$\Pi$-类型与宇宙——所期望的那些定理。
-正因如此，我们不得不向类型论中引入公理，以使这些"定理"成立。
-从类型论的角度看，\emph{公理}（axiom，参见~\cref{sec:axioms}）是一个被声明居住于某个特定类型的"原子"元素；除了其所属类型的规则之外，没有任何其他规则支配其行为。
+正因如此，我们不得不向类型论中引入公理，以使这些``定理''成立。
+从类型论的角度看，\emph{公理}（axiom，参见~\cref{sec:axioms}）是一个被声明居住于某个特定类型的``原子''元素；除了其所属类型的规则之外，没有任何其他规则支配其行为。
 \index{axiom!versus rules}%
 
 \index{function extensionality}%
@@ -1206,7 +1206,7 @@ $\alpha:f\circ g\htpy \idfunc[B]$ 和 $\beta:g\circ f\htpy \idfunc[A]$。
 \footnote{我们选择将这些原理作为公理引入，但也存在其他可能的方式来构造一套使之成立的类型论。
   详见本章注记。}
 
-需要特别注意的是，并非\emph{所有}的相等类型都能通过对类型构造进行归纳来"确定"。
+需要特别注意的是，并非\emph{所有}的相等类型都能通过对类型构造进行归纳来``确定''。
 反例包括大多数非平凡的高阶归纳类型（参见\cref{cha:hits,cha:homotopy}）。
 例如，计算类型 $\Sn^n$（参见\cref{sec:circle}）的相等类型，就相当于计算球面的高阶同伦群——这是代数拓扑学中一个深刻而重要的研究领域。
 
@@ -1264,7 +1264,7 @@ $\alpha:f\circ g\htpy \idfunc[B]$ 和 $\beta:g\circ f\htpy \idfunc[A]$。
 \]
 注意，它的一个特例给出了积类型的命题唯一性原理\index{uniqueness!principle, propositional!for product types}：$z = (\proj1(z),\proj2(z))$。
 
-不妨把 \pairpath 看作 $\id x y$ 的一个\emph{构造子}或\emph{引入规则}，这就好比 $A\times B$ 类型本身的"配对"构造子，它在给定 $a:A$ 和 $b:B$ 时构造出序对 $(a,b)$。
+不妨把 \pairpath 看作 $\id x y$ 的一个\emph{构造子}或\emph{引入规则}，这就好比 $A\times B$ 类型本身的``配对''构造子，它在给定 $a:A$ 和 $b:B$ 时构造出序对 $(a,b)$。
 从这个视角看，~\eqref{eq:path-prod}的两个分量：
 \begin{align*}
   \projpath{1} &: (\id{x}{y}) \to (\id{\proj{1}(x)}{\proj{1} (y)})\\
@@ -1566,7 +1566,7 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
 \[
 \funext : \Parens{\prd{x:A} (\id{f(x)}{g(x)})} \to {(\id{f}{g})}.
 \]
-这个函数也常被称为"函数外延性"。
+这个函数也常被称为``函数外延性''。
 正如我们在 \cref{sec:compute-cartprod} 中对 $\pairpath$ 所做的那样，我们可以将 $\funext$ 视为类型 $\id f g$ 的一个\emph{引入规则}。
 从这个视角看，$\happly$ 就是\emph{消去规则}，而那些见证 $\funext$ 作为 $\happly$ 之拟逆的同伦，则成为一个命题计算规则\index{computation rule!propositional!for identities between functions}
 \[
@@ -1689,7 +1689,7 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
   \index{function!identity}%
   注意到恒等函数 $\idfunc[\type]:\type\to\type$ 可以被看作一个以宇宙 \type 为指标的类型族；它给每个类型 $X:\type$ 指派类型 $X$ 自身。
   （若视其为纤维化，其全空间就是``带点类型''所构成的类型 $\sm{A:\type}A$；另见 \cref{sec:object-classification}。）
-  于是，给定一条道路 $p:A =_\type B$，我们便有一个传输\index{transport}函数 $\transf{p}:A \to B$。
+  于是，给定一条道路 $p:A =_{\type} B$，我们便有一个传输\index{transport}函数 $\transf{p}:A \to B$。
   我们断言 $\transf{p}$ 是一个等价。
   但通过归纳，只需假设 $p$ 是 $\refl A$，此时 $\transf{p} \jdeq \idfunc[A]$，而根据 \cref{eg:idequiv}，它是一个等价。
   因此，我们可以将 $\idtoeqv(p)$ 定义为 $\transf{p}$（连同上述证明它确为等价的证据）。
@@ -1907,15 +1907,15 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
 
 现在我们来考察第一个\emph{正类型}形成子的例子。
 \index{type!positive}\index{positive!type}%
-同样非正式地说，正类型是指由某些构造子所"呈现"的类型，其呈现的泛性质由消去规则来表达。
-（从范畴论的角度看，正类型具有"映射出"的泛性质，而负类型则具有"映射入"的泛性质。）
+同样非正式地说，正类型是指由某些构造子所``呈现''的类型，其呈现的泛性质由消去规则来表达。
+（从范畴论的角度看，正类型具有``映射出''的泛性质，而负类型则具有``映射入''的泛性质。）
 由于一般来说，基于呈现的计算是不可计算问题，因此对于正类型，我们不能总是期望对其相等类型有一个直接的刻画。
 不过，在许多具体情形中，刻画或部分刻画确实存在，并且可以通过我们借这个例子引入的一般方法来获得。
 
 （技术上来说，我们选择的 Cartesian 积与 $\Sigma$ 类型的呈现也是正类型的呈现。
 但由于这些类型同时允许一种与之相差无几的负呈现，它们的相等类型便已有直接的刻画，无需使用这里要介绍的方法。）
 
-考虑余积类型 $A+B$，它由单射 $\inl:A\to A+B$ 与 $\inr:B\to A+B$ 所"呈现"。
+考虑余积类型 $A+B$，它由单射 $\inl:A\to A+B$ 与 $\inr:B\to A+B$ 所``呈现''。
 直观上，我们期望 $A+B$ 中包含 $A$ 与 $B$ 的精确副本，且它们互不相交，因此应有
 \begin{align}
   {(\inl(a_1)=\inl(a_2))}&\eqvsym {(a_1=a_2)} \label{eq:inlinj}\\
@@ -2006,7 +2006,7 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
 %
 \[ \encode(\inr(b), {\blank}) : (\inl(a_0)=\inr(b)) \to \emptyt. \]
 %
-第二个式子表明 "$\inl(a_0)$ 与 $\inr(b)$ 不相等"，即 $\inl$ 和 $\inr$ 的像是不交的。
+第二个式子表明 ``$\inl(a_0)$ 与 $\inr(b)$ 不相等''，即 $\inl$ 和 $\inr$ 的像是不交的。
 在将相等类型视为命题的传统解读下，第一个式子只是 $\inl$ 的单射性。
 而 \cref{thm:path-coprod} 的完整同伦表述则给出了更多信息：类型 $\inl(a_0)=\inl(a)$ 和 $a_0=a$ 实际上是等价的，类型 $\inr(b_0)=\inr(b)$ 和 $b_0=b$ 也是等价的。
 
@@ -2015,7 +2015,7 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
 \end{rmk}
 
 这个证明展示了一种描述道路空间的通用方法，我们将会经常使用。
-为了刻画一个道路空间，第一步是定义一个比较纤维化 "$\code$"，它能对道路给出更明确的描述。
+为了刻画一个道路空间，第一步是定义一个比较纤维化 ``$\code$''，它能对道路给出更明确的描述。
 有几种不同的方法可以证明这样的比较纤维化等价于道路（在 \cref{sec:pi1-s1-intro} 中我们对同一个结果展示了若干不同的证明）。
 我们这里所使用的称为\define{编码-解码方法（encode-decode method）}：
 \indexdef{encode-decode method}
@@ -2063,7 +2063,7 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
 \begin{proof}
   我们通过传输定义 \[ \encode : \prd{m,n:\N} (m=n) \to \code(m,n) \] 为 $\encode(m,n,p) \defeq \transfib{\code(m,{\blank})}{p}{r(m)}$。
   （也可以通过道路归纳直接定义 $\encode$，但基于传输的定义往往使后续计算更为简便。）
-  接下来，通过对 $m$, $n$ 的双重归纳定义 \[ \decode : \prd{m,n:\N} \code(m,n) \to (m=n) \]。
+  接下来，通过对 $m$, $n$ 的双重归纳定义 \[ \decode : \prd{m,n:\N} \code(m,n) \to (m=n) \]
   当 $m$ 和 $n$ 均为 $0$ 时，我们需要一个函数 $\unit \to (0=0)$，将其定义为将所有输入映到 $\refl{0}$。
   当 $m$ 是后继而 $n$ 是 $0$，或者反过来时，定义域 $\code(m,n)$ 是 \emptyt，此时 \emptyt 的消去子即够用。
   当二者均为后继时，可将 $\decode(\suc(m),\suc(n))$ 定义为复合
@@ -2108,7 +2108,7 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
 \begin{equation}\label{eq:zero-not-succ}
   \encode(\suc(m),0) : (\suc(m)=0) \to \emptyt
 \end{equation}
-它表明"$0$ 不是任何自然数的后继"。
+它表明``$0$ 不是任何自然数的后继''。
 我们还有复合
 \begin{narrowmultline}\label{eq:suc-injective}
   (\suc(m)=\suc(n))
@@ -2128,9 +2128,9 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
 \section{示例：结构的相等性}
 \label{sec:equality-of-structures}
 
-现在我们考虑一个例子，用以说明类型的群胚结构与类型构造子之间的相互作用。在引言中我们曾指出，泛等性的一个优点在于：两个同构的东西是可互换的，意即凡涉及其中一者的性质或构造，也适用于另一者。常见的"记号滥用"\index{abuse!of notation}在形式上便成为真命题。泛等性本身断言等价的类型是相等的，因而是可互换的——这涵盖了例如将同构的集合视为等同这一常见做法。更进一步，当我们将其他数学对象定义为配备了一定结构或性质的集合乃至一般类型时，便能借助泛等性为它们推演出正确的相等概念。我们将在 \cref{cha:category-theory} 中以一个重要的例子阐明此点：在那里，我们将以适当方式定义范畴论的基本概念，使得范畴的相等即为等价，函子的相等即为自然同构，等等。特别参见 \cref{sec:sip}。在本节中，我们则描述一个来自代数的非常简单的例子。
+现在我们考虑一个例子，用以说明类型的群胚结构与类型构造子之间的相互作用。在引言中我们曾指出，泛等性的一个优点在于：两个同构的东西是可互换的，意即凡涉及其中一者的性质或构造，也适用于另一者。常见的``记号滥用''\index{abuse!of notation}在形式上便成为真命题。泛等性本身断言等价的类型是相等的，因而是可互换的——这涵盖了例如将同构的集合视为等同这一常见做法。更进一步，当我们将其他数学对象定义为配备了一定结构或性质的集合乃至一般类型时，便能借助泛等性为它们推演出正确的相等概念。我们将在 \cref{cha:category-theory} 中以一个重要的例子阐明此点：在那里，我们将以适当方式定义范畴论的基本概念，使得范畴的相等即为等价，函子的相等即为自然同构，等等。特别参见 \cref{sec:sip}。在本节中，我们则描述一个来自代数的非常简单的例子。
 
-为简便起见，我们以\emph{半群}为例，其中半群是指配备了一个满足结合律的"乘法"运算的类型。同样的想法也适用于其他代数结构，如幺半群、群和环。
+为简便起见，我们以\emph{半群}为例，其中半群是指配备了一个满足结合律的``乘法''运算的类型。同样的想法也适用于其他代数结构，如幺半群、群和环。
 回顾 \cref{sec:sigma-types,sec:pat}，一种数学结构的定义应被理解为将该类结构的类型定义为某个特定的迭代 $\Sigma$ 类型。
 对于半群的情形，就得到如下定义。
 
@@ -2159,7 +2159,7 @@ $\unit$ 的 transport 引理就是常值类型族（\cref{thm:trans-trivial}）�
 \subsection{提升等价}
 
 \index{lifting!equivalences}%
-在非正式的讨论中，我们或许会说，集合 $A$ 与 $B$ 之间的一个双射"显然"能诱导出 $A$ 上的半群结构与 $B$ 上的半群结构之间的一个同构。在泛等性下，这确实是显然的，因为给定类型 $A$ 与 $B$ 间的一个等价，我们能从 $A$ 上的一个半群结构自动导出 $B$ 上的一个半群结构，并且可以证明此导出本身是半群结构间的一个等价。原因在于，\semigroupstrsym 是一个类型族，因此它在类型间的道路上有一个由 $\mathsf{transport}$ 给出的作用：
+在非正式的讨论中，我们或许会说，集合 $A$ 与 $B$ 之间的一个双射``显然''能诱导出 $A$ 上的半群结构与 $B$ 上的半群结构之间的一个同构。在泛等性下，这确实是显然的，因为给定类型 $A$ 与 $B$ 间的一个等价，我们能从 $A$ 上的一个半群结构自动导出 $B$ 上的一个半群结构，并且可以证明此导出本身是半群结构间的一个等价。原因在于，\semigroupstrsym 是一个类型族，因此它在类型间的道路上有一个由 $\mathsf{transport}$ 给出的作用：
 \[
 \transfibf{\semigroupstrsym}{(\ua(e))} : \semigroupstr{A} \to \semigroupstr{B}.
 \]
@@ -2330,20 +2330,20 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 \end{proof}
 
 \index{axiom!of choice!type-theoretic}
-这一点值得注意，因为按命题即类型的解释，~\eqref{eq:sigma-ump-map} 就是"选择公理"。
-如果将 $\Sigma$ 读作"存在"，将 $\Pi$（有时）读作"对所有"，则可以如下表述：
+这一点值得注意，因为按命题即类型的解释，~\eqref{eq:sigma-ump-map} 就是``选择公理''。
+如果将 $\Sigma$ 读作``存在''，将 $\Pi$（有时）读作``对所有''，则可以如下表述：
 
 \begin{itemize}
-\item $\prd{x:X} \sm{a:A(x)} P(x,a)$ 意为"对所有 $x:X$，存在一个 $a:A(x)$ 使得 $P(x,a)$"；
-\item $\sm{g:\prd{x:X} A(x)} \prd{x:X} P(x,g(x))$ 意为"存在一个选择函数 $g:\prd{x:X} A(x)$，使得对所有 $x:X$ 有 $P(x,g(x))$"。
+\item $\prd{x:X} \sm{a:A(x)} P(x,a)$ 意为``对所有 $x:X$，存在一个 $a:A(x)$ 使得 $P(x,a)$''；
+\item $\sm{g:\prd{x:X} A(x)} \prd{x:X} P(x,g(x))$ 意为``存在一个选择函数 $g:\prd{x:X} A(x)$，使得对所有 $x:X$ 有 $P(x,g(x))$''。
 \end{itemize}
 
-因此，\cref{thm:ttac} 表明：选择公理不仅"为真"，其前提实际上还等价于其结论。
+因此，\cref{thm:ttac} 表明：选择公理不仅``为真''，其前提实际上还等价于其结论。
 （另一方面，经典\index{mathematics!classical}数学家可能会觉得~\eqref{eq:sigma-ump-map} 并不符合选择公理的通常含义，因为 $g$ 的值已经给定，不再有任何选择余地。
 我们将在\cref{sec:axiom-choice}回到这一点。）
 
-上述关于序对类型的泛性质是针对"映射入"的，这与范畴论中积的概念一致，读者对此应不陌生。
-然而，序对类型也有一个针对"映射出"的泛性质，可能看起来不那么熟悉。
+上述关于序对类型的泛性质是针对``映射入''的，这与范畴论中积的概念一致，读者对此应不陌生。
+然而，序对类型也有一个针对``映射出''的泛性质，可能看起来不那么熟悉。
 在 Cartesian 积的情形，非依值版本直接表达了 Cartesian 闭伴随\index{adjoint!functor}：
 \[ \eqvspaced{\big((A\times B) \to C\big)}{\big(A\to (B\to C)\big)}.\]
 其依值版本针对类型族 $C:A\times B\to \type$ 表述如下：
@@ -2398,17 +2398,17 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 \index{type theory!extensional}%
 \index{reflection rule}%
 正如在 \cref{cha:typetheory} 的注记中提到的，我们这里使用的相等类型属于\emph{内涵}类型论（intensional type theory），而非\emph{外延}类型论（extensional type theory）。
-一般来说，若一种相等性概念会根据对象的具体定义方式来区分对象，则称其为"内涵的（intensional）"；若它对具有相同"外延"或"可观察行为"的对象不加区分，则称其为"外延的（extensional）"。
+一般来说，若一种相等性概念会根据对象的具体定义方式来区分对象，则称其为``内涵的（intensional）''；若它对具有相同``外延''或``可观察行为''的对象不加区分，则称其为``外延的（extensional）''。
 用 Frege（弗雷格）的术语来说，内涵相等性比较的是\emph{涵义（sense）}，而外延相等性仅比较\emph{指称（reference）}。
-我们也可以说一种相等性比另一种"更外延"或"更不外延"，分别意味着它考虑的对象内涵方面更少或更多。
+我们也可以说一种相等性比另一种``更外延''或``更不外延''，分别意味着它考虑的对象内涵方面更少或更多。
 
-\emph{内涵}类型论之所以得名，是因为其\emph{判断相等性（judgmental equality）} $x\jdeq y$ 是一种内涵性很强的相等性：它本质上是在说，在展开函数的定义方程之后，$x$ 和 $y$"具有相同的定义"。
+\emph{内涵}类型论之所以得名，是因为其\emph{判断相等性（judgmental equality）} $x\jdeq y$ 是一种内涵性很强的相等性：它本质上是在说，在展开函数的定义方程之后，$x$ 和 $y$``具有相同的定义''。
 相比之下，命题相等类型 $\id xy$ 则更具外延性，即便是在 \cref{cha:typetheory} 中无公理的内涵类型论中也是如此：例如，我们可以通过归纳证明对所有 $m,n:\N$ 都有 $n+m=m+n$，但不能说对所有 $m,n:\N$ 都有 $n+m\jdeq m+n$，因为加法的\emph{定义}对其参数的处理是不对称的。
 
 我们可以通过添加公理使内涵类型论中的相等类型变得更加外延，例如函数外延性（若两个函数在所有输入上行为相同，则无论其定义方式如何，这两个函数都相等）和泛等性（这可以视为宇宙的一种外延性：若两个类型在所有语境中行为相同，则它们相等）。
-函数外延性公理，以及泛等性在命题特殊情形下的形式（"命题外延性"），早已出现在 Russell（罗素）与 Church（丘奇）最早的类型论中。
+函数外延性公理，以及泛等性在命题特殊情形下的形式（``命题外延性''），早已出现在 Russell（罗素）与 Church（丘奇）最早的类型论中。
 
-如前所述，\emph{外延}类型论还包含一条"反射规则（reflection rule）"，说的是若 $p:x=y$，则实际上 $x\jdeq y$。
+如前所述，\emph{外延}类型论还包含一条``反射规则（reflection rule）''，说的是若 $p:x=y$，则实际上 $x\jdeq y$。
 因此，外延类型论之所以如此命名，正是因为它\emph{不容许}任何纯粹的\emph{内涵}相等性：反射规则迫使判断相等性与更具外延性的相等类型重合。
 此外，从反射规则可以推出函数外延性（至少在存在关于函数的判断唯一性原理时）。
 然而，反射规则同时也意味着所有高阶群胚结构都会坍缩（参见 \cref{ex:equality-reflection}），因此与泛等公理不相容（参见 \cref{thm:type-is-not-a-set}）。
@@ -2417,7 +2417,7 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 \sectionNotes
 
 相等性的对称性（求逆）与传递性（拼接）在类型论中的证明已广为人知。
-这些性质使得每个类型（在同伦意义下）成为一个 1-群胚，\cite{hs:gpd-typethy} 利用这一事实给出了类型论的首个"同伦式"语义。
+这些性质使得每个类型（在同伦意义下）成为一个 1-群胚，\cite{hs:gpd-typethy} 利用这一事实给出了类型论的首个``同伦式''语义。
 
 真正的同伦解释——即将相等类型视作道路空间，将类型族视作纤维化——归功于 \cite{AW}，他使用了 Quillen 模型范畴的形式体系。
 在（严格）$\infty$-群胚\index{.infinity-groupoid@$\infty$-groupoid}中的一种解释也见于学位论文 \cite{mw:thesis}。
@@ -2425,22 +2425,22 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 
 \index{proof!assistant!Coq@\textsc{Coq}}%
 诸如 $\transfib{P}{p}{\blank}$ 与 $\apfunc{f}$ 等操作，以及一种恰当的等价概念，最初由 Voevodsky 使用证明辅助工具 \Coq 在类型论中加以深入研究。
-此后，人们又发现了"等价"的其他多种等价定义，在 \cref{cha:equivalences} 中作了比较。
+此后，人们又发现了``等价''的其他多种等价定义，在 \cref{cha:equivalences} 中作了比较。
 
-\cref{sec:computational} 中描述的关于相等类型、迁移（transport）等的"计算性"解释，受到了~\cite{lh:canonicity} 的强调。
-他们还描述了一种"1-截断的"类型论（见 \cref{cha:hlevels}），其中这些规则均为判断相等。
+\cref{sec:computational} 中描述的关于相等类型、迁移（transport）等的``计算性''解释，受到了~\cite{lh:canonicity} 的强调。
+他们还描述了一种``1-截断的''类型论（见 \cref{cha:hlevels}），其中这些规则均为判断相等。
 将此推广到完整的非截断理论的可能性，是当前的研究课题之一。
 
 \index{function extensionality}%
-朴素形式的函数外延性——即"如果两个函数逐点相等，那么它们就相等"——是类型论中一条常见的公理，最早可追溯到 \cite{PM2}。
+朴素形式的函数外延性——即``如果两个函数逐点相等，那么它们就相等''——是类型论中一条常见的公理，最早可追溯到 \cite{PM2}。
 一些更强的函数外延性形式曾在~\cite{garner:depprod} 中被讨论过。
 我们所采用的版本——即在等价的意义下将函数类型的相等类型等同起来——最初由 Voevodsky 研究；他还证明了该版本可由朴素形式（以及泛等性；参见 \cref{sec:univalence-implies-funext}）推出。
 
 \index{univalence axiom}%
 泛等公理同样归功于 Voevodsky。
 它最初的动机源于单纯集合模型中的语义考量；详见~\cite{klv:ssetmodel}。
-受群胚模型启发，Hofmann 和 Streicher~\cite{hs:gpd-typethy} 提出了一个类似的公理，称之为"宇宙外延性"。
-该公理使用了拟逆~\eqref{eq:qinvtype}，而非一个恰当的"等价"概念；因此，它仅对 1-类型的宇宙才是正确的（且仅在这种情况下才与泛等公理等价）（参见 \cref{defn:1type}）。
+受群胚模型启发，Hofmann 和 Streicher~\cite{hs:gpd-typethy} 提出了一个类似的公理，称之为``宇宙外延性''。
+该公理使用了拟逆~\eqref{eq:qinvtype}，而非一个恰当的``等价''概念；因此，它仅对 1-类型的宇宙才是正确的（且仅在这种情况下才与泛等公理等价）（参见 \cref{defn:1type}）。
 
 在本书所使用的类型论中，函数外延性与泛等性必须作为公理引入，即被断言为属于某个类型的元素，但并非按照该类型的规则构造而成。
 这种做法虽尚可行，但也有若干不足。
@@ -2448,13 +2448,13 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 另一个不便之处在于，\crefrange{sec:compute-cartprod}{sec:compute-nat} 中的定理仅仅是命题相等性（道路）或等价，因此每当需要经由它们来回转换时，都必须显式提及。
 同伦类型论当前的一个研究方向是描述这样一个类型系统：其中的这些规则是\emph{判断}相等，从而一举解决上述两个问题。
 迄今为止，这仅在若干简单情形下得以实现，不过像~\cite{lh:canonicity} 这样的初步结果也前景看好。
-此外，还有其他潜在的途径可以将泛等性与函数外延性引入类型论，例如引入足够强大的"高阶商"或"高阶归纳-递归类型"概念。
+此外，还有其他潜在的途径可以将泛等性与函数外延性引入类型论，例如引入足够强大的``高阶商''或``高阶归纳-递归类型''概念。
 
-\crefrange{sec:compute-coprod}{sec:compute-nat} 中诸如"$\inl$ 与 $\inr$ 是单的且不相交"这类简单结论，在类型论中是众所周知的；而构造 \encode 函数则是证明它们的常用方法。
+\crefrange{sec:compute-coprod}{sec:compute-nat} 中诸如``$\inl$ 与 $\inr$ 是单的且不相交''这类简单结论，在类型论中是众所周知的；而构造 \encode 函数则是证明它们的常用方法。
 我们所描述的、更精炼的方法——即在等价的意义下刻画正类型的整个相等类型——则属于较新的发展；例如可参见~\cite{ls:pi1s1}。
 
 \index{axiom!of choice!type-theoretic}%
-类型论选择公理~\eqref{eq:sigma-ump-map} 由 William Howard 在其关于"命题即类型"对应的原始论文~\cite{howard:pat} 中所注意到，其后 Martin-L\"of 在引入其依值类型论时对此作了进一步研究。在 Bourbaki 的集合论中，它被提及为一条"分配律"~\cite{Bourbaki}。
+类型论选择公理~\eqref{eq:sigma-ump-map} 由 William Howard 在其关于``命题即类型''对应的原始论文~\cite{howard:pat} 中所注意到，其后 Martin-L\"of 在引入其依值类型论时对此作了进一步研究。在 Bourbaki 的集合论中，它被提及为一条``分配律''~\cite{Bourbaki}。
 \index{Bourbaki}%
 
 关于拉回以及更一般的同伦极限在同伦类型论中更全面（且形式化）的讨论，请参阅~\cite{AKL13}。
@@ -2510,7 +2510,7 @@ p_2 &: \transfib{\semigroupstrsym}{p_1}{(m,a)} = {(m',a')}.
 \end{ex}
 
 \begin{ex}\label{ex:sigma-assoc}
-  证明 $\Sigma$-类型是"结合"的，
+  证明 $\Sigma$-类型是``结合''的，
   \index{associativity!of Sigma-types@of $\Sigma$-types}%
   即对任意 $A:\UU$ 以及类型族 $B:A\to\UU$ 和 $C:(\sm{x:A} B(x))\to\UU$，有
   \[\eqvspaced{\Parens{\sm{x:A}{y:B(x)} C(\pairr{x,y})}}{\Parens{\sm{p:\sm{x:A}B(x)} C(p)}}. \]

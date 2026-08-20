@@ -69,11 +69,35 @@ pdfkeywords={type theory, homotopy theory, univalence axiom}]{hyperref}
 %%% Multi-Columns for long lists of names
 \usepackage{multicol}
 
+% 中译本改动：amsmath/amsthm/stmaryrd/mathtools 都要放到 fontsetup（内部加载 unicode-math）之前
+\usepackage{amsmath,amsthm,stmaryrd,mathtools}
+
 %%% Set the fonts
-\usepackage{mathpazo}
-\usepackage[scaled=0.95]{helvet}
-\usepackage{courier}
-\linespread{1.05} % Palatino looks better with this
+% 改回 newcm：用 fontsetup 包（要求 Xe/LuaLaTeX，走 fontspec+unicode-math）
+\usepackage[default]{fontsetup}
+
+% \Box（模态逻辑的"必然"算子）
+\renewcommand{\Box}{□}
+
+% \centerdot（macros.tex 里 \ct 道路拼接算子的底层符号，全书高频使用）原来
+% 也是 amssymb 提供的，去掉后未定义，同样用字面 Unicode 字符代替。
+\newcommand{\centerdot}{⋅}
+
+% \ocircle（macros.tex 里 \modal 模态算子的底层符号）原来是 wasysym 提供
+% 的，去掉后未定义，同样用字面 Unicode 字符（○ U+25CB）代替。
+\newcommand{\ocircle}{○}
+
+% \leadsto（"道路"记号 $a\leadsto b$，直接在正文里裸用，不经过 macros.tex）
+% 原来是 latexsym/amsfonts 提供的，是 LaTeX 内核自带的"提示占位"桩函数
+% （报错信息会提示"Load the latexsym or amsfonts package"），之前 amsmath
+% 传递加载了 amsfonts 从而侧面提供了它；现在同样用字面 Unicode 字符
+% （⇝ U+21DD）代替，跟 \Box 一样要用 \renewcommand（因为内核桩已经"定义"过
+% 这个名字了，\newcommand 会报"已经 defined"）。
+\renewcommand{\leadsto}{⇝}
+
+% \square（macros.tex 里好几个 surreal-number "bar name" 宏，如 \tapbname/
+% \tlbname/\tleb/\tltb，都用它拼出来）同样是 amssymb 提供的，去掉后未定义。
+\newcommand{\square}{□}
 
 \usepackage{ifpdf}
 
@@ -86,8 +110,8 @@ pdfkeywords={type theory, homotopy theory, univalence axiom}]{hyperref}
 
 \usepackage{nextpage} % So we can jump to odd-numbered pages
 
-\usepackage{amssymb,amsmath,amsthm,stmaryrd,mathrsfs,wasysym}
-\usepackage{enumitem,mathtools,xspace}
+% amsmath/amsthm/stmaryrd/mathtools 已经在 fontsetup 之前加载过了，不再加载，避免 "Command 已经 defined" 冲突。
+\usepackage{enumitem,xspace}
 \usepackage{xstring} % For generating singluars and plurals in \backref
 
 \usepackage{xcolor} % For colored cells in tables we need \cellcolor

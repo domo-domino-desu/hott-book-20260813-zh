@@ -40,7 +40,7 @@
 \index{mathematics!formalized}%
 \indexsee{formalization of mathematics}{mathematics, formalized}%
 第三，我们的综合方法非常适合利用 \Coq 和 \Agda 等\index{proof!assistant}证明辅助工具进行计算机验证。
-本章所描述的证明，几乎全部都已通过计算机验证；其中许多证明最初是在证明辅助工具中给出的，而后才为本书"去形式化"。
+本章所描述的证明，几乎全部都已通过计算机验证；其中许多证明最初是在证明辅助工具中给出的，而后才为本书``去形式化''。
 计算机验证证明的篇幅和工作量与这里展示的非形式证明不相上下，有时甚至更短、更容易完成。
 
 \mentalpause
@@ -50,9 +50,9 @@
 
 \index{classical!homotopy theory|(}%
 同伦论是代数拓扑的一个分支，运用抽象代数的工具（如群论）来研究空间的性质。
-同伦论研究者探讨的问题之一是如何判断两个空间是否"相同"，这里的"相同"指的是\emph{同伦等价}
+同伦论研究者探讨的问题之一是如何判断两个空间是否``相同''，这里的``相同''指的是\emph{同伦等价}
 \index{homotopy!equivalence!topological}%
-（存在来回的连续映射能在同伦的意义下复合为恒等映射——这为"修正"那些不能严格复合为恒等的映射提供了可能）。
+（存在来回的连续映射能在同伦的意义下复合为恒等映射——这为``修正''那些不能严格复合为恒等的映射提供了可能）。
 判断两个空间是否相同的常用方法，是计算与空间相关的\emph{代数不变量}，其中包括其\emph{同伦群}、\emph{同调群}与\emph{上同调群}。
 \index{homology}%
 \index{cohomology}%
@@ -64,7 +64,7 @@
 \index{fundamental!group}%
 ，记为 $\pi_1(X,x_0$)：给定空间 $X$ 及其中的一个点 $x_0$，可以构成一个群，其元素是 $x_0$ 处的环路（即从 $x_0$ 到 $x_0$ 的连续道路），并在同伦的意义下视作相同；群的运算由恒等道路（静止不动）、道路拼接和道路反转给出。
 例如，$2$-球面的基本群是平凡的，而环面的基本群则不然，这表明球面和环面不是同伦等价的。
-直观上可以这样理解：球面上的每一个环路都同伦于恒等道路，因为它内部可以被"填满"。
+直观上可以这样理解：球面上的每一个环路都同伦于恒等道路，因为它内部可以被``填满''。
 相比之下，环面上穿过甜甜圈那个孔洞的环路则无法同伦于恒等道路，因此其基本群中存在非平凡的元素。
 
 \index{homotopy!group}
@@ -176,7 +176,7 @@ $\infty$-群胚的代数结构包含不同层级之间的非平凡交互，而�
 \index{.infinity-groupoid@$\infty$-groupoid}%
 而这种呈现\emph{决定了}但并不\emph{显式描述} $X$ 的高阶相等类型。
 相等类型中既包含生成元（例如对于圆周来说是 $\lloop$），也包含对这些生成元施加所有群胚运算（恒等、复合、取逆、结合性、互换、\ldots）所得的结果。
-因此，空间的高阶归纳呈现允许我们提出"$X$ 的相等类型实际上是什么？"这样的问题，尽管回答它可能需要相当多的数学论证。
+因此，空间的高阶归纳呈现允许我们提出``$X$ 的相等类型实际上是什么？''这样的问题，尽管回答它可能需要相当多的数学论证。
 这是类型论中一个熟知事实的高维推广：刻画 $X$ 的相等类型可能需要费一番功夫，即使 $X$ 只是一个普通的归纳类型，比如自然数或布尔值。
 例如，$\bfalse$ 与 $\btrue$ 不相等这一定理并不能直接从定义推出；
 参见 \cref{sec:compute-coprod}。
@@ -236,7 +236,7 @@ $\infty$-群胚的代数结构包含不同层级之间的非平凡交互，而�
 \index{path!fibration}%
 \index{fibration!of paths}%
 特别地，对于点 $x_0:B$，类型族 $(x\mapsto (x_0=x))$ 对应于\emph{道路纤维化} $P_{x_0} B \to B$：$P_{x_0} B$ 中的点是 $B$ 中始于 $x_0$ 的道路，而到 $B$ 的映射选取的是这条道路的另一个端点。
-这个全空间 $P_{x_0} B$ 是可缩的，因为我们可以将任一道路"收缩"回其起始端点 $x_0$ —— 我们之前已经见过这一事实的类型论版本，即 \cref{thm:contr-paths}。
+这个全空间 $P_{x_0} B$ 是可缩的，因为我们可以将任一道路``收缩''回其起始端点 $x_0$ —— 我们之前已经见过这一事实的类型论版本，即 \cref{thm:contr-paths}。
 此外，$x_0$ 上的纤维就是环路空间\index{loop space} $\Omega(B,x_0)$ —— 在类型论中，由环路空间的定义即可看出。
 
 \begin{figure}\centering
@@ -264,7 +264,7 @@ $\infty$-群胚的代数结构包含不同层级之间的非平凡交互，而�
 
 现在，在经典同伦论里——那里将 $\Sn^1$ 视为一个拓扑空间——我们可以这样进行。
 \index{winding!map}%
-考虑"环绕"映射 $w:\mathbb{R}\to \Sn ^1$，它看起来像一条投影到圆上的螺旋线（见 \cref{fig:winding}）。
+考虑``环绕''映射 $w:\mathbb{R}\to \Sn ^1$，它看起来像一条投影到圆上的螺旋线（见 \cref{fig:winding}）。
 映射 $w$ 将螺旋线\index{helix}上的每个点映为它正下方的圆上的点。
 它是一个纤维化，并且每个点上的纤维同构于整数。\index{integers}
 如果我们将底部沿逆时针方向绕行环路的那条道路提升，我们在螺旋线上就上升一层，使纤维中的整数加一。
@@ -313,7 +313,7 @@ $\infty$-群胚的代数结构包含不同层级之间的非平凡交互，而�
 同构，这对应着一个几何事实：在基空间中绕环路一圈，在螺旋线上就上升一层。
 这部分证明需要用到泛等性，因为我们需要将 $\Z$ 上的一个\emph{非平凡}等价转化为一个相等。
 
-我们称此纤维化为"码"的纤维化，因为它的元素是组合数据，充当圆周上道路的码：整数 $n$ 编码了绕圆 $n$ 圈的道路。
+我们称此纤维化为``码''的纤维化，因为它的元素是组合数据，充当圆周上道路的码：整数 $n$ 编码了绕圆 $n$ 圈的道路。
 
 从这个定义出发，容易计算出：用 $\code$ 传输会将 $\lloop$ 映为后继函数，而将 $\opp{\lloop}$ 映为前驱函数：
 
@@ -823,7 +823,7 @@ $\id{\pi_1(\Sn ^1)} {\Z}$，而当 $n>1$ 时，$\id{\pi_n(\Sn ^1)}0$。
   \indexdef{fiber sequence}%
   \indexdef{sequence!fiber}%
   是由带点类型与带点映射组成的无穷序列
-  \[\xymatrix{\dots \ar[r]^{f^{(n+1)}} & X^{(n+1)} \ar[r]^{f^{(n)}} & X^{(n)} \ar^-{f^{(n-1)}}[r] & \dots \ar[r] & X^{(2)} \ar^-{f^{(1)}}[r] & X^{(1)} \ar[r]^{f^{(0)}} & X^{(0)}}\]，
+  \[\xymatrix{\dots \ar[r]^{f^{(n+1)}} & X^{(n+1)} \ar[r]^{f^{(n)}} & X^{(n)} \ar^-{f^{(n-1)}}[r] & \dots \ar[r] & X^{(2)} \ar^-{f^{(1)}}[r] & X^{(1)} \ar[r]^{f^{(0)}} & X^{(0)}}\]
   递归地由
   \[ X^{(0)} \defeq Y\qquad
     X^{(1)} \defeq X\qquad
@@ -839,7 +839,7 @@ $\id{\pi_1(\Sn ^1)} {\Z}$，而当 $n>1$ 时，$\id{\pi_n(\Sn ^1)}0$。
 \end{defn}
 
 因此，这个纤维列中任意相邻的一对映射都具有如下形式：
-\[ \xymatrix{ X^{(n+1)} \jdeq \hfib{f^{(n-1)}}{x^{(n-1)}_0} \ar[rr]^-{f^{(n)}\jdeq \proj1} && X^{(n)} \ar[r]^{f^{(n-1)}} & X^{(n-1)}. } \]。
+\[ \xymatrix{ X^{(n+1)} \jdeq \hfib{f^{(n-1)}}{x^{(n-1)}_0} \ar[rr]^-{f^{(n)}\jdeq \proj1} && X^{(n)} \ar[r]^{f^{(n-1)}} & X^{(n-1)}. } \]
 特别地，我们有 $f^{(n-1)} \circ f^{(n)} = 0$。
 现在我们注意到，这个序列中出现的类型分别是底空间 $Y$、全空间\index{total!space} $X$ 以及纤维 $F\defeq \hfib f {y_0}$ 的迭代环路空间\index{loop space!iterated}，映射也类似。
 
@@ -888,19 +888,19 @@ $\id{\pi_1(\Sn ^1)} {\Z}$，而当 $n>1$ 时，$\id{\pi_n(\Sn ^1)}0$。
 \[ \Omega\left(\Omega f\circ \opp{(\blank)}\right) \circ \opp{(\blank)}
 = \Omega^2 f \circ \opp{(\blank)} \circ \opp{(\blank)}
 = \Omega^2 f.
-\]。
+\]
 因此，当 $k$ 是奇数时，$k$ 重环路映射上就会出现减号。
 
 从这个纤维列我们将推导出一个\emph{带点集的正合列}。
 \index{image}%
 设 $A$ 和 $B$ 是集合，$f:A\to B$ 是一个函数；回顾 \emph{像} $\im(f)$ 的定义（参见 \cref{defn:modal-image}），它可以视为 $B$ 的一个子集：
-\[\im(f) \defeq \setof{b:B | \exis{a:A} f(a)=b}. \]。
+\[\im(f) \defeq \setof{b:B | \exis{a:A} f(a)=b}. \]
 如果 $A$ 和 $B$ 还分别带有基点 $a_0$ 和 $b_0$，并且 $f$ 是一个带点映射，则定义 $f$ 的\define{核（kernel）}
 \indexdef{kernel}%
 \indexdef{pointed!map!kernel of}%
 为 $A$ 的如下子集：
 \symlabel{kernel}
-\[\ker(f) \defeq \setof{x:A | f(x) = b_0}. \]。
+\[\ker(f) \defeq \setof{x:A | f(x) = b_0}. \]
 当然，这其实就是 $f$ 在基点 $b_0$ 上的纤维；由于 $B$ 是集合，所以它是 $A$ 的子集。
 
 注意，任何群都是一个带点集，其单位元即为基点；任何群同态都是一个带点映射。
@@ -1081,7 +1081,7 @@ Hopf 纤维化将帮助我们计算球面的若干同伦群。
   \begin{itemize}
   \item 两个纤维化 $E_Y:Y\to\type$ 和 $E_Z:Z\to\type$。
   \item $E_Y\circ j:X\to\type$ 与 $E_Z\circ k:X\to\type$ 之间的一个等价 $e_X$，即
-    \[e_X:\prd{x:X}\eqv{E_Y(j(x))}{E_Z(k(x))}.\]。
+    \[e_X:\prd{x:X}\eqv{E_Y(j(x))}{E_Z(k(x))}.\]
   \end{itemize}
 
   那么我们可以构造一个纤维化 $E:Y\sqcup^XZ\to\type$，使得：
@@ -1094,8 +1094,8 @@ Hopf 纤维化将帮助我们计算球面的若干同伦群。
   \[\xymatrix{ \sm{x:X}E_Y(j(x)) \ar[r]_\sim^{\idfunc\times e_X}
     \ar[d]_{j\times\idfunc} &
     \sm{x:X}E_Z(k(x)) \ar[r]^-{k\times\idfunc}
-    & \sm{z:Z}E_Z(z) \ar[d]^\inr \\
-    \sm{y:Y}E_Y(y) \ar[rr]_\inl & & \sm{t:Y\sqcup^XZ}E(t) }\]
+    & \sm{z:Z}E_Z(z) \ar[d]^{\inr} \\
+    \sm{y:Y}E_Y(y) \ar[rr]_{\inl} & & \sm{t:Y\sqcup^XZ}E(t) }\]
 \end{lem}
 
 \begin{proof}
@@ -1165,7 +1165,7 @@ Hopf 纤维化将帮助我们计算球面的若干同伦群。
 \begin{proof}
   我们来证明对于每个 $a:A$，映射 $\mu(a,\blank)$ 是一个等价。另一个结论同理可证。
   %
-  "$\mu(a,\blank)$ 是等价"这一断言对应于一个类型族
+  ``$\mu(a,\blank)$ 是等价''这一断言对应于一个类型族
   $P:A\to\prop$，而证明它则对应于寻找该类型族的一个截面。
 
   类型 $\prop$ 是一个集合（\cref{thm:hleveln-of-hlevelSn}），因此我们可以
@@ -1202,8 +1202,8 @@ Hopf 纤维化将帮助我们计算球面的若干同伦群。
 
 此外，利用 $f(x,y)\defeq(\mu(x,y),y)$ 我们得到如下图表：
 %
-\[\xymatrix{A \ar_\idfunc[d] & A \times A \ar[l]_-{\proj2} \ar^f[d]
-  \ar[r]^-{\mu} & A \ar^\idfunc[d] \\
+\[\xymatrix{A \ar_{\idfunc}[d] & A \times A \ar[l]_-{\proj2} \ar^f[d]
+  \ar[r]^-{\mu} & A \ar^{\idfunc}[d] \\
   A & A\times A \ar^-{\proj2}[l] \ar_-{\proj1}[r] & A}\]
 %
 该图表交换，并且三个垂直映射都是等价，其中 $f$ 的逆是函数 $g$，定义为
@@ -1373,7 +1373,7 @@ $\Sn^1$ 且全空间为 $\Sn^1*\Sn^1$ 的纤维化。然后我们将证明这个
 
 在证明 Freudenthal 纬悬定理之前，我们需要一些关于连通性的辅助引理。
 在\cref{cha:hlevels}中，我们针对固定的 $n$ 证明了关于 $n$-连通映射与 $n$-类型的一系列事实；现在我们关心的是当 $n$ 变化时会发生什么。
-例如，在\cref{prop:nconnected_tested_by_lv_n_dependent types}中我们证明了 $n$-连通映射可由一个相对于 $n$-类型族的"归纳原理"来刻画。
+例如，在\cref{prop:nconnected_tested_by_lv_n_dependent types}中我们证明了 $n$-连通映射可由一个相对于 $n$-类型族的``归纳原理''来刻画。
 如果我们想沿着一个 $n$-连通映射，向一个 $k>n$ 的 $k$-类型族作归纳，我们并不能立即知道存在一个满足该归纳原理的函数，但下面的引理表明，至少我们的无知是可以被量化的。
 
 \begin{lem}\label{thm:conn-trunc-variable-ind}
@@ -1444,8 +1444,8 @@ $A\vee B$ 定义为由 $A\xleftarrow{a_0}
 
 \begin{rmk}
   在经典代数拓扑中，人们考虑的是\emph{约化纬悬}，其中道路 $\merid(x_0)$ 被坍缩为一个点，从而将 $\north$ 和 $\south$ 等同起来。
-  约化与非约化纬悬是同伦等价的，因此在我们纯粹的同伦论视角下，这一区分是不可见的——况且高阶归纳类型本来也只允许我们通过高阶道路来"等同"点，所以在同伦类型论中并无必要考虑约化纬悬。
-  然而，我们所用纬悬的"非约化性"正是 $\opp{\merid(x_0)}$ 这一（可能令人意外的）项在 $\sigma$ 的定义中出现的原因。
+  约化与非约化纬悬是同伦等价的，因此在我们纯粹的同伦论视角下，这一区分是不可见的——况且高阶归纳类型本来也只允许我们通过高阶道路来``等同''点，所以在同伦类型论中并无必要考虑约化纬悬。
+  然而，我们所用纬悬的``非约化性''正是 $\opp{\merid(x_0)}$ 这一（可能令人意外的）项在 $\sigma$ 的定义中出现的原因。
 \end{rmk}
 
 我们现在的目标是证明以下定理。
@@ -1717,7 +1717,7 @@ van Kampen 定理用于计算空间的（同伦）推出的基本群 $\pi_1$。
 \subsection{朴素 van Kampen}
 \label{sec:naive-vankampen}
 
-我们从 van Kampen 定理的一个"朴素"版本开始，它虽有用，但不及经典版本。
+我们从 van Kampen 定理的一个``朴素''版本开始，它虽有用，但不及经典版本。
 在 \cref{sec:better-vankampen} 中，我们将把它改进为一个更有用的版本。
 
 \index{encode-decode method|(}%
@@ -1808,7 +1808,7 @@ van Kampen 定理用于计算空间的（同伦）推出的基本群 $\pi_1$。
   \end{align*}
   然而，这些并非必需！
   事实上，它们可以通过对 $w$ 进行道路归纳自动得出。
-  这正是"朴素"van Kampen 定理与下一小节将要考虑的更精细版本之间的主要区别。
+  这正是``朴素''van Kampen 定理与下一小节将要考虑的更精细版本之间的主要区别。
 \end{rmk}
 
 继续下去，我们可以刻画在纤维化 $\code$ 中的 transport 操作：
@@ -1885,7 +1885,7 @@ van Kampen 定理用于计算空间的（同伦）推出的基本群 $\pi_1$。
 
 照例，为了证明复合
 \[ \Pi_1P(u,v) \xrightarrow{\encode} \code(u,v) \xrightarrow{\decode} \Pi_1P(u,v) \]
-是恒等映射，我们首先"剥掉"0-截断（因为值域是集合），然后应用道路归纳。
+是恒等映射，我们首先``剥掉''0-截断（因为值域是集合），然后应用道路归纳。
 输入 $\refl{u}$ 映到 $ru$，而 $ru$ 又映回 $\refl u$（通过对 $u$ 的进一步归纳来分解 $\decode(ru)$）。
 
 最后，考虑复合
@@ -1920,7 +1920,7 @@ van Kampen 定理用于计算空间的（同伦）推出的基本群 $\pi_1$。
   令 $A\defeq \bool$，$B\defeq\unit$，且 $C\defeq \unit$。
   那么 $P \eqvsym S^1$。
   考察比如 $\code(i(\ttt),i(\ttt))$ 的定义，我们发现所有的道路实际上都是平凡的，因此唯一的信息就是元素的序列 $x_1,y_1,\dots,x_n,y_n: \bool$。
-  此外，若对某个 $k$ 我们有 $x_k=y_k$ 或 $y_k=x_{k+1}$，那么集合商关系允许我们同时"切除"这两个元素。
+  此外，若对某个 $k$ 我们有 $x_k=y_k$ 或 $y_k=x_{k+1}$，那么集合商关系允许我们同时``切除''这两个元素。
   因此，每个这样的序列都等于一个典范的\emph{约化}序列，其中没有两个相邻元素是相等的。
   显然，这样的约化序列由其长度（一个自然数 $n$）以及（如果 $n>1$）$x_1$ 是 $\bfalse$ 还是 $\btrue$ 这一信息所唯一决定，因为这能唯一确定序列的其余部分。
   当然，这些数据可以等同于一个整数：$n$ 对应绝对值，$x_1$ 编码正负号。
@@ -1929,7 +1929,7 @@ van Kampen 定理用于计算空间的（同伦）推出的基本群 $\pi_1$。
 
 由于 \cref{thm:naive-van-kampen} 断言的只是集合族之间的双射，这个同构 $\pi_1(S^1)\cong \Z$ 同样也只是集合间的双射。
 然而，我们可以在 $\code$ 上定义一种拼接运算（通过拼接序列），并证明 $\encode$ 和 $\decode$ 构成了一个保持该结构的同构。
-（用 \cref{cha:category-theory} 的语言来说，这些将是"预群胚"。）
+（用 \cref{cha:category-theory} 的语言来说，这些将是``预群胚''。）
 细节留给读者。
 
 \index{fundamental!group|(}%

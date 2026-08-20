@@ -423,9 +423,9 @@ e_1 \defeq \; \lamu{f:\unit \to \natw}{g:\unit \to \natw} \sucw(\sucw(g(\ttt))).
 \indexsee{initial!algebra characterization of inductive types}{homotopy-initial}%
 
 如前所述，归纳类型也具有范畴论意义上的泛性质。
-它们是\emph{同伦初始代数（homotopy-initial algebras）}：在由指定的构造子决定的"代数"范畴中，它们是在同伦相干的意义下的初始对象。
+它们是\emph{同伦初始代数（homotopy-initial algebras）}：在由指定的构造子决定的``代数''范畴中，它们是在同伦相干的意义下的初始对象。
 举一个简单的例子，考虑自然数。
-这里合适的"代数"是指一个类型，它配备了与 $\nat$ 的构造子所赋予的相同结构。
+这里合适的``代数''是指一个类型，它配备了与 $\nat$ 的构造子所赋予的相同结构。
 
 \index{natural numbers!as homotopy-initial algebra}
 
@@ -470,7 +470,7 @@ e_1 \defeq \; \lamu{f:\unit \to \natw}{g:\unit \to \natw} \sucw(\sucw(g(\ttt))).
 \end{equation*}
 \end{defn}
 
-当 h-初始代数存在时，它们是唯一的——不仅是范畴论中常见的"在同构意义下"唯一，更由泛等公理在"相等"的意义下唯一。
+当 h-初始代数存在时，它们是唯一的——不仅是范畴论中常见的``在同构意义下''唯一，更由泛等公理在``相等''的意义下唯一。
 
 \begin{thm}
   任何两个 h-初始的 $\nat$-代数都是相等的。
@@ -482,7 +482,7 @@ e_1 \defeq \; \lamu{f:\unit \to \natw}{g:\unit \to \natw} \sucw(\sucw(g(\ttt))).
   那么 $\nhom(I,J)$ 是可缩的，因而其中存在某个 $\nat$-同态 $f:I\to J$；同理我们也有一个 $\nat$-同态 $g:J\to I$。
   现在复合 $g\circ f$ 是一个从 $I$ 到 $I$ 的 $\nat$-同态，$\idfunc[I]$ 也是；而 $\nhom(I,I)$ 是可缩的，所以 $g\circ f = \idfunc[I]$。
   类似地，$f\circ g = \idfunc[J]$。
-  因此 $\eqv IJ$，从而 $I=J$。由于"可缩"是一个命题，并且依值函数类型保持命题，所以"是 h-初始的"本身也是一个命题。因此，关于 $I$（或 $J$）为 h-初始的任何两个证明都必然相等，这就完成了证明。
+  因此 $\eqv IJ$，从而 $I=J$。由于``可缩''是一个命题，并且依值函数类型保持命题，所以``是 h-初始的''本身也是一个命题。因此，关于 $I$（或 $J$）为 h-初始的任何两个证明都必然相等，这就完成了证明。
 \end{proof}
 
 我们现在有以下定理。
@@ -871,7 +871,7 @@ $X:\type$，那么每个构造子的定义域
   \delta(d) \defeq \exis{\gamma:D\to\prop} (f(\gamma) = d) \times \theta(\gamma).\label{eq:Pinj}
 \end{equation}
 我们断言 $p(\delta)=\theta$。
-根据函数外延性，只需证明对任意 $\gamma:D\to\prop$ 都有 $p(\delta)(\gamma) =_\prop \theta(\gamma)$。
+根据函数外延性，只需证明对任意 $\gamma:D\to\prop$ 都有 $p(\delta)(\gamma) =_{\prop} \theta(\gamma)$。
 而根据泛等性，为此只需证明两者互相蕴含即可。
 现在由 $p$ 的定义，我们有
 \begin{align*}
@@ -896,7 +896,7 @@ $X:\type$，那么每个构造子的定义域
   \index{mathematics!predicative}%
   \indexsee{impredicativity}{mathematics, predicative}%
   \indexsee{predicative mathematics}{mathematics, predicative}%
-  因此，在直谓理论中，~\eqref{eq:Pinj} 的右侧属于 $\prop_{\UU'}$ 而非 $\prop_\UU$。
+  因此，在直谓理论中，~\eqref{eq:Pinj} 的右侧属于 $\prop_{\UU'}$ 而非 $\prop_{\UU}$。
   所以这个矛盾的推导确实需要用到\cref{subsec:prop-subsets}中提到的命题大小重整公理。
   \index{propositional!resizing}%
 \end{rmk}
@@ -1053,7 +1053,7 @@ $A$ 是一个参数，而我们称 $n:\nat$ 是这个归纳族的\define{指标�
 \end{itemize}
 
 换句话说，我们规定 $0$ 是偶数，并且如果 $n$ 是偶数，那么 $\suc(\suc(n))$ 也是偶数。
-这些构造子"显然"没有提供任何办法来构造，比如说，$\mathsf{iseven}(1)$ 的一个元素；又因为 $\mathsf{iseven}$ 理应由这些构造子自由生成，所以这样的元素必然不存在。
+这些构造子``显然''没有提供任何办法来构造，比如说，$\mathsf{iseven}(1)$ 的一个元素；又因为 $\mathsf{iseven}$ 理应由这些构造子自由生成，所以这样的元素必然不存在。
 （不过，严格证明 $\neg \mathsf{iseven}(1)$ 也并非完全平凡。）
 $\mathsf{iseven}$ 的归纳原理是说，要证明关于所有偶数自然数的命题，只需对 $0$ 证明它，并验证在加二后仍然成立即可。
 
@@ -1102,7 +1102,7 @@ $\mathsf{iseven}$ 的归纳原理是说，要证明关于所有偶数自然数�
   f(\mathsf{esucc}(n)) &\jdeq c_s(g(n))\\
   g(\mathsf{osucc}(n)) &\jdeq d_s(f(n)).
 \end{align*}
-特别地，正如我们只能对归纳族"整体"进行归纳一样，我们必须同时对 $\mathsf{even}$ 和 $\mathsf{odd}$ 进行归纳。
+特别地，正如我们只能对归纳族``整体''进行归纳一样，我们必须同时对 $\mathsf{even}$ 和 $\mathsf{odd}$ 进行归纳。
 本书同样不会过多使用相互归纳定义。
 
 \index{type!inductive-inductive}%
@@ -1127,7 +1127,7 @@ $\mathsf{iseven}$ 的归纳原理是说，要证明关于所有偶数自然数�
 
 \index{type!identity!as inductive}%
 现在我们要指出，在同伦类型论中处于核心地位的\emph{相等类型}，同样也可以被认为是归纳定义的。
-具体来说，它们是一种带指标的"归纳族"，即 \cref{sec:generalizations} 意义下的归纳族。
+具体来说，它们是一种带指标的``归纳族''，即 \cref{sec:generalizations} 意义下的归纳族。
 事实上，将相等类型描述为归纳族有\emph{两种}方式，由此便产生了 \cref{cha:typetheory} 中所述的那两种归纳原理：道路归纳与基于点的道路归纳。
 
 在两种定义中，类型 $A$ 都是一个参数。
@@ -1156,7 +1156,7 @@ $\mathsf{iseven}$ 的归纳原理是说，要证明关于所有偶数自然数�
 
 然而，对于相等类型，这一点却\emph{不}成立：它只有一个构造子 $\refl{}$，但并非每条道路都等于常值道路。
 更准确地说，我们仅使用相等类型的归纳原理（无论哪一种）都无法证明：$a=_A a$ 的每个居民都等于 $\refl a$。
-为了真正展示一个反例，我们需要某种额外的原则，例如泛等公理——回想一下，在 \cref{thm:type-is-not-a-set} 中，我们正是利用泛等公理展示了一条特殊的道路 $\bool=_\type\bool$，它不等于 $\refl{\bool}$。
+为了真正展示一个反例，我们需要某种额外的原则，例如泛等公理——回想一下，在 \cref{thm:type-is-not-a-set} 中，我们正是利用泛等公理展示了一条特殊的道路 $\bool=_{\type}\bool$，它不等于 $\refl{\bool}$。
 
 \index{free!generation of an inductive type}%
 \index{generation!of a type, inductive|(}%
@@ -1391,8 +1391,8 @@ $\mathsf{iseven}$ 的归纳原理是说，要证明关于所有偶数自然数�
 \end{ex}
 
 \begin{ex}\label{ex:ilunit}
-  承接 \cref{ex:inductive-lawvere}，考虑 $L_\unit$；由于 $\unit$ 确实具有不动点性质，$L_\unit$ 并非显然不一致。
-  试为 $L_\unit$ 表述一个归纳原理及其计算规则（类似于其递归子），并利用此归纳原理证明 $L_\unit$ 是可缩的。
+  承接 \cref{ex:inductive-lawvere}，考虑 $L_{\unit}$；由于 $\unit$ 确实具有不动点性质，$L_{\unit}$ 并非显然不一致。
+  试为 $L_{\unit}$ 表述一个归纳原理及其计算规则（类似于其递归子），并利用此归纳原理证明 $L_{\unit}$ 是可缩的。
 \end{ex}
 
 \begin{ex}\label{ex:empty-inductive-type}

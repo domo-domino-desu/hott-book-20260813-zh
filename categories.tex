@@ -2,12 +2,12 @@
 \label{cha:category-theory}
 
 数学的各个分支中，范畴论或许是与集合论基础相处得最不融洽的一支。
-其原因之一是，范畴论中的大多数内容在一类比"相等"更弱的"相同性"概念（例如范畴中的同构，或者范畴的等价）下保持不变，而集合论却无法把握这一点。
+其原因之一是，范畴论中的大多数内容在一类比``相等''更弱的``相同性''概念（例如范畴中的同构，或者范畴的等价）下保持不变，而集合论却无法把握这一点。
 但泛等公理已经为类型解决了同一类问题，做法是将相等与等价等同起来。
-因此，在泛等基础下，考虑一种"范畴"的概念是有意义的，其中对象的相等以类似的方式与同构等同起来。
+因此，在泛等基础下，考虑一种``范畴''的概念是有意义的，其中对象的相等以类似的方式与同构等同起来。
 
 忽略大小问题，在基于集合的数学里，一个范畴由一个对象\emph{集合} $A_0$ 以及对每一对 $x,y\in A_0$ 的一个态射\emph{集合} $\hom_A(x,y)$ 组成。
-在泛等基础下，一个"朴素"的范畴定义只需将上述\emph{集合}替换为\emph{类型}即可。
+在泛等基础下，一个``朴素''的范畴定义只需将上述\emph{集合}替换为\emph{类型}即可。
 如果我们允许这些类型包含任意的高阶同伦，那么就应当加上更高阶的相容性条件，从而导向某种 $(\infty,1)$-范畴的概念。
 \index{.infinity1-category@$(\infty,1)$-category}%
 但在现阶段，我们的目标更为保守。
@@ -18,9 +18,9 @@
 依照 Toby Bartels 的说法，我们称这个概念为\emph{严格范畴（strict category）}。
 \index{strict!category}%
 或者，我们可以要求某种泛等公理的推广版本，将 $(x=_{A_0} y)$ 与从 $x$ 到 $y$ 的同构类型 $\mathsf{iso}(x,y)$ 等同起来。
-鉴于我们通常认为后一个选择才是"正确的"定义，我们将简单地称其为\emph{范畴（category）}。
+鉴于我们通常认为后一个选择才是``正确的''定义，我们将简单地称其为\emph{范畴（category）}。
 
-一个能很好说明这三种范畴概念之间区别的例子是如下陈述："每一个全忠实且本质满的函子都是范畴的等价"。
+一个能很好说明这三种范畴概念之间区别的例子是如下陈述：``每一个全忠实且本质满的函子都是范畴的等价''。
 这一陈述在基于集合的经典范畴论中等价于选择公理。
 \index{mathematics!classical}%
 \index{axiom!of choice}%
@@ -35,14 +35,14 @@
 
 
 我们将在本章证明最后一个论断，以及范畴的其他一些良好性质，例如，等价的范畴（作为范畴类型的元素）是相等的。
-我们还将描述一种将预范畴 $A$ "饱和"为范畴 $\widehat A$ 的通用方法，我们称其为 $A$ 的\emph{Rezk 完备化（Rezk completion）}。
+我们还将描述一种将预范畴 $A$ ``饱和''为范畴 $\widehat A$ 的通用方法，我们称其为 $A$ 的\emph{Rezk 完备化（Rezk completion）}。
 \index{completion!Rezk}%
 不过，它也可以合理地被称为\emph{层栈完备化（stack completion）}（参见章末注记）。
 
 Rezk 完备化也能进一步阐明范畴的等价这一概念。
-例如，函子 $A \to \widehat{A}$ 总是全忠实且本质满的，因而是"弱等价（weak equivalence）"。
+例如，函子 $A \to \widehat{A}$ 总是全忠实且本质满的，因而是``弱等价（weak equivalence）''。
 由此可以推出，一个预范畴是范畴，当且仅当它能把所有全忠实且本质满的函子都视为等价；
-因此，我们的"范畴"概念其实已经蕴含在"全忠实且本质满函子"这一概念之中了。
+因此，我们的``范畴''概念其实已经蕴含在``全忠实且本质满函子''这一概念之中了。
 
 我们假设读者已具备经典范畴论的基本知识。\index{classical!category theory}
 请记住，每当我们书写 \type，它都表示某个类型宇宙，但在不同时候所指的可能不同；
@@ -87,7 +87,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   \end{enumerate}
 \end{defn}
 
-预范畴这个概念存在的问题是，对于对象 $a,b:A$，我们有两种可能不同的"相同性"概念。
+预范畴这个概念存在的问题是，对于对象 $a,b:A$，我们有两种可能不同的``相同性''概念。
 一方面，我们有类型 $(\id[A_0]{a}{b})$。
 但另一方面，还有范畴论中标准的\emph{同构（isomorphism）}概念。
 
@@ -99,7 +99,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 \end{defn}
 
 \begin{lem}\label{ct:isoprop}
-  对于任意 $f:\hom_A(a,b)$，类型"$f$ 是一个同构"是一个命题。
+  对于任意 $f:\hom_A(a,b)$，类型``$f$ 是一个同构''是一个命题。
   因此，对于任意 $a,b:A$，类型 $a\cong b$ 是一个集合。
 \end{lem}
 
@@ -137,7 +137,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   其中的恒同态射是恒等函数，复合是函数复合。
   对于这个预范畴，\cref{ct:idtoiso} 等于（限制在集合上的）来自 \cref{sec:compute-universe} 的映射 $\idtoeqv$。
 
-  当然，更精确地说，我们应该称这个范畴为 $\uset_\UU$，因为它的对象只是相对于某个宇宙 \UU 的\emph{小集合}。
+  当然，更精确地说，我们应该称这个范畴为 $\uset_{\UU}$，因为它的对象只是相对于某个宇宙 \UU 的\emph{小集合}。
   \index{small!set}%
 \end{eg}
 
@@ -406,7 +406,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   \begin{itemize}
   \item 对象上的复合 $(G_0\circ F_0) : A_0 \to C_0$。
   \item 对每个 $a,b:A$，态射上的复合
-    \[(G_{Fa,Fb}\circ F_{a,b}):\hom_A(a,b) \to \hom_C(GFa,GFb).\]。
+    \[(G_{Fa,Fb}\circ F_{a,b}):\hom_A(a,b) \to \hom_C(GFa,GFb).\]
   \end{itemize}
   公理容易验证。
 \end{defn}
@@ -443,7 +443,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 
 \index{horizontal composition!of natural transformations}%
 \index{classical!category theory}%
-在经典范畴论中，人们将 $\gamma:F\to G$ 和 $\delta:H\to K$ 的"水平复合"定义为 ${(\delta G)(H\gamma)}$ 和 ${(K\gamma)(\delta F)}$ 的共同值。
+在经典范畴论中，人们将 $\gamma:F\to G$ 和 $\delta:H\to K$ 的``水平复合''定义为 ${(\delta G)(H\gamma)}$ 和 ${(K\gamma)(\delta F)}$ 的共同值。
 我们将不这样做，因为尽管这两个变换相等，它们并非\emph{定义性}相等。
 这也意味着：我们可以无歧义地使用符号 $\circ$（或并置）来表示所有种类的复合——只有一种方式来复合两个自然变换（而非将自然变换与函子在某一侧复合）。
 
@@ -514,7 +514,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 我们请读者类似地定义右伴随。
 
 \begin{lem}\label{ct:adjprop}
-  若 $A$ 是一个范畴（但 $B$ 可以只是预范畴），则类型"$F$ 是左伴随"是一个命题。
+  若 $A$ 是一个范畴（但 $B$ 可以只是预范畴），则类型``$F$ 是左伴随''是一个命题。
 \end{lem}
 
 \begin{proof}
@@ -551,7 +551,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 \label{sec:equivalences}
 
 在范畴论中，通常将\emph{范畴的等价（equivalence of categories）}定义为一个函子 $F:A\to B$，使得存在一个函子 $G:B\to A$ 以及自然同构 $F G \cong 1_B$ 和 $G F \cong 1_A$。
-然而，与"是一个伴随"这一性质不同，若不进行截断，这样定义的"等价"将不是一个命题，其原因与拟逆的类型行为不佳相同（参见 \cref{sec:quasi-inverses}）。
+然而，与``是一个伴随''这一性质不同，若不进行截断，这样定义的``等价''将不是一个命题，其原因与拟逆的类型行为不佳相同（参见 \cref{sec:quasi-inverses}）。
 正如 \cref{sec:hae} 中那样，我们可以通过使用\emph{伴随等价（adjoint equivalence）}这一常用概念来避免此问题。
 \indexdef{adjoint!equivalence!of (pre)categories}
 
@@ -565,7 +565,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   我们记 $\cteqv A B$ 为从 $A$ 到 $B$ 的（预）范畴的等价的类型。
 \end{defn}
 
-根据 \cref{ct:adjprop,ct:isoprop}，若 $A$ 是一个范畴，则类型"$F$ 是一个预范畴的等价"是一个命题。
+根据 \cref{ct:adjprop,ct:isoprop}，若 $A$ 是一个范畴，则类型``$F$ 是一个预范畴的等价''是一个命题。
 
 \begin{lem}\label{ct:adjointification}
   如果对于一个函子 $F:A\to B$，存在 $G:B\to A$ 以及同构 $GF\cong 1_A$ 和 $FG\cong 1_B$，那么 $F$ 是一个预范畴的等价。
@@ -644,7 +644,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   因此，此复合等于恒等映射。
 
   最后，考虑另一个方向的复合~\ref{item:ct:ffeso2}$\to$\ref{item:ct:ffeso1}$\to$\ref{item:ct:ffeso2}。
-  由于"是全忠实的"是一个命题，只需注意到对每个 $b:B$，我们恢复了相同的 $a:A$ 和同构 $Fa \cong b$。
+  由于``是全忠实的''是一个命题，只需注意到对每个 $b:B$，我们恢复了相同的 $a:A$ 和同构 $Fa \cong b$。
   这是清楚的，因为我们正是用这个函数和同构在~\ref{item:ct:ffeso1} 中定义了 $G_0$ 和 $\epsilon$，而它们又恰好是我们恢复~\ref{item:ct:ffeso2} 时所用的。
   因此，两个方向的复合都等于恒等映射，于是我们得到等价 \eqv{\text{\ref{item:ct:ffeso1}}}{\text{\ref{item:ct:ffeso2}}}。
 \end{proof}
@@ -686,7 +686,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 \end{proof}
 
 这是我们的范畴论相对于基于集合的方法的一个重要优势。
-若采用纯基于集合的范畴定义，陈述"每个全忠实且本质满的函子都是范畴的等价"等价于选择公理 \choice{}。
+若采用纯基于集合的范畴定义，陈述``每个全忠实且本质满的函子都是范畴的等价''等价于选择公理 \choice{}。
 而在这里，我们可以免费获得它，作为唯一选择原理的范畴论版本（\cref{sec:unique-choice}）。
 （事实上，这一性质在预范畴中刻画了范畴；见 \cref{sec:rezk}。）
 
@@ -700,7 +700,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   ，如果 $F$ 是全忠实的且 $F_0:A_0\to B_0$ 是类型之间的等价。
 \end{defn}
 
-这个定义是我们的一般规则（参见 \cref{sec:basics-equivalences}）的一个例外，该规则规定"同构"一词只用于集合和类似集合的对象。
+这个定义是我们的一般规则（参见 \cref{sec:basics-equivalences}）的一个例外，该规则规定``同构''一词只用于集合和类似集合的对象。
 然而，它在这里确实传达了恰当的含义，因为对于一般的预范畴而言，同构强于等价。
 
 注意，作为预范畴的同构总只是一个性质。
@@ -833,7 +833,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   于是，根据 \cref{ct:ffeso}，$F$ 是范畴的等价。
 \end{proof}
 
-当然，（预）范畴之间还有第三种"相同"的概念：相等。
+当然，（预）范畴之间还有第三种``相同''的概念：相等。
 然而，泛等公理意味着它与同构一致。
 
 \begin{lem}\label{ct:cat-eq-iso}
@@ -847,7 +847,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   \begin{itemize}
   \item 一个相等 $P_0:\id{A_0}{B_0}$，
   \item 对每个 $a,b:A_0$，一个相等
-    \[P_{a,b}:\id{\hom_A(a,b)}{\hom_B(\trans {P_0} a,\trans {P_0} b)},\]，
+    \[P_{a,b}:\id{\hom_A(a,b)}{\hom_B(\trans {P_0} a,\trans {P_0} b)},\]
   \item 以及相等 $\id{\trans {(P_{a,a})} {1_a}}{1_{\trans {P_0} a}}$ 和
     \narrowequation{\id{\trans {(P_{a,c})} {gf}}{\trans {(P_{b,c})} g \circ \trans {(P_{a,b})} f}.}
   \end{itemize}
@@ -856,7 +856,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   \begin{itemize}
   \item 一个类型的等价 $F_0:\eqv{A_0}{B_0}$，
   \item 对每个 $a,b:A_0$，一个类型的等价
-    \[F_{a,b}:\eqv{\hom_A(a,b)}{\hom_B(F_0 (a),F_0 (b))},\]，
+    \[F_{a,b}:\eqv{\hom_A(a,b)}{\hom_B(F_0 (a),F_0 (b))},\]
   \item 以及相等 $\id{F_{a,a}(1_a)}{1_{F_0 (a)}}$ 和 $\id{F_{a,c}(gf)}{F_{b,c} (g)\circ F_{a,b} (f)}$。
   \end{itemize}
   但这恰好构成一个函子 $F:A\to B$，且它是范畴的同构。
@@ -1009,11 +1009,11 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 \end{defn}
 
 \begin{thm}\label{ct:representable-prop}
-  如果 $A$ 是一个范畴，那么"$F$ 是可表的"这一类型是一个命题。
+  如果 $A$ 是一个范畴，那么``$F$ 是可表的''这一类型是一个命题。
 \end{thm}
 
 \begin{proof}
-  根据定义，"$F$ 是可表的"恰好是 $\y_0$ 在 $F$ 上的纤维。
+  根据定义，``$F$ 是可表的''恰好是 $\y_0$ 在 $F$ 上的纤维。
   由于 $\y_0$ 根据 \cref{ct:yoneda-mono} 是一个嵌入，这个纤维是一个命题。
 \end{proof}
 
@@ -1077,7 +1077,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 \end{proof}
 
 \begin{cor}\label{ct:adjprop2}[\cref{ct:adjprop}]
-  若 $A$ 是一个范畴且 $F:A\to B$，则"$F$ 是左伴随"这一类型是一个命题。
+  若 $A$ 是一个范畴且 $F:A\to B$，则``$F$ 是左伴随''这一类型是一个命题。
 \end{cor}
 
 \begin{proof}
@@ -1104,7 +1104,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 \index{gaunt category}%
 \index{category!gaunt}%
 大多数时候，范畴论讨论的是范畴而非严格范畴，但有时人们也需要考虑严格范畴。
-其主要优势在于，严格范畴具有比等价更严格的"相同"概念，即同构（或由 \cref{ct:cat-eq-iso} 等价地，为相等）。
+其主要优势在于，严格范畴具有比等价更严格的``相同''概念，即同构（或由 \cref{ct:cat-eq-iso} 等价地，为相等）。
 
 以下是严格范畴的一个来源。
 
@@ -1168,7 +1168,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
   。
 \end{defn}
 
-显然，每个酉态射都是同构，而且"是酉的"这一性质是一个命题。
+显然，每个酉态射都是同构，而且``是酉的''这一性质是一个命题。
 因此，对于每对 $x,y:A$，从 $x$ 到 $y$ 的所有酉同构构成一个集合，记为 $(x\unitaryiso y)$。
 
 \begin{lem}\label{ct:idtounitary}
@@ -1214,7 +1214,7 @@ Rezk 完备化也能进一步阐明范畴的等价这一概念。
 \end{eg}
 
 在\index{mathematics!classical}\index{classical!category theory}经典数学基础下，$\dagger$-范畴已经发展出了相当多的一般理论。
-人们很早就注意到，对于 $\dagger$-范畴的对象而言，正确的"相同性"概念是酉同构而非任意同构；这在范畴学家中曾引起一些困惑。
+人们很早就注意到，对于 $\dagger$-范畴的对象而言，正确的``相同性''概念是酉同构而非任意同构；这在范畴学家中曾引起一些困惑。
 同伦类型论通过将 $\dagger$-范畴（如同严格范畴一样）视为预范畴的一种不同种类，解决了这个问题。
 
 \section{结构同一性原理}
@@ -1345,9 +1345,9 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
 注意，每个 $x:|a|^{|\omega|}$ 是一个函数 $x:|\omega|\to |a|$，因此 $f\circ x : b^\omega$。
 
 现在假设给定一个（泛等的）宇宙 $\bbU$ 和一个 $\bbU$-小签名 $\Omega$；即 $|\Omega|$ 是一个 $\bbU$-小集合，且对每个 $\omega:|\Omega|$，集合 $|\omega|$ 是 $\bbU$-小的。
-于是我们有 $\bbU$-小集合的范畴 $\uset_\bbU$。我们想要定义 $\uset_\bbU$ 上的 $\bbU$-小 $\Omega$-结构的预范畴，并利用 \cref{thm:sip} 证明它是一个范畴。
+于是我们有 $\bbU$-小集合的范畴 $\uset_{\bbU}$。我们想要定义 $\uset_{\bbU}$ 上的 $\bbU$-小 $\Omega$-结构的预范畴，并利用 \cref{thm:sip} 证明它是一个范畴。
 
-我们用一阶签名 $\Omega$ 来给出一个 $\uset_\bbU$ 上的标准结构概念 $(P,H)$。
+我们用一阶签名 $\Omega$ 来给出一个 $\uset_{\bbU}$ 上的标准结构概念 $(P,H)$。
 
 \begin{defn}\label{defn:fo-notion-of-structure}
 \mbox{}
@@ -1374,8 +1374,8 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
 \end{enumerate}
 \end{defn}
 
-现在例行验证 $(P,H)$ 是 $\uset_\bbU$ 上的标准结构概念，从而可由 \cref{thm:sip} 得出预范畴 $Str_{(P,H)}(\uset_\bbU)$ 是一个范畴。
-最后只需注意，这本质上与 $\uset_\bbU$ 上的 $\bbU$-小 $\Omega$-结构的预范畴相同。
+现在例行验证 $(P,H)$ 是 $\uset_{\bbU}$ 上的标准结构概念，从而可由 \cref{thm:sip} 得出预范畴 $Str_{(P,H)}(\uset_{\bbU})$ 是一个范畴。
+最后只需注意，这本质上与 $\uset_{\bbU}$ 上的 $\bbU$-小 $\Omega$-结构的预范畴相同。
  \index{structure!identity principle|)}
 
 \section{Rezk 完备化}
@@ -1383,7 +1383,7 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
 
 在本节中，我们将给出一种将预范畴替换为范畴的通用方法。
 事实上，我们将给出两种。
-二者都依赖于以下事实："范畴将弱等价视为等价"。
+二者都依赖于以下事实：``范畴将弱等价视为等价''。
 
 为了证明这一点，我们先证明几个引理，它们属于完全标准的范畴论内容，但表述时格外谨慎，以确保正确使用了 $\truncf{-1}$ 的消去子。
 在经典\index{mathematics!classical}\index{classical!category theory}范畴论中，如果想避免选择公理，也同样需要这样的谨慎：每当我们想定义一个函数时，都需要以某种方式唯一地刻画其值。
@@ -1456,7 +1456,7 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
 \end{proof}
 
 定理余下部分的证明思路几乎完全相同，只在关键一步插入 $C$ 作为\emph{范畴}的条件，我们在下文用斜体标出以示强调。
-正是在这一步，我们试图在不使用选择公理的情况下定义一个以\emph{对象}为值的函数，因此必须谨慎对待"唯一指定"一个对象意味着什么。
+正是在这一步，我们试图在不使用选择公理的情况下定义一个以\emph{对象}为值的函数，因此必须谨慎对待``唯一指定''一个对象意味着什么。
 在经典\index{mathematics!classical}\index{classical!category theory}范畴论中，我们只能说这个对象在相差一个唯一同构的意义下被指定，但在集合论基础中，这种程度的唯一性不足以在不援引 \choice{} 的情况下给出一个函数。
 然而在泛等基础中，如果 $C$ 是范畴，则同构即相等，我们便有了所需的那种唯一性（即处于可缩空间之中）。
 
@@ -1545,7 +1545,7 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
 \end{proof}
 
 \index{universal!property!of Rezk completion}%
-因此，若预范畴 $A$ 有一个到范畴的弱等价函子 $A\to \widehat{A}$，则后者就是 $A$ 在范畴中的"反射"：任何从 $A$ 到范畴的函子，都将本质上唯一地通过 $\widehat{A}$ 分解。
+因此，若预范畴 $A$ 有一个到范畴的弱等价函子 $A\to \widehat{A}$，则后者就是 $A$ 在范畴中的``反射''：任何从 $A$ 到范畴的函子，都将本质上唯一地通过 $\widehat{A}$ 分解。
 现在我们给出两种这样的弱等价的构造。
 
 \indexsee{Rezk 完备化}{completion, Rezk}%
@@ -1566,8 +1566,8 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
 \end{proof}
 
 这个证明十分巧妙，但存在一个缺点：它会提升宇宙层级。
-如果 $A$ 是宇宙 \bbU 中的范畴，则在此证明中 \uset 必须至少与 $\uset_\bbU$ 一样大。
-于是 $\uset_\bbU$ 和 $(\uset_\bbU)^{A\op}$ 本身不再是 \bbU 中的范畴，而只存在于更高的宇宙中；并且 \emph{先验地}，$\widehat A$ 亦是如此。
+如果 $A$ 是宇宙 \bbU 中的范畴，则在此证明中 \uset 必须至少与 $\uset_{\bbU}$ 一样大。
+于是 $\uset_{\bbU}$ 和 $(\uset_{\bbU})^{A\op}$ 本身不再是 \bbU 中的范畴，而只存在于更高的宇宙中；并且 \emph{先验地}，$\widehat A$ 亦是如此。
 可以设想用一条重置公理来处理这个问题，但同样可以用高阶归纳类型给出一个直接构造。
 
 \begin{proof}[第二种证明]
@@ -1707,7 +1707,7 @@ $a$ 由一个集合 $|a|$ 以及如下指派组成：对每个函数符号 $\ome
   它的对象类型可以等同于 $\trunc1\type$（参见 \cref{ct:ex:hocat}）。
 \end{eg}
 
-Rezk 完备化还使我们能够表明，"范畴"这一概念由"预范畴的弱等价"这一概念所决定。
+Rezk 完备化还使我们能够表明，``范畴''这一概念由``预范畴的弱等价''这一概念所决定。
 因此，既然后者（弱等价）是不可避免的，前者（范畴）亦是如此。
 
 \begin{thm}\label{ct:weq-iso-precat-cat}
@@ -1715,7 +1715,7 @@ Rezk 完备化还使我们能够表明，"范畴"这一概念由"预范畴的弱
 \end{thm}
 
 \begin{proof}
-  "仅当"方向是 \cref{ct:cat-weq-eq}。
+  ``仅当''方向是 \cref{ct:cat-weq-eq}。
   反之，令 $H$ 为 $I:A\to\widehat A$。
   由于 $(\blank\circ I)_0$ 是等价，存在 $R:\widehat A\to A$ 使得 $RI=1_A$。
   于是 $IRI=I$，但同样由于 $(\blank\circ I)_0$ 是等价，这蕴涵 $IR =1_{\widehat A}$。
@@ -1730,19 +1730,19 @@ Rezk 完备化还使我们能够表明，"范畴"这一概念由"预范畴的弱
 \sectionNotes
 
 范畴的原始定义当然是在集合论基础上给出的，因此一个范畴的对象构成一个集合（或者，对于大范畴而言，构成一个类）。
-随着时间的推移，人们逐渐认识到对象的所有"范畴论"性质在同构下都是不变的，并且范畴中对象的相等通常不是一个很有用的概念。
-多位作者~\cite{blanc:eqv-log,freyd:invar-eqv,makkai:folds,makkai:comparing}发现，依值类型逻辑使得我们能够在不涉及任何对象相等概念的情况下表述范畴的定义，并且在这种逻辑中可证明的命题恰恰是那些在同构下不变的"范畴论"命题。
+随着时间的推移，人们逐渐认识到对象的所有``范畴论''性质在同构下都是不变的，并且范畴中对象的相等通常不是一个很有用的概念。
+多位作者~\cite{blanc:eqv-log,freyd:invar-eqv,makkai:folds,makkai:comparing}发现，依值类型逻辑使得我们能够在不涉及任何对象相等概念的情况下表述范畴的定义，并且在这种逻辑中可证明的命题恰恰是那些在同构下不变的``范畴论''命题。
 \index{evil}%
 
-尽管大部分范畴论内容似乎在对象的同构以及范畴的等价下都是不变的，但也存在一些有趣的例外，这些例外引发了关于何谓"范畴论的"的哲学讨论。
+尽管大部分范畴论内容似乎在对象的同构以及范畴的等价下都是不变的，但也存在一些有趣的例外，这些例外引发了关于何谓``范畴论的''的哲学讨论。
 例如，Peter May 在 2010 年 5 月的范畴论邮件列表中提出了 \cref{ct:galois}，作为一个案例，其中两个（按集合论通常方式定义的）范畴是同构而非仅仅等价，这一区别至关重要。
-对于倡导范畴论的同构不变版本的人来说，$\dagger$-范畴的情况也多少有些令人困惑，因为 $\dagger$-范畴中对象之间"正确的"相同性概念并非通常的同构，而是\emph{酉的}同构。
+对于倡导范畴论的同构不变版本的人来说，$\dagger$-范畴的情况也多少有些令人困惑，因为 $\dagger$-范畴中对象之间``正确的''相同性概念并非通常的同构，而是\emph{酉的}同构。
 \index{isomorphism!invariance under}%
 
-满足 \cref{ct:category} 中"饱和性"或"泛等性"原则的范畴，最初由 Hofmann 和 Streicher~\cite{hs:gpd-typethy} 研究。
+满足 \cref{ct:category} 中``饱和性''或``泛等性''原则的范畴，最初由 Hofmann 和 Streicher~\cite{hs:gpd-typethy} 研究。
 几年后，Voevodsky（沃沃茨基）、Shulman 以及可能还有其他研究者大致同时、各自独立地想到了这个条件，并由 Ahrens 和 Kapulkin~\cite{aks:rezk} 加以形式化。
 这一框架将上述所有例子统一了起来：有些预范畴是范畴，有些是严格范畴，等等。
-一个关于一大类代数结构"同构蕴含相等"（假设泛等公理）的一般性定理由 Coquand（科康）和 Danielsson 证明；而 \cref{sec:sip} 中结构同一性原理的阐述则归功于 Aczel。
+一个关于一大类代数结构``同构蕴含相等''（假设泛等公理）的一般性定理由 Coquand（科康）和 Danielsson 证明；而 \cref{sec:sip} 中结构同一性原理的阐述则归功于 Aczel。
 
 撇开关于范畴论的哲学考量不论，Rezk~\cite{rezk01css} 在定义 $(\infty,1)$-范畴的概念时发现，
 \index{.infinity1-category@$(\infty,1)$-category}%
@@ -1752,15 +1752,15 @@ Rezk 完备化还使我们能够表明，"范畴"这一概念由"预范畴的弱
 \index{Segal!space}%
 该模型一个特别好的方面在于 \cref{ct:eqv-levelwise} 的类比：完备 Segal 空间之间的映射是等价的，当且仅当它是单纯空间之间的逐层等价。
 
-在 Voevodsky 的泛等基础单纯\index{simplicial!sets}集合模型中加以解释时，我们的预范畴类似于 Rezk 的"Segal 空间"的一个截断类比，而我们的范畴则对应于他的"完备 Segal 空间"。
+在 Voevodsky 的泛等基础单纯\index{simplicial!sets}集合模型中加以解释时，我们的预范畴类似于 Rezk 的``Segal 空间''的一个截断类比，而我们的范畴则对应于他的``完备 Segal 空间''。
 \index{Segal!category}%
-严格范畴则对应于（经过弱化与截断的）所谓的"Segal 范畴"。
-已知 Segal 范畴与完备 Segal 空间是 $(\infty,1)$-范畴的等价模型（例如参见~\cite{bergner:infty-one}），因此在单纯集合模型中，范畴与严格范畴所给出的范畴论是"等价"的——尽管如前所述，前者仍然具有许多优点。
+严格范畴则对应于（经过弱化与截断的）所谓的``Segal 范畴''。
+已知 Segal 范畴与完备 Segal 空间是 $(\infty,1)$-范畴的等价模型（例如参见~\cite{bergner:infty-one}），因此在单纯集合模型中，范畴与严格范畴所给出的范畴论是``等价''的——尽管如前所述，前者仍然具有许多优点。
 然而，在高阶意象\index{.infinity1-topos@$(\infty,1)$-topos}的更一般的范畴语义下，严格范畴对应于相应层 1-意象\index{topos}中的（传统意义上的）内部范畴，而范畴对应于一个\emph{层栈（stack）}。
 \index{stack}%
-一般来说，相对于一个意象而言，后者是更合适的一类"范畴"。
+一般来说，相对于一个意象而言，后者是更合适的一类``范畴''。
 
-在 Rezk 的语境中，我们所谓的"Rezk 完备化"对应于完备 Segal 空间的模型范畴中的纤维化替换\index{fibrant replacement}。
+在 Rezk 的语境中，我们所谓的``Rezk 完备化''对应于完备 Segal 空间的模型范畴中的纤维化替换\index{fibrant replacement}。
 由于这是利用超限归纳论证构造的，它与我们的第二种构造——即作为高阶归纳类型给出的那个——最为接近。
 然而，在同伦类型论的高阶意象模型中，Rezk 完备化对应于\emph{层栈完备化（stack completion）}，
 \index{completion!stack}\index{stack!completion}

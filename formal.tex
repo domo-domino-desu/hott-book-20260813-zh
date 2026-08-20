@@ -442,7 +442,7 @@ $f:\tprd{z:\wtype{x:A}B(x)} C(z)$，
 给定 $a:A$，如果 $y:A, z:\id[A] a y \vdash C : \UU_m$ 且 $\vdash d:C[a,\refl{a}/y,z]$，那么可以引入一个定义常量
 \[
   f:\tprd{y:A}{z:\id[A] a y} C
-\]，
+\]
 其定义方程为
 \[
   f(a,\refl{a})\defeq d.
@@ -1128,7 +1128,7 @@ normalizable）}）
  \cref{sec:syntax-informally} 中的系统具有典范性。
 \end{cor}
 
-最后，如果 $a,A$ 都是既约的，那么 $a:A$ 是否成立是\emph{可判定的}；换句话说，因为类型检查相当于验证一个证明的正确性，这意味着"看到一个正确的证明时，我们总能将其识别出来"。
+最后，如果 $a,A$ 都是既约的，那么 $a:A$ 是否成立是\emph{可判定的}；换句话说，因为类型检查相当于验证一个证明的正确性，这意味着``看到一个正确的证明时，我们总能将其识别出来''。
 
 \begin{cor}
  在 \cref{sec:syntax-informally} 的系统中，一个项是否构成证明是可判定的。
@@ -1140,7 +1140,7 @@ normalizable）}）
 
 通过设计适当的归约过程，或许能证明添加了泛等性和高阶归纳类型的 Martin-L\"{o}f 类型论的一致性，但目前证明这些系统一致性的唯一途径是通过语义模型——对泛等性，有 Voevodsky \cite{klv:ssetmodel} 在 Kan\index{Kan complex} 复形中给出的模型；对高阶归纳类型，有 Lumsdaine 和 Shulman \cite{ls:hits} 给出的模型。
 
-其他的元理论问题，以及我们当前成果的总结，在本书导言的"构造性"与"待解问题"两节中有更详细的讨论。
+其他的元理论问题，以及我们当前成果的总结，在本书导言的``构造性''与``待解问题''两节中有更详细的讨论。
 
 \index{metatheory|)}%
 

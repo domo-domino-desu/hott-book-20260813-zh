@@ -32,7 +32,7 @@
 
 我们还将证明所有这些类型都是彼此等价的。
 这些名称故意取得有些冗长，因为一旦我们知道它们彼此等价并且满足性质~\ref{item:beb1}--\ref{item:beb3}，
-我们便会直接使用"等价"一词，而无需指明具体选择了哪一种定义。
+我们便会直接使用``等价''一词，而无需指明具体选择了哪一种定义。
 不过，为了本章进行比较的需要，我们仍然需要为每种定义保留不同的名称。
 
 然而，在具体考察不同的等价概念之前，我们先略微解释一下，为什么需要一个不同于拟逆性的概念。
@@ -94,7 +94,7 @@
 \begin{proof}
   设 $g:\prd{x:A} \brck{a=x}$ 如~\ref{item:autohtpy2} 所给出。
   首先我们观察到，每个类型 $\id[A]xy$ 都是一个集合。
-  因为"是集合"是一个命题，所以我们可以应用命题截断的归纳原理，并假设 $g(x)=\bproj p$ 且 $g(y)=\bproj{p'}$，其中 $p:a=x$ 且 $p':a=y$。
+  因为``是集合''是一个命题，所以我们可以应用命题截断的归纳原理，并假设 $g(x)=\bproj p$ 且 $g(y)=\bproj{p'}$，其中 $p:a=x$ 且 $p':a=y$。
   在这种情况下，与 $p$ 和 $\opp{p'}$ 复合，便得到一个等价 $\eqv{(x=y)}{(a=a)}$。
   而 $(a=a)$ 根据~\ref{item:autohtpy1} 是一个集合，所以 $(x=y)$ 也是一个集合。
 
@@ -212,7 +212,7 @@
 因此，除右侧同伦外全部消去，便得到 $g(\epsilon y) = \eta(g y)$，如所需。
 \end{proof}
 
-但重要的是，我们不在 $\ishae (f)$ 的定义中\emph{同时}包含 $\tau$ 和 $\upsilon$（因此得名"\emph{半}伴随等价"（half adjoint equivalence））。
+但重要的是，我们不在 $\ishae (f)$ 的定义中\emph{同时}包含 $\tau$ 和 $\upsilon$（因此得名``\emph{半}伴随等价''（half adjoint equivalence））。
 如果同时包含，那么在消去可缩类型之后，我们仍然会剩下一项数据——除非我们再添加一个更高阶的相干条件。
 一般来说，如果在奇数个相干条件之后截断，我们期望会得到一个表现良好的类型。
 
@@ -435,7 +435,7 @@ $\eta(g(f(a)))=\ap{g}{\ap{f}{\eta(a)}}$。
 \index{contractible!function|(defstyle}%
 \index{equivalence!as contractible function|(defstyle}%
 
-注意，我们关于 $\ishae(f)$ 和 $\biinv(f)$ 的证明，本质上使用了"等价映射的纤维是可缩的"这一事实。
+注意，我们关于 $\ishae(f)$ 和 $\biinv(f)$ 的证明，本质上使用了``等价映射的纤维是可缩的''这一事实。
 事实上，这一性质本身就可以作为等价的充分定义。
 
 \begin{defn}[可缩映射] \label{defn:equivalence}
@@ -516,7 +516,7 @@ $\eta(g(f(a)))=\ap{g}{\ap{f}{\eta(a)}}$。
 \[ \iscontr(f) \eqvsym \ishae(f) \eqvsym \biinv(f). \]
 （等价还有更多可能的定义，但我们只考虑这三种。
 更多定义可参见 \cref{ex:brck-qinv} 和本章的习题。）
-因此，我们可以选择其中任意一种作为 $\isequiv (f)$ 的"那个"定义。
+因此，我们可以选择其中任意一种作为 $\isequiv (f)$ 的``那个''定义。
 为明确起见，我们选择定义
 \[ \isequiv(f) \defeq \ishae(f).\]
 \index{mathematics!formalized}%
@@ -536,7 +536,7 @@ $\eta(g(f(a)))=\ap{g}{\ap{f}{\eta(a)}}$。
 或\define{双射（bijection）}。
 \indexdef{bijection}%
 \indexsee{function!bijective}{bijection}%
-（对于不是集合的类型，我们避免使用这些词，因为在同伦论和高阶范畴论中，它们通常表示比同伦等价更严格的"相同"概念。）
+（对于不是集合的类型，我们避免使用这些词，因为在同伦论和高阶范畴论中，它们通常表示比同伦等价更严格的``相同''概念。）
 在集合论中，一个函数是双射当且仅当它既是单射又是满射。
 在类型论中同样如此，只要我们适当地表述这些条件。
 为了清晰起见，在处理不是集合的类型时，我们将用\emph{嵌入（embedding）}一词代替单射。
@@ -609,10 +609,10 @@ $\eta(g(f(a)))=\ap{g}{\ap{f}{\eta(a)}}$。
 \end{cor}
 
 \begin{proof}
-  "是满射"和"是嵌入"都是命题；现在应用 \cref{lem:equiv-iff-hprop} 即可。
+  ``是满射''和``是嵌入''都是命题；现在应用 \cref{lem:equiv-iff-hprop} 即可。
 \end{proof}
 
-当然，我们不能把这当作"等价"的定义，因为嵌入的定义本身就依赖于等价。
+当然，我们不能把这当作``等价''的定义，因为嵌入的定义本身就依赖于等价。
 不过，这一刻画仍然有用；参见 \cref{sec:whitehead}。
 我们将在 \cref{cha:hlevels} 中对其加以推广。
 
@@ -903,7 +903,7 @@ A & \eqvsym \sm{b:B} \hfiber{f}b\\
 & \eqvsym \sm{b:B}{Y:\pointed{\type}} \hfiber{f}b = \proj1 Y\\
 & \jdeq B\times_{\type}\pointed{\type}
 \end{align*}
-由此得到一个复合等价 $e:A\eqvsym B\times_\type\pointed{\type}$。
+由此得到一个复合等价 $e:A\eqvsym B\times_{\type}\pointed{\type}$。
 我们可以逐步展示这个复合等价的作用如下：
 \begin{align*}
 a & \mapsto \pairr{f(a),\; \pairr{a,\refl{f(a)}}}\\
@@ -1021,8 +1021,8 @@ a & \mapsto \pairr{f(a),\; \pairr{a,\refl{f(a)}}}\\
 
 \sectionNotes
 
-在代数拓扑中，一个众所周知的事实是：配备了拟逆的连续映射空间，其同伦类型并非"同伦等价空间"应有的同伦类型。
-在代数拓扑中，"同伦等价空间" $(\eqv ab)$ 通常被简单地定义为函数空间 $(A\to B)$ 的一个子空间，由那些作为同伦等价的函数组成。
+在代数拓扑中，一个众所周知的事实是：配备了拟逆的连续映射空间，其同伦类型并非``同伦等价空间''应有的同伦类型。
+在代数拓扑中，``同伦等价空间'' $(\eqv ab)$ 通常被简单地定义为函数空间 $(A\to B)$ 的一个子空间，由那些作为同伦等价的函数组成。
 在类型论中，与之最接近的是 $\sm{f:A\to B} \brck{\qinv(f)}$；参见 \cref{ex:brck-qinv}。
 
 在同伦类型论中，等价的第一个定义是我们称为 $\iscontr(f)$ 的那个，它由 Voevodsky 提出。
@@ -1048,7 +1048,7 @@ $(\infty,1)$-范畴
 \sectionExercises
 
 \begin{ex}\label{ex:two-sided-adjoint-equivalences}
-  考虑函数 $f:A\to B$ 的"双侧伴随等价\index{adjoint!equivalence}数据"所构成的类型，
+  考虑函数 $f:A\to B$ 的``双侧伴随等价\index{adjoint!equivalence}数据''所构成的类型，
   \begin{narrowmultline*}
     \sm{g:B\to A}{\eta: g \circ f \htpy \idfunc[A]}{\epsilon:f \circ g \htpy \idfunc[B]}
     \narrowbreak
@@ -1101,7 +1101,7 @@ $(\infty,1)$-范畴
   \item 证明在 \cref{sec:univalence-implies-funext} 中函数外延性的证明里，可以用 \qinv-泛等性代替泛等公理。
   \item 证明在 \cref{thm:qinv-notprop} 的证明里，可以用 \qinv-泛等性代替泛等公理。
   \item 证明 \qinv-泛等性是不一致的（即可以构造出 $\emptyt$ 的一个实例）。
-    由此可见，在陈述泛等公理时，使用 $\isequiv$ 的"好"版本是至关重要的。
+    由此可见，在陈述泛等公理时，使用 $\isequiv$ 的``好''版本是至关重要的。
   \end{enumerate}
 \end{ex}
 

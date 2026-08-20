@@ -28,10 +28,10 @@ Cauchy 实数包含在Dedekind 实数中。
 在 \cref{sec:surreals} 中，我们通过将 Conway（康威）的超现实数构造为高阶归纳-归纳类型来结束本章；
 这一构造在泛等类型论中比在经典集合论中更为自然。
 
-除了 \cref{cha:basics,cha:logic} 的基本理论之外，如上所述，我们对 Cauchy 实数和超现实数使用了"高阶归纳-归纳类型"：它们结合了 \cref{cha:hits} 的思想与 \cref{sec:generalizations} 中提到的归纳-归纳类型概念。
-我们也将频繁使用 \cref{subsec:prop-trunc} 中描述的传统逻辑记号，以及（在 \cref{sec:piw-pretopos} 中证明的）事实：我们的"集合"的行为方式符合预期。
+除了 \cref{cha:basics,cha:logic} 的基本理论之外，如上所述，我们对 Cauchy 实数和超现实数使用了``高阶归纳-归纳类型''：它们结合了 \cref{cha:hits} 的思想与 \cref{sec:generalizations} 中提到的归纳-归纳类型概念。
+我们也将频繁使用 \cref{subsec:prop-trunc} 中描述的传统逻辑记号，以及（在 \cref{sec:piw-pretopos} 中证明的）事实：我们的``集合''的行为方式符合预期。
 
-注意，圆周的万有覆叠的全空间（它在 \cref{subsec:pi1s1-homotopy-theory} 中扮演了类似于经典代数拓扑中"实数"的角色）\emph{不是}我们要找的实数类型。
+注意，圆周的万有覆叠的全空间（它在 \cref{subsec:pi1s1-homotopy-theory} 中扮演了类似于经典代数拓扑中``实数''的角色）\emph{不是}我们要找的实数类型。
 该类型是可缩的，因此等价于单点类型，所以它不能配备非平凡的代数结构。
 
 \section{有理数域}
@@ -94,11 +94,11 @@ Cauchy 实数包含在Dedekind 实数中。
 \end{enumerate}
 
 %
-从两个方向理解"舍入性"条件：自左向右读，它告诉我们分割是\emph{开的（open）}，
+从两个方向理解``舍入性''条件：自左向右读，它告诉我们分割是\emph{开的（open）}，
 \index{open!cut}%
 而从右向左读，它说明 $L$ 和 $U$ 分别是\emph{下集（lower set）}与\emph{上集（upper set）}。
 定位性条件指出，$L$ 与 $U$ 之间不存在大的间隙。
-因为分割总是开的，它们从不包含"中间的那个点"——即使该点为有理数时亦然。
+因为分割总是开的，它们从不包含``中间的那个点''——即使该点为有理数时亦然。
 一个典型的Dedekind 分割如下图所示：
 %
 
@@ -278,7 +278,7 @@ $(\RD, 0, 1, {+}, {-}, {\cdot})$。为了处理乘法逆元，我们必须先引
   (u - \epsilon < z) \lor (z < u + \epsilon).
 \end{equation*}
 %
-这就是"在微小数值误差意义下"的线性序。换句话说，既然我们实际上无法期望以无限精度进行计算，那么 $<$ 只能在我们已计算出的有限精度内判定，也就不足为奇了。
+这就是``在微小数值误差意义下''的线性序。换句话说，既然我们实际上无法期望以无限精度进行计算，那么 $<$ 只能在我们已计算出的有限精度内判定，也就不足为奇了。
 
 为了证明~\eqref{eq:RD-linear-order} 成立，假设 $x < y$。则仅存在 $q : \Q$ 使得 $U_x(q)$ 且 $L_y(q)$。
 由舍入性，仅存在 $r, s : \Q$ 使得 $r < q < s$，$U_x(r)$ 且 $L_y(s)$。
@@ -336,7 +336,7 @@ $(\RD, 0, 1, {+}, {-}, {\cdot})$。为了处理乘法逆元，我们必须先引
 \index{ordered field!archimedean}%
 \index{dense}%
 \indexsee{order-dense}{dense}%
-Archimedean 原理可以有多种陈述方式。我们发现，以"$\Q$ 在 $\RD$ 中稠密"这种形式来陈述，最具启发性。
+Archimedean 原理可以有多种陈述方式。我们发现，以``$\Q$ 在 $\RD$ 中稠密''这种形式来陈述，最具启发性。
 
 \begin{thm}[$\RD$ 的 Archimedean 原理] \label{RD-archimedean}
   %
@@ -598,7 +598,7 @@ Cauchy 实数按其意图是 \Q 在柯西序列极限下的完备化。\index{Ca
 然而，利用高阶归纳类型，我们还有第四种解决方案。我们相信它比以上任何一种都更可取，甚至对经典数学家来说也很有趣。
 这个想法是：Cauchy 实数应当是由~\Q 生成的\emph{自由完备度量空间}\index{free!complete metric space}。
 一般来说，构造任何种类的自由结构，都需要将该结构的操作反复应用于生成元。
-例如，集合 $X$ 上自由群的元素，并不仅仅是 $X$ 中元素的二元乘积和逆，还包括通过迭代乘积和求逆构造而得到的"词"。
+例如，集合 $X$ 上自由群的元素，并不仅仅是 $X$ 中元素的二元乘积和逆，还包括通过迭代乘积和求逆构造而得到的``词''。
 因此，我们自然可以预期 Cauchy 完备化也是如此，这里相关的\emph{操作}就是\emph{取一个柯西序列的极限}。
 （在这种情况下，迭代必须超限地进行，因为即使在无穷多步之后，也仍然会有新的柯西序列需要取极限。）
 
@@ -613,17 +613,17 @@ Cauchy 实数按其意图是 \Q 在柯西序列极限下的完备化。\index{Ca
 \label{sec:constr-cauchy-reals}
 
 将 Cauchy 实数 $\RC$ 构造为高阶归纳类型，比 \cref{sec:free-algebras} 中考虑的自由代数结构的构造更为微妙。
-我们打算引入一个"取极限"构造子，它以实数的柯西序列作为输入；但"实数的柯西序列"这一概念本身，又依赖于某种度量实数间"距离"的方法。
+我们打算引入一个``取极限''构造子，它以实数的柯西序列作为输入；但``实数的柯西序列''这一概念本身，又依赖于某种度量实数间``距离''的方法。
 当然，一般来说，两个实数之间的距离本身也是一个实数，这可能带来有问题的循环。
 
-然而，对于"实数的柯西序列"这一概念，我们实际需要的并非一般的"距离"概念，而是一种能够表达"两个实数之间的距离\index{distance}小于 $\epsilon$"的方法，对任意 $\epsilon:\Qp$ 成立。
+然而，对于``实数的柯西序列''这一概念，我们实际需要的并非一般的``距离''概念，而是一种能够表达``两个实数之间的距离\index{distance}小于 $\epsilon$''的方法，对任意 $\epsilon:\Qp$ 成立。
 这可以用一个二元关系族来表示，记作 $\mathord{\close\epsilon} : \RC\to\RC\to \prop$。
 关系 $x \close\epsilon y$ 的预期含义是 $|x - y| < \epsilon$；但由于我们尚未定义减法、绝对值或不等式等概念（毕竟我们才刚刚在定义 $\RC$），我们就不得不在定义 $\RC$ 本身的同时，一并定义这些关系 $\close\epsilon$。
 又因为 $\close\epsilon$ 是一个以两份 $\RC$ 为指标的类型族，所以我们无法用普通的相互（高阶）归纳定义来完成；取而代之，我们必须使用一种\emph{高阶归纳-归纳定义}。
 \index{inductive-inductive type!higher}
 
 回顾 \cref{sec:generalizations} 可知，普通意义上的归纳-归纳定义允许我们通过同时归纳的方式，定义一个类型以及一个以该类型为指标的类型族。
-当然，它的"高阶"版本则允许该类型和该类型族都既包含点构造子，也包含道路构造子。
+当然，它的``高阶''版本则允许该类型和该类型族都既包含点构造子，也包含道路构造子。
 本书不会尝试建立高阶归纳-归纳定义的一般性理论，但我们希望接下来对 $\RC$ 和 $\close\epsilon$ 的描述，能够使这个想法清晰明了。
 
 \begin{rmk}
@@ -712,7 +712,7 @@ $A$ 的类型是明显的，但 $B$ 的类型就需要稍加思索了。
 
 如果我们考虑非依值情形（即递归原理），这一点可能会更清楚；在那种情形下，$A$ 是一个简单的类型（而不是类型族）。
 此时，我们会希望 $B$ 不依赖于 $x,y:\RC$ 或 $x\close\epsilon y$。
-但递归原理（连同其相关的唯一性原理）意在表明，带有关联关系 $\close\epsilon$ 的 $\RC$ 是某个范畴中的"始对象"。
+但递归原理（连同其相关的唯一性原理）意在表明，带有关联关系 $\close\epsilon$ 的 $\RC$ 是某个范畴中的``始对象''。
 因此，在这种情况下，$A$ 和 $B$ 的依赖结构应当反映出 $\RC$ 和 $\close\epsilon$ 的依赖结构：也就是说，我们应有 $B:A\to A\to \Qp \to \type$。
 将这一观察与依值情形下 $B$ 还必须依赖于 $x,y:\RC$ 和 $x\close\epsilon y$ 的事实结合起来，便不可避免地导出了上面给出的 $B$ 的类型。
 
@@ -919,7 +919,7 @@ $\RC$ 的第二个构造子给出了一个函数 $\rclim:\CAP\to\RC$。
 
 然而，在不知道 $f$ 如何作用在 $\epsilon$-接近的 Cauchy 实数上的情况下，通常很难证明~\ref{item:rcrec3}。
 增强的 $(\RC,\closesym)$-递归原理弥补了这一缺陷，它允许我们指定一个\emph{任意的} ``$f$ 在 $\epsilon$-接近的 Cauchy 实数上的作用方式''，然后我们可以通过与 $f$ 的定义同步进行的归纳来证明这一点确实成立。
-这个"作用方式"就是关系族 $\bsim$。
+这个``作用方式''就是关系族 $\bsim$。
 由于 $A$ 独立于 $\RC$，为了简化，我们可以假设 $\bsim$ 只依赖于 $A$ 和 $\Qp$，因此用 $a\bsim_\epsilon b$ 代替 $(u,a) \bsim_\epsilon (v,b)$ 不会产生歧义。
 在这种情况下，使用 $(\RC,\closesym)$-递归定义一个函数 $f:\RC\to A$ 需要处理以下几种情形（现在我们使用模式匹配约定的写法来书写）。
 
@@ -1201,7 +1201,7 @@ $\RC$ 的第二个构造子给出了一个函数 $\rclim:\CAP\to\RC$。
 \end{proof}
 
 \index{encode-decode method}%
-略加引申，我们可以将 $\approx$ 称为 $\closesym$ 的"代码"纤维化，而上述证明的两个方向分别对应 \encode 和 \decode。
+略加引申，我们可以将 $\approx$ 称为 $\closesym$ 的``代码''纤维化，而上述证明的两个方向分别对应 \encode 和 \decode。
 根据 $\approx$ 的定义，由 \cref{thm:RC-sim-characterization} 我们得到等价
 \begin{align*}
   (\rcrat(q) \close\epsilon \rcrat(r))  &=
@@ -1236,7 +1236,7 @@ $\RC$ 的第二个构造子给出了一个函数 $\rclim:\CAP\to\RC$。
 %   Thus, both properties follow from \cref{thm:RC-sim-characterization}.
 % \end{proof}
 
-有了三角不等式，我们就可以证明 Cauchy 逼近的"极限"确实表现得像极限。
+有了三角不等式，我们就可以证明 Cauchy 逼近的``极限''确实表现得像极限。
 
 \begin{lem}\label{thm:RC-sim-lim}
   对任意 $u:\RC$，任意 Cauchy 逼近 $y$，以及任意 $\epsilon,\delta:\Qp$，若 $u\close\epsilon y_\delta$，则 $u\close{\epsilon+\delta} \rclim(y)$。
@@ -1442,7 +1442,7 @@ Archimedean 原理直接由 $<$ 的定义得出。
   但根据定义，
   \[\max(\rcrat(q+\epsilon),\rclim(y)) \jdeq \rclim(\lam{\delta} \max(\rcrat(q+\epsilon),y_\delta)).\]
   由于一个最终常值的 Cauchy 逼近的极限就是该常值，我们有
-  \[\max(\rcrat(q+\epsilon),\rclim(y)) = \rcrat(q+\epsilon),\]，从而得到 $\rclim(y)\le \rcrat(q+\epsilon)$。
+  \[\max(\rcrat(q+\epsilon),\rclim(y)) = \rcrat(q+\epsilon),\]从而得到 $\rclim(y)\le \rcrat(q+\epsilon)$。
 
   现在考虑一般的 $u:\RC$。
   因为 $u\le \rcrat(q)$ 意味着 $\max(\rcrat(q),u)=\rcrat(q)$，结合假设 $u\close\epsilon v$ 以及 $\max(\rcrat(q),-)$ 的 Lipschitz 性质，可推出 $\max(\rcrat(q),v) \close\epsilon \rcrat(q)$。
@@ -1713,7 +1713,7 @@ $\sigma$-帧
   因此，我们得到~\eqref{eq:untruncated-linearity}，从而可以应用 \cref{lem:untruncated-linearity-reals-coincide}。
 
   假设可数选择公理成立。集合 $S = \setof{ \pairr{q, r} \in \Q \times \Q | q <
-    r }$ 与 $\N$ 等价，因此可以对"$x$ 可定位"这一陈述
+    r }$ 与 $\N$ 等价，因此可以对``$x$ 可定位''这一陈述
   %
   \begin{equation*}
     \fall{\pairr{q, r} : S} (q < x) \lor (x < r).
@@ -1837,7 +1837,7 @@ $\sigma$-帧
   在完全有界性的定义中，我们使用了一种不够严格的记法 $\sm{n : \N}{x_1, \ldots, x_n : M}$。严格来说，我们应该写成 $\sm{x : \lst{M}}$，其中 $\lst{M}$ 是从 \cref{sec:bool-nat} 引入的有限列表\index{type!of lists}的归纳类型。不过，那样会使其余部分的表述稍显繁琐。
 \end{rmk}
 
-请注意，在完全有界性的定义中，我们要求的是 $\epsilon$-网的纯粹存在性，而非仅存在性。这样我们就能得到一个函数，为每个 $\epsilon : \Qp$ 指派一个具体的 $\epsilon$-网。这样的函数或许可以称为"完全有界模"。一般而言，在将经典的度量概念移植到同伦类型论时，我们应当节制地使用命题截断，通常是为了避免要求一个从 $\R$ 到 $\Q$ 或 $\N$ 的非常值映射。例如，以下是"一致连续"的"正确"定义。
+请注意，在完全有界性的定义中，我们要求的是 $\epsilon$-网的纯粹存在性，而非仅存在性。这样我们就能得到一个函数，为每个 $\epsilon : \Qp$ 指派一个具体的 $\epsilon$-网。这样的函数或许可以称为``完全有界模''。一般而言，在将经典的度量概念移植到同伦类型论时，我们应当节制地使用命题截断，通常是为了避免要求一个从 $\R$ 到 $\Q$ 或 $\N$ 的非常值映射。例如，以下是``一致连续''的``正确''定义。
 
 \begin{defn} \label{defn:uniformly-continuous}
   度量空间上的映射 $f : M \to \R$ 称为\define{一致连续的（uniformly continuous）}
@@ -2049,8 +2049,8 @@ $[0,1]$ 的 \define{Heine–Borel 紧性}
 
 没有了排中律，或是缺少一点布劳威尔直觉主义，我们似乎就束手无策了。
 然而，$[0,1]$ 的 Heine–Borel 紧性\emph{是能够}在构造性框架下恢复的，而且其方式仍然与经典数学兼容！
-为此，我们需要重新审视"覆盖"这一概念。
-\eqref{eq:cover-pointwise-truncated} 的问题在于，截断的存在量词允许空间以任意杂乱的方式被覆盖，因此从计算的角度来说，我们便毫无机会"仅仅"提取出一个有限的子覆盖。
+为此，我们需要重新审视``覆盖''这一概念。
+\eqref{eq:cover-pointwise-truncated} 的问题在于，截断的存在量词允许空间以任意杂乱的方式被覆盖，因此从计算的角度来说，我们便毫无机会``仅仅''提取出一个有限的子覆盖。
 去掉截断，我们得到
 %
 \begin{equation} \label{eq:cover-pointwise}
@@ -2060,26 +2060,26 @@ $[0,1]$ 的 \define{Heine–Borel 紧性}
 这或许能有所帮助，但它对覆盖的要求实在太高了。
 按照这个定义，我们甚至无法证明 $(0,3)$ 和 $(2,5)$ 覆盖了 $[1,4]$，因为那相当于给出一个非常值的映射 $[1,4] \to \bool$，参见
 \cref{ex:reals-non-constant-into-Z}。
-这里，我们可以从"无点拓扑"
+这里，我们可以从``无点拓扑''
 \index{pointfree topology}%
 \index{topology!pointfree}%
 （即 locale 理论）
 \index{locale}%
 中汲取经验：覆盖的概念应当基于开集来表达，而不涉及点。
-这种对空间的"整体性"观点将使我们能够分析覆盖的概念，进而恢复 Heine–Borel 紧性。
+这种对空间的``整体性''观点将使我们能够分析覆盖的概念，进而恢复 Heine–Borel 紧性。
 locale 理论使用幂集，
 \index{power set}%
 我们可以通过假设命题大小重整来获得它；
 \index{propositional!resizing}%
 不过，我们可以转而借鉴 locale 理论的直谓近亲的思想，
 \index{mathematics!predicative}%
-它被称为"形式拓扑"。
+它被称为``形式拓扑''。
 \index{formal!topology}%
 
 \index{acceptance|(}
 
 假设我们有一个族 $\pairr{I, \mathcal{F}}$ 和一个区间 $(a, b)$。
-我们如何在不涉及点的情况下表达"$(a,b)$ 被该族覆盖"这一事实呢？
+我们如何在不涉及点的情况下表达``$(a,b)$ 被该族覆盖''这一事实呢？
 这里有一个：如果 $(a, b)$ 等于某个 $\mathcal{F}(i)$，那么它被该族覆盖。
 还有一个：如果 $(a,b)$ 被另一个族 $(J, \mathcal{G})$ 覆盖，并且每个 $\mathcal{G}(j)$ 又都被 $\pairr{I, \mathcal{F}}$ 覆盖，那么 $(a,b)$ 就被 $\pairr{I, \mathcal{F}}$ 覆盖。
 请注意，我们正在列举可以用来\emph{推导}出 $\pairr{I, \mathcal{F}}$ 覆盖 $(a,b)$ 的\emph{规则}。
@@ -2348,15 +2348,15 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
 \item 我们递归地定义 $\iota_{\nat}:\nat\to\NO$ 如下：
   \begin{align*}
     \iota_{\nat}(0) &\defeq \surr{}{},\\
-    \iota_\nat(\suc(n)) &\defeq \surr{\iota_\nat(n)}{}.
+    \iota_{\nat}(\suc(n)) &\defeq \surr{\iota_{\nat}(n)}{}.
   \end{align*}
-  也就是说，$\iota_\nat(0)$ 由分割 $\emptyt\to\NO$ 和 $\emptyt\to\NO$ 定义。
-  类似地，$\iota_\nat(\suc(n))$ 由 $\unit\to\NO$（选出 $\iota_\nat(n)$）和 $\emptyt\to\NO$ 定义。
+  也就是说，$\iota_{\nat}(0)$ 由分割 $\emptyt\to\NO$ 和 $\emptyt\to\NO$ 定义。
+  类似地，$\iota_{\nat}(\suc(n))$ 由 $\unit\to\NO$（选出 $\iota_{\nat}(n)$）和 $\emptyt\to\NO$ 定义。
 \item 类似地，我们利用符号情形递归原理（\cref{thm:sign-induction}）定义 $\iota_{\Z}:\Z\to\NO$：
   \begin{align*}
     \iota_{\Z}(0) &\defeq \surr{}{},\\
-    \iota_\Z(n+1) &\defeq \surr{\iota_\Z(n)}{} & &\text{$n\ge 0$,}\\
-    \iota_\Z(n-1) &\defeq \surr{}{\iota_\Z(n)} & &\text{$n\le 0$.}
+    \iota_{\Z}(n+1) &\defeq \surr{\iota_{\Z}(n)}{} & &\text{$n\ge 0$,}\\
+    \iota_{\Z}(n-1) &\defeq \surr{}{\iota_{\Z}(n)} & &\text{$n\le 0$.}
   \end{align*}
 \item 所谓\define{2进有理数（dyadic rational）}
   \indexdef{rational numbers!dyadic}%
@@ -2365,7 +2365,7 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
   我们将其记作 $a/2^n$，并视其为对应的有理数。
   若用 $\Q_D$ 表示所有2进有理数的集合，我们通过对 $n$ 归纳来定义 $\iota_{\Q_D}:\Q_D\to\NO$：
   \begin{align*}
-    \iota_{\Q_D}(a/2^0) &\defeq \iota_\Z(a),\\
+    \iota_{\Q_D}(a/2^0) &\defeq \iota_{\Z}(a),\\
     \iota_{\Q_D}(a/2^n) &\defeq \surr{\iota_{\Q_D}(a/2^n - 1/2^n)}{\iota_{\Q_D}(a/2^n + 1/2^n)},
     \quad \text{for $n>0$.}
   \end{align*}
@@ -2381,10 +2381,10 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
   我们通过关于 $\ord$ 的良基递归（\cref{thm:wfrec}）定义 $\iota_{\ord}:\ord\to\NO$\label{ord-into-surreals}：
   \begin{equation*}
     \iota_{\ord}(A) \defeq
-    \surr{\iota_\ord(\ordsl A a) \text{ for all } a:A}{}.
+    \surr{\iota_{\ord}(\ordsl A a) \text{ for all } a:A}{}.
   \end{equation*}
-  同样由简单性定理可知，将 $\iota_\ord$ 限制在有限序数上与 $\iota_\nat$ 一致。
-  （但我们提醒读者，与上面的例子不同，除非将其限制到更小的一类序数上，否则 $\iota_\ord$ 并非构造性地单的；参见 \cref{ex:ord-into-surreals,ex:hiit-plump}。）
+  同样由简单性定理可知，将 $\iota_{\ord}$ 限制在有限序数上与 $\iota_{\nat}$ 一致。
+  （但我们提醒读者，与上面的例子不同，除非将其限制到更小的一类序数上，否则 $\iota_{\ord}$ 并非构造性地单的；参见 \cref{ex:ord-into-surreals,ex:hiit-plump}。）
 \item 从 Conway 那里再取几个有趣的例子：
   \begin{align*}
     \omega &\defeq \surr{0,1,2,3,\dots}{} \qquad\text{(also an ordinal)}\\
@@ -2475,7 +2475,7 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
 
 \begin{quote}\footnotesize
   一般来说，当我们希望对所有数 $x$ 确立一个命题 $P(x)$ 时，我们将用归纳法来证明它：由所有 $P(x^L)$ 和 $P(x^R)$ 成立来推导 $P(x)$。
-  我们认为"所有数都是以这种方式构造的"这一说法为这一做法的合法性提供了依据。
+  我们认为``所有数都是以这种方式构造的''这一说法为这一做法的合法性提供了依据。
 \end{quote}
 
 利用 $\NO$-归纳法，我们可以证明
@@ -2543,7 +2543,7 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
   \Big((x< y) \to (f(x)\blt f(y))\Big).
 \end{narrowmultline*}
 %
-与 Cauchy 实数的 $(\RC,\closesym)$-递归类似，这个递归原理对于定义 $\NO$ 上的函数至关重要，因为我们无法先在"预超现实数"上定义函数，事后再证明它尊重相等的概念。
+与 Cauchy 实数的 $(\RC,\closesym)$-递归类似，这个递归原理对于定义 $\NO$ 上的函数至关重要，因为我们无法先在``预超现实数''上定义函数，事后再证明它尊重相等的概念。
 
 \begin{eg}
   我们来定义\emph{取负}函数 $\NO\to\NO$。
@@ -2592,9 +2592,9 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
 \end{thm}
 
 \begin{proof}
-  我们通过对 x, y 的双重 ($\NO$, \le, <)-归纳来定义 \preceq 和 \prec。
+  我们通过对 $x, y$ 的双重 $(\NO,\le,<)$-归纳来定义 $\preceq$ 和 $\prec$。
   第一次归纳是一个简单的递归，其值域是 $(\NO\to\prop)\times (\NO\to\prop)$ 的子集 $A$，该子集由一对谓词组成，其中一个蕴含另一个，并且满足“右侧传递性”，即 \eqref{eq:NO-codes-unstrict} 和 \eqref{eq:NO-codes-transitivity} 的右列，其中 $(x\preceq \blank)$ 和 $(x\prec \blank)$ 被替换为两个给定的谓词。
-  如同在 \cref{defn:RC-approx} 的证明中，我们将这些谓词视为二元关系的一半来书写，记为 y\mapsto (\hle y) 和 y\mapsto (\hlt y)，并用 \hlname 表示这一对关系。
+  如同在 \cref{defn:RC-approx} 的证明中，我们将这些谓词视为二元关系的一半来书写，记为 $y\mapsto (\hle y)$ 和 $y\mapsto (\hlt y)$，并用 $\hlname$ 表示这一对关系。
   % The precise definition of $A$ is
   % \begin{align*}
   %   A\defeq \bigg\{ \hlname : (\NO\to\prop)\times (\NO\to\prop) \;\bigg|\;\\
@@ -2606,7 +2606,7 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
   %     \land\; &\Big( (\hlt y) \to (y< z) \to (\hlt z) \Big) \bigg\}
   %   \end{split}
   % \end{align*}
-  我们在 A 上装备以下两个关系：
+  我们在 $A$ 上装备以下两个关系：
   \begin{align*}
     (\hlname \ble \hlbname) &\defeq
     \fall{y:\NO} \Big( (\hleb y) \to (\hle y) \Big) \land
@@ -2615,8 +2615,8 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
     \fall{y:\NO} \Big( (\hleb y) \to (\hlt y) \Big).
     %\land \Big( (\hltb y) \to (\hlt y) \Big)
   \end{align*}
-  注意 \ble 是反对称的，因为如果 \hlname \ble \hlbname 且 \hlbname \ble \hlname，那么对于所有 y 有 (\hleb y) \Leftrightarrow (\hle y) 且 (\hltb y) \Leftrightarrow (\hlt y)，因此由命题的泛等性和函数外延性可得 \hlname=\hlbname。
-  此外，说一个函数 $\NO$\to A 保持不等式，精确地说就是：当将其视为 $\NO$ 上的一对二元关系时，它满足“左侧传递性”（\eqref{eq:NO-codes-transitivity} 的左列）。
+  注意 $\ble$ 是反对称的，因为如果 $\hlname \ble \hlbname$ 且 $\hlbname \ble \hlname$，那么对于所有 $y$ 有 $(\hleb y) \Leftrightarrow (\hle y)$ 且 $(\hltb y) \Leftrightarrow (\hlt y)$，因此由命题的泛等性和函数外延性可得 $\hlname=\hlbname$。
+  此外，说一个函数 $\NO\to A$ 保持不等式，精确地说就是：当将其视为 $\NO$ 上的一对二元关系时，它满足“左侧传递性”（\eqref{eq:NO-codes-transitivity} 的左列）。
 
   现在处理递归的主情况，我们假设给定一个由分割定义的 $x$，以及对于所有 $L$ 和 $R$ 的关系 $(x^L \prec \blank)$, $(x^R \prec \blank)$, $(x^L \preceq \blank)$, 和 $(x^R \preceq \blank)$。其中严格的关系蕴含非严格的关系，满足右侧传递性，并且使得
   \begin{equation}\label{eq:NO-prec-outer-IH}
@@ -2631,7 +2631,7 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
     \fall{L} (\tle y)\to (x^L\prec y) \label{eq:NO-prec-IHL}\\
     \fall{R} (x^R \preceq y) \to (\tlt y) \label{eq:NO-prec-IHR}.
   \end{gather}
-  使用类似于 \ble 和 \blt 的记号，我们在 A' 上装备两个关系，对于 \tlname:A'(y) 和 \tlbname:A'(z) 定义如下：
+  使用类似于 $\ble$ 和 $\blt$ 的记号，我们在 $A'$ 上装备两个关系，对于 $\tlname:A'(y)$ 和 $\tlbname:A'(z)$ 定义如下：
   \begin{align*}
     (\tlname \bble \tlbname) &\defeq
     \Big((\tle y) \to (\tleb z)\Big) \land \Big((\tlt y) \to (\tltb z)\Big)\\
@@ -2639,7 +2639,7 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
     \Big((\tle y) \to (\tltb z)\Big). % \land \Big(\tlt \to \tltb\Big).
   \end{align*}
   % (These are the type families $B$ and $C$ in the general induction principle.)
-  同样，\bble 在适当的意义下显然是反对称的。
+  同样，$\bble$ 在适当的意义下显然是反对称的。
   此外，一个能保持不等式的函数 $\prd{y:\NO} A'(y)$ 恰好是这样一对谓词：其中一个蕴含另一个，满足右侧传递性，并且关于不等式 $x^L<x$ 和 $x<x^R$ 满足左侧传递性。
   因此，这个内层归纳将提供我们完成外层递归主情况所需的内容。
 
@@ -2776,7 +2776,7 @@ Conway 用 $\le$ 来定义 $<$，这种方式在经典意义下是合理的，�
 
 \index{acceptance|(}%
 \index{mathematics!formalized}%
-在~\cite{conway:onag} 第零部分的附录中，Conway 讨论了如何在 ZFC 集合论中形式化超现实数：沿序数迭代，并对每个等价类取秩最低的代表元所构成的集合；或者用"符号展开"来表示数。
+在~\cite{conway:onag} 第零部分的附录中，Conway 讨论了如何在 ZFC 集合论中形式化超现实数：沿序数迭代，并对每个等价类取秩最低的代表元所构成的集合；或者用``符号展开''来表示数。
 他随后指出
 
 \begin{quote}\footnotesize
@@ -2848,7 +2848,7 @@ $\RC$ 是最小的 Cauchy 完备的 Archimedean 的有序域，这一事实（�
 验证这是否确实如此\index{open!problem}，将是一个有趣的问题。
 Escard{\'o}--Simpson 实数的概念，更准确地说，是相应的闭区间概念，之所以有趣，是因为它可以在任何具有有限积的范畴中陈述。
 
-在增加了"正则扩张公理"的构造性集合论中，人们也可以尝试通过超限迭代、对 Cauchy 序列的极限取闭包来定义 Cauchy 完备化。
+在增加了``正则扩张公理''的构造性集合论中，人们也可以尝试通过超限迭代、对 Cauchy 序列的极限取闭包来定义 Cauchy 完备化。
 验证这种构造是否与我们的构造一致，同样是一个有趣的问题。
 
 构造性数学中一个广为流传的结论是：Cauchy 实数与Dedekind 实数的一致需要依赖选择公理。
@@ -2909,7 +2909,7 @@ Escard{\'o}--Simpson 实数的概念，更准确地说，是相应的闭区间�
   假设我们去掉 \cref{defn:dedekind-reals} 中的位于性条件。
   那么我们就得到了\define{区间域（interval domain）}
   \indexdef{interval!domain}%
-  $\mathbb{I}$，因为此时分割允许存在"间隙"，而这些间隙就是区间。通过
+  $\mathbb{I}$，因为此时分割允许存在``间隙''，而这些间隙就是区间。通过
   %
   \begin{narrowmultline*}
     ((L, U) \sqsubseteq (L', U'))
@@ -2919,7 +2919,7 @@ Escard{\'o}--Simpson 实数的概念，更准确地说，是相应的闭区间�
   \end{narrowmultline*}
   %
   定义 $\mathbb{I}$ 上的偏序 $\sqsubseteq$。
-  $\mathbb{I}$ 中的极大元有哪些？定义"端点"运算，它将区间域中的一个元素映为其下端点与上端点。这些端点是实数、下实数还是上实数（参见
+  $\mathbb{I}$ 中的极大元有哪些？定义``端点''运算，它将区间域中的一个元素映为其下端点与上端点。这些端点是实数、下实数还是上实数（参见
   \cref{ex:RD-lower-cuts}）？分割上的哪些算术运算定义对区间域仍然有意义？
 \end{ex}
 
@@ -3057,7 +3057,7 @@ Escard{\'o}--Simpson 实数的概念，更准确地说，是相应的闭区间�
   \begin{enumerate}
   \item 构造一个映射 $j:\mathsf{POrd} \to \NO$，并证明它是一个嵌入。
   \item 证明在关系 $<$ 下，$\mathsf{POrd}$ 是一个序数（在更高一层的宇宙中，如 $\ord$）。
-  \item 假设命题大小重整，证明 $\mathsf{POrd}$ 等价于 \cref{ex:plump-ordinals} 中 \ord 的子集 \[\setof{A:\ord | \mathsf{isPlump}(A)}\]。由此推断，$\iota_{\ord}:\ord\to\NO$ 限制在丰满序数上时是单的。
+  \item 假设命题大小重整，证明 $\mathsf{POrd}$ 等价于 \cref{ex:plump-ordinals} 中 \ord 的子集 \[\setof{A:\ord | \mathsf{isPlump}(A)}\]由此推断，$\iota_{\ord}:\ord\to\NO$ 限制在丰满序数上时是单的。
   \end{enumerate}
   在没有命题大小重整的情况下，我们依然可以称 $\mathsf{POrd}$ 的元素（或它们在 $\NO$ 中的像）为 \define{丰满序数}。\index{ordinal!plump}\index{plump!ordinal}
 \end{ex}

@@ -1,3 +1,18 @@
+# 《同伦类型论》AI 翻译
+
+本仓库是《同伦类型论：数学的泛等基础》（HoTT book）的中文翻译版本。
+使用 Deepseek v3.2 + GLM 5.1 进行翻译。
+中文 PDF 可以在 Releases 页面找到。
+
+当前进度：
+
+| 流程 | 进度 |
+| --- | --- |
+| 翻译 | 100% |
+| 校对 | 遥遥无期 |
+
+---
+
 This is a textbook on informal homotopy type theory.
 It is part of the [Univalent foundations of mathematics](http://www.math.ias.edu/sp/univalent)
 project that took place at the Institute for Advanced Study in 2012/13.

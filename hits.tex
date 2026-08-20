@@ -11,7 +11,7 @@
 \index{generation!of a type, inductive|(}
 
 正如我们在\cref{cha:induction}中讨论的一般归纳类型那样，\emph{高阶归纳类型（higher inductive types）}也是一个用于定义由某些构造子生成新类型的一般框架。
-但与普通归纳类型不同，在定义高阶归纳类型时，我们可以有一些"构造子"，它们不仅能生成该类型的\emph{点}，还能生成该类型中的\emph{道路}乃至更高维的道路。
+但与普通归纳类型不同，在定义高阶归纳类型时，我们可以有一些``构造子''，它们不仅能生成该类型的\emph{点}，还能生成该类型中的\emph{道路}乃至更高维的道路。
 \index{type!circle}%
 \indexsee{circle type}{type,circle}%
 例如，我们可以考虑由以下构造子生成的高阶归纳类型 $\Sn^1$：
@@ -33,8 +33,8 @@
 \end{itemize}
 生成。
 
-当我们把类型看作高阶群胚时，这种更一般的"生成"概念便十分自然：
-既然高阶群胚是一种兼有点、道路和高维道路的"多排序对象"，我们就应当允许在所有维数上都有"生成元"。
+当我们把类型看作高阶群胚时，这种更一般的``生成''概念便十分自然：
+既然高阶群胚是一种兼有点、道路和高维道路的``多排序对象''，我们就应当允许在所有维数上都有``生成元''。
 
 我们将那些普通的构造子（例如 $\base$）称为\define{点构造子（point constructors）}
 \indexdef{constructor!point}%
@@ -56,22 +56,22 @@
 关于这一推广，有几个要点需要说明。
 
 \index{free!generation of an inductive type}%
-首先，"生成"一词应当认真对待，就如同群可以由某个集合自由生成一样。
-具体来说，由于高阶群胚带有道路和高维道路上的\emph{运算}，当这样一个对象由某些构造子"生成"时，这些运算会产生更多并非直接来自构造子本身的道路。
+首先，``生成''一词应当认真对待，就如同群可以由某个集合自由生成一样。
+具体来说，由于高阶群胚带有道路和高维道路上的\emph{运算}，当这样一个对象由某些构造子``生成''时，这些运算会产生更多并非直接来自构造子本身的道路。
 例如，在高阶归纳类型 $\Sn^1$ 中，构造子 $\lloop$ 并不是从 $\base$ 到 $\base$ 的唯一非平凡道路；
-我们还有"$\lloop\ct\lloop$"、"$\lloop\ct\lloop\ct\lloop$"等等，以及 $\opp{\lloop}$ 等，它们全都各不相同。
-这可能看起来显而易见，甚至不值一提，但它偏离了"普通"归纳类型的行为：
-在普通归纳类型中，除了构造子直接"放入"的内容之外，不应期待看到其他东西。
+我们还有``$\lloop\ct\lloop$''、``$\lloop\ct\lloop\ct\lloop$''等等，以及 $\opp{\lloop}$ 等，它们全都各不相同。
+这可能看起来显而易见，甚至不值一提，但它偏离了``普通''归纳类型的行为：
+在普通归纳类型中，除了构造子直接``放入''的内容之外，不应期待看到其他东西。
 
-其次，这种生成实际上是\emph{自由}生成：高阶归纳类型严格来说并不允许我们施加"公理"，例如强行要求"$\lloop\ct\lloop$"等于 $\refl{\base}$。
+其次，这种生成实际上是\emph{自由}生成：高阶归纳类型严格来说并不允许我们施加``公理''，例如强行要求``$\lloop\ct\lloop$''等于 $\refl{\base}$。
 然而，在 $\infty$-群胚的世界里，%
 \index{.infinity-groupoid@$\infty$-groupoid}
-"自由生成"与"展示"之间几乎没有差别，
+``自由生成''与``展示''之间几乎没有差别，
 \index{presentation!of an infinity-groupoid@of an $\infty$-groupoid}%
 \index{generation!of an infinity-groupoid@of an $\infty$-groupoid}%
 因为我们可以通过添加一个新的二维生成元（例如在 $\base=\base$ 中添加一条道路 $\lloop\ct\lloop = \refl{\base}$）来使两条道路\emph{在同伦意义下}相等。
-当然，我们随后还需要考虑这个新生成元是否应当满足它自己的"公理"，依此类推；但原则上，任何"展示"都可以通过将公理转化为构造子来变成"自由"生成。
-正如我们将要看到的，通过添加"截断构造子"，我们同样可以用高阶归纳类型来表达诸如群展示之类的经典概念。
+当然，我们随后还需要考虑这个新生成元是否应当满足它自己的``公理''，依此类推；但原则上，任何``展示''都可以通过将公理转化为构造子来变成``自由''生成。
+正如我们将要看到的，通过添加``截断构造子''，我们同样可以用高阶归纳类型来表达诸如群展示之类的经典概念。
 
 第三，尽管高阶归纳类型包含了能在该类型中生成\emph{道路}的“构造子”，它仍然是对\emph{单个}类型的归纳定义。
 特别地，正如我们将要看到的，具有泛性质（通常由归纳原理表述）的是高阶归纳类型本身，而\emph{不是}它的相等类型。
@@ -155,7 +155,7 @@
 回忆一下，对于普通的归纳类型，我们将递归定义的函数的计算规则不仅视为判断相等性，而且视作\emph{定义性}相等，因此可以使用符号 $\defeq$ 来表示它们。
 例如，截断的前驱\index{predecessor!function, truncated}函数 $p:\nat\to\nat$ 就是由 $p(0)\defeq 0$ 和 $p(\suc(n))\defeq n$ 定义的。
 对于高阶归纳类型，这类记号对点构造子是合理的（例如 $f(\base)\defeq b$），但对于道路构造子则可能产生误导，因为像 $\ap f \lloop = \ell$ 这样的相等性并非判断相等性。
-因此，我们混合使用记法，将这种"通过定义的命题相等性"写作 $\ap f \lloop \defid \ell$。
+因此，我们混合使用记法，将这种``通过定义的命题相等性''写作 $\ap f \lloop \defid \ell$。
 \end{rmk}
 
 
@@ -165,7 +165,7 @@
 \index{type!circle|(}%
 \index{induction principle!for S1@for $\Sn^1$}%
 那么，归纳原理（依值消去子）又是怎样的呢？
-回想一下，对于一个普通的归纳类型 $W$，为了用归纳法证明 $\prd{x:W} P(x)$，我们必须为 $W$ 的每个构造子指定一个 $P$ 上的操作，该操作作用于 $W$ 中该构造子"上方"的"纤维"上。
+回想一下，对于一个普通的归纳类型 $W$，为了用归纳法证明 $\prd{x:W} P(x)$，我们必须为 $W$ 的每个构造子指定一个 $P$ 上的操作，该操作作用于 $W$ 中该构造子``上方''的``纤维''上。
 例如，如果 $W$ 是自然数 $\nat$，那么要归纳地证明 $\prd{x:\nat} P(x)$，我们必须指定
 
 
@@ -175,7 +175,7 @@
 \end{itemize}
 
 
-第二个条件可以看作一个位于构造子 $\suc:\nat\to\nat$ \emph{上方}的"$P\to P$"函数，这推广了 $b:P(0)$ 位于构造子 $0:\nat$ 上方的方式。
+第二个条件可以看作一个位于构造子 $\suc:\nat\to\nat$ \emph{上方}的``$P\to P$''函数，这推广了 $b:P(0)$ 位于构造子 $0:\nat$ 上方的方式。
 
 因此，类比之下，为了证明 $\prd{x:\Sn^1} P(x)$，我们应当指定
 
@@ -410,13 +410,13 @@
 \end{lem}
 
 \begin{proof}
-  我们证明对于所有 $x:\interval$，有 $x=_\interval\ione$。换言之，我们需要一个函数 $f$，其类型为 $\prd{x:\interval}(x=_\interval\ione)$。我们按如下方式开始定义 $f$：
+  我们证明对于所有 $x:\interval$，有 $x=_{\interval}\ione$。换言之，我们需要一个函数 $f$，其类型为 $\prd{x:\interval}(x=_{\interval}\ione)$。我们按如下方式开始定义 $f$：
   \begin{alignat*}{2}
-    f(\izero)&\defeq \seg  &:\izero&=_\interval\ione,\\
-    f(\ione)&\defeq \refl\ione &:\ione &=_\interval\ione.
+    f(\izero)&\defeq \seg  &:\izero&=_{\interval}\ione,\\
+    f(\ione)&\defeq \refl\ione &:\ione &=_{\interval}\ione.
   \end{alignat*}
-  尚需定义 $\apd{f}\seg$，其类型必须为 $\seg =_\seg^{\lam{x} x=_\interval\ione}\refl \ione$。
-  根据定义，该类型就是 $\trans\seg\seg=_{\ione=_\interval\ione}\refl\ione$，而它又等价于 $\rev\seg\ct\seg=\refl\ione$。
+  尚需定义 $\apd{f}\seg$，其类型必须为 $\seg =_{\seg}^{\lam{x} x=_{\interval}\ione}\refl \ione$。
+  根据定义，该类型就是 $\trans\seg\seg=_{\ione=_{\interval}\ione}\refl\ione$，而它又等价于 $\rev\seg\ct\seg=\refl\ione$。
   但该类型中有一个典范元素，即道路之逆确为逆的证明。
 \end{proof}
 
@@ -502,7 +502,7 @@
   根据泛等性，\type 中的类型 $\Sn^1=\Sn^1$ 等价于 $\Sn^1$ 的自等价类型 $\eqv{\Sn^1}{\Sn^1}$，因此只需证明 $\eqv{\Sn^1}{\Sn^1}$ 不是集合即可。
   \index{automorphism!of S1@of $\Sn^1$}%
   为此，只需证明其相等类型 $\id[(\eqv{\Sn^1}{\Sn^1})]{\idfunc[\Sn^1]}{\idfunc[\Sn^1]}$ 不是一个命题。
-  由于"是等价"这一性质本身是一个命题，该类型等价于 $\id[(\Sn^1\to\Sn^1)]{\idfunc[\Sn^1]}{\idfunc[\Sn^1]}$。
+  由于``是等价''这一性质本身是一个命题，该类型等价于 $\id[(\Sn^1\to\Sn^1)]{\idfunc[\Sn^1]}{\idfunc[\Sn^1]}$。
   而根据函数外延性，后者又等价于 $\prd{x:\Sn^1} (x=x)$；正如我们在 \cref{thm:S1-autohtpy} 中所见，它包含两个不相等的元素。
 \end{proof}
 
@@ -578,7 +578,7 @@ $\Sn^2$ 的递归原理并不难陈述：给定类型 $B$ 及其中的点 $b:B$ 
 \end{itemize}
 
 
-为了写出这种表示下的归纳原理，需要定义"依值 $n$-环路\indexdef{loop!dependent n-@dependent $n$-}"的概念，以及依值函数在 $n$-环路上的作用。
+为了写出这种表示下的归纳原理，需要定义``依值 $n$-环路\indexdef{loop!dependent n-@dependent $n$-}''的概念，以及依值函数在 $n$-环路上的作用。
 我们将此留给读者（参见 \cref{ex:nspheres}）；在下一节中，我们将讨论另一种有时更易处理的定义球面的方法。
 
 \section{纬悬}
@@ -597,7 +597,7 @@ $\Sn^2$ 的递归原理并不难陈述：给定类型 $B$ 及其中的点 $b:B$ 
 \item 一个函数 $\merid:A \to (\id[\susp A]\north\south)$。
 \end{itemize}
 
-这些名称意在让人联想到某种"地球仪"，它有一个北极、一个南极，以及以类型 $A$ 为指标的、连接两极的经线。
+这些名称意在让人联想到某种``地球仪''，它有一个北极、一个南极，以及以类型 $A$ 为指标的、连接两极的经线。
 \indexdef{pole}%
 \indexdef{meridian}%
 事实上，稍后我们会看到，如果 $A=\Sn^1$，那么它的纬悬就等价于通常球面 $\Sn^2$ 的表面。
@@ -831,7 +831,7 @@ $\susp A$ 的递归原理是说，给定一个类型 $B$ 以及以下数据：
 在拓扑学中，通常通过沿$(n-1)$维边界球面粘贴$n$维圆盘来构建CW复形。
 \index{attaching map}%
 然而，另一种表述方式是粘入$(n-1)$维球面的\emph{锥（cone）}\index{cone!of a sphere}。
-也就是说，我们可以将圆盘\index{disc}看作由一个锥点（或称"轮毂"）和经线\index{meridian}%（或称"辐条"）构成，这些经线将该点连续地连接到边界上的每一点，如\cref{fig:hub-and-spokes}所示。
+也就是说，我们可以将圆盘\index{disc}看作由一个锥点（或称``轮毂''）和经线\index{meridian}%（或称``辐条''）构成，这些经线将该点连续地连接到边界上的每一点，如\cref{fig:hub-and-spokes}所示。
 
 \begin{figure}
   \centering
@@ -1006,7 +1006,7 @@ $\susp A$ 的递归原理是说，给定一个类型 $B$ 以及以下数据：
 
 显然，存在一个在 $\Ddiag$ 下以 $A\sqcup^C B$ 为顶点的典范上锥，它由 $\inl$、$\inr$ 和 $\glue$ 组成。
 \[\uppercurveobject{{ }}\lowercurveobject{{ }}\twocellhead{{ }}
-\xymatrix{C \ar^g[r] \ar_f[d] \drtwocell{^\glue\ \ } & B \ar^\inr[d] \\
+\xymatrix{C \ar^g[r] \ar_f[d] \drtwocell{^\glue\ \ } & B \ar^{\inr}[d] \\
   A \ar_-\inl[r] & A\sqcup^CB }\]
 下述引理说明，这个上锥是万有上锥。
 
@@ -1095,7 +1095,7 @@ $\mathsf{s}(\composecocone{t}c_\sqcup)=t$。
 我们将在 \cref{cha:hlevels,cha:homotopy} 中进一步讨论推出。
 
 \begin{rmk}
-  如 \cref{subsec:prop-trunc} 所述，符号 $\wedge$ 和 $\vee$ 既用于表示带点空间的缩积和楔，也用于逻辑中的"与"和"或"。
+  如 \cref{subsec:prop-trunc} 所述，符号 $\wedge$ 和 $\vee$ 既用于表示带点空间的缩积和楔，也用于逻辑中的``与''和``或''。
   由于同伦类型论中的类型既可以表现得像空间，也可以表现得像命题，从技术上讲，存在潜在的冲突——但由于它们很少同时扮演两种角色，语境通常能消除歧义。
   此外，缩积和楔仅适用于\emph{带点}空间，而唯一带点的命题是 $\top\jdeq\unit$——并且无论 $\wedge$ 和 $\vee$ 取哪种含义，都有 $\unit\wedge \unit = \unit$ 和 $\unit\vee\unit=\unit$。
 \end{rmk}
@@ -1105,7 +1105,7 @@ $\mathsf{s}(\composecocone{t}c_\sqcup)=t$。
 \begin{rmk}
   需要注意的是，余极限一般不保持截断性质。
   例如，$\Sn^0$ 和 \unit 都是集合，但 $\unit \leftarrow \Sn^0 \to \unit$ 的推出是 $\Sn^1$，而 $\Sn^1$ 不是集合。
-  因此，如果我们对 $n$-类型范畴（特别是集合范畴）中的余极限感兴趣，就需要以某种方式对余极限进行"截断"。
+  因此，如果我们对 $n$-类型范畴（特别是集合范畴）中的余极限感兴趣，就需要以某种方式对余极限进行``截断''。
   我们将在 \cref{sec:hittruncations,cha:hlevels,cha:set-math} 中回到这一点。
 \end{rmk}
 
@@ -1169,7 +1169,7 @@ $\brck A$ 同样有归纳原理：给定任意 $B:\brck A \to \type$ 及以下�
 \item 对于每对 $x,y:\trunc0A$ 及每对道路 $p,q:x=y$，都有一条道路 $p=q$。
 \end{itemize}
 
-那么，$\trunc0A$ 就是由一个函数 $A\to \trunc0A$ 连同"$\trunc0A$ 是集合"这一断言自由生成的。
+那么，$\trunc0A$ 就是由一个函数 $A\to \trunc0A$ 连同``$\trunc0A$ 是集合''这一断言自由生成的。
 它的一个自然的归纳原理是说：给定 $B:\trunc0 A \to \type$ 及以下条件
 
 \begin{itemize}
@@ -1201,7 +1201,7 @@ $\brck A$ 同样有归纳原理：给定任意 $B:\brck A \to \type$ 及以下�
 \end{lem}
 
 \begin{proof}
-  将 \cref{thm:trunc0-ind} 应用于常值族这一特殊情形，得到一个从右到左的映射，它是从左到右"与 $\tprojf0$ 复合"映射的右逆。
+  将 \cref{thm:trunc0-ind} 应用于常值族这一特殊情形，得到一个从右到左的映射，它是从左到右``与 $\tprojf0$ 复合''映射的右逆。
   为证明它也是左逆，任取 $h:\trunc0A\to B$，并将 \cref{thm:trunc0-ind} 应用于复合 $a\mapsto h(\tproj0a)$ 来定义 $h':\trunc0A\to B$。
   于是有 $h'(\tproj0a)=h(\tproj0a)$。
 
@@ -1725,7 +1725,7 @@ $\lst A$ 上的幺半群运算是列表的拼接，递归地定义为
 我们不妨退后一步，回顾一下刚才做了什么。
 我们证明了任意集合上的自由群存在，而\emph{无需}给出它的显式构造。
 本质上，我们所要做的仅仅是将它应当满足的泛性质写下来。
-在集合论中，要达到类似的结果，需要诉诸伴随函子定理\index{adjoint!functor theorem}之类的"黑箱"；而类型论则将此类构造内建于数学基础之中。
+在集合论中，要达到类似的结果，需要诉诸伴随函子定理\index{adjoint!functor theorem}之类的``黑箱''；而类型论则将此类构造内建于数学基础之中。
 
 当然，有时自由代数结构的具体描述也是有用的。
 对于自由群，我们可以利用商来给出这样的描述。
@@ -1834,7 +1834,7 @@ $H*K$，即群范畴中的余积。
 \index{presentation!of a group}%
 注意，由\emph{展示}给出的群可视为余极限的特例。
 设给定集合（或更一般地，类型）$A$ 及一对函数 $R\rightrightarrows \freegroup{A}$。
-将 $R$ 视为"关系"的类型，其中这对函数为每个关系指定它所设定为相等的两个字。
+将 $R$ 视为``关系''的类型，其中这对函数为每个关系指定它所设定为相等的两个字。
 例如，在展示 $\langle a \mid a^2 = e \rangle$ 中，可取 $A\defeq \unit$、$R\defeq \unit$，两个态射 $R\rightrightarrows \freegroup{A}$ 分别选取列表 $(a,a)$ 与空列表 $\nil$。
 于是，由自由群的泛性质，可得一对群同态 $\freegroup{R} \rightrightarrows \freegroup{A}$。
 它们在群范畴中的余等子（可仿照推出构造）即为此展示所\emph{展示}的群。
@@ -1843,11 +1843,11 @@ $H*K$，即群范畴中的余积。
 
 注意，所有这类构造仅适用于\emph{代数理论}\index{theory!algebraic}，即公理为（全称量化的）方程的理论，方程中涉及的变量、常量与运算均来自给定的\emph{签名}\index{signature!of an algebraic theory}。
 对其加以修改后，也可应用于所谓的\emph{本质代数理论}\index{theory!essentially algebraic}：这类理论中的运算为偏定义的，其定义域由先前运算之间的等式所确定。
-例如，它们不适用于域的理论：域理论中的"求逆"运算是偏定义的，其定义域 $\setof{x | x \mathrel{\#} 0}$ 由先前运算之间的一个\emph{远离关系} $\#$ 所确定，参见 \cref{RD-inverse-apart-0}。
+例如，它们不适用于域的理论：域理论中的``求逆''运算是偏定义的，其定义域 $\setof{x | x \mathrel{\#} 0}$ 由先前运算之间的一个\emph{远离关系} $\#$ 所确定，参见 \cref{RD-inverse-apart-0}。
 事实上，域范畴没有始对象，这是众所周知的。
 \index{initial!field}%
 
-另一方面，这些构造同样适用于\emph{无穷元}\index{infinitary!algebraic theory}代数理论，其"运算"可接受无穷多个输入。
+另一方面，这些构造同样适用于\emph{无穷元}\index{infinitary!algebraic theory}代数理论，其``运算''可接受无穷多个输入。
 在此情形下，除非假设选择公理，否则自由代数或代数余极限可能无法表示为简单的商。
 这意味着高阶归纳类型显著增强了构造类型论（未必体现在证明论强度上，而是实用效力上），且在某些方面确实比（不带选择公理的）Zermelo--Fraenkel\index{set theory!Zermelo--Fraenkel} 集合论更强~\cite{blass:freealg}。
 % We will see an example of this in \cref{sec:ordinals}.
@@ -2209,7 +2209,7 @@ $H*K$，即群范畴中的余积。
 
 自然性的直觉仅为判断一个高阶归纳定义在什么情况下可允许提供了粗略的指南。
 即便能在本书中给出此类定义可允许形式的精确规范，这样的规范也很可能迅速过时，因为这一理论的新扩展正在不断被探索。
-例如，\cref{sec:circle} 中提到的用"依值 $n$-环路\index{loop!dependent n-@dependent $n$-}"来表示 $n$-球面，以及 \cref{cha:real-numbers} 中使用的"高阶归纳-递归定义"，都是本书撰写期间引入的创新。
+例如，\cref{sec:circle} 中提到的用``依值 $n$-环路\index{loop!dependent n-@dependent $n$-}''来表示 $n$-球面，以及 \cref{cha:real-numbers} 中使用的``高阶归纳-递归定义''，都是本书撰写期间引入的创新。
 我们鼓励读者去实验——但务必谨慎。
 
 \sectionNotes
@@ -2219,7 +2219,7 @@ $H*K$，即群范畴中的余积。
 
 关于高阶归纳类型的语法及其在高阶范畴模型中的语义的一般讨论，可见于 \cite{ls:hits}。
 与普通的归纳类型类似，高阶归纳类型的模型可以通过超限迭代过程来构造；一个通俗的说法是：普通归纳类型描述的是\emph{自由}单子，而高阶归纳类型描述的是单子的\emph{展示}。\index{monad}
-引入道路构造子也涉及模型范畴论中"右同伦"（用道路空间定义）与"左同伦"（用柱体定义）之间的等价——这一等价通常只在同伦意义下成立，这为更倾向于对道路构造子采用命题计算规则提供了语义上的理由。
+引入道路构造子也涉及模型范畴论中``右同伦''（用道路空间定义）与``左同伦''（用柱体定义）之间的等价——这一等价通常只在同伦意义下成立，这为更倾向于对道路构造子采用命题计算规则提供了语义上的理由。
 
 另一个（暂时的）理由来自现有计算机实现的局限。
 像 \Coq 和 \Agda 这样的证明助手\index{proof!assistant}内置了普通的归纳类型，但尚未内置高阶归纳类型。
@@ -2281,7 +2281,7 @@ $H*K$，即群范畴中的余积。
 \end{ex}
 
 \begin{ex}\label{ex:unnatural-endomorphisms}
-  假设 \LEM{}，构造一个函数族 $f:\prd{X:\type}(X\to X)$，使得 $f_\bool:\bool\to\bool$ 是非恒等自同构。\index{automorphism!of 2, nonidentity@of $\bool$, nonidentity}
+  假设 \LEM{}，构造一个函数族 $f:\prd{X:\type}(X\to X)$，使得 $f_{\bool}:\bool\to\bool$ 是非恒等自同构。\index{automorphism!of 2, nonidentity@of $\bool$, nonidentity}
 \end{ex}
 
 \begin{ex}\label{ex:funext-from-interval}

@@ -14,6 +14,16 @@
 \newcommand{\defeq}{\vcentcolon\equiv}  % A judgmental equality currently being defined
 
 %%% Term being defined
+% 中译本改动：中文排版里正文强调惯例上不是把宋体加粗，而是换用黑体；
+% 标题的粗体不受影响。假定只用 LuaLaTeX 编译。
+\setCJKfamilyfont{zhemph}{FandolSong-Regular}[
+  Extension = .otf,
+  BoldFont = FandolHei-Regular,
+  ItalicFont = FandolKai-Regular,
+  BoldItalicFont = FandolKai-Regular,
+  BoldItalicFeatures = {FakeBold=2.5},
+]
+\renewcommand{\textbf}[1]{{\CJKfamily{zhemph}\bfseries #1}}
 \newcommand{\define}[1]{\textbf{#1}}
 
 %%% Vec (for example)
@@ -321,17 +331,17 @@
 \let\type\UU
 % Universes of truncated types
 \newcommand{\typele}[1]{\ensuremath{{#1}\text-\mathsf{Type}}\xspace}
-\newcommand{\typeleU}[1]{\ensuremath{{#1}\text-\mathsf{Type}_\UU}\xspace}
+\newcommand{\typeleU}[1]{\ensuremath{{#1}\text-\mathsf{Type}_{\UU}}\xspace}
 \newcommand{\typelep}[1]{\ensuremath{{(#1)}\text-\mathsf{Type}}\xspace}
-\newcommand{\typelepU}[1]{\ensuremath{{(#1)}\text-\mathsf{Type}_\UU}\xspace}
+\newcommand{\typelepU}[1]{\ensuremath{{(#1)}\text-\mathsf{Type}_{\UU}}\xspace}
 \let\ntype\typele
 \let\ntypeU\typeleU
 \let\ntypep\typelep
 \let\ntypepU\typelepU
 \renewcommand{\set}{\ensuremath{\mathsf{Set}}\xspace}
-\newcommand{\setU}{\ensuremath{\mathsf{Set}_\UU}\xspace}
+\newcommand{\setU}{\ensuremath{\mathsf{Set}_{\UU}}\xspace}
 \newcommand{\prop}{\ensuremath{\mathsf{Prop}}\xspace}
-\newcommand{\propU}{\ensuremath{\mathsf{Prop}_\UU}\xspace}
+\newcommand{\propU}{\ensuremath{\mathsf{Prop}_{\UU}}\xspace}
 %Pointed types
 \newcommand{\pointed}[1]{\ensuremath{#1_\bullet}}
 
@@ -594,7 +604,7 @@
 \newcommand{\nalg}{\nat\mathsf{Alg}}
 \newcommand{\nhom}{\nat\mathsf{Hom}}
 \newcommand{\ishinitw}{\mathsf{isHinit}_{\mathsf{W}}}
-\newcommand{\ishinitn}{\mathsf{isHinit}_\nat}
+\newcommand{\ishinitn}{\mathsf{isHinit}_{\nat}}
 \newcommand{\w}{\mathsf{W}}
 \newcommand{\walg}{\w\mathsf{Alg}}
 \newcommand{\whom}{\w\mathsf{Hom}}
@@ -756,6 +766,35 @@
 \crefname{chapter}{章}{章}
 \crefname{table}{表}{表}
 \crefname{equation}{式}{式}
+
+% 光有 \crefname 只解决了单条 \cref{cha:xxx} 的名词翻译，多条引用
+% （\cref{cha:a,cha:b}）走的是 \crefmultiformat，cleveref 没给它设中文
+% 格式时会退回内置的英文连接词 "and"，所以补上跟 section 一致的格式。
+\crefformat{chapter}{第~#2#1#3~章}
+\Crefformat{chapter}{第~#2#1#3~章}
+\crefrangeformat{chapter}{第~#3#1#4~至~#5#2#6~章}
+\Crefrangeformat{chapter}{第~#3#1#4~至~#5#2#6~章}
+\crefmultiformat{chapter}{第~#2#1#3}{~和~#2#1#3~章}{、#2#1#3}{~和~#2#1#3~章}
+\Crefmultiformat{chapter}{第~#2#1#3}{~和~#2#1#3~章}{、#2#1#3}{~和~#2#1#3~章}
+\crefrangemultiformat{chapter}{第~#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6~章}{、#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6~章}
+\Crefrangemultiformat{chapter}{第~#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6~章}{、#3#1#4~至~#5#2#6}{~和~#3#1#4~至~#5#2#6~章}
+
+% 上面这些 \crefmultiformat 只覆盖"同类型"多重引用（比如两个 section 一起
+% 引用）。但书里更常见的是"跨类型"多重引用，例如 \cref{sec:x,cha:y}
+% （一个 section 一个 chapter 混在一条 \cref 里），这种情况 cleveref 走的
+% 是另一套机制——\crefpairconjunction 等连接词宏，而不是 crefmultiformat，
+% 这套宏没有任何中文本地化包提供翻译，一直在退回内置英文 "and"/","，是
+% "第 2.9 和 2.10 节 and 章 6"这类中英夹杂的真正根源。这里统一改成中文
+% 顿号／"和"，一次性修好所有类型组合下的多重引用连接词。
+\newcommand*{\crefpairconjunction}{~和~}
+\newcommand*{\crefmiddleconjunction}{、}
+\newcommand*{\creflastconjunction}{~和~}
+\newcommand*{\crefrangeconjunction}{~至~}
+\newcommand*{\crefpairgroupconjunction}{~和~}
+\newcommand*{\crefmiddlegroupconjunction}{、}
+\newcommand*{\creflastgroupconjunction}{~和~}
+\newcommand*{\crefrangepregroupconjunction}{、}
+\newcommand*{\crefrangepostgroupconjunction}{}
 
 %%%% EQUATION NUMBERING %%%%
 
